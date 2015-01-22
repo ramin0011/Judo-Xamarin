@@ -1,0 +1,2 @@
+AndroidTestApp.MainActivity;androidtestapp.MainActivity
+IntermediateClassLibraryWithUi.Payment;intermediateclasslibrarywithui.Payment

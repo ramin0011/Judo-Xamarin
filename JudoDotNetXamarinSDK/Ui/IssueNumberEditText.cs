@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Text;
+using Android.Util;
+using Android.Views;
+using Android.Widget;
+using JudoDotNetXamarinSDK.Utils;
+
+namespace JudoDotNetXamarinSDK.Ui
+{
+    public class IssueNumberEditText : BackgroundHintTextView
+    {
+        public Action BackKeyPressedListener { get; set; }
+
+        public IssueNumberEditText(Context context) : base(context)
+        {
+            Init();
+        }
+
+        public IssueNumberEditText(Context context, IAttributeSet attributes) : base(context, attributes)
+        {
+            Init();
+        }
+
+        public IssueNumberEditText(Context context, IAttributeSet attributes, int defStyle) : base(context, attributes, defStyle)
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            
+        }
+
+        protected override int LengthToStartValidation()
+        {
+            return 1;
+        }
+
+        public override void SetInputFilter(string filter)
+        {
+            GetEditText().SetFilters(new IInputFilter[]{ new InputFilterLengthFilter(2)});
+        }
+
+        public void ValidateIssueNumberDuringEntry(string issueNumber)
+        {
+            if (!("0" == issueNumber && !ValidationHelper.CheckIssueNumber(issueNumber)))
+            {
+                var message = Resources.GetString(Resource.String.msg_check_issue_number);
+                SetErrorText(message);
+                throw new Exception(message);
+            }
+        }
+
+        public string GetCardIssueNumber()
+        {
+            return GetEditText().Text;
+        }
+
+
+        public override void BackKeyPressed()
+        {
+            if (BackKeyPressedListener != null)
+            {
+                BackKeyPressedListener();
+            }
+        }
+
+        public override void ValidateInput(string input)
+        {
+            ValidateIssueNumberDuringEntry(input);
+        }
+    }
+}

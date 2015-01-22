@@ -1,0 +1,2 @@
+layout/Payment.axml;layout/payment.xml
+Values/Strings.xml;values/strings.xml

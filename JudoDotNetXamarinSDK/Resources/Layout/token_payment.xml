@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+    <LinearLayout
+            android:orientation="vertical"
+            style="@style/judo_payments_page"
+            >
+
+    <TextView
+            android:id="@+id/hintTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/normal_text"
+            android:paddingBottom="4dp"
+            android:text="@string/enter_card_cv2"
+        android:textSize="@dimen/small_text_size"/>
+
+
+    <LinearLayout
+            style="@style/judo_payments_InputFieldContainer"
+            >
+
+        <LinearLayout
+                style="@style/judo_payments_InputContainer"
+                >
+
+            <com.judopay.android.library.ui.CV2EntryView
+                    android:id="@+id/cv2EntryView"
+                    style="@style/judo_payments_EditText"
+                    android:padding="0dp"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:hint="@string/payment_hint_cv2"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="0dp"/>
+
+            <com.judopay.android.library.ui.HelpButton
+                    android:id="@+id/infoButtonID"
+                    style="@style/judo_payments_InfoButton"
+                    android:src="@drawable/ic_info"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/security" />
+
+    <View style="@style/judo_payments_spacer"/>
+
+    <Button
+            android:id="@+id/payButton"
+            style="@style/judo_payments_Button.Main"
+            android:text="@string/payment_button"
+            />
+    <Button
+        android:id="@+id/cancelButton"
+        style="@style/judo_payments_Button.Secondary"
+        android:text="@string/cancel"
+        />
+
+        <View style="@style/judo_payments_divider"/>
+    <ImageView style="@style/judo_payments_cardstrip" android:contentDescription="@null"/>
+
+</LinearLayout>
+</ScrollView>
+<LinearLayout
+android:id="@+id/loadingLayout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:visibility="gone"
+android:gravity="center"
+android:background="@color/white_transparent">
+<ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+        </FrameLayout>
+

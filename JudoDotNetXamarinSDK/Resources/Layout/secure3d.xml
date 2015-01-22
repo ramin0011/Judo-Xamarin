@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical"
+		style="@style/judo_payments_page"
+        android:gravity="center"
+		>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_3ds_logos"
+            android:layout_marginBottom="30dip"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/secure3dtext"
+             android:textColor="@color/default_text"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:layout_marginBottom="40dip"/>
+
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>
+

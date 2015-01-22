@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Theme.Judo_payments_base" parent="@android:style/Theme.Light">
+
+  </style>
+
+  <!-- Theme file for Judo Library -->
+  <style name="Theme.Judo_payments" parent="@style/Theme.Judo_payments_base">
+    <!-- Action bar not supported, see values-v14 for actionbar/holo themes-->
+  </style>
+
+
+  <style name="judo_payments_BaseButton">
+  </style>
+
+</resources>
