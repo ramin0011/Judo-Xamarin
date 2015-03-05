@@ -1,0 +1,1 @@
+<resources><!-- this is needed as in material theme the action title doens't have any padding --><dimen name="action_bar_icon_right_padding">10dp</dimen><dimen name="button_text_size">14sp</dimen></resources>

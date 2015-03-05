@@ -18,7 +18,7 @@ namespace JudoDotNetXamarinSDK.Utils
         public static int ToPixels(Context context, float dips)
         {
             DisplayMetrics metrics = new DisplayMetrics();
-            var wm = (IWindowManager) context.GetSystemService(Context.WindowService);
+            var wm = context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
             wm.DefaultDisplay.GetMetrics(metrics);
             return (int) (dips*((float) metrics.DensityDpi/160)); // px = dp * (dpi / 160)
         }

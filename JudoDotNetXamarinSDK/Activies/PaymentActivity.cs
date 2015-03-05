@@ -56,7 +56,7 @@ namespace JudoDotNetXamarinSDK.Activies
             judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Utils.Consumer>();
 
             judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_CONSUMER);
+            judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra(JudoSDKManager.JUDO_CURRENCY);
 
             if (judoPaymentRef == null)
@@ -203,7 +203,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 var receipt = t.Result.Response;
 
                 Intent intent = new Intent();
-                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, receipt.ReceiptId);
+                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, receipt.ReceiptId); //TODO this is not valid it is just the receipt id
                 SetResult(JudoSDKManager.JUDO_SUCCESS, intent);
                 Finish();
                 Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);

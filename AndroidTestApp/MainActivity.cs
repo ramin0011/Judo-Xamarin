@@ -5,12 +5,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using JudoDotNetXamarinSDK;
 
 namespace AndroidTestApp
 {
     public class MainActivity : Activity
     {
         int count = 1;
+
+        private const int ACTION_PAYMENT = 1;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -20,49 +23,40 @@ namespace AndroidTestApp
             SetContentView(Resource.Layout.Main);
 
             // Get our UI controls from the loaded layout
-            EditText phoneNumberText = FindViewById<EditText>(Resource.Id.PhoneNumberText);
-            Button translateButton = FindViewById<Button>(Resource.Id.TranslateButton);
-            Button callButton = FindViewById<Button>(Resource.Id.CallButton);
+            Button makeAPaymentButton = FindViewById<Button>(Resource.Id.MakePayment);
 
-            // Disable the "Call" button
-            callButton.Enabled = false;
+            var that = this;
 
-            // Add code to translate number
-            string translatedNumber = string.Empty;
-
-            translateButton.Click += (sender, e) =>
+            makeAPaymentButton.Click += (sender, e) =>
             {
-                // Translate user’s alphanumeric phone number to numeric
-                translatedNumber = Core.PhonewordTranslator.ToNumber(phoneNumberText.Text);
-                if (String.IsNullOrWhiteSpace(translatedNumber))
-                {
-                    callButton.Text = "Call";
-                    callButton.Enabled = false;
-                }
-                else
-                {
-                    callButton.Text = "Call " + translatedNumber;
-                    callButton.Enabled = true;
-                }
-            };
+                var judoId = "100016";
+                var currency = "GBP";
+                var amount = "4.99";
+                var paymentReference = "payment101010102";
+                var consumerRef = "consumer1010102";
 
-            callButton.Click += (sender, e) =>
+                var intent = JudoSDKManager.makeAPayment(that, judoId, currency, amount, paymentReference, consumerRef, null);
+
+                StartActivityForResult(intent, ACTION_PAYMENT);
+            };
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            switch (requestCode)
             {
-                // On "Call" button click, try to dial phone number.
-                var callDialog = new AlertDialog.Builder(this);
-                callDialog.SetMessage("Call " + translatedNumber + "?");
-                callDialog.SetNeutralButton("Call", delegate
-                {
-                    // Create intent to dial phone
-                    var callIntent = new Intent(Intent.ActionCall);
-                    callIntent.SetData(Android.Net.Uri.Parse("tel:" + translatedNumber));
-                    StartActivity(callIntent);
-                });
-                callDialog.SetNegativeButton("Cancel", delegate { });
-
-                // Show the alert dialog to the user and wait for response.
-                callDialog.Show();
-            };
+                case ACTION_PAYMENT:
+                    if (resultCode == Result.Ok)
+                    {
+                        var receiptId = data.GetStringExtra(JudoSDKManager.JUDO_RECEIPT);
+                        Toast.MakeText(this, string.Format("Payment succeeded: id: {0}", receiptId), ToastLength.Long).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Payment failed", ToastLength.Long).Show();
+                    }
+                    break;
+            }
         }
     }
 }

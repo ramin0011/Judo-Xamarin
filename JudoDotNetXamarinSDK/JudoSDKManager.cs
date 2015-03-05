@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using JudoDotNetXamarinSDK.Activies;
 using JudoDotNetXamarinSDK.Utils;
 
 namespace JudoDotNetXamarinSDK
@@ -122,7 +123,23 @@ namespace JudoDotNetXamarinSDK
         {
             Intent intent = new Intent();
             intent.PutExtra(JUDO_ERROR_MESSAGE, message);
-            //intent.PutExtra(JUDO_ERROR_EXCEPTION, exception); TODO Think about something that is serializable and can explain the error
+            intent.PutExtra(JUDO_ERROR_EXCEPTION, new ExceptionSerializable(exception));
+
+            return intent;
+        }
+
+        public static Intent makeAPayment(Context context, string judoId, string currency, string amount,
+                                          string yourPaymentRef, string consumerRef, Bundle metaData)
+        {
+            Intent intent = new Intent(context, typeof(PaymentActivity));
+            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
+            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
+            intent.PutExtra(JUDO_AMOUNT, amount);
+            intent.PutExtra(JUDO_ID, judoId);
+            intent.PutExtra(JUDO_CURRENCY, currency);
+
+
+            intent.PutExtra(JUDO_META_DATA, metaData);
 
             return intent;
         }

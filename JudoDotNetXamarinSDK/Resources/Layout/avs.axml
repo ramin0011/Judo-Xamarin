@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/avs_container_height"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/general_padding">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dip"
+            android:text="@string/billing_country"
+            android:textColor="@color/normal_text"
+            android:textSize="@dimen/small_text_size" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:layout_gravity="center_vertical">
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_backgroundhinttextview_container_height"
+                android:textSize="@dimen/title_text_size"
+                style="@style/judo_payments_Spinner"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical" />
+        </FrameLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/postCodeContainer"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:orientation="vertical"
+        android:paddingLeft="8dip">
+        <TextView
+            android:id="@+id/postCodeTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dip"
+            android:text="@string/postcode"
+            android:textSize="@dimen/small_text_size"
+            android:textColor="@color/normal_text" />
+        <LinearLayout
+            style="@style/judo_payments_InputFieldContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <EditText
+                style="@style/judo_payments_EditText"
+                android:id="@+id/postCodeEditText"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/default_backgroundhinttextview_container_height"
+                android:inputType="textPostalAddress|textNoSuggestions"
+                android:textSize="@dimen/title_text_size"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:hint="@string/hint_postcode"
+                android:textColorHint="@color/hint_text"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/backgroundhinttextview_horizontal_padding" />
+            <judodotnetxamarinsdk.ui.HelpButton
+                android:id="@+id/postCodeHelpButton"
+                style="@style/judo_payments_InfoButton.Home"
+                android:src="@drawable/ic_home" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

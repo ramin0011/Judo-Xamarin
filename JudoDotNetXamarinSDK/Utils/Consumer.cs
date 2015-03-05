@@ -20,12 +20,17 @@ namespace JudoDotNetXamarinSDK.Utils
         public string YourConsumerReference { get; set; }
 
         [ExportField("CREATOR")]
-        static ConsumerCreator InitializeCreator()
+        public static ConsumerCreator InitializeCreator()
         {
             return new ConsumerCreator();
         }
 
         public Consumer() { }
+
+        public Consumer(string consumerReference)
+        {
+            YourConsumerReference = consumerReference;
+        }
 
         public Consumer(Parcel inParcel)
         {

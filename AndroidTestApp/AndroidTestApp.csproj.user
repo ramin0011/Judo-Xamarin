@@ -2,6 +2,6 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
-    <SelectedDevice>Nexus 4 %28KitKat%29</SelectedDevice>
+    <SelectedDevice>Nexus 4 %28KitKat%29 updated</SelectedDevice>
   </PropertyGroup>
 </Project>

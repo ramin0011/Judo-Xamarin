@@ -1,8 +1,8 @@
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\AndroidTestApp.dll
-D:\Igor\Xamarim\IntermediateClassLibraryWithUi\bin\Debug\IntermediateClassLibraryWithUi.dll
-D:\Igor\Xamarim\JudoDotNetXamarin\bin\Debug\JudoDotNetXamarin.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\AndroidTestApp.dll
+D:\Judo\Stash\Sdk\Xamarim\JudoDotNetXamarin\bin\Debug\JudoDotNetXamarin.dll
+D:\Judo\Stash\Sdk\Xamarim\JudoDotNetXamarinSDK\bin\Debug\JudoDotNetXamarinSDK.dll
 D:\Judo\GitHub\DotNetSDK\JudoPayDotNet\bin\Debug\JudoPayDotNet.dll
-D:\Igor\Xamarim\AndroidTestApp\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Collections.Concurrent.dll
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Collections.dll
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.ComponentModel.Annotations.dll
@@ -52,16 +52,16 @@ C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Xml.ReaderWriter.dll
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Xml.XDocument.dll
 C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\Facades\System.Xml.XmlSerializer.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\Serilog.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\FluentValidation.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\da\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\de\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\es\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\fi\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\fr\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\it\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\nl\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\pl\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\pt\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\ru\FluentValidation.resources.dll
-D:\Igor\Xamarim\AndroidTestApp\bin\Debug\sv\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\Serilog.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\FluentValidation.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\da\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\de\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\es\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\fi\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\fr\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\it\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\nl\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\pl\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\pt\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\ru\FluentValidation.resources.dll
+D:\Judo\Stash\Sdk\Xamarim\AndroidTestApp\bin\Debug\sv\FluentValidation.resources.dll

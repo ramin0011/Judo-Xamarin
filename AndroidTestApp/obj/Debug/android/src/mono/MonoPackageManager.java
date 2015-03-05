@@ -68,8 +68,8 @@ public class MonoPackageManager {
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"AndroidTestApp.dll",
-		"IntermediateClassLibraryWithUi.dll",
 		"JudoDotNetXamarin.dll",
+		"JudoDotNetXamarinSDK.dll",
 		"JudoPayDotNet.dll",
 		"Newtonsoft.Json.dll",
 		"System.Collections.Concurrent.dll",

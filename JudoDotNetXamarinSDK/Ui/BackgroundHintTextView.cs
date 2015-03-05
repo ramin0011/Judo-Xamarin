@@ -98,7 +98,7 @@ namespace JudoDotNetXamarinSDK.Ui
             linearLayout.LayoutParameters = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MatchParent, (int)GetContainerHeight());
 
             textLayout = new RelativeLayout(Context);
-            textLayout.LayoutParameters = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MatchParent, 1);
+            textLayout.LayoutParameters = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MatchParent, 1);
             textLayout.SetGravity(GravityFlags.Center);
 
             linearLayout.AddView(textLayout);
@@ -124,6 +124,37 @@ namespace JudoDotNetXamarinSDK.Ui
                 Resources.GetDimensionPixelOffset(Resource.Dimension.backgroundhinttextview_horizontal_padding);
             hintTextView.SetPadding(horizontalPadding, 0 , horizontalPadding, 0);
             textTextView.SetPadding(horizontalPadding, 0, horizontalPadding, 0);
+
+            textErrorView = new EditText(Context);
+            RelativeLayout.LayoutParams errorLP = new RelativeLayout.LayoutParams(LayoutParams.MatchParent,
+                LayoutParams.WrapContent);
+            errorLP.AddRule(LayoutRules.CenterVertical);
+
+            int margin = UiUtils.ToPixels(Context, 2);
+            errorLP.SetMargins(margin, 0, margin, 0);
+
+            textErrorView.LayoutParameters = errorLP;
+            textErrorView.Enabled = false;
+            textErrorView.Focusable = false;
+            textErrorView.Visibility = ViewStates.Gone;
+            textErrorView.SetBackgroundColor(Color.Red);
+            int errorVerticalPadding =
+                Context.Resources.GetDimensionPixelOffset(
+                    Resource.Dimension.backgroundhinttextview_error_vertical_padding);
+            textErrorView.SetPadding(horizontalPadding, errorVerticalPadding, horizontalPadding, errorVerticalPadding);
+            textErrorView.Text = errorText;
+            textErrorView.SetSingleLine(true);
+            textErrorView.Gravity = GravityFlags.Center;
+            textErrorView.SetTextAppearance(Context, Resource.Style.judo_payments_ErrorText);
+
+            //set courier font
+            Typeface type = Typefaces.LoadTypefaceFromRaw(Context, Resource.Raw.courier);
+            //hintTextView.Typeface = type;
+            hintTextView.SetTypeface(Typeface.Monospace, TypefaceStyle.Normal);
+            //textTextView.Typeface = type;
+            textTextView.SetTypeface(Typeface.Monospace, TypefaceStyle.Normal);
+            textErrorView.Typeface = type;
+
 
             textLayout.AddView(hintTextView);
             textLayout.AddView(textTextView);
@@ -294,7 +325,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         private void UpdateHintTextForCurrentTextEntry()
         {
-            string hintText = string.Empty;
+            string hintText = "";
             for (int i = 0; i < this.hintText.Length; ++i)
             {
                 if (i < textTextView.Length())
@@ -303,7 +334,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 }
                 else
                 {
-                    hintText += hintText.Substring(i, i + 1);
+                    hintText += this.hintText.Substring(i, 1);
                 }
             }
             hintTextView.Text = hintText;
@@ -326,6 +357,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public virtual void SetInputFilter(string filter)
         {
+            filterString = " " + filter;
             textTextView.SetFilters(new IInputFilter[]{new InputFilterLengthFilter(hintText.Length), new Filter(this) });
 
             skipCharsAtPositions.Clear();
@@ -377,7 +409,7 @@ namespace JudoDotNetXamarinSDK.Ui
             animationSet.AnimationEnd += (sender, args) =>
             {
                 textErrorView.Visibility = ViewStates.Gone;
-                RemoveView(textTextView);
+                RemoveView(textErrorView);
             };
 
             textErrorView.StartAnimation(animationSet);

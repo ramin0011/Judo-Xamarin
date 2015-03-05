@@ -1,0 +1,1 @@
+<objectAnimator android:valueFrom="270" android:valueTo="360" android:propertyName="rotationY" xmlns:android="http://schemas.android.com/apk/res/android"></objectAnimator>
