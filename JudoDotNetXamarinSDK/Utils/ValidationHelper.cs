@@ -34,7 +34,7 @@ namespace JudoDotNetXamarinSDK.Utils
             bool alternate = false;
             for (int i = ccNumber.Length - 1; i >= 0; --i)
             {
-                int n = int.Parse(ccNumber.Substring(i, i + 1));
+                int n = int.Parse(ccNumber.Substring(i, 1));
                 if (alternate)
                 {
                     n *= 2;

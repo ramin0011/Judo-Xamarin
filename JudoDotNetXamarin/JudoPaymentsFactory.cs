@@ -13,7 +13,7 @@ namespace JudoDotNetXamarin
 {
     public static class JudoPaymentsFactory
     {
-        private static readonly string LIVE_URL = "http://devpartnerapi.judopay.com/";
+        private static readonly string LIVE_URL = "http://10.12.44.151:2004/";
         private static readonly string SANDBOX_URL = "";
         private static readonly string API_VERSION = "4.1.0.0";
         private const string Apiversionheader = "api-version";

@@ -121,11 +121,13 @@ namespace JudoDotNetXamarinSDK.Ui
                     //}
                     //else
                     //{
-                        cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCard, true), false);
-                        cardNumberTextView.SetHintText(JudoSDKManager.GetCardHintFormat(currentCard));
-                        cardExpiryCv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(currentCard));
-                        cardExpiryCv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(currentCard));
+                    cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCardType, true), false);
+                    cardNumberTextView.SetHintText(JudoSDKManager.GetCardHintFormat(currentCardType));
+                    cardExpiryCv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(currentCardType));
+                    cardExpiryCv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(currentCardType));
                     //}
+
+                    currentCard = currentCardType;
                 }
                 lastPos = position;
             };
@@ -247,7 +249,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 // This will last 4 digits of cc# visible on screen
                 cardNumberTextView.Visibility = ViewStates.Gone;
                 cardExpiryCv2TextView.SetText(" ");
-                string cardNumber = cardNumberTextView.GetEditText().ToString();
+                string cardNumber = cardNumberTextView.GetEditText().Text;
                 cardExpiryCv2TextView.SetLast4NumbersOfCard(cardNumber.Substring(cardNumber.Length - 4));
 
                 cardExpiryCv2TextView.RequestFocus();

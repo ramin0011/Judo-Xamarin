@@ -13,9 +13,11 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using JudoDotNetXamarin;
+using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Ui;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
+using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamarinSDK.Activies
@@ -28,7 +30,7 @@ namespace JudoDotNetXamarinSDK.Activies
         private string judoCurrency;
         private Bundle judoMetaData;
         private CardEntryView cardEntryView;
-        private Utils.Consumer judoConsumer;
+        private Consumer judoConsumer;
         private AVSEntryView avsEntryView;
         private HelpButton cv2ExpiryHelpInfoButton;
         private StartDateIssueNumberEntryView startDateEntryView;
@@ -53,7 +55,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 Resource.Id.postCodeHelpButton);
 
             judoPaymentRef = Intent.GetStringExtra(JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Utils.Consumer>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Consumer>();
 
             judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_ID);
@@ -118,19 +120,17 @@ namespace JudoDotNetXamarinSDK.Activies
                 {
                     Console.Error.Write(e.StackTrace);
                 }
+                
+                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.IsMaestroEnabled)
+                {
+                    startDateEntryView.Visibility = ViewStates.Visible;
+                    startDateEntryView.RequestFocus();
+                }
 
-
-                //TODO Implement infrastructure to suport Enabled and disable settings for avs and maestro
-                //if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && IsMastroEnabled)
-                //{
-                //    startDateEntryView.Visibility = ViewStates.Visible;
-                //    startDateEntryView.RequestFocus();
-                //}
-
-                //if (IsAVSEnabled && avsEntryView != null)
-                //{
-                //    avsEntryView.Visibility = ViewStates.Visible;
-                //}
+                if (JudoSDKManager.IsAVSEnabled && avsEntryView != null)
+                {
+                    avsEntryView.Visibility = ViewStates.Visible;
+                }
             };
 
             cardEntryView.OnReturnToCreditCardNumberEntry = () =>
@@ -153,22 +153,20 @@ namespace JudoDotNetXamarinSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel();
 
-            //TODO infrastructure to support flags for AVS and Maestro card types
-            //if (IsAvsEnable)
-            //{
-            //    var country = avsEntryView.getCountry();
-            //    cardAddress.PostCode = avsEntryView.GetPostCode();
-            //}
+            if (JudoSDKManager.IsAVSEnabled)
+            {
+                var country = avsEntryView.GetCountry();
+                cardAddress.PostCode = avsEntryView.GetPostCode();
+            }
 
             string startDate = null;
             string issueNumber = null;
 
-            //TODO infrastructure to support flags for AVS and Maestro card types
-            //if (IsMaestroEnabled)
-            //{
-            //    issueNumber = startDateEntryView.GetIssueNumber();
-            //    startDate = startDateEntryView.GetStartDate();
-            //}
+            if (JudoSDKManager.IsMaestroEnabled)
+            {
+                issueNumber = startDateEntryView.GetIssueNumber();
+                startDate = startDateEntryView.GetStartDate();
+            }
 
             var cardPayment = new CardPaymentModel()
             {
@@ -176,17 +174,19 @@ namespace JudoDotNetXamarinSDK.Activies
                 Currency = judoCurrency,
                 Amount = judoAmount,
                 YourPaymentReference = judoPaymentRef,
+                YourConsumerReference = judoConsumer.YourConsumerReference,
                 //YourPaymentMetaData = judoMetaData, TODO Need to find a way to create a dictionary that can be putted inside an intent
                 CardNumber = cardNumber,
                 CardAddress = cardAddress,
                 StartDate = startDate,
-                ExpiryDate = expiryDate
+                ExpiryDate = expiryDate,
+                CV2 = cv2
             };
 
             ShowLoadingSpinner(true);
 
-            //Todo create infrasctruture to hold JudoPaymentApi instead of always creating it
-            var judoPay = JudoPaymentsFactory.Create(Environment.Live, "", "");
+
+            var judoPay = JudoSDKManager.JudoClient;
 
             judoPay.Payments.Create(cardPayment).ContinueWith(t =>
             {
@@ -197,16 +197,17 @@ namespace JudoDotNetXamarinSDK.Activies
                     var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.Message;
                     Log.Error("com.judopay.android", "ERROR: " + errorMessage);
                     SetResult(JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception));
+                    Finish();
                     return;
                 }
 
                 var receipt = t.Result.Response;
 
                 Intent intent = new Intent();
-                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, receipt.ReceiptId); //TODO this is not valid it is just the receipt id
+                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, new Receipt(receipt));
                 SetResult(JudoSDKManager.JUDO_SUCCESS, intent);
-                Finish();
                 Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);
+                Finish();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

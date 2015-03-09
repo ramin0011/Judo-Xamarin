@@ -72,20 +72,13 @@ namespace JudoDotNetXamarinSDK.Ui
                 var checkExpDate = Resources.GetString(Resource.String.msg_check_exp_date);
 
                 //validate year
-                var year = expiry.Substring(3, 5);
+                var year = expiry.Substring(3, 2);
                 int yearNumber;
-                try
-                {
-                    if ((yearNumber = int.Parse(year)) > 12)
-                    {
-                        SetErrorText("Invalid Year");
-                        throw new Exception(checkExpDate);
-                    }
-                }
-                catch (FormatException e)
+
+                if (!int.TryParse(year, out yearNumber))
                 {
                     SetErrorText("Invalid Year");
-                    throw e;
+                    throw new Exception(checkExpDate);
                 }
 
                 yearNumber += 2000;
@@ -93,7 +86,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 //validate not in the past
                 var now = DateTime.Now;
 
-                var expiryDate = new DateTime(yearNumber, monthNumber, now.Day, now.Hour, now.Minute, now.Millisecond);
+                var expiryDate = new DateTime(yearNumber, monthNumber, now.Day, now.Hour, now.Minute, now.Second);
 
                 if (expiryDate < now)
                 {
@@ -120,7 +113,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public string GetCardCV2()
         {
-            string expiryAndCV2 = GetEditText().ToString();
+            string expiryAndCV2 = GetEditText().Text;
             string[] temp = expiryAndCV2.Split(' ');
 
             if (temp.Length < 2)
@@ -132,7 +125,7 @@ namespace JudoDotNetXamarinSDK.Ui
             string expiry = temp[0];
             string cv2 = temp[1];
 
-            return expiry;
+            return cv2;
         }
 
         public string GetCardExpiry()

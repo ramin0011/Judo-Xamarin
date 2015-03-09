@@ -10,8 +10,12 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using JudoDotNetXamarin;
 using JudoDotNetXamarinSDK.Activies;
+using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Utils;
+using JudoPayDotNet;
+using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamarinSDK
 {
@@ -41,6 +45,55 @@ namespace JudoDotNetXamarinSDK
         private static String AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CIDV";
         private static String REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
         private static String AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
+
+        private static volatile bool avsEnabled = false;
+        public static bool IsAVSEnabled { get { return avsEnabled; } set { avsEnabled = value; } }
+        
+        private static volatile bool maestroEnabled = false;
+        public static bool IsMaestroEnabled { get { return maestroEnabled; } set { maestroEnabled = value; } }
+
+        private static readonly object _clientLock = new object();
+        private static JudoPayApi _judoClient;
+
+        internal static JudoPayApi JudoClient
+        {
+            get
+            {
+                lock (_clientLock)
+                {
+                    return _judoClient;
+                }
+            }
+        }
+
+        private static Environment _environment;
+
+        public static Environment Environment
+        {
+            get
+            {
+                lock (_clientLock)
+                {
+                    return _environment;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Sets the configuration to access judo servers
+        /// </summary>
+        /// <param name="apiToken">The apiToken of the merchant</param>
+        /// <param name="apiSecret">The apiSecret of the merchant</param>
+        /// <param name="environment">The environment to use</param>
+        public static void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Live)
+        {
+            lock(_clientLock)
+            {
+                _environment = environment;
+                _judoClient = JudoPaymentsFactory.Create(_environment, apiToken, apiSecret);
+            }
+        }
 
         public static string DEBUG_TAG = "com.judopay.android";
 
