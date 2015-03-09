@@ -2,9 +2,9 @@
 *~
 
 # Build/test output
-obj/
-bin/
-Debug/
+[Oo]bj/
+[Bb]in/
+[Dd]ebug/
 test-results/
 
 # VS sometimes writes these for no apparent reason
