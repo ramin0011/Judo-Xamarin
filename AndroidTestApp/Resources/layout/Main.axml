@@ -8,4 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MakePayment" />
+    <Button
+        android:text="Make A Token Payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MakePaymentToken" />
+    <Button
+        android:text="Make A Token PreAuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MakePreAuthToken" />
 </LinearLayout>

@@ -92,9 +92,9 @@
       <Project>{365D3FE1-5AA7-4C99-8AEF-0D780C28E842}</Project>
       <Name>JudoPayDotNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JudoDotNetXamarinSDK\JudoDotNetXamarinSDK.csproj">
+    <ProjectReference Include="..\JudoDotNetXamarinAndroidSDK\JudoDotNetXamarinAndroidSDK.csproj">
       <Project>{0D9E85D5-FEA8-4D3D-AE96-233DFD4E8EDF}</Project>
-      <Name>JudoDotNetXamarinSDK</Name>
+      <Name>JudoDotNetXamarinAndroidSDK</Name>
     </ProjectReference>
     <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>

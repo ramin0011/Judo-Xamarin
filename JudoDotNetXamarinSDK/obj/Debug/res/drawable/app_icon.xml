@@ -1,1 +1,0 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item android:drawable="@drawable/ic_app_icon" android:right="@dimen/action_bar_icon_right_padding" /></layer-list>
