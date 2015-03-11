@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using Android.Runtime;
@@ -21,6 +22,7 @@ namespace AndroidTestApp
         private const int ACTION_PAYMENT = 1;
         private const int ACTION_PAYMENT_TOKEN = 2;
         private const int ACTION_PREAUTH_TOKEN = 4;
+        private const int ACTION_REGISTER_CARD = 5;
 
         private volatile string cardToken;
         private volatile string consumerToken;
@@ -41,6 +43,7 @@ namespace AndroidTestApp
             Button makeAPaymentButton = FindViewById<Button>(Resource.Id.MakePayment);
             Button makeATokenPaymentButton = FindViewById<Button>(Resource.Id.MakePaymentToken);
             Button makeATokenPreAuthButton = FindViewById<Button>(Resource.Id.MakePreAuthToken);
+            Button registerCard = FindViewById<Button>(Resource.Id.RegisterCard);
 
             var that = this;
 
@@ -52,7 +55,7 @@ namespace AndroidTestApp
                 var paymentReference = "payment101010102";
                 var consumerRef = "consumer1010102";
 
-                var intent = JudoSDKManager.makeAPayment(that, judoId, currency, amount, paymentReference, consumerRef, null);
+                var intent = JudoSDKManager.makeAPayment(that, judoId, currency, amount, paymentReference, consumerRef, new Dictionary<string, string>{{"test", "ValueTest"}});
 
                 StartActivityForResult(intent, ACTION_PAYMENT);
             };
@@ -110,15 +113,31 @@ namespace AndroidTestApp
 
                 StartActivityForResult(intent, ACTION_PREAUTH_TOKEN);
             };
+
+            registerCard.Click += (sender, e) =>
+            {
+                var consumerReference = "consumer1010102";
+
+                var intent = JudoSDKManager.registerCard(that, consumerReference);
+
+                StartActivityForResult(intent, ACTION_REGISTER_CARD);
+            };
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            Receipt receipt;
+            Receipt receipt = null;
+
+            if (data != null)
+            {
+                receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
+            }
+
             switch (requestCode)
             {
                 case ACTION_PAYMENT:
-                    receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
+                    
+
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
                         PaymentReceiptModel paymentReceipt;
@@ -146,7 +165,6 @@ namespace AndroidTestApp
                     }
                     break;
                 case ACTION_PAYMENT_TOKEN:
-                    receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
                         Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
@@ -165,7 +183,6 @@ namespace AndroidTestApp
                     }
                     break;
                 case ACTION_PREAUTH_TOKEN:
-                    receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
                         Toast.MakeText(this, string.Format("PreAuth succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
@@ -175,6 +192,33 @@ namespace AndroidTestApp
                         if (receipt != null)
                         {
                             Toast.MakeText(this, string.Format("PreAuth failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        }
+                        else
+                        {
+                            Toast.MakeText(this,
+                                string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
+                        }
+                    }
+                    break;
+                case ACTION_REGISTER_CARD:
+                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentReceipt;
+                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
+                        {
+                            cardToken = paymentReceipt.CardDetails.CardToken;
+                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
+                            consumerRef = paymentReceipt.Consumer.YourConsumerReference;
+                            lastFour = paymentReceipt.CardDetails.CardLastfour;
+                        }
+
+                        Toast.MakeText(this, string.Format("Register card succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                    }
+                    else
+                    {
+                        if (receipt != null)
+                        {
+                            Toast.MakeText(this, string.Format("Register card failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
                         }
                         else
                         {

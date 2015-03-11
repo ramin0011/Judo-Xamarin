@@ -130,5 +130,13 @@ namespace JudoDotNetXamarinSDK.Ui
         {
             return postCodeEditText.Text;
         }
+
+        public void FocusPostCode()
+        {
+            if (postCodeEditText != null)
+            {
+                postCodeEditText.RequestFocus();
+            }
+        }
     }
 }

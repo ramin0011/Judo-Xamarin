@@ -771,56 +771,59 @@ namespace AndroidTestApp
 			// aapt resource value: 0x7f0c0007
 			public const int MakePreAuthToken = 2131492871;
 			
-			// aapt resource value: 0x7f0c0010
-			public const int addressLine1 = 2131492880;
+			// aapt resource value: 0x7f0c0008
+			public const int RegisterCard = 2131492872;
 			
 			// aapt resource value: 0x7f0c0011
-			public const int addressLine2 = 2131492881;
+			public const int addressLine1 = 2131492881;
 			
 			// aapt resource value: 0x7f0c0012
-			public const int addressLine3 = 2131492882;
-			
-			// aapt resource value: 0x7f0c0014
-			public const int addressPostCode = 2131492884;
+			public const int addressLine2 = 2131492882;
 			
 			// aapt resource value: 0x7f0c0013
-			public const int addressTown = 2131492883;
+			public const int addressLine3 = 2131492883;
 			
-			// aapt resource value: 0x7f0c000c
-			public const int avsEntryView = 2131492876;
+			// aapt resource value: 0x7f0c0015
+			public const int addressPostCode = 2131492885;
 			
-			// aapt resource value: 0x7f0c000e
-			public const int cancelButton = 2131492878;
+			// aapt resource value: 0x7f0c0014
+			public const int addressTown = 2131492884;
 			
-			// aapt resource value: 0x7f0c0009
-			public const int cardEntryView = 2131492873;
+			// aapt resource value: 0x7f0c000d
+			public const int avsEntryView = 2131492877;
+			
+			// aapt resource value: 0x7f0c000f
+			public const int cancelButton = 2131492879;
+			
+			// aapt resource value: 0x7f0c000a
+			public const int cardEntryView = 2131492874;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c001b
-			public const int cv2EntryView = 2131492891;
+			// aapt resource value: 0x7f0c001c
+			public const int cv2EntryView = 2131492892;
 			
-			// aapt resource value: 0x7f0c0008
-			public const int hintTextView = 2131492872;
+			// aapt resource value: 0x7f0c0009
+			public const int hintTextView = 2131492873;
 			
-			// aapt resource value: 0x7f0c000a
-			public const int infoButtonID = 2131492874;
-			
-			// aapt resource value: 0x7f0c0018
-			public const int issueNumberContainer = 2131492888;
-			
-			// aapt resource value: 0x7f0c001a
-			public const int issueNumberEditText = 2131492890;
+			// aapt resource value: 0x7f0c000b
+			public const int infoButtonID = 2131492875;
 			
 			// aapt resource value: 0x7f0c0019
-			public const int issueNumberTitleText = 2131492889;
+			public const int issueNumberContainer = 2131492889;
 			
-			// aapt resource value: 0x7f0c000f
-			public const int loadingLayout = 2131492879;
+			// aapt resource value: 0x7f0c001b
+			public const int issueNumberEditText = 2131492891;
 			
-			// aapt resource value: 0x7f0c000d
-			public const int payButton = 2131492877;
+			// aapt resource value: 0x7f0c001a
+			public const int issueNumberTitleText = 2131492890;
+			
+			// aapt resource value: 0x7f0c0010
+			public const int loadingLayout = 2131492880;
+			
+			// aapt resource value: 0x7f0c000e
+			public const int payButton = 2131492878;
 			
 			// aapt resource value: 0x7f0c0001
 			public const int postCodeContainer = 2131492865;
@@ -834,17 +837,17 @@ namespace AndroidTestApp
 			// aapt resource value: 0x7f0c0002
 			public const int postCodeTitleText = 2131492866;
 			
-			// aapt resource value: 0x7f0c0015
-			public const int startDateContainer = 2131492885;
+			// aapt resource value: 0x7f0c0016
+			public const int startDateContainer = 2131492886;
+			
+			// aapt resource value: 0x7f0c0018
+			public const int startDateEditText = 2131492888;
+			
+			// aapt resource value: 0x7f0c000c
+			public const int startDateEntryView = 2131492876;
 			
 			// aapt resource value: 0x7f0c0017
-			public const int startDateEditText = 2131492887;
-			
-			// aapt resource value: 0x7f0c000b
-			public const int startDateEntryView = 2131492875;
-			
-			// aapt resource value: 0x7f0c0016
-			public const int startDateTitleText = 2131492886;
+			public const int startDateTitleText = 2131492887;
 			
 			static Id()
 			{

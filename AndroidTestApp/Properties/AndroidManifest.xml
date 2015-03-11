@@ -12,5 +12,7 @@
 		</activity>
 		<activity android:name="judodotnetxamarinsdk.activies.PaymentActivity" />
     <activity android:name="judodotnetxamarinsdk.activies.PaymentTokenActivity" />
+    <activity android:name="judodotnetxamarinsdk.activies.PreAuthTokenActivity" />
+    <activity android:name="judodotnetxamarinsdk.activies.RegisterCardActivity" />
 	</application>
 </manifest>

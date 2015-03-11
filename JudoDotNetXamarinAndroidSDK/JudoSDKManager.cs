@@ -184,7 +184,7 @@ namespace JudoDotNetXamarinSDK
         }
 
         public static Intent makeAPayment(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, Bundle metaData)
+                                          string yourPaymentRef, string consumerRef, Dictionary<string, string> metaData)
         {
             Intent intent = new Intent(context, typeof(PaymentActivity));
             intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
@@ -194,13 +194,13 @@ namespace JudoDotNetXamarinSDK
             intent.PutExtra(JUDO_CURRENCY, currency);
 
 
-            intent.PutExtra(JUDO_META_DATA, metaData);
+            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
 
             return intent;
         }
 
         public static Intent makeATokenPayment(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Bundle metaData, string consumerToken = null)
+                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
         {
             Intent intent = new Intent(context, typeof(PaymentTokenActivity));
             intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
@@ -211,13 +211,13 @@ namespace JudoDotNetXamarinSDK
             intent.PutExtra(JUDO_CARD_DETAILS, cardToken);
 
 
-            intent.PutExtra(JUDO_META_DATA, metaData);
+            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
 
             return intent;
         }
 
         public static Intent makeATokenPreAuth(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Bundle metaData, string consumerToken = null)
+                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
         {
             Intent intent = new Intent(context, typeof(PreAuthTokenActivity));
             intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
@@ -228,7 +228,15 @@ namespace JudoDotNetXamarinSDK
             intent.PutExtra(JUDO_CARD_DETAILS, cardToken);
 
 
-            intent.PutExtra(JUDO_META_DATA, metaData);
+            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
+
+            return intent;
+        }
+
+        public static Intent registerCard(Context context, string consumerRef)
+        {
+            Intent intent = new Intent(context, typeof(RegisterCardActivity));
+            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
 
             return intent;
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Android.App;
@@ -12,81 +12,70 @@ using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
-using JudoDotNetXamarin;
+using Java.Lang;
 using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Ui;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Environment = JudoPayDotNet.Enums.Environment;
+using Exception = System.Exception;
 
 namespace JudoDotNetXamarinSDK.Activies
 {
-    public class PaymentActivity : BaseActivity
+    [Activity(Label = "RegisterCardActivity")]
+    public class RegisterCardActivity : BaseActivity
     {
-        private string judoPaymentRef;
-        private decimal judoAmount;
-        private string judoId;
-        private string judoCurrency;
-        private MetaData judoMetaData;
+        private Bundle judoMetaData;
         private CardEntryView cardEntryView;
         private Consumer judoConsumer;
-        private AVSEntryView avsEntryView;
-        private HelpButton cv2ExpiryHelpInfoButton;
+        private EditText addressLine1;
+        private EditText addressLine2;
+        private EditText addressLine3;
+        private EditText addressTown;
+        private EditText addressPostCode;
+        private AVSEntryView aVsEntryView;
         private StartDateIssueNumberEntryView startDateEntryView;
+
+        private HelpButton cv2ExpiryHelpInfoButton;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            SetContentView(Resource.Layout.register_card);
+            SetTitle(Resource.String.title_register_card);
 
-            SetContentView(Resource.Layout.payment);
-            Title = GetString(Resource.String.title_payment);
             cardEntryView = FindViewById<CardEntryView>(Resource.Id.cardEntryView);
             TextView hintTextView = FindViewById<TextView>(Resource.Id.hintTextView);
             cardEntryView.HintTextView = hintTextView;
-            avsEntryView = FindViewById<AVSEntryView>(Resource.Id.avsEntryView);
+            aVsEntryView = FindViewById<AVSEntryView>(Resource.Id.avsEntryView);
             startDateEntryView = FindViewById<StartDateIssueNumberEntryView>(Resource.Id.startDateEntryView);
 
             cv2ExpiryHelpInfoButton = FindViewById<HelpButton>(Resource.Id.infoButtonID);
-            cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
 
+            addressLine1 = FindViewById<EditText>(Resource.Id.addressLine1);
+            addressLine2 = FindViewById<EditText>(Resource.Id.addressLine2);
+            addressLine3 = FindViewById<EditText>(Resource.Id.addressLine3);
+            addressTown = FindViewById<EditText>(Resource.Id.addressTown);
+            addressPostCode = FindViewById<EditText>(Resource.Id.addressPostCode);
+            
             SetHelpText(Resource.String.help_info, Resource.String.help_card_text);
-            SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text,
-                Resource.Id.postCodeHelpButton);
+            SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoPaymentRef = Intent.GetStringExtra(JudoSDKManager.JUDO_PAYMENT_REF);
             judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Consumer>();
 
-            judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra(JudoSDKManager.JUDO_CURRENCY);
-
-            if (judoPaymentRef == null)
-            {
-                throw new ArgumentException("JUDO_PAYMENT_REF must be supplied");
-            }
             if (judoConsumer == null)
             {
-                throw new ArgumentException("JUDO_CONSUMER must be supplied");
-            }
-            if (judoAmount == null)
-            {
-                throw new ArgumentException("JUDO_AMOUNT must be supplied");
-            } 
-            if (judoId == null)
-            {
-                throw new ArgumentException("JUDO_ID must be supplied");
-            }
-            if (judoCurrency == null)
-            {
-                throw new ArgumentException("JUDO_CURRENCY must be supplied");
+                throw new IllegalArgumentException("JUDO_CONSUMER must be supplied");
             }
 
-            judoMetaData = Intent.Extras.GetParcelable(JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData>();
+            judoMetaData = Intent.GetBundleExtra(JudoSDKManager.JUDO_META_DATA);
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
-            payButton.Text = Resources.GetString(Resource.String.payment);
+            payButton.SetText(Resource.String.register_card);
+
+            var that = this;
+
             payButton.Click += (sender, args) =>
             {
                 try
@@ -95,8 +84,8 @@ namespace JudoDotNetXamarinSDK.Activies
                 }
                 catch (Exception e)
                 {
-                    Toast.MakeText(this, "" + e.Message, ToastLength.Short).Show();
-                    Log.Error(JudoSDKManager.DEBUG_TAG, "Exception", e);
+                    Log.Error(JudoSDKManager.DEBUG_TAG, e.Message, e);
+                    Toast.MakeText(that, e.Message, ToastLength.Short).Show();
                 }
             };
 
@@ -108,31 +97,37 @@ namespace JudoDotNetXamarinSDK.Activies
             cardEntryView.OnExpireAndCV2Entered = (expiryDate, cv2) =>
             {
                 string cardNumber = null;
-
                 try
                 {
                     cardNumber = cardEntryView.GetCardNumber();
                 }
-                catch (Exception e)
+                catch (InvalidDataException e)
                 {
-                    Console.Error.Write(e.StackTrace);
+                    Log.Error(JudoSDKManager.DEBUG_TAG, e.StackTrace, e);
                 }
-                
+
+                bool startDateFocus = false;
                 if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
+                    startDateFocus = true;
                 }
 
-                if (JudoSDKManager.IsAVSEnabled && avsEntryView != null)
+                if (JudoSDKManager.IsAVSEnabled && aVsEntryView != null)
                 {
-                    avsEntryView.Visibility = ViewStates.Visible;
+                    aVsEntryView.Visibility = ViewStates.Visible;
+
+                    if (!startDateFocus)
+                    {
+                        aVsEntryView.FocusPostCode();
+                    }
                 }
             };
 
-            cardEntryView.OnReturnToCreditCardNumberEntry = () =>
+            cardEntryView.OnReturnToCreditCardNumberEntry += () =>
             {
-                cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
+               cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
             };
         }
 
@@ -144,48 +139,23 @@ namespace JudoDotNetXamarinSDK.Activies
 
         public void MakeCardPayment()
         {
-            var cardNumber = cardEntryView.GetCardNumber();
-            var expiryDate = cardEntryView.GetCardExpiry();
-            var cv2 = cardEntryView.GetCardCV2();
-
-            CardAddressModel cardAddress = new CardAddressModel();
-
-            if (JudoSDKManager.IsAVSEnabled)
+            var registerCard = new RegisterCardModel()
             {
-                var country = avsEntryView.GetCountry();
-                cardAddress.PostCode = avsEntryView.GetPostCode();
-            }
-
-            string startDate = null;
-            string issueNumber = null;
-
-            if (JudoSDKManager.IsMaestroEnabled)
-            {
-                issueNumber = startDateEntryView.GetIssueNumber();
-                startDate = startDateEntryView.GetStartDate();
-            }
-
-            var cardPayment = new CardPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                YourConsumerReference = judoConsumer.YourConsumerReference,
-                YourPaymentMetaData = judoMetaData.Metadata,
-                CardNumber = cardNumber,
-                CardAddress = cardAddress,
-                StartDate = startDate,
-                ExpiryDate = expiryDate,
-                CV2 = cv2
+                CardAddress = new CardAddressModel()
+                {
+                    Line1 = addressLine1.Text,
+                    Line2 = addressLine2.Text,
+                    Line3 = addressLine3.Text,
+                    Town = addressTown.Text,
+                    PostCode = addressPostCode.Text
+                },
+                CardNumber = cardEntryView.GetCardNumber(),
+                CV2 = cardEntryView.GetCardCV2(),
+                ExpiryDate = cardEntryView.GetCardExpiry(),
+                YourConsumerReference = judoConsumer.YourConsumerReference
             };
 
-            ShowLoadingSpinner(true);
-
-
-            var judoPay = JudoSDKManager.JudoClient;
-
-            judoPay.Payments.Create(cardPayment).ContinueWith(t =>
+            JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(t =>
             {
                 ShowLoadingSpinner(false);
 
@@ -212,7 +182,7 @@ namespace JudoDotNetXamarinSDK.Activies
         {
             RunOnUiThread(() =>
             {
-                ((InputMethodManager) GetSystemService(Context.InputMethodService)).HideSoftInputFromWindow(
+                ((InputMethodManager)GetSystemService(Context.InputMethodService)).HideSoftInputFromWindow(
                     FindViewById(Resource.Id.payButton).WindowToken, 0);
                 FindViewById(Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
 

@@ -53,9 +53,11 @@
     <Compile Include="Activies\PaymentActivity.cs" />
     <Compile Include="Activies\PaymentTokenActivity.cs" />
     <Compile Include="Activies\PreAuthTokenActivity.cs" />
+    <Compile Include="Activies\RegisterCardActivity.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\CardToken.cs" />
     <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
