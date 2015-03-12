@@ -158,7 +158,12 @@ namespace Android.Xamarin.SampleApp
 
             if (resultCode == Result.Canceled) 
             {
-                Toast.MakeText(this, string.Format("Payment Canceled."), ToastLength.Long).Show();
+                Toast.MakeText(this, "Payment Canceled.", ToastLength.Long).Show();
+                return;
+            }
+            else if (resultCode == JudoSDKManager.JUDO_ERROR)
+            {
+                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
                 return;
             }
 

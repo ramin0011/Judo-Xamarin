@@ -92,7 +92,7 @@ namespace JudoDotNetXamarinSDK.Activies
         public void ShowConfirmation(string title, string message, bool cancelable, string buttonLabel, Action buttonAction)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            if (String.IsNullOrWhiteSpace(title))
+            if (!String.IsNullOrWhiteSpace(title))
             {
                 builder.SetTitle(title);
             }
@@ -101,27 +101,26 @@ namespace JudoDotNetXamarinSDK.Activies
             builder.SetCancelable(cancelable);
 
             var dialog = builder.Create();
-            var positiveButton = dialog.GetButton((int)DialogButtonType.Positive);
-            var negativeButton = dialog.GetButton((int)DialogButtonType.Negative);
 
             if (buttonLabel == null)
             {
-                positiveButton.Click += (sender, args) => dialog.Dismiss();
+                builder.SetPositiveButton(Resource.String.ok, (sender, args) => dialog.Dismiss());
             }
             else
             {
-                positiveButton.Click += (sender, args) =>
-                {
-                    if (buttonAction != null)
+                builder.SetPositiveButton(buttonLabel,
+                    (sender, args) =>
                     {
-                        Task.Factory.StartNew(buttonAction);
-                    }
-                    dialog.Dismiss();
-                };
+                        if (buttonAction != null)
+                        {
+                            Task.Factory.StartNew(buttonAction);
+                        }
+                        dialog.Dismiss();
+                    });
 
                 if (cancelable)
                 {
-                    negativeButton.Click += (sender, args) => dialog.Dismiss();
+                    builder.SetNegativeButton(Resource.String.cancel, (sender, args) => dialog.Dismiss());
                 }
 
             }
