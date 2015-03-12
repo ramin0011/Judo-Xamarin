@@ -10,6 +10,8 @@ using JudoDotNetXamarinSDK.Models;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -17,13 +19,13 @@ namespace Android.Xamarin.SampleApp
     public class WithUIActivity : Activity
     {
         // Configure your JudoID and payment detail
-        private const string ApiToken = "4eVWyZQnO5DyaXZy";
-        private const string ApiSecret = "1d5e8381ed9ef3cc1ecc1daaf8ce550bdc97ea058ac804be4b68c28d02fdb791";
-        private string MY_JUDO_ID = "100016";
-        private string currency = "GBP";
-        private string amount = "4.99";
+        private const string ApiToken   = "4eVWyZQnO5DyaXZy";
+        private const string ApiSecret  = "1d5e8381ed9ef3cc1ecc1daaf8ce550bdc97ea058ac804be4b68c28d02fdb791";
+        private string MY_JUDO_ID       = "100016";
+        private string currency         = "GBP";
+        private string amount           = "4.99";
         private string paymentReference = "payment101010102";
-        private string consumerRef = "consumer1010102";
+        private string consumerRef      = "consumer1010102";
 
         private const int ACTION_CARD_PAYMENT   = 101;
         private const int ACTION_TOKEN_PAYMENT  = 102;
@@ -63,6 +65,8 @@ namespace Android.Xamarin.SampleApp
             payTokenPreAuth.Click   += new EventHandler(payTokenPreAuth_Click);
             registerCard.Click      += new EventHandler(registerCard_Click);
             nonUiExamples.Click     += new EventHandler(nonUiExamples_Click);
+
+            FindViewById<TextView>(Resource.Id.sdk_version_label).Text = "";
         }
 
         private void payCard_Click(object sender, EventArgs e)
@@ -101,6 +105,7 @@ namespace Android.Xamarin.SampleApp
                 ConsumerToken = consumerToken
             };
 
+            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
             var intent = JudoSDKManager.makeATokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
