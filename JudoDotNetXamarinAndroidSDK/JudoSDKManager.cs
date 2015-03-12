@@ -54,6 +54,12 @@ namespace JudoDotNetXamarinSDK
         private static volatile bool maestroEnabled = false;
         public static bool IsMaestroEnabled { get { return maestroEnabled; } set { maestroEnabled = value; } }
 
+        private static volatile bool fraudMonitoringSignals = false;
+        public static bool IsFraudMonitoringSignals { get { return fraudMonitoringSignals; } set { fraudMonitoringSignals = value; } }
+
+        private static volatile bool isSSLPinningEnabled = false;
+        public static bool IsSSLPinningEnabled { get { return isSSLPinningEnabled; } set { isSSLPinningEnabled = value; } }
+
         private static readonly object _clientLock = new object();
         private static JudoPayApi _judoClient;
 

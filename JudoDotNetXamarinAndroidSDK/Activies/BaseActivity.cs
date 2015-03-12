@@ -7,9 +7,15 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
+using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Ui;
+using JudoDotNetXamarinSDK.Utils;
+using JudoPayDotNet.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace JudoDotNetXamarinSDK.Activies
 {
@@ -21,7 +27,7 @@ namespace JudoDotNetXamarinSDK.Activies
         public static readonly bool DEBUG = true;
     }
 
-    public class BaseActivity : Activity
+    public abstract class BaseActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -143,6 +149,39 @@ namespace JudoDotNetXamarinSDK.Activies
                     Finish();
                 };
             }
+        }
+
+        protected abstract void ShowLoadingSpinner(bool show);
+
+        protected void HandleServerResponse(Task<IResult<ITransactionResult>> t)
+        {
+            ShowLoadingSpinner(false);
+
+            if (t.IsFaulted || t.Result == null || t.Result.HasError)
+            {
+                var errorMessage = !t.IsFaulted && t.Result != null
+                    ? t.Result.Error.ErrorMessage
+                    : t.Exception.ToString();
+                Log.Error("com.judopay.android", "ERROR: " + errorMessage);
+                SetResult(JudoSDKManager.JUDO_ERROR,
+                    JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception,
+                        !t.IsFaulted && t.Result != null ? t.Result.Error : null));
+                Finish();
+                return;
+            }
+
+            var receipt = t.Result.Response;
+
+            Intent intent = new Intent();
+            intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, new Receipt(receipt));
+            SetResult(JudoSDKManager.JUDO_SUCCESS, intent);
+            Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);
+            Finish();
+        }
+
+        protected JObject GetClientDetails()
+        {
+            return JObject.FromObject(ClientDetailsProvider.GetClientDetails(this));
         }
     }
 }

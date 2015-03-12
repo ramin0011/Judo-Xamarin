@@ -94,8 +94,11 @@
     <Compile Include="Ui\StartDateEditText.cs" />
     <Compile Include="Ui\StartDateIssueNumberEntryView.cs" />
     <Compile Include="Utils\CardBase.cs" />
+    <Compile Include="Utils\ClientDetailsProvider.cs" />
     <Compile Include="Utils\CompatibilityAnimation.cs" />
     <Compile Include="Models\Consumer.cs" />
+    <Compile Include="Utils\DeviceUuidFactory.cs" />
+    <Compile Include="Utils\RootCheck.cs" />
     <Compile Include="Utils\Typefaces.cs" />
     <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\ValidationHelper.cs" />
