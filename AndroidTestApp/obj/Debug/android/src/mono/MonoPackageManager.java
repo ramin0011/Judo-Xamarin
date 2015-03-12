@@ -68,10 +68,15 @@ public class MonoPackageManager {
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"AndroidTestApp.dll",
+		"FluentValidation.dll",
 		"JudoDotNetXamarin.dll",
 		"JudoDotNetXamarinSDK.dll",
 		"JudoPayDotNet.dll",
+		"Microsoft.Threading.Tasks.dll",
+		"Microsoft.Threading.Tasks.Extensions.dll",
 		"Newtonsoft.Json.dll",
+		"System.Net.Http.Extensions.dll",
+		"System.Net.Http.Primitives.dll",
 		"System.Collections.Concurrent.dll",
 		"System.Collections.dll",
 		"System.ComponentModel.Annotations.dll",
@@ -122,7 +127,6 @@ class MonoPackageManager_Resources {
 		"System.Xml.XDocument.dll",
 		"System.Xml.XmlSerializer.dll",
 		"Serilog.dll",
-		"FluentValidation.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};

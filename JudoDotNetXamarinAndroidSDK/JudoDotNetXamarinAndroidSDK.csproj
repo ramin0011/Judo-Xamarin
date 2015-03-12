@@ -36,6 +36,18 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.4.0.0\lib\portable-win+net40+sl50+wp80\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="JudoPayDotNet">
+      <HintPath>..\packages\JudoPay.PCL.1.0.4\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\JudoPayDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
@@ -45,6 +57,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\monoandroid\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\monoandroid\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -91,10 +110,6 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\GitHub\DotNetSDK\JudoPayDotNet\JudoPayDotNet.csproj">
-      <Project>{365D3FE1-5AA7-4C99-8AEF-0D780C28E842}</Project>
-      <Name>JudoPayDotNet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
       <Name>JudoDotNetXamarin</Name>
@@ -323,6 +338,11 @@
     <AndroidResource Include="Resources\Values\judo_strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

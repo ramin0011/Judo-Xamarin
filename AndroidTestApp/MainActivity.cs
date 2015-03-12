@@ -132,6 +132,11 @@ namespace AndroidTestApp
             {
                 receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
             }
+            else
+            {
+                Toast.MakeText(this, "Operation canceled", ToastLength.Long).Show();
+                return;
+            }
 
             switch (requestCode)
             {

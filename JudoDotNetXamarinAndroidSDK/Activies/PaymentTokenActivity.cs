@@ -28,7 +28,7 @@ namespace JudoDotNetXamarinSDK.Activies
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
-        protected Bundle judoMetaData;
+        protected MetaData judoMetaData;
         protected CardToken judoCardToken;
         protected Consumer judoConsumer;
         protected CV2EntryView cv2EntryView;
@@ -79,7 +79,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             cv2EntryView.SetCardDetails(judoCardToken);
 
-            judoMetaData = Intent.GetBundleExtra(JudoSDKManager.JUDO_META_DATA);
+            judoMetaData = Intent.GetParcelableExtra(JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData>();
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
@@ -116,7 +116,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 YourPaymentReference = judoPaymentRef,
                 ConsumerToken = judoConsumer.ConsumerToken,
                 YourConsumerReference = judoConsumer.YourConsumerReference,
-                //YourPaymentMetaData = judoMetaData TODO Solve how handle the metadata
+                YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2(),
 
@@ -130,7 +130,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
                 if (t.IsFaulted || t.Result == null || t.Result.HasError)
                 {
-                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.Message;
+                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.ToString();
                     Log.Error("com.judopay.android", "ERROR: " + errorMessage);
                     SetResult(JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception, t.Result != null ? t.Result.Error : null));
                     Finish();
