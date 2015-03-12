@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjects", "TestProject
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidTestApp", "AndroidTestApp\AndroidTestApp.csproj", "{DED58D74-02A2-48B0-B797-F848C9542D38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Android.Xamarin.SampleApp", "Android.Xamarin.SampleApp\Android.Xamarin.SampleApp.csproj", "{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,12 @@ Global
 		{DED58D74-02A2-48B0-B797-F848C9542D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DED58D74-02A2-48B0-B797-F848C9542D38}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DED58D74-02A2-48B0-B797-F848C9542D38}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50E0B22-62CB-4D2C-93DC-16BC9B9399A1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

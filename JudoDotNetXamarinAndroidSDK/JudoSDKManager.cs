@@ -199,6 +199,22 @@ namespace JudoDotNetXamarinSDK
             return intent;
         }
 
+        public static Intent makeAPreAuth(Context context, string judoId, string currency, string amount,
+                                          string yourPaymentRef, string consumerRef, Dictionary<string, string> metaData)
+        {
+            Intent intent = new Intent(context, typeof(PreAuthActivity));
+            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
+            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
+            intent.PutExtra(JUDO_AMOUNT, amount);
+            intent.PutExtra(JUDO_ID, judoId);
+            intent.PutExtra(JUDO_CURRENCY, currency);
+
+
+            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
+
+            return intent;
+        }
+
         public static Intent makeATokenPayment(Context context, string judoId, string currency, string amount,
                                           string yourPaymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
         {

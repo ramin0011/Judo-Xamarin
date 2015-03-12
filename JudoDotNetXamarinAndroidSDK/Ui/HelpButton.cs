@@ -19,7 +19,6 @@ namespace JudoDotNetXamarinSDK.Ui
         public delegate void HelpClickListenerHandler(bool isHelp);
 
         private ImageView img;
-        private HelpClickListenerHandler clickListener;
         private readonly bool isHelp = true;
         public event HelpClickListenerHandler HelpClickListener; 
 
@@ -40,9 +39,9 @@ namespace JudoDotNetXamarinSDK.Ui
 
             Click += (sender, args) =>
             {
-                if (clickListener != null)
+                if (HelpClickListener != null)
                 {
-                    clickListener(isHelp);
+                    HelpClickListener(isHelp);
                 }
             };
 
