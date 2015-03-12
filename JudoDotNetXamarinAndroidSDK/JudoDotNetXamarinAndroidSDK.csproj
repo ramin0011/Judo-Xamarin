@@ -52,6 +52,7 @@
     <Compile Include="Activies\BaseActivity.cs" />
     <Compile Include="Activies\PaymentActivity.cs" />
     <Compile Include="Activies\PaymentTokenActivity.cs" />
+    <Compile Include="Activies\PreAuthActivity.cs" />
     <Compile Include="Activies\PreAuthTokenActivity.cs" />
     <Compile Include="Activies\RegisterCardActivity.cs" />
     <Compile Include="JudoSDKManager.cs" />

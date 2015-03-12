@@ -24,16 +24,16 @@ namespace JudoDotNetXamarinSDK.Activies
 {
     public class PaymentActivity : BaseActivity
     {
-        private string judoPaymentRef;
-        private decimal judoAmount;
-        private string judoId;
-        private string judoCurrency;
-        private MetaData judoMetaData;
-        private CardEntryView cardEntryView;
-        private Consumer judoConsumer;
-        private AVSEntryView avsEntryView;
-        private HelpButton cv2ExpiryHelpInfoButton;
-        private StartDateIssueNumberEntryView startDateEntryView;
+        protected string judoPaymentRef;
+        protected decimal judoAmount;
+        protected string judoId;
+        protected string judoCurrency;
+        protected MetaData judoMetaData;
+        protected CardEntryView cardEntryView;
+        protected Consumer judoConsumer;
+        protected AVSEntryView avsEntryView;
+        protected HelpButton cv2ExpiryHelpInfoButton;
+        protected StartDateIssueNumberEntryView startDateEntryView;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -142,7 +142,7 @@ namespace JudoDotNetXamarinSDK.Activies
             base.OnBackPressed();
         }
 
-        public void MakeCardPayment()
+        public virtual void MakeCardPayment()
         {
             var cardNumber = cardEntryView.GetCardNumber();
             var expiryDate = cardEntryView.GetCardExpiry();
