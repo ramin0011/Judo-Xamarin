@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -38,7 +39,19 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public String GetCV2()
         {
-            return GetCV2EditText().Text;
+            string expiryAndCV2 = cv2TextView.GetEditText().Text;
+            string[] temp = expiryAndCV2.Split(' ');
+
+            if (temp.Length < 2)
+            {
+                Log.Error(this.ToString(), "Error: Invalid expiry and/or cv2");
+                throw new InvalidDataException("Expiry date and/or cv2");
+            }
+
+            string expiry = temp[0];
+            string cv2 = temp[1];
+
+            return cv2;
         }
 
         public IEditable GetText()
@@ -125,6 +138,9 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public void SetCardType(CardBase.CardType cardType)
         {
+            cv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(cardType));
+            cv2TextView.SetInputFilter("/");
+            cv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(cardType));
             SetCardImageWithoutAnimation(JudoSDKManager.GetCardResourceId(Context, cardType, false));
         }
 
