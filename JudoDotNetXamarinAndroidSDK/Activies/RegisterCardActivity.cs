@@ -80,7 +80,7 @@ namespace JudoDotNetXamarinSDK.Activies
             {
                 try
                 {
-                    MakeCardPayment();
+                    RegisterCard();
                 }
                 catch (Exception e)
                 {
@@ -137,7 +137,7 @@ namespace JudoDotNetXamarinSDK.Activies
             base.OnBackPressed();
         }
 
-        public void MakeCardPayment()
+        public void RegisterCard()
         {
             var registerCard = new RegisterCardModel()
             {
@@ -154,6 +154,8 @@ namespace JudoDotNetXamarinSDK.Activies
                 ExpiryDate = cardEntryView.GetCardExpiry(),
                 YourConsumerReference = judoConsumer.YourConsumerReference
             };
+            
+            ShowLoadingSpinner(true);
 
             JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(t =>
             {
