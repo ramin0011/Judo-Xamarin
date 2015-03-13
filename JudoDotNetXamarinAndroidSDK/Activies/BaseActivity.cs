@@ -205,10 +205,5 @@ namespace JudoDotNetXamarinSDK.Activies
                 return;
             }
         }
-
-        protected JObject GetClientDetails()
-        {
-            return JObject.FromObject(ClientDetailsProvider.GetClientDetails(this));
-        }
     }
 }

@@ -2,22 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using Android.App;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Javax.Xml.Transform;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinSDK.Activies;
 using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet;
 using JudoPayDotNet.Errors;
+using JudoPayDotNet.Models;
+using Newtonsoft.Json.Linq;
+using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 using Environment = JudoPayDotNet.Enums.Environment;
 using Error = JudoDotNetXamarinSDK.Models.Error;
+using Result = Android.App.Result;
 
 namespace JudoDotNetXamarinSDK
 {
@@ -261,6 +265,121 @@ namespace JudoDotNetXamarinSDK
             intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
 
             return intent;
+        }
+
+        public static Task<IResult<ITransactionResult>> makeAPaymentCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
+                                                                                string judoConsumerReference, IDictionary<string, string> judoMetaData, string cardNumber, 
+                                                                                CardAddressModel cardAddress, string startDate, string expiryDate, string cv2)
+        {
+            var cardPayment = new CardPaymentModel()
+            {
+                JudoId = judoId,
+                Currency = judoCurrency,
+                Amount = judoAmount,
+                YourPaymentReference = judoPaymentRef,
+                YourConsumerReference = judoConsumerReference,
+                YourPaymentMetaData = judoMetaData,
+                CardNumber = cardNumber,
+                CardAddress = cardAddress,
+                StartDate = startDate,
+                ExpiryDate = expiryDate,
+                CV2 = cv2,
+                ClientDetails = GetClientDetails(context)
+            };
+
+            return JudoClient.Payments.Create(cardPayment);
+        }
+
+        public static Task<IResult<ITransactionResult>> makeAPaymentTokenCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
+                                                                                    string judoConsumerToken, string judoConsumerReference, IDictionary<string, string> judoMetaData, 
+                                                                                    string judoCardToken, string cv2)
+        {
+            TokenPaymentModel payment = new TokenPaymentModel()
+            {
+                JudoId = judoId,
+                Currency = judoCurrency,
+                Amount = judoAmount,
+                YourPaymentReference = judoPaymentRef,
+                ConsumerToken = judoConsumerToken,
+                YourConsumerReference = judoConsumerReference,
+                YourPaymentMetaData = judoMetaData,
+                CardToken = judoCardToken,
+                CV2 = cv2,
+                ClientDetails = GetClientDetails(context)
+            };
+
+            return JudoClient.Payments.Create(payment);
+        }
+
+        public static Task<IResult<ITransactionResult>> makeAPreAuthCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
+                                                                                string judoConsumerReference, IDictionary<string, string> judoMetaData, string cardNumber, 
+                                                                                CardAddressModel cardAddress, string startDate, string expiryDate, string cv2)
+        {
+            var cardPayment = new CardPaymentModel()
+            {
+                JudoId = judoId,
+                Currency = judoCurrency,
+                Amount = judoAmount,
+                YourPaymentReference = judoPaymentRef,
+                YourConsumerReference = judoConsumerReference,
+                YourPaymentMetaData = judoMetaData,
+                CardNumber = cardNumber,
+                CardAddress = cardAddress,
+                StartDate = startDate,
+                ExpiryDate = expiryDate,
+                CV2 = cv2,
+                ClientDetails = GetClientDetails(context)
+            };
+
+            return JudoClient.PreAuths.Create(cardPayment);
+        }
+
+        public static Task<IResult<ITransactionResult>> makeAPreAuthTokenCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef,
+                                                                                    string judoConsumerToken, string judoConsumerReference, IDictionary<string, string> judoMetaData, 
+                                                                                    string judoCardToken, string cv2)
+        {
+            TokenPaymentModel payment = new TokenPaymentModel()
+            {
+                JudoId = judoId,
+                Currency = judoCurrency,
+                Amount = judoAmount,
+                YourPaymentReference = judoPaymentRef,
+                ConsumerToken = judoConsumerToken,
+                YourConsumerReference = judoConsumerReference,
+                YourPaymentMetaData = judoMetaData,
+                CardToken = judoCardToken,
+                CV2 = cv2,
+                ClientDetails = GetClientDetails(context)
+            };
+
+            return JudoClient.PreAuths.Create(payment);
+        }
+
+        public static Task<IResult<ITransactionResult>> registerCard(string cardNumber, string cv2, string expiryDate, string judoConsumerReference, string addressLine1,   
+                                                                        string addressLine2, string addressLine3, string addressTown, string addressPostCode)
+        {
+            var registerCard = new RegisterCardModel()
+            {
+                CardAddress = new CardAddressModel()
+                {
+                    Line1 = addressLine1,
+                    Line2 = addressLine2,
+                    Line3 = addressLine3,
+                    Town = addressTown,
+                    PostCode = addressPostCode
+                },
+                CardNumber = cardNumber,
+                CV2 = cv2,
+                ExpiryDate = expiryDate,
+                YourConsumerReference = judoConsumerReference
+            };
+
+            return JudoClient.RegisterCards.Create(registerCard);
+        }
+
+        internal static JObject GetClientDetails(Context context)
+        {
+            return JObject.FromObject(ClientDetailsProvider.GetClientDetails(context));
         }
     }
 }
