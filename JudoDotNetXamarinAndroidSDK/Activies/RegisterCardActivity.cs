@@ -99,6 +99,7 @@ namespace JudoDotNetXamarinSDK.Activies
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
                     startDateFocus = true;
+                    aVsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
                 if (JudoSDKManager.IsAVSEnabled && aVsEntryView != null)

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
@@ -66,7 +66,7 @@ namespace JudoDotNetXamarinSDK.Ui
         private View postCodeContainer;
         private string[] countries;
         private string[] postcodeText;
-
+        private bool ignoreFocus;
 
         public AVSEntryView(Context context) : base(context)
         {
@@ -122,7 +122,10 @@ namespace JudoDotNetXamarinSDK.Ui
                     postCodeContainer.Visibility = ViewStates.Visible;
                     postCodeContainer.BringToFront();
                     avsMsgText.Visibility = ViewStates.Invisible;
-                    postCodeEditText.RequestFocus();
+                    if (!Volatile.Read(ref ignoreFocus))
+                    {
+                        postCodeEditText.RequestFocus();   
+                    }
                 }
             };
         }
@@ -143,6 +146,11 @@ namespace JudoDotNetXamarinSDK.Ui
             {
                 postCodeEditText.RequestFocus();
             }
+        }
+
+        public void InhibitFocusOnFirstShowOfCountrySpinner()
+        {
+            Volatile.Write(ref ignoreFocus, true);
         }
     }
 }

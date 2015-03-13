@@ -71,6 +71,7 @@ namespace AndroidTestApp
 			global::JudoDotNetXamarinSDK.Resource.Dimension.activity_horizontal_margin = global::AndroidTestApp.Resource.Dimension.activity_horizontal_margin;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.activity_vertical_margin = global::AndroidTestApp.Resource.Dimension.activity_vertical_margin;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.avs_container_height = global::AndroidTestApp.Resource.Dimension.avs_container_height;
+			global::JudoDotNetXamarinSDK.Resource.Dimension.avs_msg_height = global::AndroidTestApp.Resource.Dimension.avs_msg_height;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.backgroundhinttextview_error_vertical_padding = global::AndroidTestApp.Resource.Dimension.backgroundhinttextview_error_vertical_padding;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.backgroundhinttextview_horizontal_padding = global::AndroidTestApp.Resource.Dimension.backgroundhinttextview_horizontal_padding;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.button_text_size = global::AndroidTestApp.Resource.Dimension.button_text_size;
@@ -162,7 +163,6 @@ namespace AndroidTestApp
 			global::JudoDotNetXamarinSDK.Resource.Id.addressLine3 = global::AndroidTestApp.Resource.Id.addressLine3;
 			global::JudoDotNetXamarinSDK.Resource.Id.addressPostCode = global::AndroidTestApp.Resource.Id.addressPostCode;
 			global::JudoDotNetXamarinSDK.Resource.Id.addressTown = global::AndroidTestApp.Resource.Id.addressTown;
-			global::JudoDotNetXamarinSDK.Resource.Id.avsContainer = global::AndroidTestApp.Resource.Id.avsContainer;
 			global::JudoDotNetXamarinSDK.Resource.Id.avsEntryView = global::AndroidTestApp.Resource.Id.avsEntryView;
 			global::JudoDotNetXamarinSDK.Resource.Id.avsMsgText = global::AndroidTestApp.Resource.Id.avsMsgText;
 			global::JudoDotNetXamarinSDK.Resource.Id.cancelButton = global::AndroidTestApp.Resource.Id.cancelButton;
@@ -180,6 +180,7 @@ namespace AndroidTestApp
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeEditText = global::AndroidTestApp.Resource.Id.postCodeEditText;
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeHelpButton = global::AndroidTestApp.Resource.Id.postCodeHelpButton;
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeTitleText = global::AndroidTestApp.Resource.Id.postCodeTitleText;
+			global::JudoDotNetXamarinSDK.Resource.Id.postCode_Msg = global::AndroidTestApp.Resource.Id.postCode_Msg;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateContainer = global::AndroidTestApp.Resource.Id.startDateContainer;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateEditText = global::AndroidTestApp.Resource.Id.startDateEditText;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateEntryView = global::AndroidTestApp.Resource.Id.startDateEntryView;
@@ -466,53 +467,56 @@ namespace AndroidTestApp
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f0a000f
-			public const int action_bar_icon_right_padding = 2131361807;
-			
-			// aapt resource value: 0x7f0a0006
-			public const int activity_horizontal_margin = 2131361798;
+			// aapt resource value: 0x7f0a0010
+			public const int action_bar_icon_right_padding = 2131361808;
 			
 			// aapt resource value: 0x7f0a0007
-			public const int activity_vertical_margin = 2131361799;
+			public const int activity_horizontal_margin = 2131361799;
+			
+			// aapt resource value: 0x7f0a0008
+			public const int activity_vertical_margin = 2131361800;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int avs_container_height = 2131361792;
 			
+			// aapt resource value: 0x7f0a0001
+			public const int avs_msg_height = 2131361793;
+			
+			// aapt resource value: 0x7f0a0006
+			public const int backgroundhinttextview_error_vertical_padding = 2131361798;
+			
 			// aapt resource value: 0x7f0a0005
-			public const int backgroundhinttextview_error_vertical_padding = 2131361797;
-			
-			// aapt resource value: 0x7f0a0004
-			public const int backgroundhinttextview_horizontal_padding = 2131361796;
-			
-			// aapt resource value: 0x7f0a000b
-			public const int button_text_size = 2131361803;
-			
-			// aapt resource value: 0x7f0a000e
-			public const int cancel_button_height = 2131361806;
-			
-			// aapt resource value: 0x7f0a0002
-			public const int cardnumber_container_height = 2131361794;
-			
-			// aapt resource value: 0x7f0a0003
-			public const int default_backgroundhinttextview_container_height = 2131361795;
-			
-			// aapt resource value: 0x7f0a0009
-			public const int default_text_size = 2131361801;
-			
-			// aapt resource value: 0x7f0a000d
-			public const int error_text_size = 2131361805;
-			
-			// aapt resource value: 0x7f0a0008
-			public const int general_padding = 2131361800;
+			public const int backgroundhinttextview_horizontal_padding = 2131361797;
 			
 			// aapt resource value: 0x7f0a000c
-			public const int small_text_size = 2131361804;
+			public const int button_text_size = 2131361804;
 			
-			// aapt resource value: 0x7f0a0001
-			public const int startdate_container_height = 2131361793;
+			// aapt resource value: 0x7f0a000f
+			public const int cancel_button_height = 2131361807;
+			
+			// aapt resource value: 0x7f0a0003
+			public const int cardnumber_container_height = 2131361795;
+			
+			// aapt resource value: 0x7f0a0004
+			public const int default_backgroundhinttextview_container_height = 2131361796;
 			
 			// aapt resource value: 0x7f0a000a
-			public const int title_text_size = 2131361802;
+			public const int default_text_size = 2131361802;
+			
+			// aapt resource value: 0x7f0a000e
+			public const int error_text_size = 2131361806;
+			
+			// aapt resource value: 0x7f0a0009
+			public const int general_padding = 2131361801;
+			
+			// aapt resource value: 0x7f0a000d
+			public const int small_text_size = 2131361805;
+			
+			// aapt resource value: 0x7f0a0002
+			public const int startdate_container_height = 2131361794;
+			
+			// aapt resource value: 0x7f0a000b
+			public const int title_text_size = 2131361803;
 			
 			static Dimension()
 			{
@@ -792,9 +796,6 @@ namespace AndroidTestApp
 			// aapt resource value: 0x7f0c0016
 			public const int addressTown = 2131492886;
 			
-			// aapt resource value: 0x7f0c0001
-			public const int avsContainer = 2131492865;
-			
 			// aapt resource value: 0x7f0c000f
 			public const int avsEntryView = 2131492879;
 			
@@ -845,6 +846,9 @@ namespace AndroidTestApp
 			
 			// aapt resource value: 0x7f0c0003
 			public const int postCodeTitleText = 2131492867;
+			
+			// aapt resource value: 0x7f0c0001
+			public const int postCode_Msg = 2131492865;
 			
 			// aapt resource value: 0x7f0c0018
 			public const int startDateContainer = 2131492888;
