@@ -7,6 +7,7 @@ using Android.Widget;
 using Android.OS;
 using JudoDotNetXamarinSDK;
 using JudoDotNetXamarinSDK.Models;
+using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 using System.Collections.Generic;
@@ -37,11 +38,13 @@ namespace Android.Xamarin.SampleApp
         private volatile string consumerToken;
         private volatile string rcp_consumerRef;
         private volatile string lastFour;
+        private volatile CardBase.CardType cardType;
 
         private volatile string preAuth_cardToken;
         private volatile string preAuth_consumerToken;
         private volatile string preAuth_rcp_consumerRef;
         private volatile string preAuth_lastFour;
+        private volatile CardBase.CardType preAuth_cardType;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -110,7 +113,8 @@ namespace Android.Xamarin.SampleApp
             {
                 CardLastFour = lastFour,
                 Token = cardToken,
-                ConsumerToken = consumerToken
+                ConsumerToken = consumerToken,
+                CardType = cardType
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
@@ -136,7 +140,8 @@ namespace Android.Xamarin.SampleApp
             {
                 CardLastFour = preAuth_lastFour,
                 Token = preAuth_cardToken,
-                ConsumerToken = preAuth_consumerToken
+                ConsumerToken = preAuth_consumerToken,
+                CardType = preAuth_cardType
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
@@ -191,6 +196,7 @@ namespace Android.Xamarin.SampleApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
+                            cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
                         Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
                     }
@@ -209,6 +215,7 @@ namespace Android.Xamarin.SampleApp
                             preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
+                            preAuth_cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
 
                         Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
@@ -264,6 +271,7 @@ namespace Android.Xamarin.SampleApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
+                            cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
 
                         Toast.MakeText(this, string.Format("Register card succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
