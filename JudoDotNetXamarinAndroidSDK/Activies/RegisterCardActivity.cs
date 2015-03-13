@@ -163,7 +163,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
                 if (t.IsFaulted || t.Result == null || t.Result.HasError)
                 {
-                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.Message;
+                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.ToString();
                     Log.Error("com.judopay.android", "ERROR: " + errorMessage);
                     SetResult(JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception, t.Result != null ? t.Result.Error : null));
                     Finish();
