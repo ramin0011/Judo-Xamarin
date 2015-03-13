@@ -107,11 +107,12 @@ namespace JudoDotNetXamarinSDK.Activies
                 {
                     Console.Error.Write(e.StackTrace);
                 }
-                
+
                 if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
+                    avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
                 if (JudoSDKManager.IsAVSEnabled && avsEntryView != null)

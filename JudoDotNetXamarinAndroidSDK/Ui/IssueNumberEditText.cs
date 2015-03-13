@@ -51,11 +51,20 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public void ValidateIssueNumberDuringEntry(string issueNumber)
         {
-            if (!("0" == issueNumber && !ValidationHelper.CheckIssueNumber(issueNumber)))
+            if ("0" != issueNumber && !ValidationHelper.CheckIssueNumber(issueNumber))
             {
                 var message = Resources.GetString(Resource.String.msg_check_issue_number);
                 SetErrorText(message);
                 throw new Exception(message);
+            }
+            else
+            {
+                if ("00" == issueNumber)
+                {
+                    var message = Resources.GetString(Resource.String.msg_check_issue_number);
+                    SetErrorText(message);
+                    throw new Exception(message);
+                }
             }
         }
 

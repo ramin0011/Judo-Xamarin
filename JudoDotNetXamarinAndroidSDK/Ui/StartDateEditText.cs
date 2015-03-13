@@ -69,7 +69,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 }
 
                 //validate not in the past
-                var year = start.Substring(3, 5);
+                var year = start.Substring(3, 2);
                 int yearInt;
                 if (!int.TryParse(year, out yearInt))
                 {
@@ -81,7 +81,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
                 var now = DateTime.Now;
 
-                var startDate = new DateTime(yearInt, monthInt, now.Day, now.Hour, now.Minute, now.Millisecond);
+                var startDate = new DateTime(yearInt, monthInt, now.Day, now.Hour, now.Minute, now.Second);
 
                 if (startDate > now)
                 {
