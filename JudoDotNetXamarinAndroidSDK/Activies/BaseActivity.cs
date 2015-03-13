@@ -160,7 +160,6 @@ namespace JudoDotNetXamarinSDK.Activies
             }
             catch (Exception e)
             {
-                Toast.MakeText(this, "" + e.Message, ToastLength.Short).Show();
                 Log.Error(JudoSDKManager.DEBUG_TAG, "Exception", e);
                 SetResult(JudoSDKManager.JUDO_ERROR,
                     JudoSDKManager.CreateErrorIntent(e.Message, e, null));
