@@ -71,6 +71,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinSDK.Resource.Dimension.activity_horizontal_margin = global::Android.Xamarin.SampleApp.Resource.Dimension.activity_horizontal_margin;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.activity_vertical_margin = global::Android.Xamarin.SampleApp.Resource.Dimension.activity_vertical_margin;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.avs_container_height = global::Android.Xamarin.SampleApp.Resource.Dimension.avs_container_height;
+			global::JudoDotNetXamarinSDK.Resource.Dimension.avs_msg_height = global::Android.Xamarin.SampleApp.Resource.Dimension.avs_msg_height;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.backgroundhinttextview_error_vertical_padding = global::Android.Xamarin.SampleApp.Resource.Dimension.backgroundhinttextview_error_vertical_padding;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.backgroundhinttextview_horizontal_padding = global::Android.Xamarin.SampleApp.Resource.Dimension.backgroundhinttextview_horizontal_padding;
 			global::JudoDotNetXamarinSDK.Resource.Dimension.button_text_size = global::Android.Xamarin.SampleApp.Resource.Dimension.button_text_size;
@@ -163,6 +164,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinSDK.Resource.Id.addressPostCode = global::Android.Xamarin.SampleApp.Resource.Id.addressPostCode;
 			global::JudoDotNetXamarinSDK.Resource.Id.addressTown = global::Android.Xamarin.SampleApp.Resource.Id.addressTown;
 			global::JudoDotNetXamarinSDK.Resource.Id.avsEntryView = global::Android.Xamarin.SampleApp.Resource.Id.avsEntryView;
+			global::JudoDotNetXamarinSDK.Resource.Id.avsMsgText = global::Android.Xamarin.SampleApp.Resource.Id.avsMsgText;
 			global::JudoDotNetXamarinSDK.Resource.Id.cancelButton = global::Android.Xamarin.SampleApp.Resource.Id.cancelButton;
 			global::JudoDotNetXamarinSDK.Resource.Id.cardEntryView = global::Android.Xamarin.SampleApp.Resource.Id.cardEntryView;
 			global::JudoDotNetXamarinSDK.Resource.Id.countrySpinner = global::Android.Xamarin.SampleApp.Resource.Id.countrySpinner;
@@ -178,6 +180,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeEditText = global::Android.Xamarin.SampleApp.Resource.Id.postCodeEditText;
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeHelpButton = global::Android.Xamarin.SampleApp.Resource.Id.postCodeHelpButton;
 			global::JudoDotNetXamarinSDK.Resource.Id.postCodeTitleText = global::Android.Xamarin.SampleApp.Resource.Id.postCodeTitleText;
+			global::JudoDotNetXamarinSDK.Resource.Id.postCode_Msg = global::Android.Xamarin.SampleApp.Resource.Id.postCode_Msg;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateContainer = global::Android.Xamarin.SampleApp.Resource.Id.startDateContainer;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateEditText = global::Android.Xamarin.SampleApp.Resource.Id.startDateEditText;
 			global::JudoDotNetXamarinSDK.Resource.Id.startDateEntryView = global::Android.Xamarin.SampleApp.Resource.Id.startDateEntryView;
@@ -222,6 +225,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinSDK.Resource.String.hint_postcode = global::Android.Xamarin.SampleApp.Resource.String.hint_postcode;
 			global::JudoDotNetXamarinSDK.Resource.String.hint_start_date = global::Android.Xamarin.SampleApp.Resource.String.hint_start_date;
 			global::JudoDotNetXamarinSDK.Resource.String.issue_number = global::Android.Xamarin.SampleApp.Resource.String.issue_number;
+			global::JudoDotNetXamarinSDK.Resource.String.msg_avs_info_others = global::Android.Xamarin.SampleApp.Resource.String.msg_avs_info_others;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_card_no_invalid = global::Android.Xamarin.SampleApp.Resource.String.msg_card_no_invalid;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_check_exp_date = global::Android.Xamarin.SampleApp.Resource.String.msg_check_exp_date;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_check_issue_number = global::Android.Xamarin.SampleApp.Resource.String.msg_check_issue_number;
@@ -463,53 +467,56 @@ namespace Android.Xamarin.SampleApp
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f0a000f
-			public const int action_bar_icon_right_padding = 2131361807;
-			
-			// aapt resource value: 0x7f0a0006
-			public const int activity_horizontal_margin = 2131361798;
+			// aapt resource value: 0x7f0a0010
+			public const int action_bar_icon_right_padding = 2131361808;
 			
 			// aapt resource value: 0x7f0a0007
-			public const int activity_vertical_margin = 2131361799;
+			public const int activity_horizontal_margin = 2131361799;
+			
+			// aapt resource value: 0x7f0a0008
+			public const int activity_vertical_margin = 2131361800;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int avs_container_height = 2131361792;
 			
+			// aapt resource value: 0x7f0a0001
+			public const int avs_msg_height = 2131361793;
+			
+			// aapt resource value: 0x7f0a0006
+			public const int backgroundhinttextview_error_vertical_padding = 2131361798;
+			
 			// aapt resource value: 0x7f0a0005
-			public const int backgroundhinttextview_error_vertical_padding = 2131361797;
-			
-			// aapt resource value: 0x7f0a0004
-			public const int backgroundhinttextview_horizontal_padding = 2131361796;
-			
-			// aapt resource value: 0x7f0a000b
-			public const int button_text_size = 2131361803;
-			
-			// aapt resource value: 0x7f0a000e
-			public const int cancel_button_height = 2131361806;
-			
-			// aapt resource value: 0x7f0a0002
-			public const int cardnumber_container_height = 2131361794;
-			
-			// aapt resource value: 0x7f0a0003
-			public const int default_backgroundhinttextview_container_height = 2131361795;
-			
-			// aapt resource value: 0x7f0a0009
-			public const int default_text_size = 2131361801;
-			
-			// aapt resource value: 0x7f0a000d
-			public const int error_text_size = 2131361805;
-			
-			// aapt resource value: 0x7f0a0008
-			public const int general_padding = 2131361800;
+			public const int backgroundhinttextview_horizontal_padding = 2131361797;
 			
 			// aapt resource value: 0x7f0a000c
-			public const int small_text_size = 2131361804;
+			public const int button_text_size = 2131361804;
 			
-			// aapt resource value: 0x7f0a0001
-			public const int startdate_container_height = 2131361793;
+			// aapt resource value: 0x7f0a000f
+			public const int cancel_button_height = 2131361807;
+			
+			// aapt resource value: 0x7f0a0003
+			public const int cardnumber_container_height = 2131361795;
+			
+			// aapt resource value: 0x7f0a0004
+			public const int default_backgroundhinttextview_container_height = 2131361796;
 			
 			// aapt resource value: 0x7f0a000a
-			public const int title_text_size = 2131361802;
+			public const int default_text_size = 2131361802;
+			
+			// aapt resource value: 0x7f0a000e
+			public const int error_text_size = 2131361806;
+			
+			// aapt resource value: 0x7f0a0009
+			public const int general_padding = 2131361801;
+			
+			// aapt resource value: 0x7f0a000d
+			public const int small_text_size = 2131361805;
+			
+			// aapt resource value: 0x7f0a0002
+			public const int startdate_container_height = 2131361794;
+			
+			// aapt resource value: 0x7f0a000b
+			public const int title_text_size = 2131361803;
 			
 			static Dimension()
 			{
@@ -762,107 +769,113 @@ namespace Android.Xamarin.SampleApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c000d
-			public const int addressLine1 = 2131492877;
-			
-			// aapt resource value: 0x7f0c000e
-			public const int addressLine2 = 2131492878;
-			
 			// aapt resource value: 0x7f0c000f
-			public const int addressLine3 = 2131492879;
-			
-			// aapt resource value: 0x7f0c0011
-			public const int addressPostCode = 2131492881;
+			public const int addressLine1 = 2131492879;
 			
 			// aapt resource value: 0x7f0c0010
-			public const int addressTown = 2131492880;
+			public const int addressLine2 = 2131492880;
 			
-			// aapt resource value: 0x7f0c0009
-			public const int avsEntryView = 2131492873;
+			// aapt resource value: 0x7f0c0011
+			public const int addressLine3 = 2131492881;
+			
+			// aapt resource value: 0x7f0c0013
+			public const int addressPostCode = 2131492883;
+			
+			// aapt resource value: 0x7f0c0012
+			public const int addressTown = 2131492882;
 			
 			// aapt resource value: 0x7f0c000b
-			public const int cancelButton = 2131492875;
+			public const int avsEntryView = 2131492875;
 			
 			// aapt resource value: 0x7f0c0006
-			public const int cardEntryView = 2131492870;
+			public const int avsMsgText = 2131492870;
+			
+			// aapt resource value: 0x7f0c000d
+			public const int cancelButton = 2131492877;
+			
+			// aapt resource value: 0x7f0c0008
+			public const int cardEntryView = 2131492872;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c0018
-			public const int cv2EntryView = 2131492888;
-			
-			// aapt resource value: 0x7f0c001f
-			public const int getTransactions = 2131492895;
-			
-			// aapt resource value: 0x7f0c0005
-			public const int hintTextView = 2131492869;
-			
-			// aapt resource value: 0x7f0c0007
-			public const int infoButtonID = 2131492871;
-			
-			// aapt resource value: 0x7f0c0015
-			public const int issueNumberContainer = 2131492885;
-			
-			// aapt resource value: 0x7f0c0017
-			public const int issueNumberEditText = 2131492887;
-			
-			// aapt resource value: 0x7f0c0016
-			public const int issueNumberTitleText = 2131492886;
-			
-			// aapt resource value: 0x7f0c000c
-			public const int loadingLayout = 2131492876;
-			
-			// aapt resource value: 0x7f0c0020
-			public const int nonUiExamples = 2131492896;
-			
-			// aapt resource value: 0x7f0c000a
-			public const int payButton = 2131492874;
-			
-			// aapt resource value: 0x7f0c0019
-			public const int payCard = 2131492889;
-			
-			// aapt resource value: 0x7f0c001c
-			public const int payPreAuth = 2131492892;
-			
-			// aapt resource value: 0x7f0c001b
-			public const int payToken = 2131492891;
-			
-			// aapt resource value: 0x7f0c001d
-			public const int payTokenPreAuth = 2131492893;
-			
-			// aapt resource value: 0x7f0c0001
-			public const int postCodeContainer = 2131492865;
-			
-			// aapt resource value: 0x7f0c0003
-			public const int postCodeEditText = 2131492867;
-			
-			// aapt resource value: 0x7f0c0004
-			public const int postCodeHelpButton = 2131492868;
-			
-			// aapt resource value: 0x7f0c0002
-			public const int postCodeTitleText = 2131492866;
-			
-			// aapt resource value: 0x7f0c001e
-			public const int registerCard = 2131492894;
+			// aapt resource value: 0x7f0c001a
+			public const int cv2EntryView = 2131492890;
 			
 			// aapt resource value: 0x7f0c0021
-			public const int sdk_version_label = 2131492897;
+			public const int getTransactions = 2131492897;
 			
-			// aapt resource value: 0x7f0c0012
-			public const int startDateContainer = 2131492882;
+			// aapt resource value: 0x7f0c0007
+			public const int hintTextView = 2131492871;
+			
+			// aapt resource value: 0x7f0c0009
+			public const int infoButtonID = 2131492873;
+			
+			// aapt resource value: 0x7f0c0017
+			public const int issueNumberContainer = 2131492887;
+			
+			// aapt resource value: 0x7f0c0019
+			public const int issueNumberEditText = 2131492889;
+			
+			// aapt resource value: 0x7f0c0018
+			public const int issueNumberTitleText = 2131492888;
+			
+			// aapt resource value: 0x7f0c000e
+			public const int loadingLayout = 2131492878;
+			
+			// aapt resource value: 0x7f0c0022
+			public const int nonUiExamples = 2131492898;
+			
+			// aapt resource value: 0x7f0c000c
+			public const int payButton = 2131492876;
+			
+			// aapt resource value: 0x7f0c001b
+			public const int payCard = 2131492891;
+			
+			// aapt resource value: 0x7f0c001e
+			public const int payPreAuth = 2131492894;
+			
+			// aapt resource value: 0x7f0c001d
+			public const int payToken = 2131492893;
+			
+			// aapt resource value: 0x7f0c001f
+			public const int payTokenPreAuth = 2131492895;
+			
+			// aapt resource value: 0x7f0c0002
+			public const int postCodeContainer = 2131492866;
+			
+			// aapt resource value: 0x7f0c0004
+			public const int postCodeEditText = 2131492868;
+			
+			// aapt resource value: 0x7f0c0005
+			public const int postCodeHelpButton = 2131492869;
+			
+			// aapt resource value: 0x7f0c0003
+			public const int postCodeTitleText = 2131492867;
+			
+			// aapt resource value: 0x7f0c0001
+			public const int postCode_Msg = 2131492865;
+			
+			// aapt resource value: 0x7f0c0020
+			public const int registerCard = 2131492896;
+			
+			// aapt resource value: 0x7f0c0023
+			public const int sdk_version_label = 2131492899;
 			
 			// aapt resource value: 0x7f0c0014
-			public const int startDateEditText = 2131492884;
+			public const int startDateContainer = 2131492884;
 			
-			// aapt resource value: 0x7f0c0008
-			public const int startDateEntryView = 2131492872;
+			// aapt resource value: 0x7f0c0016
+			public const int startDateEditText = 2131492886;
 			
-			// aapt resource value: 0x7f0c0013
-			public const int startDateTitleText = 2131492883;
+			// aapt resource value: 0x7f0c000a
+			public const int startDateEntryView = 2131492874;
 			
-			// aapt resource value: 0x7f0c001a
-			public const int threeDsecure = 2131492890;
+			// aapt resource value: 0x7f0c0015
+			public const int startDateTitleText = 2131492885;
+			
+			// aapt resource value: 0x7f0c001c
+			public const int threeDsecure = 2131492892;
 			
 			static Id()
 			{
@@ -952,11 +965,11 @@ namespace Android.Xamarin.SampleApp
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060039
-			public const int ApplicationName = 2131099705;
+			// aapt resource value: 0x7f06003a
+			public const int ApplicationName = 2131099706;
 			
-			// aapt resource value: 0x7f060038
-			public const int Hello = 2131099704;
+			// aapt resource value: 0x7f060039
+			public const int Hello = 2131099705;
 			
 			// aapt resource value: 0x7f060009
 			public const int address_line1 = 2131099657;
@@ -976,8 +989,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060000
 			public const int app_name = 2131099648;
 			
-			// aapt resource value: 0x7f06003a
-			public const int app_name_ui = 2131099706;
+			// aapt resource value: 0x7f06003b
+			public const int app_name_ui = 2131099707;
 			
 			// aapt resource value: 0x7f06002b
 			public const int billing_country = 2131099691;
@@ -1051,6 +1064,9 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060034
 			public const int issue_number = 2131099700;
 			
+			// aapt resource value: 0x7f060038
+			public const int msg_avs_info_others = 2131099704;
+			
 			// aapt resource value: 0x7f060031
 			public const int msg_card_no_invalid = 2131099697;
 			
@@ -1066,32 +1082,32 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060036
 			public const int msg_check_start_date = 2131099702;
 			
-			// aapt resource value: 0x7f06003d
-			public const int msg_payment_cancel = 2131099709;
-			
 			// aapt resource value: 0x7f06003e
-			public const int msg_payment_error = 2131099710;
-			
-			// aapt resource value: 0x7f06003b
-			public const int msg_payment_ok = 2131099707;
-			
-			// aapt resource value: 0x7f060043
-			public const int msg_preauth_error = 2131099715;
-			
-			// aapt resource value: 0x7f06003c
-			public const int msg_preauth_ok = 2131099708;
-			
-			// aapt resource value: 0x7f060040
-			public const int msg_reg_card_cancel = 2131099712;
-			
-			// aapt resource value: 0x7f060042
-			public const int msg_reg_card_error = 2131099714;
-			
-			// aapt resource value: 0x7f060041
-			public const int msg_reg_card_ok = 2131099713;
+			public const int msg_payment_cancel = 2131099710;
 			
 			// aapt resource value: 0x7f06003f
-			public const int msg_transactions_error = 2131099711;
+			public const int msg_payment_error = 2131099711;
+			
+			// aapt resource value: 0x7f06003c
+			public const int msg_payment_ok = 2131099708;
+			
+			// aapt resource value: 0x7f060044
+			public const int msg_preauth_error = 2131099716;
+			
+			// aapt resource value: 0x7f06003d
+			public const int msg_preauth_ok = 2131099709;
+			
+			// aapt resource value: 0x7f060041
+			public const int msg_reg_card_cancel = 2131099713;
+			
+			// aapt resource value: 0x7f060043
+			public const int msg_reg_card_error = 2131099715;
+			
+			// aapt resource value: 0x7f060042
+			public const int msg_reg_card_ok = 2131099714;
+			
+			// aapt resource value: 0x7f060040
+			public const int msg_transactions_error = 2131099712;
 			
 			// aapt resource value: 0x7f06000f
 			public const int ok = 2131099663;
@@ -1123,8 +1139,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f060025
 			public const int register_card = 2131099685;
 			
-			// aapt resource value: 0x7f060044
-			public const int sdk_version = 2131099716;
+			// aapt resource value: 0x7f060045
+			public const int sdk_version = 2131099717;
 			
 			// aapt resource value: 0x7f06002a
 			public const int secure3dtext = 2131099690;

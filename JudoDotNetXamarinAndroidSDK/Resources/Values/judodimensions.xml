@@ -3,6 +3,7 @@
   <integer name="progressFrameDuration">100</integer>
 
   <dimen name="avs_container_height">48dp</dimen>
+  <dimen name="avs_msg_height">62dp</dimen>
   <dimen name="startdate_container_height">48dp</dimen>
   <dimen name="cardnumber_container_height">48dp</dimen>
   <dimen name="default_backgroundhinttextview_container_height">38dp</dimen>

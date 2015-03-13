@@ -202,53 +202,56 @@ namespace JudoDotNetXamarinSDK
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f0a000f
-			public static int action_bar_icon_right_padding = 2131361807;
-			
-			// aapt resource value: 0x7f0a0006
-			public static int activity_horizontal_margin = 2131361798;
+			// aapt resource value: 0x7f0a0010
+			public static int action_bar_icon_right_padding = 2131361808;
 			
 			// aapt resource value: 0x7f0a0007
-			public static int activity_vertical_margin = 2131361799;
+			public static int activity_horizontal_margin = 2131361799;
+			
+			// aapt resource value: 0x7f0a0008
+			public static int activity_vertical_margin = 2131361800;
 			
 			// aapt resource value: 0x7f0a0000
 			public static int avs_container_height = 2131361792;
 			
+			// aapt resource value: 0x7f0a0001
+			public static int avs_msg_height = 2131361793;
+			
+			// aapt resource value: 0x7f0a0006
+			public static int backgroundhinttextview_error_vertical_padding = 2131361798;
+			
 			// aapt resource value: 0x7f0a0005
-			public static int backgroundhinttextview_error_vertical_padding = 2131361797;
-			
-			// aapt resource value: 0x7f0a0004
-			public static int backgroundhinttextview_horizontal_padding = 2131361796;
-			
-			// aapt resource value: 0x7f0a000b
-			public static int button_text_size = 2131361803;
-			
-			// aapt resource value: 0x7f0a000e
-			public static int cancel_button_height = 2131361806;
-			
-			// aapt resource value: 0x7f0a0002
-			public static int cardnumber_container_height = 2131361794;
-			
-			// aapt resource value: 0x7f0a0003
-			public static int default_backgroundhinttextview_container_height = 2131361795;
-			
-			// aapt resource value: 0x7f0a0009
-			public static int default_text_size = 2131361801;
-			
-			// aapt resource value: 0x7f0a000d
-			public static int error_text_size = 2131361805;
-			
-			// aapt resource value: 0x7f0a0008
-			public static int general_padding = 2131361800;
+			public static int backgroundhinttextview_horizontal_padding = 2131361797;
 			
 			// aapt resource value: 0x7f0a000c
-			public static int small_text_size = 2131361804;
+			public static int button_text_size = 2131361804;
 			
-			// aapt resource value: 0x7f0a0001
-			public static int startdate_container_height = 2131361793;
+			// aapt resource value: 0x7f0a000f
+			public static int cancel_button_height = 2131361807;
+			
+			// aapt resource value: 0x7f0a0003
+			public static int cardnumber_container_height = 2131361795;
+			
+			// aapt resource value: 0x7f0a0004
+			public static int default_backgroundhinttextview_container_height = 2131361796;
 			
 			// aapt resource value: 0x7f0a000a
-			public static int title_text_size = 2131361802;
+			public static int default_text_size = 2131361802;
+			
+			// aapt resource value: 0x7f0a000e
+			public static int error_text_size = 2131361806;
+			
+			// aapt resource value: 0x7f0a0009
+			public static int general_padding = 2131361801;
+			
+			// aapt resource value: 0x7f0a000d
+			public static int small_text_size = 2131361805;
+			
+			// aapt resource value: 0x7f0a0002
+			public static int startdate_container_height = 2131361794;
+			
+			// aapt resource value: 0x7f0a000b
+			public static int title_text_size = 2131361803;
 			
 			static Dimension()
 			{
@@ -498,80 +501,86 @@ namespace JudoDotNetXamarinSDK
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c000d
-			public static int addressLine1 = 2131492877;
-			
-			// aapt resource value: 0x7f0c000e
-			public static int addressLine2 = 2131492878;
-			
 			// aapt resource value: 0x7f0c000f
-			public static int addressLine3 = 2131492879;
-			
-			// aapt resource value: 0x7f0c0011
-			public static int addressPostCode = 2131492881;
+			public static int addressLine1 = 2131492879;
 			
 			// aapt resource value: 0x7f0c0010
-			public static int addressTown = 2131492880;
+			public static int addressLine2 = 2131492880;
 			
-			// aapt resource value: 0x7f0c0009
-			public static int avsEntryView = 2131492873;
+			// aapt resource value: 0x7f0c0011
+			public static int addressLine3 = 2131492881;
+			
+			// aapt resource value: 0x7f0c0013
+			public static int addressPostCode = 2131492883;
+			
+			// aapt resource value: 0x7f0c0012
+			public static int addressTown = 2131492882;
 			
 			// aapt resource value: 0x7f0c000b
-			public static int cancelButton = 2131492875;
+			public static int avsEntryView = 2131492875;
 			
 			// aapt resource value: 0x7f0c0006
-			public static int cardEntryView = 2131492870;
+			public static int avsMsgText = 2131492870;
+			
+			// aapt resource value: 0x7f0c000d
+			public static int cancelButton = 2131492877;
+			
+			// aapt resource value: 0x7f0c0008
+			public static int cardEntryView = 2131492872;
 			
 			// aapt resource value: 0x7f0c0000
 			public static int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c0018
-			public static int cv2EntryView = 2131492888;
-			
-			// aapt resource value: 0x7f0c0005
-			public static int hintTextView = 2131492869;
+			// aapt resource value: 0x7f0c001a
+			public static int cv2EntryView = 2131492890;
 			
 			// aapt resource value: 0x7f0c0007
-			public static int infoButtonID = 2131492871;
+			public static int hintTextView = 2131492871;
 			
-			// aapt resource value: 0x7f0c0015
-			public static int issueNumberContainer = 2131492885;
+			// aapt resource value: 0x7f0c0009
+			public static int infoButtonID = 2131492873;
 			
 			// aapt resource value: 0x7f0c0017
-			public static int issueNumberEditText = 2131492887;
+			public static int issueNumberContainer = 2131492887;
 			
-			// aapt resource value: 0x7f0c0016
-			public static int issueNumberTitleText = 2131492886;
+			// aapt resource value: 0x7f0c0019
+			public static int issueNumberEditText = 2131492889;
+			
+			// aapt resource value: 0x7f0c0018
+			public static int issueNumberTitleText = 2131492888;
+			
+			// aapt resource value: 0x7f0c000e
+			public static int loadingLayout = 2131492878;
 			
 			// aapt resource value: 0x7f0c000c
-			public static int loadingLayout = 2131492876;
-			
-			// aapt resource value: 0x7f0c000a
-			public static int payButton = 2131492874;
-			
-			// aapt resource value: 0x7f0c0001
-			public static int postCodeContainer = 2131492865;
-			
-			// aapt resource value: 0x7f0c0003
-			public static int postCodeEditText = 2131492867;
-			
-			// aapt resource value: 0x7f0c0004
-			public static int postCodeHelpButton = 2131492868;
+			public static int payButton = 2131492876;
 			
 			// aapt resource value: 0x7f0c0002
-			public static int postCodeTitleText = 2131492866;
+			public static int postCodeContainer = 2131492866;
 			
-			// aapt resource value: 0x7f0c0012
-			public static int startDateContainer = 2131492882;
+			// aapt resource value: 0x7f0c0004
+			public static int postCodeEditText = 2131492868;
+			
+			// aapt resource value: 0x7f0c0005
+			public static int postCodeHelpButton = 2131492869;
+			
+			// aapt resource value: 0x7f0c0003
+			public static int postCodeTitleText = 2131492867;
+			
+			// aapt resource value: 0x7f0c0001
+			public static int postCode_Msg = 2131492865;
 			
 			// aapt resource value: 0x7f0c0014
-			public static int startDateEditText = 2131492884;
+			public static int startDateContainer = 2131492884;
 			
-			// aapt resource value: 0x7f0c0008
-			public static int startDateEntryView = 2131492872;
+			// aapt resource value: 0x7f0c0016
+			public static int startDateEditText = 2131492886;
 			
-			// aapt resource value: 0x7f0c0013
-			public static int startDateTitleText = 2131492883;
+			// aapt resource value: 0x7f0c000a
+			public static int startDateEntryView = 2131492874;
+			
+			// aapt resource value: 0x7f0c0015
+			public static int startDateTitleText = 2131492885;
 			
 			static Id()
 			{
@@ -744,6 +753,9 @@ namespace JudoDotNetXamarinSDK
 			
 			// aapt resource value: 0x7f060034
 			public static int issue_number = 2131099700;
+			
+			// aapt resource value: 0x7f060038
+			public static int msg_avs_info_others = 2131099704;
 			
 			// aapt resource value: 0x7f060031
 			public static int msg_card_no_invalid = 2131099697;

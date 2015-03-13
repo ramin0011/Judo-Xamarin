@@ -62,6 +62,7 @@ namespace JudoDotNetXamarinSDK.Ui
         private Spinner countrySpinner;
         private EditText postCodeEditText;
         private TextView postCodeTitleText;
+        private TextView avsMsgText;
         private View postCodeContainer;
         private string[] countries;
         private string[] postcodeText;
@@ -94,6 +95,7 @@ namespace JudoDotNetXamarinSDK.Ui
             postCodeContainer = view.FindViewById(Resource.Id.postCodeContainer);
             postCodeEditText = view.FindViewById<EditText>(Resource.Id.postCodeEditText);
             postCodeTitleText = view.FindViewById<TextView>(Resource.Id.postCodeTitleText);
+            avsMsgText = view.FindViewById<TextView>(Resource.Id.avsMsgText);
 
             Typeface type = Typefaces.LoadTypefaceFromRaw(Context, Resource.Raw.courier);
             postCodeEditText.Typeface = type;
@@ -112,10 +114,14 @@ namespace JudoDotNetXamarinSDK.Ui
                 if (args.Position == 3)
                 {
                     postCodeContainer.Visibility = ViewStates.Invisible;
+                    avsMsgText.Visibility = ViewStates.Visible;
+                    avsMsgText.BringToFront();
                 }
                 else
                 {
                     postCodeContainer.Visibility = ViewStates.Visible;
+                    postCodeContainer.BringToFront();
+                    avsMsgText.Visibility = ViewStates.Invisible;
                     postCodeEditText.RequestFocus();
                 }
             };
