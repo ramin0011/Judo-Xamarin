@@ -19,7 +19,7 @@ namespace JudoDotNetXamarinSDK.Utils
 {
     public class RootCheck
     {
-        private const string LINE = "\n";
+        private const char LINE = '\n';
         private readonly Context context;
         private readonly StringBuilder logBuilder;
 
