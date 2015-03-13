@@ -168,7 +168,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = GetClientDetails()
+                ClientDetails = JudoSDKManager.GetClientDetails(this)
             };
 
             ShowLoadingSpinner(true);
