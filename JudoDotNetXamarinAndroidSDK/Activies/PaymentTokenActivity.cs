@@ -83,21 +83,8 @@ namespace JudoDotNetXamarinSDK.Activies
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
-            var that = this;
-
             payButton.Text = Resources.GetString(Resource.String.token_payment);
-            payButton.Click += (sender, args) =>
-            {
-                try
-                {
-                    MakeTokenPayment();
-                }
-                catch (Exception e)
-                {
-                    Toast.MakeText(that, e.Message, ToastLength.Short).Show();
-                    Log.Error(JudoSDKManager.DEBUG_TAG, "Exception", e);
-                }
-            };
+            payButton.Click += (sender, args) => TransactClickHandler(MakeTokenPayment);
         }
 
         public override void OnBackPressed()

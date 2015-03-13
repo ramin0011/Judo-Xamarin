@@ -74,20 +74,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             payButton.SetText(Resource.String.register_card);
 
-            var that = this;
-
-            payButton.Click += (sender, args) =>
-            {
-                try
-                {
-                    RegisterCard();
-                }
-                catch (Exception e)
-                {
-                    Log.Error(JudoSDKManager.DEBUG_TAG, e.Message, e);
-                    Toast.MakeText(that, e.Message, ToastLength.Short).Show();
-                }
-            };
+            payButton.Click += (sender, args) => TransactClickHandler(RegisterCard);
 
             cardEntryView.OnCreditCardEntered = cardNumber =>
             {

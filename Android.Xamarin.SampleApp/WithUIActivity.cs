@@ -48,6 +48,8 @@ namespace Android.Xamarin.SampleApp
             // setting up API token/secret 
             JudoSDKManager.SetApiTokenAndSecret(ApiToken, ApiSecret);
             JudoSDKManager.IsAVSEnabled = true;
+            JudoSDKManager.IsFraudMonitoringSignals = true;
+            JudoSDKManager.IsMaestroEnabled = true;
 
             // Get our button from the layout resource,
             // and attach an event to it
