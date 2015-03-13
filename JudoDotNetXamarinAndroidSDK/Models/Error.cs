@@ -50,6 +50,7 @@ namespace JudoDotNetXamarinSDK.Models
 
         public Error(Exception exception, JudoApiErrorModel apiError)
         {
+            //ToDo : format the exception 
             Exception = exception;
             ApiError = apiError;
         }
