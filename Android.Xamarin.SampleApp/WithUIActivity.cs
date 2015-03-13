@@ -38,6 +38,11 @@ namespace Android.Xamarin.SampleApp
         private volatile string rcp_consumerRef;
         private volatile string lastFour;
 
+        private volatile string preAuth_cardToken;
+        private volatile string preAuth_consumerToken;
+        private volatile string preAuth_rcp_consumerRef;
+        private volatile string preAuth_lastFour;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -91,7 +96,8 @@ namespace Android.Xamarin.SampleApp
 
         private void payToken_Click(object sender, EventArgs e) 
         {
-            if (string.IsNullOrWhiteSpace(consumerToken) || string.IsNullOrWhiteSpace(cardToken) || string.IsNullOrWhiteSpace(consumerRef) || string.IsNullOrWhiteSpace(lastFour))
+            if (string.IsNullOrWhiteSpace(consumerToken) || string.IsNullOrWhiteSpace(cardToken) 
+                || string.IsNullOrWhiteSpace(rcp_consumerRef) || string.IsNullOrWhiteSpace(lastFour))
             {
                 Toast.MakeText(this,
                     "Can't make a token payment before making a full card payment to save card token",
@@ -116,24 +122,25 @@ namespace Android.Xamarin.SampleApp
 
         private void payTokenPreAuth_Click(object sender, EventArgs e) 
         {
-            if (string.IsNullOrWhiteSpace(consumerToken) || string.IsNullOrWhiteSpace(cardToken) || string.IsNullOrWhiteSpace(consumerRef) || string.IsNullOrWhiteSpace(lastFour))
+            if (string.IsNullOrWhiteSpace(preAuth_consumerToken) || string.IsNullOrWhiteSpace(preAuth_cardToken)
+                || string.IsNullOrWhiteSpace(preAuth_rcp_consumerRef) || string.IsNullOrWhiteSpace(preAuth_lastFour))
             {
                 Toast.MakeText(this,
-                    "Can't make a token payment before making a full card payment to save card token",
+                    "Can't make a Preauth token payment before making a full preauth card payment to save card token",
                     ToastLength.Short).Show();
                 return;
             }
 
-            var consumerReference = rcp_consumerRef;
+            var consumerReference = preAuth_rcp_consumerRef;
             var token = new CardToken()
             {
-                CardLastFour = lastFour,
-                Token = cardToken,
-                ConsumerToken = consumerToken
+                CardLastFour = preAuth_lastFour,
+                Token = preAuth_cardToken,
+                ConsumerToken = preAuth_consumerToken
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManager.makeATokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+            var intent = JudoSDKManager.makeATokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
         }
@@ -195,6 +202,15 @@ namespace Android.Xamarin.SampleApp
                 case ACTION_PREAUTH:
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
+                        PaymentReceiptModel paymentReceipt;
+                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
+                        {
+                            preAuth_cardToken = paymentReceipt.CardDetails.CardToken;
+                            preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
+                            preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
+                            preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
+                        }
+
                         Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
                     }
                     else

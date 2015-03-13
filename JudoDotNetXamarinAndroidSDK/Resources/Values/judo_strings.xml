@@ -79,6 +79,7 @@
     <string name="hint_issue_number">00</string>
     <string name="msg_check_start_date">Check start date</string>
     <string name="msg_check_issue_number">Recheck number</string>
+    <string name="msg_avs_info_others">We only accept cards from UK, USA and Canada.</string>
 
 
     <string-array name="avs_countries">

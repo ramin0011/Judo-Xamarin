@@ -162,7 +162,9 @@ namespace AndroidTestApp
 			global::JudoDotNetXamarinSDK.Resource.Id.addressLine3 = global::AndroidTestApp.Resource.Id.addressLine3;
 			global::JudoDotNetXamarinSDK.Resource.Id.addressPostCode = global::AndroidTestApp.Resource.Id.addressPostCode;
 			global::JudoDotNetXamarinSDK.Resource.Id.addressTown = global::AndroidTestApp.Resource.Id.addressTown;
+			global::JudoDotNetXamarinSDK.Resource.Id.avsContainer = global::AndroidTestApp.Resource.Id.avsContainer;
 			global::JudoDotNetXamarinSDK.Resource.Id.avsEntryView = global::AndroidTestApp.Resource.Id.avsEntryView;
+			global::JudoDotNetXamarinSDK.Resource.Id.avsMsgText = global::AndroidTestApp.Resource.Id.avsMsgText;
 			global::JudoDotNetXamarinSDK.Resource.Id.cancelButton = global::AndroidTestApp.Resource.Id.cancelButton;
 			global::JudoDotNetXamarinSDK.Resource.Id.cardEntryView = global::AndroidTestApp.Resource.Id.cardEntryView;
 			global::JudoDotNetXamarinSDK.Resource.Id.countrySpinner = global::AndroidTestApp.Resource.Id.countrySpinner;
@@ -222,6 +224,7 @@ namespace AndroidTestApp
 			global::JudoDotNetXamarinSDK.Resource.String.hint_postcode = global::AndroidTestApp.Resource.String.hint_postcode;
 			global::JudoDotNetXamarinSDK.Resource.String.hint_start_date = global::AndroidTestApp.Resource.String.hint_start_date;
 			global::JudoDotNetXamarinSDK.Resource.String.issue_number = global::AndroidTestApp.Resource.String.issue_number;
+			global::JudoDotNetXamarinSDK.Resource.String.msg_avs_info_others = global::AndroidTestApp.Resource.String.msg_avs_info_others;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_card_no_invalid = global::AndroidTestApp.Resource.String.msg_card_no_invalid;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_check_exp_date = global::AndroidTestApp.Resource.String.msg_check_exp_date;
 			global::JudoDotNetXamarinSDK.Resource.String.msg_check_issue_number = global::AndroidTestApp.Resource.String.msg_check_issue_number;
@@ -762,92 +765,98 @@ namespace AndroidTestApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c0005
-			public const int MakePayment = 2131492869;
-			
-			// aapt resource value: 0x7f0c0006
-			public const int MakePaymentToken = 2131492870;
-			
 			// aapt resource value: 0x7f0c0007
-			public const int MakePreAuthToken = 2131492871;
+			public const int MakePayment = 2131492871;
 			
 			// aapt resource value: 0x7f0c0008
-			public const int RegisterCard = 2131492872;
+			public const int MakePaymentToken = 2131492872;
 			
-			// aapt resource value: 0x7f0c0011
-			public const int addressLine1 = 2131492881;
-			
-			// aapt resource value: 0x7f0c0012
-			public const int addressLine2 = 2131492882;
-			
-			// aapt resource value: 0x7f0c0013
-			public const int addressLine3 = 2131492883;
-			
-			// aapt resource value: 0x7f0c0015
-			public const int addressPostCode = 2131492885;
-			
-			// aapt resource value: 0x7f0c0014
-			public const int addressTown = 2131492884;
-			
-			// aapt resource value: 0x7f0c000d
-			public const int avsEntryView = 2131492877;
-			
-			// aapt resource value: 0x7f0c000f
-			public const int cancelButton = 2131492879;
+			// aapt resource value: 0x7f0c0009
+			public const int MakePreAuthToken = 2131492873;
 			
 			// aapt resource value: 0x7f0c000a
-			public const int cardEntryView = 2131492874;
+			public const int RegisterCard = 2131492874;
+			
+			// aapt resource value: 0x7f0c0013
+			public const int addressLine1 = 2131492883;
+			
+			// aapt resource value: 0x7f0c0014
+			public const int addressLine2 = 2131492884;
+			
+			// aapt resource value: 0x7f0c0015
+			public const int addressLine3 = 2131492885;
+			
+			// aapt resource value: 0x7f0c0017
+			public const int addressPostCode = 2131492887;
+			
+			// aapt resource value: 0x7f0c0016
+			public const int addressTown = 2131492886;
+			
+			// aapt resource value: 0x7f0c0001
+			public const int avsContainer = 2131492865;
+			
+			// aapt resource value: 0x7f0c000f
+			public const int avsEntryView = 2131492879;
+			
+			// aapt resource value: 0x7f0c0006
+			public const int avsMsgText = 2131492870;
+			
+			// aapt resource value: 0x7f0c0011
+			public const int cancelButton = 2131492881;
+			
+			// aapt resource value: 0x7f0c000c
+			public const int cardEntryView = 2131492876;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c001c
-			public const int cv2EntryView = 2131492892;
-			
-			// aapt resource value: 0x7f0c0009
-			public const int hintTextView = 2131492873;
+			// aapt resource value: 0x7f0c001e
+			public const int cv2EntryView = 2131492894;
 			
 			// aapt resource value: 0x7f0c000b
-			public const int infoButtonID = 2131492875;
+			public const int hintTextView = 2131492875;
 			
-			// aapt resource value: 0x7f0c0019
-			public const int issueNumberContainer = 2131492889;
+			// aapt resource value: 0x7f0c000d
+			public const int infoButtonID = 2131492877;
 			
 			// aapt resource value: 0x7f0c001b
-			public const int issueNumberEditText = 2131492891;
+			public const int issueNumberContainer = 2131492891;
 			
-			// aapt resource value: 0x7f0c001a
-			public const int issueNumberTitleText = 2131492890;
+			// aapt resource value: 0x7f0c001d
+			public const int issueNumberEditText = 2131492893;
+			
+			// aapt resource value: 0x7f0c001c
+			public const int issueNumberTitleText = 2131492892;
+			
+			// aapt resource value: 0x7f0c0012
+			public const int loadingLayout = 2131492882;
 			
 			// aapt resource value: 0x7f0c0010
-			public const int loadingLayout = 2131492880;
-			
-			// aapt resource value: 0x7f0c000e
-			public const int payButton = 2131492878;
-			
-			// aapt resource value: 0x7f0c0001
-			public const int postCodeContainer = 2131492865;
-			
-			// aapt resource value: 0x7f0c0003
-			public const int postCodeEditText = 2131492867;
-			
-			// aapt resource value: 0x7f0c0004
-			public const int postCodeHelpButton = 2131492868;
+			public const int payButton = 2131492880;
 			
 			// aapt resource value: 0x7f0c0002
-			public const int postCodeTitleText = 2131492866;
+			public const int postCodeContainer = 2131492866;
 			
-			// aapt resource value: 0x7f0c0016
-			public const int startDateContainer = 2131492886;
+			// aapt resource value: 0x7f0c0004
+			public const int postCodeEditText = 2131492868;
+			
+			// aapt resource value: 0x7f0c0005
+			public const int postCodeHelpButton = 2131492869;
+			
+			// aapt resource value: 0x7f0c0003
+			public const int postCodeTitleText = 2131492867;
 			
 			// aapt resource value: 0x7f0c0018
-			public const int startDateEditText = 2131492888;
+			public const int startDateContainer = 2131492888;
 			
-			// aapt resource value: 0x7f0c000c
-			public const int startDateEntryView = 2131492876;
+			// aapt resource value: 0x7f0c001a
+			public const int startDateEditText = 2131492890;
 			
-			// aapt resource value: 0x7f0c0017
-			public const int startDateTitleText = 2131492887;
+			// aapt resource value: 0x7f0c000e
+			public const int startDateEntryView = 2131492878;
+			
+			// aapt resource value: 0x7f0c0019
+			public const int startDateTitleText = 2131492889;
 			
 			static Id()
 			{
@@ -934,11 +943,11 @@ namespace AndroidTestApp
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060039
-			public const int ApplicationName = 2131099705;
+			// aapt resource value: 0x7f06003a
+			public const int ApplicationName = 2131099706;
 			
-			// aapt resource value: 0x7f060038
-			public const int Hello = 2131099704;
+			// aapt resource value: 0x7f060039
+			public const int Hello = 2131099705;
 			
 			// aapt resource value: 0x7f060009
 			public const int address_line1 = 2131099657;
@@ -1029,6 +1038,9 @@ namespace AndroidTestApp
 			
 			// aapt resource value: 0x7f060034
 			public const int issue_number = 2131099700;
+			
+			// aapt resource value: 0x7f060038
+			public const int msg_avs_info_others = 2131099704;
 			
 			// aapt resource value: 0x7f060031
 			public const int msg_card_no_invalid = 2131099697;
