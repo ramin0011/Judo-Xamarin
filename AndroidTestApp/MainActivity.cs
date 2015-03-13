@@ -35,6 +35,7 @@ namespace AndroidTestApp
 
             JudoSDKManager.SetApiTokenAndSecret(ApiToken, ApiSecret);
             JudoSDKManager.IsAVSEnabled = true;
+            JudoSDKManager.IsFraudMonitoringSignals = true;
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);

@@ -157,30 +157,10 @@ namespace JudoDotNetXamarinSDK.Activies
             
             ShowLoadingSpinner(true);
 
-            JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(t =>
-            {
-                ShowLoadingSpinner(false);
-
-                if (t.IsFaulted || t.Result == null || t.Result.HasError)
-                {
-                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.ToString();
-                    Log.Error("com.judopay.android", "ERROR: " + errorMessage);
-                    SetResult(JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception, t.Result != null ? t.Result.Error : null));
-                    Finish();
-                    return;
-                }
-
-                var receipt = t.Result.Response;
-
-                Intent intent = new Intent();
-                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, new Receipt(receipt));
-                SetResult(JudoSDKManager.JUDO_SUCCESS, intent);
-                Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);
-                Finish();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public void ShowLoadingSpinner(bool show)
+        protected override void ShowLoadingSpinner(bool show)
         {
             RunOnUiThread(() =>
             {
