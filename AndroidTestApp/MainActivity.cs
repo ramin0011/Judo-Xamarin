@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using JudoDotNetXamarinSDK;
 using JudoDotNetXamarinSDK.Models;
+using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 
@@ -25,6 +26,7 @@ namespace AndroidTestApp
         private const int ACTION_REGISTER_CARD = 5;
 
         private volatile string cardToken;
+        private volatile CardBase.CardType cardType;
         private volatile string consumerToken;
         private volatile string consumerRef;
         private volatile string lastFour;
@@ -80,7 +82,8 @@ namespace AndroidTestApp
                 {
                     CardLastFour = lastFour,
                     Token = cardToken,
-                    ConsumerToken = consumerToken
+                    ConsumerToken = consumerToken,
+                    CardType = cardType
                 };
 
                 var intent = JudoSDKManager.makeATokenPayment(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
@@ -107,7 +110,8 @@ namespace AndroidTestApp
                 {
                     CardLastFour = lastFour,
                     Token = cardToken,
-                    ConsumerToken = consumerToken
+                    ConsumerToken = consumerToken,
+                    CardType = cardType
                 };
 
                 var intent = JudoSDKManager.makeATokenPreAuth(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
@@ -153,6 +157,7 @@ namespace AndroidTestApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
+                            cardType = (CardBase.CardType) paymentReceipt.CardDetails.CardType;
                         }
                         
                         Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
@@ -216,6 +221,7 @@ namespace AndroidTestApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
+                            cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
 
                         Toast.MakeText(this, string.Format("Register card succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();

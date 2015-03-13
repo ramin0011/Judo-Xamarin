@@ -110,22 +110,21 @@ namespace JudoDotNetXamarinSDK.Ui
 
                 if (currentCardType != currentCard)
                 {
-                    //TODO: Implement the structure to enable/disable support for Amex and Maestro
-                    //if (currentCard == CardBase.CardType.AMEX && !AmexEnabled)
-                    //{
-                    //    cardNumberTextView.ShowInvalid("AmEx not accepted");
-                    //}
-                    //else if (currentCard == CardBase.CardType.MASTRO && !MaestroEnabled)
-                    //{
-                    //    cardNumberTextView.ShowInvalid("Maestro not accepted");
-                    //}
-                    //else
-                    //{
-                    cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCardType, true), false);
-                    cardNumberTextView.SetHintText(JudoSDKManager.GetCardHintFormat(currentCardType));
-                    cardExpiryCv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(currentCardType));
-                    cardExpiryCv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(currentCardType));
-                    //}
+                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManager.IsAVSEnabled)
+                    {
+                        cardNumberTextView.ShowInvalid("AmEx not accepted");
+                    }
+                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManager.IsMaestroEnabled)
+                    {
+                        cardNumberTextView.ShowInvalid("Maestro not accepted");
+                    }
+                    else
+                    {
+                        cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCardType, true), false);
+                        cardNumberTextView.SetHintText(JudoSDKManager.GetCardHintFormat(currentCardType));
+                        cardExpiryCv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(currentCardType));
+                        cardExpiryCv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(currentCardType));
+                    }
 
                     currentCard = currentCardType;
                 }

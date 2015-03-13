@@ -36,7 +36,6 @@ namespace JudoDotNetXamarinSDK.Ui
         private void Init()
         {
             SetHintText(Resources.GetString(Resource.String.payment_hint_cv2));
-            SetInputFilter(String.Empty);
         }
 
         public override void ValidateInput(string input)
