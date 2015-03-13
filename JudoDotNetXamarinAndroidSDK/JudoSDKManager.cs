@@ -132,7 +132,7 @@ namespace JudoDotNetXamarinSDK
                         return Resource.Drawable.ic_card_maestro;
                     case CardBase.CardType.UNKNOWN:
                     default:
-                        return Resource.Drawable.ic_card_visa;
+                        return Resource.Drawable.ic_card_unknown;
                 }
             }
             else

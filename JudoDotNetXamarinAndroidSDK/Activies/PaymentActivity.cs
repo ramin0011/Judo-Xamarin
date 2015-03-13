@@ -87,18 +87,8 @@ namespace JudoDotNetXamarinSDK.Activies
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
             payButton.Text = Resources.GetString(Resource.String.payment);
-            payButton.Click += (sender, args) =>
-            {
-                try
-                {
-                    MakeCardPayment();
-                }
-                catch (Exception e)
-                {
-                    Toast.MakeText(this, "" + e.Message, ToastLength.Short).Show();
-                    Log.Error(JudoSDKManager.DEBUG_TAG, "Exception", e);
-                }
-            };
+
+            payButton.Click += (sender, args) => TransactClickHandler(MakeCardPayment);
 
             cardEntryView.OnCreditCardEntered = cardNumber =>
             {

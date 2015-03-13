@@ -68,7 +68,8 @@ namespace JudoDotNetXamarinSDK.Activies
                 CardAddress = cardAddress,
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
-                CV2 = cv2
+                CV2 = cv2,
+                ClientDetails = GetClientDetails()
             };
 
             ShowLoadingSpinner(true);
@@ -76,27 +77,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             var judoPay = JudoSDKManager.JudoClient;
 
-            judoPay.PreAuths.Create(cardPayment).ContinueWith(t =>
-            {
-                ShowLoadingSpinner(false);
-
-                if (t.IsFaulted || t.Result == null || t.Result.HasError)
-                {
-                    var errorMessage = t.Result != null ? t.Result.Error.ErrorMessage : t.Exception.Message;
-                    Log.Error("com.judopay.android", "ERROR: " + errorMessage);
-                    SetResult(JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent(errorMessage, t.Exception, t.Result != null ? t.Result.Error : null));
-                    Finish();
-                    return;
-                }
-
-                var receipt = t.Result.Response;
-
-                Intent intent = new Intent();
-                intent.PutExtra(JudoSDKManager.JUDO_RECEIPT, new Receipt(receipt));
-                SetResult(JudoSDKManager.JUDO_SUCCESS, intent);
-                Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);
-                Finish();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }
