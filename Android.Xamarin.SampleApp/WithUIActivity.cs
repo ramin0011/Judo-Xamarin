@@ -172,7 +172,10 @@ namespace Android.Xamarin.SampleApp
             }
             else if (resultCode == JudoSDKManager.JUDO_ERROR)
             {
-                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
+                Error err =  data.GetParcelableExtra(JudoSDKManager.JUDO_ERROR_EXCEPTION) as Error;
+
+                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE),
+                    err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show();
                 return;
             }
 
@@ -225,15 +228,7 @@ namespace Android.Xamarin.SampleApp
                     }
                     else
                     {
-                        if (receipt != null)
-                        {
-                            Toast.MakeText(this, string.Format("Payment failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
-                        }
-                        else
-                        {
-                            Toast.MakeText(this,
-                                string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
-                        }
+                        Toast.MakeText(this, string.Format("Payment failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
                     }
                     break;
                 case ACTION_TOKEN_PREAUTH:
@@ -243,15 +238,7 @@ namespace Android.Xamarin.SampleApp
                     }
                     else
                     {
-                        if (receipt != null)
-                        {
-                            Toast.MakeText(this, string.Format("PreAuth failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
-                        }
-                        else
-                        {
-                            Toast.MakeText(this,
-                                string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
-                        }
+                        Toast.MakeText(this, string.Format("PreAuth failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
                     }
                     break;
                 case ACTION_REGISTER_CARD:
