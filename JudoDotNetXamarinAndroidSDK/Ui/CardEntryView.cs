@@ -38,9 +38,9 @@ namespace JudoDotNetXamarinSDK.Ui
 
         private Stage currentStage = Stage.STAGE_CC_NO;
 
-        public Action<string> OnCreditCardEntered { get; set; }
-        public Action<string, string> OnExpireAndCV2Entered { get; set; }
-        public Action OnReturnToCreditCardNumberEntry { get; set; }
+        public event Action<string> OnCreditCardEntered;
+        public event Action<string, string> OnExpireAndCV2Entered;
+        public event Action OnReturnToCreditCardNumberEntry;
 
         public CardEntryView(Context context) : base(context)
         {
@@ -89,7 +89,7 @@ namespace JudoDotNetXamarinSDK.Ui
             int lastPos = 0;
             CardBase.CardType currentCardType;
 
-            cardNumberTextView.OnEntryComplete = cardNumber =>
+            cardNumberTextView.OnEntryComplete += cardNumber =>
             {
                 if (OnCreditCardEntered != null)
                 {
@@ -98,7 +98,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 SetStage(Stage.STAGE_CC_EXP);
             };
 
-            cardNumberTextView.OnProgress = position =>
+            cardNumberTextView.OnProgress += position =>
             {
                 if (position == 0)
                 {
@@ -110,11 +110,11 @@ namespace JudoDotNetXamarinSDK.Ui
 
                 if (currentCardType != currentCard)
                 {
-                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManager.IsAVSEnabled)
+                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManager.Configuration.IsAVSEnabled)
                     {
                         cardNumberTextView.ShowInvalid("AmEx not accepted");
                     }
-                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManager.IsMaestroEnabled)
+                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManager.Configuration.IsMaestroEnabled)
                     {
                         cardNumberTextView.ShowInvalid("Maestro not accepted");
                     }
@@ -131,7 +131,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 lastPos = position;
             };
 
-            cardExpiryCv2TextView.OnEntryComplete = expiryAndCV2 =>
+            cardExpiryCv2TextView.OnEntryComplete += expiryAndCV2 =>
             {
                 string[] temp = expiryAndCV2.Split(' ');
                 if (temp.Length < 2)
@@ -149,7 +149,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 }
             };
 
-            cardExpiryCv2TextView.OnProgress = position =>
+            cardExpiryCv2TextView.OnProgress += position =>
             {
                 cardExpiryCv2TextView.ValidatePartialInput();
 

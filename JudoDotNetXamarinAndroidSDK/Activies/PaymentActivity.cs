@@ -90,12 +90,12 @@ namespace JudoDotNetXamarinSDK.Activies
 
             payButton.Click += (sender, args) => TransactClickHandler(MakeCardPayment);
 
-            cardEntryView.OnCreditCardEntered = cardNumber =>
+            cardEntryView.OnCreditCardEntered += cardNumber =>
             {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Visible;
             };
 
-            cardEntryView.OnExpireAndCV2Entered = (expiryDate, cv2) =>
+            cardEntryView.OnExpireAndCV2Entered += (expiryDate, cv2) =>
             {
                 string cardNumber = null;
 
@@ -108,20 +108,20 @@ namespace JudoDotNetXamarinSDK.Activies
                     Console.Error.Write(e.StackTrace);
                 }
 
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.IsMaestroEnabled)
+                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.Configuration.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
                     avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManager.IsAVSEnabled && avsEntryView != null)
+                if (JudoSDKManager.Configuration.IsAVSEnabled && avsEntryView != null)
                 {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
             };
 
-            cardEntryView.OnReturnToCreditCardNumberEntry = () =>
+            cardEntryView.OnReturnToCreditCardNumberEntry += () =>
             {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
             };
@@ -141,7 +141,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel();
 
-            if (JudoSDKManager.IsAVSEnabled)
+            if (JudoSDKManager.Configuration.IsAVSEnabled)
             {
                 var country = avsEntryView.GetCountry();
                 cardAddress.PostCode = avsEntryView.GetPostCode();
@@ -150,7 +150,7 @@ namespace JudoDotNetXamarinSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManager.IsMaestroEnabled)
+            if (JudoSDKManager.Configuration.IsMaestroEnabled)
             {
                 issueNumber = startDateEntryView.GetIssueNumber();
                 startDate = startDateEntryView.GetStartDate();

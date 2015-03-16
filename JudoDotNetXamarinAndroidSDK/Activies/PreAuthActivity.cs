@@ -41,7 +41,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel();
 
-            if (JudoSDKManager.IsAVSEnabled)
+            if (JudoSDKManager.Configuration.IsAVSEnabled)
             {
                 var country = avsEntryView.GetCountry();
                 cardAddress.PostCode = avsEntryView.GetPostCode();
@@ -50,7 +50,7 @@ namespace JudoDotNetXamarinSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManager.IsMaestroEnabled)
+            if (JudoSDKManager.Configuration.IsMaestroEnabled)
             {
                 issueNumber = startDateEntryView.GetIssueNumber();
                 startDate = startDateEntryView.GetStartDate();

@@ -35,9 +35,9 @@ namespace AndroidTestApp
         {
             base.OnCreate(bundle);
 
-            JudoSDKManager.SetApiTokenAndSecret(ApiToken, ApiSecret);
-            JudoSDKManager.IsAVSEnabled = true;
-            JudoSDKManager.IsFraudMonitoringSignals = true;
+            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
+            JudoSDKManager.Configuration.IsAVSEnabled = true;
+            JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -58,7 +58,7 @@ namespace AndroidTestApp
                 var paymentReference = "payment101010102";
                 var consumerRef = "consumer1010102";
 
-                var intent = JudoSDKManager.makeAPayment(that, judoId, currency, amount, paymentReference, consumerRef, new Dictionary<string, string>{{"test", "ValueTest"}});
+                var intent = JudoSDKManager.UIMethods.Payment(that, judoId, currency, amount, paymentReference, consumerRef, new Dictionary<string, string>{{"test", "ValueTest"}});
 
                 StartActivityForResult(intent, ACTION_PAYMENT);
             };
@@ -86,7 +86,7 @@ namespace AndroidTestApp
                     CardType = cardType
                 };
 
-                var intent = JudoSDKManager.makeATokenPayment(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+                var intent = JudoSDKManager.UIMethods.TokenPayment(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
                 StartActivityForResult(intent, ACTION_PAYMENT_TOKEN);
             };
@@ -114,7 +114,7 @@ namespace AndroidTestApp
                     CardType = cardType
                 };
 
-                var intent = JudoSDKManager.makeATokenPreAuth(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+                var intent = JudoSDKManager.UIMethods.TokenPreAuth(that, judoId, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
                 StartActivityForResult(intent, ACTION_PREAUTH_TOKEN);
             };
@@ -123,7 +123,7 @@ namespace AndroidTestApp
             {
                 var consumerReference = "consumer1010102";
 
-                var intent = JudoSDKManager.registerCard(that, consumerReference);
+                var intent = JudoSDKManager.UIMethods.RegisterCard(that, consumerReference);
 
                 StartActivityForResult(intent, ACTION_REGISTER_CARD);
             };

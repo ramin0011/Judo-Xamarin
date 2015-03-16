@@ -54,10 +54,10 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withui);
 
             // setting up API token/secret 
-            JudoSDKManager.SetApiTokenAndSecret(ApiToken, ApiSecret);
-            JudoSDKManager.IsAVSEnabled = true;
-            JudoSDKManager.IsFraudMonitoringSignals = true;
-            JudoSDKManager.IsMaestroEnabled = true;
+            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
+            JudoSDKManager.Configuration.IsAVSEnabled = true;
+            JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
+            JudoSDKManager.Configuration.IsMaestroEnabled = true;
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -84,7 +84,7 @@ namespace Android.Xamarin.SampleApp
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
             Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
             
-            var intent = JudoSDKManager.makeAPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
+            var intent = JudoSDKManager.UIMethods.Payment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
 
             StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         }
@@ -92,7 +92,7 @@ namespace Android.Xamarin.SampleApp
         private void payPreAuth_Click(object sender, EventArgs e)
         {
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            Intent intent = JudoSDKManager.makeAPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
+            Intent intent = JudoSDKManager.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
 
             StartActivityForResult(intent, ACTION_PREAUTH);
         }
@@ -118,7 +118,7 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManager.makeATokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+            var intent = JudoSDKManager.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
 
@@ -145,14 +145,14 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManager.makeATokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
+            var intent = JudoSDKManager.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
         }
 
         private void registerCard_Click(object sender, EventArgs e)
         {
-            var intent = JudoSDKManager.registerCard(this, consumerRef);
+            var intent = JudoSDKManager.UIMethods.RegisterCard(this, consumerRef);
 
             StartActivityForResult(intent, ACTION_REGISTER_CARD);
         }

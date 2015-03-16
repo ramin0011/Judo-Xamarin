@@ -29,8 +29,8 @@ namespace Android.Xamarin.SampleApp
             base.OnCreate(bundle);
 
             // setting up API token/secret 
-            JudoSDKManager.SetApiTokenAndSecret(ApiToken, ApiSecret);
-            JudoSDKManager.IsAVSEnabled = true;
+            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
+            JudoSDKManager.Configuration.IsAVSEnabled = true;
 
             // Set our view from the "withoutui" layout resource
             SetContentView(Resource.Layout.withoutui);
@@ -67,9 +67,9 @@ namespace Android.Xamarin.SampleApp
             var paymentReference = "payment101010102";
             var consumerRef = "consumer1010102";
 
-            var intent = JudoSDKManager.makeAPayment(this, judoId, currency, amount, paymentReference, consumerRef, null);
+            //var intent = JudoSDKManager.NonUIMethods.makeAPaymentCustomUI(this, judoId, currency, amount, paymentReference, consumerRef, null);
 
-            StartActivityForResult(intent, ACTION_PAYMENT);
+            //StartActivityForResult(intent, ACTION_PAYMENT);
         }
 
         private void threeDsecure_Click(object sender, EventArgs e)
