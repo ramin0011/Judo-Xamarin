@@ -29,8 +29,8 @@ namespace JudoDotNetXamarinSDK.Ui
         private FrameLayout cardImageLayout;
         private TextView last4CCNosTextView;
 
-        public Action<string> OnCreditCardEntered { get; set; }
-        public Action<string, string> OnExpiryAndCV2Entered { get; set; }
+        public event Action<string> OnCreditCardEntered;
+        public event Action<string, string> OnExpiryAndCV2Entered;
 
         public EditText GetCV2EditText()
         {

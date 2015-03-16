@@ -48,7 +48,7 @@ namespace JudoDotNetXamarinSDK.Ui
             LayoutInflater.From(Context).Inflate(Resource.Layout.startdate_and_issuenumber, this, true);
 
             startDateEditText = FindViewById<StartDateEditText>(Resource.Id.startDateEditText);
-            startDateEditText.OnEntryComplete = startDate =>
+            startDateEditText.OnEntryComplete += startDate =>
             {
                 if (EntryCompleteListener != null)
                 {

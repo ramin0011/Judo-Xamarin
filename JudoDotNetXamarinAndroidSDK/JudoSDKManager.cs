@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Android.Content;
@@ -12,12 +13,15 @@ using Android.Widget;
 using Javax.Xml.Transform;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinSDK.Activies;
+using JudoDotNetXamarinSDK.Clients;
+using JudoDotNetXamarinSDK.Configurations;
 using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet;
 using JudoPayDotNet.Errors;
 using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
+using Configuration = JudoDotNetXamarinSDK.Configurations.Configuration;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 using Environment = JudoPayDotNet.Enums.Environment;
 using Error = JudoDotNetXamarinSDK.Models.Error;
@@ -25,7 +29,7 @@ using Result = Android.App.Result;
 
 namespace JudoDotNetXamarinSDK
 {
-    public class JudoSDKManager
+    public sealed class JudoSDKManager
     {
         public static readonly Result JUDO_SUCCESS = Result.Ok;
         public static readonly Result JUDO_CANCELLED = Result.Canceled;
@@ -52,35 +56,25 @@ namespace JudoDotNetXamarinSDK
         private static String REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
         private static String AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
 
-        private static volatile bool avsEnabled = false;
-        public static bool IsAVSEnabled { get { return avsEnabled; } set { avsEnabled = value; } }
         
-        private static volatile bool maestroEnabled = false;
-        public static bool IsMaestroEnabled { get { return maestroEnabled; } set { maestroEnabled = value; } }
 
-        private static volatile bool fraudMonitoringSignals = false;
-        public static bool IsFraudMonitoringSignals { get { return fraudMonitoringSignals; } set { fraudMonitoringSignals = value; } }
+        private readonly object _clientLock = new object();
+        internal IJudoPayApi _judoClient;
 
-        private static volatile bool isSSLPinningEnabled = false;
-        public static bool IsSSLPinningEnabled { get { return isSSLPinningEnabled; } set { isSSLPinningEnabled = value; } }
-
-        private static readonly object _clientLock = new object();
-        private static JudoPayApi _judoClient;
-
-        internal static JudoPayApi JudoClient
+        internal static IJudoPayApi JudoClient
         {
             get
             {
-                lock (_clientLock)
+                lock (Instance._clientLock)
                 {
-                    return _judoClient;
+                    return Instance._judoClient;
                 }
             }
         }
 
-        private static Environment _environment;
+        private Environment _environment;
 
-        public static Environment Environment
+        public Environment Environment
         {
             get
             {
@@ -91,25 +85,62 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-
-        /// <summary>
-        /// Sets the configuration to access judo servers
-        /// </summary>
-        /// <param name="apiToken">The apiToken of the merchant</param>
-        /// <param name="apiSecret">The apiSecret of the merchant</param>
-        /// <param name="environment">The environment to use</param>
-        public static void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Live)
+        private readonly IUIMethods _uIMethods;
+        public static IUIMethods UIMethods
         {
-            lock(_clientLock)
+            get { return Instance._uIMethods; }
+        }
+
+        private readonly INonUIMethods _nonUIMethods;
+        public static INonUIMethods NonUIMethods
+        {
+            get { return Instance._nonUIMethods; }
+        }
+
+        private readonly IConfiguration _configuration;
+        public static IConfiguration Configuration
+        {
+            get { return Instance._configuration; }
+        }
+
+        private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
+
+        public static JudoSDKManager Instance
+        {
+            get { return _singleton.Value; }
+        }
+
+        static JudoSDKManager()
+        {
+
+        }
+
+        private JudoSDKManager()
+        {
+            _uIMethods = new UIMethods();
+            _nonUIMethods = new NonUIMethods();
+            _configuration = new Configuration();
+        }
+
+        internal void SetJudoClient(IJudoPayApi judoClient)
+        {
+            lock (_clientLock)
             {
-                _environment = environment;
-                _judoClient = JudoPaymentsFactory.Create(_environment, apiToken, apiSecret);
+                _judoClient = judoClient;
             }
         }
 
-        public static string DEBUG_TAG = "com.judopay.android";
+        internal void SetEnvironment(Environment environment)
+        {
+            lock (_clientLock)
+            {
+                _environment = environment;
+            }  
+        }
 
-        public static string CardHintFormat(CardBase.CardType cardType)
+        internal static string DEBUG_TAG = "com.judopay.android";
+
+        internal static string CardHintFormat(CardBase.CardType cardType)
         {
             switch (cardType)
             {
@@ -120,7 +151,7 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        public static int GetCardResourceId(Context context, CardBase.CardType cardType, bool showFront)
+        internal static int GetCardResourceId(Context context, CardBase.CardType cardType, bool showFront)
         {
             if (showFront)
             {
@@ -151,7 +182,7 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        public static string GetCardHintFormat(CardBase.CardType cardType)
+        internal static string GetCardHintFormat(CardBase.CardType cardType)
         {
             switch (cardType)
             {
@@ -162,7 +193,7 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        public static string GetExpiryAndValidationHintFormat(CardBase.CardType cardType)
+        internal static string GetExpiryAndValidationHintFormat(CardBase.CardType cardType)
         {
             switch (cardType)
             {
@@ -173,7 +204,7 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        public static string GetExpiryAndValidationErrorMessage(CardBase.CardType cardType)
+        internal static string GetExpiryAndValidationErrorMessage(CardBase.CardType cardType)
         {
             switch (cardType)
             {
@@ -184,197 +215,13 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        public static Intent CreateErrorIntent(string message, Exception exception, JudoApiErrorModel apiErrorModel)
+        internal static Intent CreateErrorIntent(string message, Exception exception, JudoApiErrorModel apiErrorModel)
         {
             Intent intent = new Intent();
             intent.PutExtra(JUDO_ERROR_MESSAGE, message);
             intent.PutExtra(JUDO_ERROR_EXCEPTION, new Error(exception, apiErrorModel));
 
             return intent;
-        }
-
-        public static Intent makeAPayment(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, Dictionary<string, string> metaData)
-        {
-            Intent intent = new Intent(context, typeof(PaymentActivity));
-            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
-            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
-            intent.PutExtra(JUDO_AMOUNT, amount);
-            intent.PutExtra(JUDO_ID, judoId);
-            intent.PutExtra(JUDO_CURRENCY, currency);
-
-
-            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
-
-            return intent;
-        }
-
-        public static Intent makeAPreAuth(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, Dictionary<string, string> metaData)
-        {
-            Intent intent = new Intent(context, typeof(PreAuthActivity));
-            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
-            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
-            intent.PutExtra(JUDO_AMOUNT, amount);
-            intent.PutExtra(JUDO_ID, judoId);
-            intent.PutExtra(JUDO_CURRENCY, currency);
-
-
-            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
-
-            return intent;
-        }
-
-        public static Intent makeATokenPayment(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
-        {
-            Intent intent = new Intent(context, typeof(PaymentTokenActivity));
-            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
-            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef, consumerToken));
-            intent.PutExtra(JUDO_AMOUNT, amount);
-            intent.PutExtra(JUDO_ID, judoId);
-            intent.PutExtra(JUDO_CURRENCY, currency);
-            intent.PutExtra(JUDO_CARD_DETAILS, cardToken);
-
-
-            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
-
-            return intent;
-        }
-
-        public static Intent makeATokenPreAuth(Context context, string judoId, string currency, string amount,
-                                          string yourPaymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
-        {
-            Intent intent = new Intent(context, typeof(PreAuthTokenActivity));
-            intent.PutExtra(JUDO_PAYMENT_REF, yourPaymentRef);
-            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef, consumerToken));
-            intent.PutExtra(JUDO_AMOUNT, amount);
-            intent.PutExtra(JUDO_ID, judoId);
-            intent.PutExtra(JUDO_CURRENCY, currency);
-            intent.PutExtra(JUDO_CARD_DETAILS, cardToken);
-
-
-            intent.PutExtra(JUDO_META_DATA, new MetaData(metaData));
-
-            return intent;
-        }
-
-        public static Intent registerCard(Context context, string consumerRef)
-        {
-            Intent intent = new Intent(context, typeof(RegisterCardActivity));
-            intent.PutExtra(JUDO_CONSUMER, new Consumer(consumerRef));
-
-            return intent;
-        }
-
-        public static Task<IResult<ITransactionResult>> makeAPaymentCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
-                                                                                string judoConsumerReference, IDictionary<string, string> judoMetaData, string cardNumber, 
-                                                                                CardAddressModel cardAddress, string startDate, string expiryDate, string cv2)
-        {
-            var cardPayment = new CardPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                YourConsumerReference = judoConsumerReference,
-                YourPaymentMetaData = judoMetaData,
-                CardNumber = cardNumber,
-                CardAddress = cardAddress,
-                StartDate = startDate,
-                ExpiryDate = expiryDate,
-                CV2 = cv2,
-                ClientDetails = GetClientDetails(context)
-            };
-
-            return JudoClient.Payments.Create(cardPayment);
-        }
-
-        public static Task<IResult<ITransactionResult>> makeAPaymentTokenCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
-                                                                                    string judoConsumerToken, string judoConsumerReference, IDictionary<string, string> judoMetaData, 
-                                                                                    string judoCardToken, string cv2)
-        {
-            TokenPaymentModel payment = new TokenPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                ConsumerToken = judoConsumerToken,
-                YourConsumerReference = judoConsumerReference,
-                YourPaymentMetaData = judoMetaData,
-                CardToken = judoCardToken,
-                CV2 = cv2,
-                ClientDetails = GetClientDetails(context)
-            };
-
-            return JudoClient.Payments.Create(payment);
-        }
-
-        public static Task<IResult<ITransactionResult>> makeAPreAuthCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef, 
-                                                                                string judoConsumerReference, IDictionary<string, string> judoMetaData, string cardNumber, 
-                                                                                CardAddressModel cardAddress, string startDate, string expiryDate, string cv2)
-        {
-            var cardPayment = new CardPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                YourConsumerReference = judoConsumerReference,
-                YourPaymentMetaData = judoMetaData,
-                CardNumber = cardNumber,
-                CardAddress = cardAddress,
-                StartDate = startDate,
-                ExpiryDate = expiryDate,
-                CV2 = cv2,
-                ClientDetails = GetClientDetails(context)
-            };
-
-            return JudoClient.PreAuths.Create(cardPayment);
-        }
-
-        public static Task<IResult<ITransactionResult>> makeAPreAuthTokenCustomUI(Context context, string judoId, string judoCurrency, decimal judoAmount, string judoPaymentRef,
-                                                                                    string judoConsumerToken, string judoConsumerReference, IDictionary<string, string> judoMetaData, 
-                                                                                    string judoCardToken, string cv2)
-        {
-            TokenPaymentModel payment = new TokenPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                ConsumerToken = judoConsumerToken,
-                YourConsumerReference = judoConsumerReference,
-                YourPaymentMetaData = judoMetaData,
-                CardToken = judoCardToken,
-                CV2 = cv2,
-                ClientDetails = GetClientDetails(context)
-            };
-
-            return JudoClient.PreAuths.Create(payment);
-        }
-
-        public static Task<IResult<ITransactionResult>> registerCard(string cardNumber, string cv2, string expiryDate, string judoConsumerReference, string addressLine1,   
-                                                                        string addressLine2, string addressLine3, string addressTown, string addressPostCode)
-        {
-            var registerCard = new RegisterCardModel()
-            {
-                CardAddress = new CardAddressModel()
-                {
-                    Line1 = addressLine1,
-                    Line2 = addressLine2,
-                    Line3 = addressLine3,
-                    Town = addressTown,
-                    PostCode = addressPostCode
-                },
-                CardNumber = cardNumber,
-                CV2 = cv2,
-                ExpiryDate = expiryDate,
-                YourConsumerReference = judoConsumerReference
-            };
-
-            return JudoClient.RegisterCards.Create(registerCard);
         }
 
         internal static JObject GetClientDetails(Context context)

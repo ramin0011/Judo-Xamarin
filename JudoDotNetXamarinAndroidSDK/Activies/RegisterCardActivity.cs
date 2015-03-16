@@ -76,12 +76,12 @@ namespace JudoDotNetXamarinSDK.Activies
 
             payButton.Click += (sender, args) => TransactClickHandler(RegisterCard);
 
-            cardEntryView.OnCreditCardEntered = cardNumber =>
+            cardEntryView.OnCreditCardEntered += cardNumber =>
             {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Visible;
             };
 
-            cardEntryView.OnExpireAndCV2Entered = (expiryDate, cv2) =>
+            cardEntryView.OnExpireAndCV2Entered += (expiryDate, cv2) =>
             {
                 string cardNumber = null;
                 try
@@ -94,7 +94,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 }
 
                 bool startDateFocus = false;
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.IsMaestroEnabled)
+                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.Configuration.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
@@ -102,7 +102,7 @@ namespace JudoDotNetXamarinSDK.Activies
                     aVsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManager.IsAVSEnabled && aVsEntryView != null)
+                if (JudoSDKManager.Configuration.IsAVSEnabled && aVsEntryView != null)
                 {
                     aVsEntryView.Visibility = ViewStates.Visible;
 

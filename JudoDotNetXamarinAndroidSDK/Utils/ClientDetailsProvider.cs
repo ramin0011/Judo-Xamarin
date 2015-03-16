@@ -22,7 +22,7 @@ namespace JudoDotNetXamarinSDK.Utils
     {
         public static ClientDetails GetClientDetails(Context context)
         {
-            if (!JudoSDKManager.IsFraudMonitoringSignals)
+            if (!JudoSDKManager.Configuration.IsFraudMonitoringSignals)
             {
                 return null;
             }
@@ -59,7 +59,7 @@ namespace JudoDotNetXamarinSDK.Utils
             RootCheck rootCheck = new RootCheck(context);
             clientDetails.Root = rootCheck.BuildRootCheckDetails();
 
-            clientDetails.SSLPinningEnabled = JudoSDKManager.IsSSLPinningEnabled;
+            clientDetails.SSLPinningEnabled = JudoSDKManager.Configuration.IsSSLPinningEnabled;
 
             return clientDetails;
         }

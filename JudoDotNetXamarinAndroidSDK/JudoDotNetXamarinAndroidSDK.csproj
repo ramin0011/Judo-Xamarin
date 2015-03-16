@@ -74,6 +74,12 @@
     <Compile Include="Activies\PreAuthActivity.cs" />
     <Compile Include="Activies\PreAuthTokenActivity.cs" />
     <Compile Include="Activies\RegisterCardActivity.cs" />
+    <Compile Include="Clients\NonUIMethods.cs" />
+    <Compile Include="Clients\UIMethods.cs" />
+    <Compile Include="Configurations\Configuration.cs" />
+    <Compile Include="Configurations\IConfiguration.cs" />
+    <Compile Include="Clients\INonUIMethods.cs" />
+    <Compile Include="Clients\IUIMethods.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\CardToken.cs" />
     <Compile Include="Models\Error.cs" />

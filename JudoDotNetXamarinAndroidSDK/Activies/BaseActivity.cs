@@ -19,12 +19,13 @@ using Newtonsoft.Json.Linq;
 
 namespace JudoDotNetXamarinSDK.Activies
 {
-    /// <summary>
-    /// TODO This needs to be addressed because doesn't make sense on the native android sdk
-    /// </summary>
     public static class BuildConfig
     {
-        public static readonly bool DEBUG = true;
+#if DEBUG
+        public const bool DEBUG = true;
+#else
+        public const bool DEBUG = false;
+#endif
     }
 
     public abstract class BaseActivity : Activity

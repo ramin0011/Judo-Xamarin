@@ -63,8 +63,8 @@ namespace JudoDotNetXamarinSDK.Ui
         private LinearLayout linearLayout;
         private RelativeLayout textLayout;
 
-        public Action<string> OnEntryComplete { get; set; }
-        public Action<int> OnProgress { get; set; }
+        public event Action<string> OnEntryComplete;
+        public event Action<int> OnProgress;
 
         public BackgroundHintTextView(Context context) : base(context)
         {
