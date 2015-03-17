@@ -169,6 +169,7 @@ namespace Android.Xamarin.SampleApp
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             Receipt receipt = null;
+            string msg_prefix = "";
 
             if (resultCode == Result.Canceled) 
             {
@@ -187,6 +188,12 @@ namespace Android.Xamarin.SampleApp
             if(data != null)
                 receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
 
+            if (receipt == null)
+            {
+                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
+                return;
+            }
+
             switch (requestCode)
             {
                 case ACTION_CARD_PAYMENT:
@@ -201,11 +208,11 @@ namespace Android.Xamarin.SampleApp
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
                             cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
-                        Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "Payment succeeded";
                     }
                     else
                     {
-                        Toast.MakeText(this, string.Format("Payment failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "Payment failed";
                     }
                     break;
                 case ACTION_PREAUTH:
@@ -221,31 +228,31 @@ namespace Android.Xamarin.SampleApp
                             preAuth_cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
 
-                        Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "PreAuth card payment succeeded";
                     }
                     else
                     {
-                        Toast.MakeText(this, string.Format("Payment failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "PreAuth card payment failed";
                     }
                     break;
                 case ACTION_TOKEN_PAYMENT:
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
-                        Toast.MakeText(this, string.Format("Payment succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "Token payment succeeded";
                     }
                     else
                     {
-                        Toast.MakeText(this, string.Format("Payment failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "Token payment failed";
                     }
                     break;
                 case ACTION_TOKEN_PREAUTH:
                     if (resultCode == Result.Ok && receipt.Result != "Declined")
                     {
-                        Toast.MakeText(this, string.Format("PreAuth succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "PreAuth Token payment succeeded";
                     }
                     else
                     {
-                        Toast.MakeText(this, string.Format("PreAuth failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "PreAuth Token payment failed";
                     }
                     break;
                 case ACTION_REGISTER_CARD:
@@ -261,22 +268,20 @@ namespace Android.Xamarin.SampleApp
                             cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
                         }
 
-                        Toast.MakeText(this, string.Format("Register card succeeded: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+                        msg_prefix = "Register card succeeded";
                     }
                     else
                     {
-                        if (receipt != null)
-                        {
-                            Toast.MakeText(this, string.Format("Register card failed: id: {0}, Message: {1}, result: {2}", receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
-                        }
-                        else
-                        {
-                            Toast.MakeText(this,
-                                string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
-                        }
+                        msg_prefix = "Register card failed";
                     }
                     break;
             }
+
+            if (receipt != null)
+            {
+                Toast.MakeText(this, string.Format("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+            }
+
         }
     }
 }
