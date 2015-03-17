@@ -23,7 +23,7 @@ namespace JudoDotNetXamarinSDK.Configurations
         /// <param name="apiToken">The apiToken of the merchant</param>
         /// <param name="apiSecret">The apiSecret of the merchant</param>
         /// <param name="environment">The environment to use</param>
-        public void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Live)
+        public void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Sandbox)
         {
             var judoSDKManager = JudoSDKManager.Instance;
             judoSDKManager.SetEnvironment(environment);

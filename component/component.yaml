@@ -4,7 +4,6 @@ summary: A Xamarin SDK for JudoPay service
 getting-started: GettingStarted.md
 details: Details.md
 screenshots: 
-  - screenshots/screenshot1.png
 license: License.md
 icons: 
   - judopay-xamarin-sdk_128x128.png
@@ -12,10 +11,23 @@ icons:
 publisher: judoPay
 name: JudoPay Xamarin SDK
 id: judopay-xamarin-sdk
+build:
+  - src/JudoXamarin.sln
+libraries:
+  android:
+    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
+    - ..\src\JudoDotNetXamarinAndroidSDK\bin\Release\JudoDotNetXamarinSDK.dll
 samples: 
-  iOS Sample: ../samples/AwesomeSample/AwesomeSample.sln
-publisher-url: www.judopay.com
-libraries: 
-  ios: ../lib/ios/Awesome.dll
+  Android Sample: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+packages:
+  mobile:
+    - FluentValidation, version=5.5.0.0
+    - JudoPay.PCL, version=1.0.4
+    - Microsoft.Bcl, version=1.1.9
+    - Microsoft.Bcl.Async, version=1.0.168
+    - Microsoft.Bcl.Build, version=1.0.14
+    - Microsoft.Net.Http, version=2.2.22
+    - Newtonsoft.Json, version=6.0.3
+    - Serilog, version=1.4.118
+publisher-url: https://www.judopay.com
 version: "1.0"
-...
