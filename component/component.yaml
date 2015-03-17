@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+summary: A Xamarin SDK for JudoPay service
+getting-started: GettingStarted.md
+details: Details.md
+screenshots: 
+  - screenshots/screenshot1.png
+license: License.md
+icons: 
+  - judopay-xamarin-sdk_128x128.png
+  - judopay-xamarin-sdk_512x512.png
+publisher: judoPay
+name: JudoPay Xamarin SDK
+id: judopay-xamarin-sdk
+samples: 
+  iOS Sample: ../samples/AwesomeSample/AwesomeSample.sln
+publisher-url: www.judopay.com
+libraries: 
+  ios: ../lib/ios/Awesome.dll
+version: "1.0"
+...
