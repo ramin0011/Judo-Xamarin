@@ -21,9 +21,9 @@ namespace JudoDotNetXamarinSDK.Configurations
         /// Sets the configuration to access judo servers
         /// </summary>
         /// <param name="apiToken">The apiToken of the merchant</param>
-        /// <param name="apiSecret">The apiSecret of the merchant</param>
+        /// <param name="apiSecret">The apiSecret of the merchant</param> 
         /// <param name="environment">The environment to use</param>
-        public void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Sandbox)
+        public void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment)
         {
             var judoSDKManager = JudoSDKManager.Instance;
             judoSDKManager.SetEnvironment(environment);
