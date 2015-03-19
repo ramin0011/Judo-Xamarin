@@ -108,14 +108,18 @@ namespace Android.Xamarin.SampleApp
             try
             {
                 var result = await task.ConfigureAwait(false);
-                if (result == null)
+                if (task.IsFaulted || result == null) 
                 {
-                    var errorMessage = !task.IsFaulted && task.Result != null ? task.Result.Error.ErrorMessage : task.Exception.ToString();
-                    dealWithResult(requestCode, Result.FirstUser, task.Result);
-                    return;
+                    ResponseText = task.Exception.ToString();
                 }
-
-                dealWithResult(requestCode, Result.Ok, task.Result);
+                else if (result.HasError)
+                {
+                    dealWithResult(requestCode, Result.FirstUser, result);
+                }
+                else 
+                {
+                    dealWithResult(requestCode, Result.Ok, result);
+                }
             }
             catch (Exception ex)
             {
