@@ -38,7 +38,8 @@
     <Folder Include="Resources\" />
     <Folder Include="Models\" />
     <Folder Include="Enum\" />
-    <Folder Include="New Folder\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -46,6 +47,10 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Enum\CreditCardType.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Controllers\CreditCardController.cs" />
+    <Compile Include="Enum\CreditCardControllerType.cs" />
+    <Compile Include="Enum\BillingCountryOptions.cs" />
+    <Compile Include="Controllers\PlaceHolderTextView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -53,5 +58,77 @@
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
       <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Views\CreditCardView.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_3ds_logos.png" />
+    <BundleResource Include="Resources\ic_3ds_logos%402x.png" />
+    <BundleResource Include="Resources\ic_3ds_logos%403x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5%402x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6%402x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_shadow_light.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_shadow_light%402x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_shadow_light%403x.png" />
+    <BundleResource Include="Resources\ic_back.png" />
+    <BundleResource Include="Resources\ic_back%402x.png" />
+    <BundleResource Include="Resources\ic_back%403x.png" />
+    <BundleResource Include="Resources\ic_cancel.png" />
+    <BundleResource Include="Resources\ic_cancel%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_amex.png" />
+    <BundleResource Include="Resources\ic_card_large_amex%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_amex%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2_amex.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2_amex%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_cv2_amex%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_maestro.png" />
+    <BundleResource Include="Resources\ic_card_large_maestro%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_maestro%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_mastercard.png" />
+    <BundleResource Include="Resources\ic_card_large_mastercard%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_mastercard%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_unknown.png" />
+    <BundleResource Include="Resources\ic_card_large_unknown%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_unknown%403x.png" />
+    <BundleResource Include="Resources\ic_card_large_visa.png" />
+    <BundleResource Include="Resources\ic_card_large_visa%402x.png" />
+    <BundleResource Include="Resources\ic_card_large_visa%403x.png" />
+    <BundleResource Include="Resources\ic_card_logo_strip.png" />
+    <BundleResource Include="Resources\ic_card_logo_strip%402x.png" />
+    <BundleResource Include="Resources\ic_card_logo_strip%403x.png" />
+    <BundleResource Include="Resources\ic_divider_light.png" />
+    <BundleResource Include="Resources\ic_divider_light%402x.png" />
+    <BundleResource Include="Resources\ic_divider_light%403x.png" />
+    <BundleResource Include="Resources\ic_home.png" />
+    <BundleResource Include="Resources\ic_home%402x.png" />
+    <BundleResource Include="Resources\ic_info.png" />
+    <BundleResource Include="Resources\ic_info%402x.png" />
+    <BundleResource Include="Resources\ic_info%403x.png" />
+    <BundleResource Include="Resources\ic_lock.png" />
+    <BundleResource Include="Resources\ic_lock%402x.png" />
+    <BundleResource Include="Resources\ic_lock%403x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5%402x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6%402x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_shadow_light.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_shadow_light%402x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_shadow_light%403x.png" />
+    <BundleResource Include="Resources\ic_selector_country.png" />
+    <BundleResource Include="Resources\ic_selector_country%402x.png" />
+    <BundleResource Include="Resources\ic_selector_country_%403x.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5%402x.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6%402x.png" />
   </ItemGroup>
 </Project>
