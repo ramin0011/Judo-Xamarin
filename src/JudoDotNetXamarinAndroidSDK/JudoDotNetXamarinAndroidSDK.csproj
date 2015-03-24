@@ -126,9 +126,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Styles\" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\Values\judostyles.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
