@@ -40,6 +40,7 @@
     <Folder Include="Enum\" />
     <Folder Include="Controllers\" />
     <Folder Include="Views\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.cs" />
+    <Compile Include="Helpers\ThemeBundleReplacement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
