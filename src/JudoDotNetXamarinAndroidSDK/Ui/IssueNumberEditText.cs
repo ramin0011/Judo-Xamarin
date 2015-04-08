@@ -36,7 +36,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         private void Init()
         {
-            
+            SetInputFilter("");
         }
 
         protected override int LengthToStartValidation()
