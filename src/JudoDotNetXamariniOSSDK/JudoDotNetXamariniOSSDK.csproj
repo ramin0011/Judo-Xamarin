@@ -42,6 +42,8 @@
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
     <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
     <Compile Include="Controllers\WebViewController.cs" />
+    <Compile Include="Helpers\AddressHelper.cs" />
+    <Compile Include="Helpers\CardHelper.cs" />
     <Compile Include="Models\Consumer.cs" />
     <Compile Include="Controllers\LocationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
