@@ -54,6 +54,9 @@
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
+    <Compile Include="Helpers\BSKeyboardControls.cs" />
+    <Compile Include="Enum\BSKeyboardControl.cs" />
+    <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
