@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,14 +35,17 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Models\" />
-    <Folder Include="Enum\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Views\" />
-    <Folder Include="Helpers\" />
+    <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CV2EntryViewController.cs" />
+    <Compile Include="Controllers\ExpiryInfoVC.cs" />
+    <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
+    <Compile Include="Controllers\WebViewController.cs" />
+    <Compile Include="Helpers\AddressHelper.cs" />
+    <Compile Include="Helpers\CardHelper.cs" />
+    <Compile Include="Models\Consumer.cs" />
+    <Compile Include="Controllers\LocationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\Card.cs" />
@@ -135,5 +138,14 @@
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6+%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Views\CV2EntryViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Views\WebViewController.xib" />
   </ItemGroup>
 </Project>

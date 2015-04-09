@@ -7,5 +7,6 @@ namespace JudoDotNetXamariniOSSDK
 		PreviousNext = 1,
 		ControlDone = 2
 	}
+
 }
 
