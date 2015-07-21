@@ -79,13 +79,14 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (charsToDraw.Length > 0) 
 			{
-				CGColor grayColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR").CGColor;
+				CGColor grayColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
 
 				context.SetStrokeColor (grayColor);
 				context.SetFillColor (grayColor);
 
 				var chars = charsToDraw.ToString ().ToCharArray();
-				for (int i = 0; i < charsToDraw.ToString ().Length; i++) 
+			    int i;
+				for (i = 0; i < charsToDraw.ToString ().Length; i++) 
 				{
 					char character = chars[i];
 					if (character == ' ') {
@@ -98,12 +99,12 @@ namespace JudoDotNetXamariniOSSDK
 						#else
 						CGRect box = rect.Inset (3, 3);
 						#endif
-						const nfloat radius = 3;
+						nfloat radius = 3;
 						context.BeginPath ();
 						context.MoveTo (box.GetMinX () + radius, box.GetMinY ());
 						var mask = "0";
 						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
-						mask.DrawString (box.GetMinX (), box.GetMinY (), drawFont);
+                        mask.DrawString(box, drawFont);
 						r.X += Offset.Size.Width;
 						continue;
 					}
@@ -114,7 +115,7 @@ namespace JudoDotNetXamariniOSSDK
 				charsToDraw.Length -= i;
 				if (charsToDraw.Length == 0) 
 				{
-					grayText.Substring(charsToDraw.Location, charsToDraw.Length).DrawString (r.Location, Font);
+					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, Font);
 				}
 			}
 		}
@@ -128,6 +129,8 @@ namespace JudoDotNetXamariniOSSDK
 		public nfloat WidthFromOffset()
 		{
 			var endText = Text.Substring (ShowTextOffset, Text.Length - ShowTextOffset);
+
+		    return 0;
 		}
 	}
 }

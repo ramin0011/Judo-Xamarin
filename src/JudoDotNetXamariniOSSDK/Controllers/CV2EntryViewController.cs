@@ -1,7 +1,8 @@
 using System;
 using System.Drawing;
-
+using CoreAnimation;
 using CoreFoundation;
+using CoreGraphics;
 using UIKit;
 using Foundation;
 
@@ -31,11 +32,11 @@ namespace JudoDotNetXamariniOSSDK.Controllers
     public class CV2EntryViewController : UIViewController
     {
 
-        public Transaction transaction;
+        //public Transaction transaction;
         public NSDictionary cardInfo;
         public Card judoCard;
 
-        public void completionBlock(BOOL success, Card card);
+        public void completionBlock(bool success, Card card);
 
         public UILabel lastFourLabel { get; set; }
         public UILabel transactionInfoLabel { get; set; }
@@ -47,13 +48,13 @@ namespace JudoDotNetXamariniOSSDK.Controllers
         public UIButton expiryInfoButton { get; set; }
 
         // CreditCard Info
-        CREDIT_CARD_TYPE type;		// brand
+        CreditCardType type;		// brand
         int numberLength;	    // length of formatted number only
         int ccv;				// three or 4 digits
         // we may need to change ccv datatype as string
 
         // States
-        BOOL completelyDone;
+        bool completelyDone;
 
         public CV2EntryViewController()
         {
@@ -81,26 +82,26 @@ namespace JudoDotNetXamariniOSSDK.Controllers
             base.ViewDidLoad();
 
             // Perform any additional setup after loading the view
-            UIImage patternImage = ThemeBundleReplacement.BundledOrReplacement("bg_light_iPhone5");
+            UIImage patternImage = ThemeBundleReplacement.BundledOrReplacementImage("bg_light_iPhone5", BundledOrReplacementOptions.BundledOrReplacement);
             this.View.BackgroundColor = UIColor.FromPatternImage(patternImage);
     
 	        NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-            defaultCenter.AddObserver(this.Select())
+            defaultCenter.AddObserver(this.Select());
             //[defaultCenter addObserver:self selector:@selector(keyboardMoving:) name:UIKeyboardWillShowNotification object:nil];	// dummyTV
             //[defaultCenter addObserver:self selector:@selector(keyboardMoving:) name:UIKeyboardDidShowNotification object:nil];		// dummyTV
             //[defaultCenter addObserver:self selector:@selector(keyboardMoving:) name:UIKeyboardWillHideNotification object:nil];	// passwordTextField
     
             UIEdgeInsets insets = UIEdgeInsetsMake(0.0, 20.0, 0.0, 20.0);
-            UIImage activeImage = ThemeBundleReplacement.BundledOrReplacement("btn_pay_normal_iPhone6");
-            UIImage inactiveImage = ThemeBundleReplacement.BundledOrReplacement("btn_pay_inactive_iPhone6");
+            UIImage activeImage = ThemeBundleReplacement.BundledOrReplacementImage("btn_pay_normal_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
+            UIImage inactiveImage = ThemeBundleReplacement.BundledOrReplacementImage("btn_pay_inactive_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
             UIImage resizableActiveImage = activeImage.CreateResizableImage(insets);
             UIImage resizableInactiveImage = inactiveImage.CreateResizableImage(insets);
     
             this.submitButton.SetBackgroundImage(resizableActiveImage, UIControlState.Normal);
             this.submitButton.SetBackgroundImage(resizableInactiveImage, UIControlState.Disabled);
 
-            this.submitButton.SetTitleColor(ThemeBundleReplacement.BundledOrReplacement("GRAY_COLOR"), UIControlState.Normal);
-            this.cancelButton.SetTitleColor(ThemeBundleReplacement.BundledOrReplacement("GRAY_COLOR"), UIControlState.Normal);
+            this.submitButton.SetTitleColor(ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Normal);
+            this.cancelButton.SetTitleColor(ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Normal);
 
 	        this.editCard;
 
@@ -116,14 +117,14 @@ namespace JudoDotNetXamariniOSSDK.Controllers
             creditCardImage.Layer.CornerRadius = 4.0f;
             creditCardImage.Layer.MasksToBounds = true;
     
-            UIImage image = ThemeBundleReplacement.BundledOrReplacement("card_unknown");
+            UIImage image = ThemeBundleReplacement.BundledOrReplacementImage("card_unknown", BundledOrReplacementOptions.BundledOrReplacement);
     
-            creditCardImage.image =image;
+            creditCardImage.image = image;
     
 	        CALayer layer = containerView.layer;
 	        layer.cornerRadius = 4.0;
 	        layer.masksToBounds = true;
-	        layer.borderColor = ThemeBundleReplacement.BundledOrReplacement("LIGHT_GRAY_COLOR", CGColor);
+	        layer.borderColor = ThemeBundleReplacement.BundledOrReplacementColor("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 	        layer.borderWidth = 1;
     
 	        layer = textScroller.layer;
@@ -202,7 +203,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
         void override textViewDidChange(UITextView textView)
         {
-            int maxLength = type == AMEX ? 4 : 3;
+            int maxLength = type == CreditCardType.AMEX ? 4 : 3;
     
             int lengthAfterChange = (int)textView.text.length;
     
@@ -214,12 +215,12 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
         bool textView(UITextView textView, NSRange range, NSString text)
         {
-	        int maxLength = type == AMEX ? 4 : 3;
+	        int maxLength = type == CreditCardType.AMEX ? 4 : 3;
     
-            unsigned long lengthAfterChange = textView.text.length + text.length - range.length;
+            ulong lengthAfterChange = textView.text.length + text.length - range.length;
     
             if (lengthAfterChange <= maxLength) {
-                const unichar spaces[] = {' ',' ',' ',' '};
+                const ushort spaces[] = {' ',' ',' ',' '};
                 //placeholderTextView.text = ["CV2 " stringByReplacingCharactersInRange:NSMakeRange(0, lengthAfterChange) withString:[NSString stringWithCharacters:&spaces[0] length:lengthAfterChange]];
                 placeholderTextView.text ="";
 
@@ -267,7 +268,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
         void editCard
         {
-	        dispatch_async(dispatch_get_main_queue(), ^{ [self updateUI]; });
+	        dispatch_async(dispatch_get_main_queue(), { [self updateUI]; });
         }
 
         void KeyboardControlsDonePressed(BSKeyboardControls keyboardControls)

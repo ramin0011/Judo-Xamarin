@@ -16,7 +16,7 @@ namespace JudoDotNetXamariniOSSDK
 		public string CountryCode {get; set;}
 		public CreditCardType CardType { get; set; }
 
-		private Card(string cardNumber = null, string expiryDate = null, string cv2 = null, string startDate = null, string issueNumber = null, 
+		public Card(string cardNumber = null, string expiryDate = null, string cv2 = null, string startDate = null, string issueNumber = null, 
 			string cardToken = null, string lastFour = null, CreditCardType? cardType = null, string postCode = null, string countryCode = null)
 		{
 			CardNumber = cardNumber;
@@ -35,15 +35,15 @@ namespace JudoDotNetXamariniOSSDK
 			CountryCode = countryCode;
 		}
 
-		public Card(string cardNumber, string expiryDate, string cv2, string startDate = null, string issueNumber = null) : 
-														this(cardNumber: cardNumber, expirydate: expiryDate, cv2: cv2, startDate: startDate, issueNumber: issueNumber)
-		{
-		}
+        //public Card(string cardNumber, string expiryDate, string cv2, string startDate = null, string issueNumber = null) :
+        //    this(cardNumber: cardNumber, expiryDate: expiryDate, cv2: cv2, startDate: startDate, issueNumber: issueNumber)
+        //{
+        //}
 
-		public Card(string cardToken, string expiryDate, string lastFour, CreditCardType cardType, string startDate = null, string issueNumber = null) :
-														this(cardToken: cardToken, expiryDate: expiryDate, lastFour: lastFour, cardType: cardType, startDate: startDate, issueNumber: issueNumber)
-		{
-		}
+        //public Card(string cardToken, string expiryDate, string lastFour, CreditCardType cardType, string startDate = null, string issueNumber = null) :
+        //    this(cardToken: cardToken, expiryDate: expiryDate, lastFour: lastFour, cardType: cardType, startDate: startDate, issueNumber: issueNumber)
+        //{
+        //}
 
 		public Card(Dictionary<string, object> details)
 		{

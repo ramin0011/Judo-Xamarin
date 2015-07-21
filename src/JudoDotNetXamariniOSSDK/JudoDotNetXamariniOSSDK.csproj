@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Collections" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
@@ -38,14 +39,16 @@
     <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CV2EntryViewController.cs" />
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
+    <Compile Include="Controllers\LocationManager.cs" />
+    <Compile Include="Controllers\PlaceHolderTextView.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
-    <Compile Include="Controllers\WebViewController.cs" />
     <Compile Include="Helpers\AddressHelper.cs" />
     <Compile Include="Helpers\CardHelper.cs" />
     <Compile Include="Models\Consumer.cs" />
-    <Compile Include="Controllers\LocationManager.cs" />
+    <Compile Include="Models\Receipt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\Card.cs" />
@@ -54,11 +57,10 @@
     <Compile Include="Controllers\CreditCardController.cs" />
     <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
-    <Compile Include="Controllers\PlaceHolderTextView.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
-    <Compile Include="Helpers\BSKeyboardControls.cs" />
     <Compile Include="Enum\BSKeyboardControl.cs" />
     <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
+    <Compile Include="Utils\CardBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

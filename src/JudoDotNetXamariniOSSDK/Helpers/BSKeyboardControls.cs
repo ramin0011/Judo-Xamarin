@@ -55,14 +55,6 @@ namespace JudoDotNetXamariniOSSDK
             this.Fields = fields;
         }
 
-        private void segmentedControlValueChanged(object sender)
-        {
-
-        }
-
-        private void doneButtonPressed(object sender)
-        {
-        }
 
         private UIView _activeField;
         public UIView ActiveField
@@ -71,16 +63,16 @@ namespace JudoDotNetXamariniOSSDK
             { return _activeField; }
             set
             {
-                UIView activeField = value
-                if (activeField != this.ActiveField)
+                //UIView activeField = value
+                if (value != this.ActiveField)
                 {
-                    if (Fields.conteainobject(activeField)) // conteainobject needs to be implement 
+                    if (Fields.conteainobject(value)) // conteainobject needs to be implement 
                     {
-                        _activeField = activeField;
+                        _activeField = value;
         
                         if (!ActiveField.IsFirstResponder)
                         {
-                            activeField.BecomeFirstResponder();
+                            _activeField.BecomeFirstResponder();
                         }
         
                         this.SegmentedControl.Enabled = true;
@@ -248,7 +240,7 @@ namespace JudoDotNetXamariniOSSDK
     
             if (VisibleControls & BSKeyboardControl.ControlDone)
             {
-                items.Add(UIBarButtonItem.Alloc(UIBarButtonSystemItem);
+                items.Add(UIBarButtonItem.Alloc(UIBarButtonSystemItem));
                 items.Add(DoneButton);
             }
     

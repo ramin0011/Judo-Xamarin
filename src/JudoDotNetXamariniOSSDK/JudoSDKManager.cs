@@ -7,7 +7,7 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public class JudoSDKManager
 	{
-		internal readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
+		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
 
 		Card currentCard {get; set;}
 		CLLocation location {get; set;}
@@ -17,6 +17,7 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool AVSEnabled { get; set; }
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
+        private static UIWindow window;
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -63,7 +64,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static Dictionary<string, string> GetClientDetails(string deviceId)
 		{
-			
+		    return null;
 		}
 
 		public static void SetUserAgent()
@@ -73,7 +74,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static bool ShouldCheckUserAgent()
 		{
-
+		    return false;
 		}
 
 		public static void HandleApplicationOpenURL(string url)
@@ -83,7 +84,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static CreditCardController GetCreditCardController()
 		{
-
+		    return null;
 		}
 
 		//TODO: correct the parameter for failureBlock action to be something meaningful instead of a string
@@ -96,8 +97,19 @@ namespace JudoDotNetXamariniOSSDK
 		public static void MakeAPayment(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{
+            // call UI 
+            CreditCardController ctrl = new CreditCardController();
+            // create a new window instance based on the screen size
+            window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
 
-		}
+            var controller = new UIViewController();
+            controller.View.BackgroundColor = UIColor.White;
+
+            window.RootViewController = controller;
+
+            // make the window visible
+            window.MakeKeyAndVisible();
+        }
 
 		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)

@@ -21,15 +21,16 @@ namespace JudoDotNetXamariniOSSDK
 
         public bool prefersStatusBarHidden()
         {
-            this.NavigationController = null;
+            //this.NavigationController = null;
+            return false;
         }
 
         public override void ViewDidLoad()
         {
-            this.Title = ThemeBundleReplacement.bundledOrReplacementStringNamed("cardEntry");
-            UIImage *patternImage = ThemeBundleReplacement.bundledOrReplacementImageNamed("bg_light_iPhone5");
-            this.View.BackgroundColor = UIColor.FromPatternImage(patternImage);
-    
+            this.Title = ThemeBundleReplacement.BundledOrReplacementString("cardEntry", BundledOrReplacementOptions.BundledOrReplacement);
+            UIImage patternImage = ThemeBundleReplacement.BundledOrReplacementImage("bg_light_iPhone5", BundledOrReplacementOptions.BundledOrReplacement);
+            if (patternImage != null) this.View.BackgroundColor = UIColor.FromPatternImage(patternImage);
+
             this.TabBarController.TabBar.Hidden = true;
 
             base.ViewDidLoad();

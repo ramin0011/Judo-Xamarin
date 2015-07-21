@@ -39,7 +39,7 @@ namespace JudoDotNetXamariniOSSDK
 		private UILabel StartDateWarningLabel {get; set;}
 		private UITextField IssueNumberTextView {get; set;}
 		private UILabel IssueNumberLabel {get; set;}
-		private UILabel IssueNumberContainerView {get; set;}
+		private UIView IssueNumberContainerView {get; set;}
 
 		private UIView PickerViewContainer {get; set;}
 		private UIPickerView PickerView {get; set;}
@@ -122,9 +122,9 @@ namespace JudoDotNetXamariniOSSDK
 			defaultCenter.AddObserver(UIKeyboard.DidShowNotification, keyboardMoving);
 			defaultCenter.AddObserver(UIKeyboard.WillHideNotification, keyboardMoving);
 
-			SubmitButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement));
+			SubmitButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Application);
 
-			UIEdgeInsets insets = new UIEdgeInsets (0.0, 20.0, 0.0, 20.0);
+			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
 			UIImage activeImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_normal_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
 			UIImage inactiveImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_inactive_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
 			UIImage resizableActiveImage = activeImage.CreateResizableImage (insets);
@@ -133,7 +133,7 @@ namespace JudoDotNetXamariniOSSDK
 			SubmitButton.SetBackgroundImage (resizableActiveImage, UIControlState.Normal);
 			SubmitButton.SetBackgroundImage (resizableInactiveImage, UIControlState.Disabled);
 
-			CancelButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR"), UIControlState.Normal);
+			CancelButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Normal);
 
 			CountryButton.Layer.CornerRadius = 4.0f;
 			CountryButton.Layer.MasksToBounds = true;
@@ -150,20 +150,20 @@ namespace JudoDotNetXamariniOSSDK
 			StartDateContainerView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
 			StartDateContainerView.Layer.BorderWidth = 1;
 
-			IssueNumberContainerTextView.Layer.CornerRadius = 4.0f;
-			IssueNumberContainerTextView.Layer.MasksToBounds = true;
-			IssueNumberContainerTextView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
-			IssueNumberContainerTextView.Layer.BorderWidth = 1;
+            IssueNumberContainerView.Layer.CornerRadius = 4.0f;
+            IssueNumberContainerView.Layer.MasksToBounds = true;
+            IssueNumberContainerView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+            IssueNumberContainerView.Layer.BorderWidth = 1;
 
 			StartDatePlaceholder.TextColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 			StartDateTextField.TextColor = ThemeBundleReplacement.BundledOrReplacementColor ("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 
-			IssueNumberContainerTextView.TextColor = ThemeBundleReplacement.BundledOrReplacementColor ("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
+            IssueNumberTextView.TextColor = ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 
 			editCard();
 
 			CGRect rectangle = ccText.Frame;
-			rectangle.Size.Height = 36;
+			//rectangle.Size.Height = 36;
 			ccText.Frame = rectangle;
 
 			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
@@ -198,7 +198,7 @@ namespace JudoDotNetXamariniOSSDK
 			UITextPosition end = ccText.GetPosition (start, 24);
 			UITextRange range = ccText.GetTextRange (start, end);
 			CGRect r = ccText.GetFirstRectForRange (range);
-			r.Size.Width /= 24.0f;
+			//r.Size.Width /= 24.0f;
 			ccText.Text = String.Empty;
 
 			CGRect frame = placeView.Frame;
@@ -228,7 +228,7 @@ namespace JudoDotNetXamariniOSSDK
 			dummyTextView.BecomeFirstResponder ();
 
 			NSArray fields = NSArray.FromObjects (ccText, dummyTextView, PostCodeTextField, StartDateTextField, IssueNumberTextView);
-			BSKeyboardControls bd = 
+			//BSKeyboardControls bd = 
 		}
 
 		private void keyboardMoving(NSNotification note){
