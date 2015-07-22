@@ -86,15 +86,11 @@ namespace JudoDotNetXamariniOSSDK
 		bool completelyDone;
 
 		string successMessage;
-
-        //public CreditCardController() : base("CreditCardView", new NSBundle(NSBundle.MainBundle.GetUrlForResource("JudoPay", "bundle")))
-        //{
-        //}
-
-	    public CreditCardController()
-	    {
-	        
-	    }
+		//JudoDotNetXamariniODSDK
+		public CreditCardController() : base("CreditCardView",null)
+        {
+        }
+			
 
 		private bool prefersStatusBarHidden()
 		{

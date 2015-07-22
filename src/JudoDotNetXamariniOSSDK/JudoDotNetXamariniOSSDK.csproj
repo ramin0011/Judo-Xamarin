@@ -30,13 +30,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Collections" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
+    <InterfaceDefinition Include="Views\CreditCardView2.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -61,6 +61,10 @@
     <Compile Include="Enum\BSKeyboardControl.cs" />
     <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
     <Compile Include="Utils\CardBase.cs" />
+    <Compile Include="Views\CreditCardView2.cs" />
+    <Compile Include="Views\CreditCardView2.designer.cs">
+      <DependentUpon>CreditCardView2.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

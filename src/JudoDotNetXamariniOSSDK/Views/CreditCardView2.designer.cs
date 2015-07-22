@@ -1,0 +1,58 @@
+// WARNING
+//
+// This file has been generated automatically by Xamarin Studio to store outlets and
+// actions made in the UI designer. If it is removed, they will be lost.
+// Manual changes to this file may not be handled correctly.
+//
+using Foundation;
+using System.CodeDom.Compiler;
+
+namespace JudoDotNetXamariniOSSDK
+{
+	[Register ("CreditCardView2")]
+	partial class CreditCardView2
+	{
+		[Outlet]
+		UIKit.UITableViewCell CardDetailCell { get; set; }
+
+		[Outlet]
+		UIKit.UITableViewCell MaestroCell { get; set; }
+
+		[Outlet]
+		UIKit.UITableViewCell PayCell { get; set; }
+
+		[Outlet]
+		UIKit.UITableViewCell SpacerCell { get; set; }
+
+		[Outlet]
+		UIKit.UITableView TableView { get; set; }
+		
+		void ReleaseDesignerOutlets ()
+		{
+			if (CardDetailCell != null) {
+				CardDetailCell.Dispose ();
+				CardDetailCell = null;
+			}
+
+			if (SpacerCell != null) {
+				SpacerCell.Dispose ();
+				SpacerCell = null;
+			}
+
+			if (PayCell != null) {
+				PayCell.Dispose ();
+				PayCell = null;
+			}
+
+			if (MaestroCell != null) {
+				MaestroCell.Dispose ();
+				MaestroCell = null;
+			}
+
+			if (TableView != null) {
+				TableView.Dispose ();
+				TableView = null;
+			}
+		}
+	}
+}

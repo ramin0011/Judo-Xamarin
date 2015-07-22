@@ -98,14 +98,14 @@ namespace JudoDotNetXamariniOSSDK
 									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{
             // call UI 
-            CreditCardController ctrl = new CreditCardController();
+			CreditCardView2 ctrl = new CreditCardView2();
             // create a new window instance based on the screen size
             window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
 
             var controller = new UIViewController();
             controller.View.BackgroundColor = UIColor.White;
 
-            window.RootViewController = controller;
+			window.RootViewController = ctrl;
 
             // make the window visible
             window.MakeKeyAndVisible();

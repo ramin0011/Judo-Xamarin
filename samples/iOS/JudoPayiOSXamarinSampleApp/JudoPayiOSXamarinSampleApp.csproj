@@ -61,9 +61,10 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision />
-    <CodesignResourceRules />
-    <CodesignExtraArgs />
+    <CodesignProvision>
+    </CodesignProvision>
+    <CodesignExtraArgs>
+    </CodesignExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -100,10 +101,6 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignProvision>Automatic:AppStore</CodesignProvision>
     <CodesignKey>iPhone Distribution</CodesignKey>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Win32Resource>
-    </Win32Resource>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -143,10 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\JudoDotNetXamariniOSSDK\JudoDotNetXamariniOSSDK.csproj">
-      <Project>{5e165f2e-27fc-4c2e-9abd-7b54431d4333}</Project>
+      <Project>{5E165F2E-27FC-4C2E-9ABD-7B54431D4333}</Project>
       <Name>JudoDotNetXamariniOSSDK</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
+      <IsAppExtension>False</IsAppExtension>
+      <IsWatchApp>False</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
