@@ -55,7 +55,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		private UILabel StatusHelpLabel { get; set;}
 		private UILabel PleaseRecheckNumberLabel {get; set;}
-		private NSMutableArray CellsToShow {get; set;}
+		private NSArray CellsToShow {get; set;}
 
 		private NSLayoutConstraint PickBottomConstraint {get; set;}
 
@@ -101,7 +101,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidLoad ();
 		
-			CellsToShow = (NSMutableArray)NSMutableArray.FromObjects (new []{ CardDetailsCell, ReassuringTextCell, SpacerCell, PayCell, null });
+			CellsToShow = NSMutableArray.FromObjects (new []{ CardDetailsCell, ReassuringTextCell, SpacerCell, PayCell });
 
 			UIImage patternImage = ThemeBundleReplacement.BundledOrReplacementImage ("bg_light_iPhone5", BundledOrReplacementOptions.BundledOrReplacement);
 			View.BackgroundColor = UIColor.FromPatternImage (patternImage);

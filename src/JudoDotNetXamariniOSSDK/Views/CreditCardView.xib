@@ -108,24 +108,40 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sby-25-R0p">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="hmK-XB-UhH"/>
                         <outlet property="delegate" destination="-1" id="x5R-Y8-T93"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5c-pA-dwZ">
+                    <rect key="frame" x="8" y="466" width="46" height="30"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1C-Ga-eMF">
+                    <rect key="frame" x="266" y="466" width="46" height="30"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="cUJ-u6-eOF" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="523-lJ-gMr"/>
                 <constraint firstAttribute="centerX" secondItem="sby-25-R0p" secondAttribute="centerX" id="66A-mL-g4o"/>
+                <constraint firstItem="B5c-pA-dwZ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="8" id="Dfp-82-3rN"/>
+                <constraint firstItem="cUJ-u6-eOF" firstAttribute="top" secondItem="F1C-Ga-eMF" secondAttribute="bottom" constant="8" id="R1b-b6-Ag9"/>
                 <constraint firstAttribute="trailing" secondItem="cUJ-u6-eOF" secondAttribute="trailing" id="RI6-D3-9Pm"/>
-                <constraint firstAttribute="centerY" secondItem="sby-25-R0p" secondAttribute="centerY" id="TWF-eC-Vis"/>
+                <constraint firstItem="cUJ-u6-eOF" firstAttribute="top" secondItem="B5c-pA-dwZ" secondAttribute="bottom" constant="8" id="SDt-Ke-Z1d"/>
+                <constraint firstAttribute="centerY" secondItem="sby-25-R0p" secondAttribute="centerY" constant="112" id="TWF-eC-Vis"/>
                 <constraint firstItem="sby-25-R0p" firstAttribute="top" secondItem="1" secondAttribute="top" id="aO8-A1-Cj9"/>
                 <constraint firstAttribute="trailing" secondItem="sby-25-R0p" secondAttribute="trailing" id="bfG-5G-atR"/>
                 <constraint firstAttribute="bottom" secondItem="cUJ-u6-eOF" secondAttribute="bottom" constant="-260" id="nnI-HT-SeJ"/>
-                <constraint firstAttribute="bottom" secondItem="sby-25-R0p" secondAttribute="bottom" id="nqR-BV-dEl"/>
+                <constraint firstAttribute="bottom" secondItem="sby-25-R0p" secondAttribute="bottom" constant="224" id="nqR-BV-dEl"/>
+                <constraint firstAttribute="trailing" secondItem="F1C-Ga-eMF" secondAttribute="trailing" constant="8" id="s2O-Yk-1l2"/>
                 <constraint firstItem="sby-25-R0p" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="tj6-TL-Qbn"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -156,7 +172,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ky3-ye-zZG">
                                 <rect key="frame" x="83" y="9" width="205" height="44"/>
                                 <subviews>
-                                    <scrollView tag="56" contentMode="scaleToFill" ambiguous="YES" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                                    <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7">
                                         <rect key="frame" x="0.0" y="0.0" width="205" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14">
@@ -165,18 +181,20 @@
                                             </view>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13" customClass="PlaceHolderTextView">
                                                 <rect key="frame" x="0.0" y="0.0" width="246" height="44"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" text="1111 2222 3333 4444" translatesAutoresizingMaskIntoConstraints="NO" id="12">
+                                                        <rect key="frame" x="0.0" y="4" width="640" height="32"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="textColor" red="0.45882356169999999" green="0.45882356169999999" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
+                                                        <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="-1" id="111"/>
+                                                        </connections>
+                                                    </textView>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
-                                            <textView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" text="1111 2222 3333 4444" translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                                                <rect key="frame" x="0.0" y="4" width="640" height="32"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <color key="textColor" red="0.45882356169999999" green="0.45882356169999999" blue="0.45882356169999999" alpha="1" colorSpace="deviceRGB"/>
-                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="-1" id="111"/>
-                                                </connections>
-                                            </textView>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11" userLabel="Clear Button">
                                                 <rect key="frame" x="324" y="0.0" width="44" height="44"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>

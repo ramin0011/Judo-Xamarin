@@ -13,7 +13,19 @@ namespace JudoDotNetXamariniOSSDK
 	partial class CreditCardView2
 	{
 		[Outlet]
+		UIKit.UITableViewCell AVSCell { get; set; }
+
+		[Outlet]
+		UIKit.UIButton CancelButton { get; set; }
+
+		[Outlet]
 		UIKit.UITableViewCell CardDetailCell { get; set; }
+
+		[Outlet]
+		UIKit.UIImageView ccImage { get; set; }
+
+		[Outlet]
+		UIKit.UITextView ccText { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell MaestroCell { get; set; }
@@ -22,21 +34,47 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UITableViewCell PayCell { get; set; }
 
 		[Outlet]
+		UIKit.UITableViewCell ReassuringTextCell { get; set; }
+
+		[Outlet]
 		UIKit.UITableViewCell SpacerCell { get; set; }
+
+		[Outlet]
+		UIKit.UIButton SubmitButton { get; set; }
 
 		[Outlet]
 		UIKit.UITableView TableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (ccText != null) {
+				ccText.Dispose ();
+				ccText = null;
+			}
+
+			if (ccImage != null) {
+				ccImage.Dispose ();
+				ccImage = null;
+			}
+
+			if (AVSCell != null) {
+				AVSCell.Dispose ();
+				AVSCell = null;
+			}
+
+			if (CancelButton != null) {
+				CancelButton.Dispose ();
+				CancelButton = null;
+			}
+
 			if (CardDetailCell != null) {
 				CardDetailCell.Dispose ();
 				CardDetailCell = null;
 			}
 
-			if (SpacerCell != null) {
-				SpacerCell.Dispose ();
-				SpacerCell = null;
+			if (MaestroCell != null) {
+				MaestroCell.Dispose ();
+				MaestroCell = null;
 			}
 
 			if (PayCell != null) {
@@ -44,9 +82,19 @@ namespace JudoDotNetXamariniOSSDK
 				PayCell = null;
 			}
 
-			if (MaestroCell != null) {
-				MaestroCell.Dispose ();
-				MaestroCell = null;
+			if (ReassuringTextCell != null) {
+				ReassuringTextCell.Dispose ();
+				ReassuringTextCell = null;
+			}
+
+			if (SpacerCell != null) {
+				SpacerCell.Dispose ();
+				SpacerCell = null;
+			}
+
+			if (SubmitButton != null) {
+				SubmitButton.Dispose ();
+				SubmitButton = null;
 			}
 
 			if (TableView != null) {

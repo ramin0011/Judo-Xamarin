@@ -83,7 +83,7 @@ namespace JudoDotNetXamariniOSSDK
                     break;
 				case BundledOrReplacementOptions.Bundled:
 				{
-					return UIImage.FromBundle (getFrameworkBundle ().PathForResource (imageName, "png"));
+					return UIImage.FromBundle (getFrameworkBundle().PathForResource (imageName, "png"));
 				}
 
 				break;
