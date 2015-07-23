@@ -22,16 +22,22 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UITableViewCell CardDetailCell { get; set; }
 
 		[Outlet]
-		UIKit.UIImageView ccImage { get; set; }
+		UIKit.UITextView ccText { get; set; }
 
 		[Outlet]
-		UIKit.UITextView ccText { get; set; }
+		UIKit.UIView containerView { get; set; }
+
+		[Outlet]
+		UIKit.UIImageView creditCardImage { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell MaestroCell { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell PayCell { get; set; }
+
+		[Outlet]
+		JudoDotNetXamariniOSSDK.PlaceHolderTextView placeView { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell ReassuringTextCell { get; set; }
@@ -44,17 +50,15 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		UIKit.UITableView TableView { get; set; }
+
+		[Outlet]
+		UIKit.UIScrollView textScroller { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ccText != null) {
-				ccText.Dispose ();
-				ccText = null;
-			}
-
-			if (ccImage != null) {
-				ccImage.Dispose ();
-				ccImage = null;
+			if (containerView != null) {
+				containerView.Dispose ();
+				containerView = null;
 			}
 
 			if (AVSCell != null) {
@@ -72,6 +76,16 @@ namespace JudoDotNetXamariniOSSDK
 				CardDetailCell = null;
 			}
 
+			if (ccText != null) {
+				ccText.Dispose ();
+				ccText = null;
+			}
+
+			if (creditCardImage != null) {
+				creditCardImage.Dispose ();
+				creditCardImage = null;
+			}
+
 			if (MaestroCell != null) {
 				MaestroCell.Dispose ();
 				MaestroCell = null;
@@ -80,6 +94,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (PayCell != null) {
 				PayCell.Dispose ();
 				PayCell = null;
+			}
+
+			if (placeView != null) {
+				placeView.Dispose ();
+				placeView = null;
 			}
 
 			if (ReassuringTextCell != null) {
@@ -100,6 +119,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (TableView != null) {
 				TableView.Dispose ();
 				TableView = null;
+			}
+
+			if (textScroller != null) {
+				textScroller.Dispose ();
+				textScroller = null;
 			}
 		}
 	}

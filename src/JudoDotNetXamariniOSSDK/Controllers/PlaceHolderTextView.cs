@@ -7,7 +7,7 @@ using Foundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	
+	[Register("PlaceHolderTextView")]
 	public class PlaceHolderTextView : UIView
 	{
 		
@@ -23,9 +23,13 @@ namespace JudoDotNetXamariniOSSDK
 		public int ShowTextOffset { get; set; }
 		public CGRect Offset { get; set;}
 
-		public PlaceHolderTextView (CGRect frame) : base(frame)
+//		public PlaceHolderTextView (CGRect frame) : base(frame)
+//		{
+//			
+//		}
+
+		public PlaceHolderTextView(IntPtr p) : base(p)
 		{
-			
 		}
 
 		private void SetText(string newText)

@@ -14,13 +14,6 @@ namespace JudoDotNetXamariniOSSDK
 		public Card judoCard {get; set;}
 		public event Action<bool, Card> CompletionBlock;
 
-//		private UITableView TableView { get; set; }
-//		private UITableViewCell CardDetailsCell {get; set;}
-//		private UITableViewCell ReassuringTextCell { get; set;}
-////		private UITableViewCell AVSCell { get; set; }
-//		private UITableViewCell MaestroCell { get; set;}
-//		private UITableViewCell PayCell {get; set;}
-//		private UITableViewCell SpacerCell {get; set;}
 
 		private UILabel PostCodeLabel { get; set;}
 		private UIView PostCodeBackgroundView {get; set;}
@@ -45,8 +38,8 @@ namespace JudoDotNetXamariniOSSDK
 		private UIButton PickerDoneCoverButton {get; set;}
 
 		private UILabel TransactionInfoLabel {get; set;}
-		private UIButton SubmitButton {get; set;}
-		private UIButton CancelButton {get; set;}
+//		private UIButton SubmitButton {get; set;}
+//		private UIButton CancelButton {get; set;}
 
 		//private BSKeyboardControls KeyboardControls {get; set;}
 		private UIButton NumberFieldClearButton {get; set;}
@@ -54,21 +47,16 @@ namespace JudoDotNetXamariniOSSDK
 
 		private UILabel StatusHelpLabel { get; set;}
 		private UILabel PleaseRecheckNumberLabel {get; set;}
-		private NSArray CellsToShow {get; set;}
+		private UITableViewCell[] CellsToShow {get; set;}
 
 		private NSLayoutConstraint PickBottomConstraint {get; set;}
 
-		private UIImageView creditCardImage;
-		private UIView containerView;
 
-		private UIScrollView textScroller;
 		private UIView warningView;
-		private PlaceHolderTextView placeView;
-		private UITextView ccText;
 		private UIButton updateCard;
 		private UITextView dummyTextView;
 
-		UIImageView ccImage;
+
 		UIImageView ccBackImage;
 
 		nfloat oldX;
@@ -85,7 +73,10 @@ namespace JudoDotNetXamariniOSSDK
 		bool completelyDone;
 
 		string successMessage;
-		//JudoDotNetXamariniODSDK
+
+
+
+
 		public CreditCardView2() : base("CreditCardView2",null)
 		{
 		}
@@ -106,8 +97,9 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidLoad ();
 
-			CellsToShow = NSMutableArray.FromObjects (new []{ CardDetailCell, ReassuringTextCell, SpacerCell, PayCell });
-		
+
+			SetUpTableView ();
+
 			this.View.BackgroundColor = UIColor.FromRGB(245f,245f,245f);
 
 			switch (CreditCardControllerType) 
@@ -127,7 +119,6 @@ namespace JudoDotNetXamariniOSSDK
 			defaultCenter.AddObserver(UIKeyboard.DidShowNotification, keyboardMoving);
 			defaultCenter.AddObserver(UIKeyboard.WillHideNotification, keyboardMoving);
 
-//			SubmitButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Application);
 			SubmitButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
 			UIImage activeImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_normal_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
@@ -140,32 +131,17 @@ namespace JudoDotNetXamariniOSSDK
 
 			CancelButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor("GRAYw_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Normal);
 
-			CountryButton.Layer.CornerRadius = 4.0f;
-			CountryButton.Layer.MasksToBounds = true;
-			CountryLabel.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
-			CountryButton.Layer.BorderWidth = 1;
 
-			PostCodeBackgroundView.Layer.CornerRadius = 4.0f;
-			PostCodeBackgroundView.Layer.MasksToBounds = true;
-			PostCodeBackgroundView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
-			PostCodeBackgroundView.Layer.BorderWidth = 1;
-
-			StartDateContainerView.Layer.CornerRadius = 4.0f;
-			StartDateContainerView.Layer.MasksToBounds = true;
-			StartDateContainerView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
-			StartDateContainerView.Layer.BorderWidth = 1;
-
-			IssueNumberContainerView.Layer.CornerRadius = 4.0f;
-			IssueNumberContainerView.Layer.MasksToBounds = true;
-			IssueNumberContainerView.Layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
-			IssueNumberContainerView.Layer.BorderWidth = 1;
-
-			StartDatePlaceholder.TextColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
-			StartDateTextField.TextColor = ThemeBundleReplacement.BundledOrReplacementColor ("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
-
-			IssueNumberTextView.TextColor = ThemeBundleReplacement.BundledOrReplacementColor("GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 
 			editCard();
+
+
+
+		}
+
+		void SetUpTableView ()
+		{
+			CellsToShow = new UITableViewCell[]{CardDetailCell, ReassuringTextCell };
 
 			CGRect rectangle = ccText.Frame;
 			//rectangle.Size.Height = 36;
@@ -176,7 +152,7 @@ namespace JudoDotNetXamariniOSSDK
 			creditCardImage.Layer.CornerRadius = 4.0f;
 			creditCardImage.Layer.MasksToBounds = true;
 
-			StatusHelpLabel.Text = ThemeBundleReplacement.BundledOrReplacementString ("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
+			//StatusHelpLabel.Text = ThemeBundleReplacement.BundledOrReplacementString ("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
 
 			UIImage image = ThemeBundleReplacement.BundledOrReplacementImage ("ic_card_large_unknown", BundledOrReplacementOptions.BundledOrReplacement);
 
@@ -187,7 +163,7 @@ namespace JudoDotNetXamariniOSSDK
 			CALayer layer = containerView.Layer;
 			layer.CornerRadius = 4.0f;
 			layer.MasksToBounds = true;
-			layer.BorderColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+			layer.BorderColor = ColourHelper.GetColour("0xC3C3C3FF").CGColor;  //ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.Bundled).CGColor;
 			layer.BorderWidth = 1;
 
 			layer = textScroller.Layer;
@@ -208,32 +184,25 @@ namespace JudoDotNetXamariniOSSDK
 
 			CGRect frame = placeView.Frame;
 
-			placeView = new PlaceHolderTextView (frame);
+			//placeView = new PlaceHolderTextView ();
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
 			placeView.ShowTextOffset = 0;
 			placeView.Offset = r;
-			placeView.BackgroundColor = ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
+			placeView.BackgroundColor = ColourHelper.GetColour ("0x00000000"); //  ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 
 			textScroller.InsertSubview (placeView, 0);
 
 			type = CreditCardType.InvalidCard;
 
-			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
-			dummyTextView.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20; 
-			PostCodeTextField.Font = ccText.Font;
-			PostCodeTextField.TextColor = ccText.TextColor;
-			CountryLabel.Font = ccText.Font;
-			CountryLabel.TextColor = ccText.TextColor;
-			StartDateTextField.Font = ccText.Font;
-			StartDateTextField.TextColor = ccText.TextColor;
-			IssueNumberTextView.Font = ccText.Font;
-			IssueNumberTextView.TextColor = ccText.TextColor;
 
-			dummyTextView.BecomeFirstResponder ();
+			//dummyTextView.BecomeFirstResponder ();
 
-			NSArray fields = NSArray.FromObjects (ccText, dummyTextView, PostCodeTextField, StartDateTextField, IssueNumberTextView);
-			//BSKeyboardControls bd = 
+			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow);
+			TableView.Source = tableSource;
+			TableView.SeparatorColor = UIColor.Clear;
+
+			NSArray fields = NSArray.FromObjects (ccText,dummyTextView , PostCodeTextField, StartDateTextField, IssueNumberTextView);
 		}
 
 		private void keyboardMoving(NSNotification note){

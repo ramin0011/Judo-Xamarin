@@ -65,6 +65,8 @@
     <Compile Include="Views\CreditCardView2.designer.cs">
       <DependentUpon>CreditCardView2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ColourHelper.cs" />
+    <Compile Include="TableSources\AddPaymentTableSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -144,6 +146,16 @@
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6+%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6%402x.png" />
+    <BundleResource Include="Resources\btn_cancel_light_%403x.png" />
+    <BundleResource Include="Resources\btn_cancel_light.png" />
+    <BundleResource Include="Resources\btn_cancel_light%402x.png" />
+    <BundleResource Include="Resources\btn_pay_inactive_iPhone6.png" />
+    <BundleResource Include="Resources\btn_pay_inactive_iPhone6%402x.png" />
+    <BundleResource Include="Resources\btn_pay_inactive_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\btn_pay_normal_iPhone6.png" />
+    <BundleResource Include="Resources\btn_pay_normal_iPhone6%402x.png" />
+    <BundleResource Include="Resources\btn_pay_normal_iPhone6+%403x.png" />
+    <BundleResource Include="JudoTheme.strings" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
@@ -153,5 +165,8 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TableSources\" />
   </ItemGroup>
 </Project>

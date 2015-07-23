@@ -204,7 +204,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			CGRect frame = placeView.Frame;
 
-			placeView = new PlaceHolderTextView (frame);
+			//placeView = new PlaceHolderTextView ();
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
 			placeView.ShowTextOffset = 0;

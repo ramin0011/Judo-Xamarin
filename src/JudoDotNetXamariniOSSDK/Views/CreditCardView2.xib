@@ -16,8 +16,11 @@
                 <outlet property="SpacerCell" destination="M6l-WO-IcD" id="uqB-hw-qZV"/>
                 <outlet property="SubmitButton" destination="GEk-Gj-1De" id="hXm-UB-OnX"/>
                 <outlet property="TableView" destination="qyh-BB-iT4" id="tpb-hg-vI2"/>
-                <outlet property="ccImage" destination="9Tv-4F-d2j" id="nyk-kK-SYx"/>
                 <outlet property="ccText" destination="tOz-2R-QYm" id="tqS-Zd-naN"/>
+                <outlet property="containerView" destination="dB8-gG-3Ae" id="hCA-yS-o1k"/>
+                <outlet property="creditCardImage" destination="9Tv-4F-d2j" id="5zs-ed-9yi"/>
+                <outlet property="placeView" destination="2cB-DV-G4B" id="5HZ-9E-Kbt"/>
+                <outlet property="textScroller" destination="9sL-ek-4SN" id="lgI-JY-QKh"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
             </connections>
         </placeholder>
@@ -26,8 +29,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qyh-BB-iT4" userLabel="TableView">
-                    <rect key="frame" x="0.0" y="56" width="320" height="253"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qyh-BB-iT4" userLabel="TableView">
+                    <rect key="frame" x="0.0" y="56" width="320" height="466"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a Payment " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ka3-ia-vlv">
@@ -37,13 +40,19 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEk-Gj-1De" userLabel="SubmitButton">
-                    <rect key="frame" x="215" y="530" width="46" height="30"/>
+                    <rect key="frame" x="215" y="530" width="105" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="105" id="Mfy-52-25c"/>
+                    </constraints>
                     <state key="normal" title="Button">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8y-my-uAW" userLabel="CancelButton">
-                    <rect key="frame" x="60" y="530" width="46" height="30"/>
+                    <rect key="frame" x="0.0" y="530" width="106" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="106" id="qya-ZP-hGY"/>
+                    </constraints>
                     <state key="normal" title="Button">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -51,21 +60,21 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="qyh-BB-iT4" secondAttribute="bottom" constant="259" id="13I-s6-Uus"/>
-                <constraint firstAttribute="trailing" secondItem="GEk-Gj-1De" secondAttribute="trailing" constant="59" id="6az-qh-gF3"/>
+                <constraint firstAttribute="bottom" secondItem="qyh-BB-iT4" secondAttribute="bottom" constant="46" id="13I-s6-Uus"/>
+                <constraint firstItem="GEk-Gj-1De" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottomMargin" id="4wV-vh-bHy"/>
                 <constraint firstItem="qyh-BB-iT4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Bl-Gv-SL3"/>
                 <constraint firstAttribute="trailing" secondItem="Ka3-ia-vlv" secondAttribute="trailing" constant="59" id="H4Y-uE-DhW"/>
                 <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="I09-CQ-2lj"/>
+                <constraint firstItem="g8y-my-uAW" firstAttribute="leading" secondItem="qyh-BB-iT4" secondAttribute="leading" id="I8t-e9-i54"/>
+                <constraint firstItem="GEk-Gj-1De" firstAttribute="baseline" secondItem="g8y-my-uAW" secondAttribute="baseline" id="TEd-jx-s2Q"/>
                 <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Zwr-ED-oHz"/>
                 <constraint firstItem="qyh-BB-iT4" firstAttribute="top" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="8" id="aiQ-Cq-vyE"/>
                 <constraint firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="e15-id-dWC"/>
-                <constraint firstAttribute="bottom" secondItem="g8y-my-uAW" secondAttribute="bottom" constant="8" id="em2-Eh-vLD"/>
-                <constraint firstItem="g8y-my-uAW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="hxg-OK-Xcd"/>
                 <constraint firstAttribute="bottom" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="520" id="iX6-qm-hPi"/>
-                <constraint firstAttribute="bottom" secondItem="GEk-Gj-1De" secondAttribute="bottom" constant="8" id="j2S-H2-QdR"/>
+                <constraint firstItem="GEk-Gj-1De" firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="tZz-jL-9ax"/>
                 <constraint firstItem="Ka3-ia-vlv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="xuF-VY-dG0"/>
             </constraints>
-            <point key="canvasLocation" x="761" y="336"/>
+            <point key="canvasLocation" x="417" y="241"/>
         </view>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="74" id="lVa-Ic-UsX" userLabel="AVSCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
@@ -219,7 +228,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SB4-0q-naP" userLabel="Credit Card Image">
                                 <rect key="frame" x="13" y="13" width="56" height="35"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="ic_card_large_unknown.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-4F-d2j">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="ic_card_large_unknown.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-4F-d2j" userLabel="creditCardImage">
                                         <rect key="frame" x="0.0" y="0.0" width="56" height="35"/>
                                     </imageView>
                                 </subviews>
@@ -374,7 +383,7 @@
                             <constraint firstAttribute="height" constant="1" id="95P-f8-FDo"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWP-XK-gWh">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWP-XK-gWh">
                         <rect key="frame" x="10" y="52" width="63" height="28"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="hgG-Pn-JPf"/>
@@ -524,7 +533,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="btn_cancel_light.png" width="16" height="16"/>
+        <image name="btn_cancel_light.png" width="63" height="28"/>
         <image name="ic_card_large_unknown.png" width="54" height="35"/>
         <image name="ic_card_logo_strip.png" width="289" height="27"/>
         <image name="ic_divider_light.png" width="1" height="1"/>
