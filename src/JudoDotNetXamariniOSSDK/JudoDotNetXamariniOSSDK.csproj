@@ -67,6 +67,8 @@
     </Compile>
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="TableSources\AddPaymentTableSource.cs" />
+    <Compile Include="Controllers\CardNumberEntryView.cs" />
+    <Compile Include="Helpers\CSRange.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
