@@ -46,6 +46,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UITableViewCell SpacerCell { get; set; }
 
 		[Outlet]
+		UIKit.UILabel StatusHelpLabel { get; set; }
+
+		[Outlet]
 		UIKit.UIButton SubmitButton { get; set; }
 
 		[Outlet]
@@ -56,9 +59,9 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (containerView != null) {
-				containerView.Dispose ();
-				containerView = null;
+			if (StatusHelpLabel != null) {
+				StatusHelpLabel.Dispose ();
+				StatusHelpLabel = null;
 			}
 
 			if (AVSCell != null) {
@@ -79,6 +82,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (ccText != null) {
 				ccText.Dispose ();
 				ccText = null;
+			}
+
+			if (containerView != null) {
+				containerView.Dispose ();
+				containerView = null;
 			}
 
 			if (creditCardImage != null) {

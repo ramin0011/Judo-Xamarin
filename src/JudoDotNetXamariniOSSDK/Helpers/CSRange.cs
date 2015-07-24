@@ -12,7 +12,7 @@ namespace JudoDotNetXamariniOSSDK
 			Length = length;
 		}
 
-		public CSRange (int location, int length)
+		public CSRange ()
 		{
 		}
 	}

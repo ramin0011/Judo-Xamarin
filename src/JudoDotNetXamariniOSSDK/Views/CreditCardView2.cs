@@ -4,6 +4,7 @@ using Foundation;
 using ObjCRuntime;
 using CoreGraphics;
 using CoreAnimation;
+using System.Text;
 
 
 namespace JudoDotNetXamariniOSSDK	      
@@ -45,7 +46,6 @@ namespace JudoDotNetXamariniOSSDK
 		private UIButton NumberFieldClearButton {get; set;}
 		private UIButton ExpiryInfoButton {get; set;}
 
-		private UILabel StatusHelpLabel { get; set;}
 		private UILabel PleaseRecheckNumberLabel {get; set;}
 		private UITableViewCell[] CellsToShow {get; set;}
 
@@ -59,21 +59,34 @@ namespace JudoDotNetXamariniOSSDK
 
 		UIImageView ccBackImage;
 
-		nfloat oldX;
-		nint currentYear;
+		float oldX;
+		int currentYear;
 
 		CreditCardType type;
-		nuint numberLength;
+		int numberLength;
 		string creditCardNum;
-		nint month;
-		nint year;
-		nint ccv;
+		int month;
+		int year;
+		int ccv;
 
 		bool haveFullNames;
 		bool completelyDone;
 
 		string successMessage;
 
+		/// <summary>
+		/// DElegate properties here to avoid GOTO
+		/// </summary>
+		string formattedText;
+		bool flashForError = false;
+		bool updateText = false;
+		bool scrollForward = false;
+		bool deleting = false;
+		bool ret = false;
+		bool hasFullNumber = false;
+		bool deletedSpace = false;
+
+		float widthToLastGroup;
 
 
 
@@ -137,6 +150,43 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+
+
+			float width =  widthToLastGroup;
+
+			CGRect frame = ccText.Frame;
+			frame.Size.Width = width + textScroller.Frame.Size.Width;
+			ccText.Frame = frame;
+			placeView.Frame = frame;
+			textScroller.ContentSize =  new CGSize(frame.size.width, textScroller.contentSize.height);
+
+			textScroller.ScrollEnabled = true;
+			//[textScroller setContentOffset:CGPointMake(0, 0) animated:animated];
+			textScroller.SetContentOffset(new CGPoint(0f,0f),animated);
+			// todo add theses pickerBottomConstraint = -self.pickerViewContainer.bounds.size.height; 
+			//[self.pickerViewContainer layoutIfNeeded];
+
+			if (float.Parse( UIDevice.CurrentDevice.SystemVersion) >= 8.0f) {
+				if (this.View.Bounds.Size.Width > 320f) {
+					float margin = 13f;
+					if (this.View.Bounds.Size.Width > 375) {
+						margin = 18f;
+					}
+					UIEdgeInsets insets = CardDetailCell.ContentView.LayoutMargins;
+					insets.Left = margin;
+					insets.Left = margin;
+					CardDetailCell.ContentView.LayoutMargins = insets;
+					ReassuringTextCell.ContentView.LayoutMargins = insets;
+					AVSCell.ContentView.LayoutMargins = insets;
+					MaestroCell.ContentView.LayoutMargins = insets;
+					PayCell.ContentView.LayoutMargins = insets;
+				}
+			}
+		}
+
 		void SetUpTableView ()
 		{
 			CellsToShow = new UITableViewCell[]{CardDetailCell, ReassuringTextCell };
@@ -170,25 +220,31 @@ namespace JudoDotNetXamariniOSSDK
 
 			textScroller.ScrollEnabled = false;
 	
-			ccText.Text = "0000 0000 0000 0000";
+			ccText.Text = "000011112222333344445555";
 
 			UITextPosition start = ccText.BeginningOfDocument;
 			UITextPosition end = ccText.GetPosition (start, 24);
 			UITextRange range = ccText.GetTextRange (start, end);
 			CGRect r = ccText.GetFirstRectForRange (range);
-			//r.Size.Width /= 24.0f;
-			//ccText.Text = String.Empty;
+			CGSize frameRect = r.Size;
+			frameRect.Width = (r.Size.Width/ 24.0f);
 
+			r .Size= frameRect;
+			ccText.Text = "L";
+		
 			CGRect frame = placeView.Frame;
 
-			//placeView = new PlaceHolderTextView ();
+
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
+			placeView.SetText ("YES");
+
 			placeView.ShowTextOffset = 0;
 			placeView.Offset = r;
 	
-			placeView.BackgroundColor =UIColor.White;
+			placeView.BackgroundColor =UIColor.Clear;
 			textScroller.InsertSubview (placeView, 0);
+
 
 			type = CreditCardType.InvalidCard;
 
@@ -198,54 +254,56 @@ namespace JudoDotNetXamariniOSSDK
 			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow);
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
-
+			SetUpMaskedInput ();
 			NSArray fields = NSArray.FromObjects (ccText,dummyTextView , PostCodeTextField, StartDateTextField, IssueNumberTextView);
 		}
 
 		void SetUpMaskedInput()
 		{
-				
-			ccText.ShouldChangeText.ShouldChangeCharacters = (UITextField textField, NSRange range, string replace) =>
+			ccText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) =>
 			{
-				string formattedText;
-				bool flashForError = false;
-				bool updateText = false;
-				bool scrollForward = false;
-				bool deleting = false;
-				bool ret = false;
-				bool deletedSpace = false;
-
-
+				CSRange range = new CSRange((int)NSRange.Location,(int)NSRange.Length);
+				 formattedText="";
+				 flashForError = false;
+				 updateText = false;
+				 scrollForward = false;
+				 deleting = false;
+				 ret = false;
+				 deletedSpace = false;
 
 				completelyDone = false;
-				if(textField.Text.Length == 0)
+				if(replace.Length == 0)
 				{
 					updateText = true;
 					deleting = true;
-					if(textField.Text.Length) 
+					if(textView.Text.Length!=0) 
 					{	// handle case of delete when there are no characters left to delete
-						char c = textField.Text.Substring(range.Location);
-						if(range.Location && range.Length == 1 && (c == ' ' || c == '/')) {
-							--range.Location;
-							++range.Location;
+						
+						char c = textView.Text.Substring(range.Location,1).ToCharArray()[0];
+						if(range.Location ==1 && range.Length == 1 && (c == ' ' || c == '/')) {
+							range.Location--;
+							range.Length++;
 							deletedSpace = false;
 						}
 					} else {
 						return false;
 					}
 				}
+				var aStringBuilder = new StringBuilder(textView.Text);
+				aStringBuilder.Remove(range.Location,range.Length);
+				aStringBuilder.Insert(range.Location, replace);
+				string newTextOrig = aStringBuilder.ToString();
 
-				string newTextOrig = this.Text.Substring(range.Location,range.Length);// [textView.text stringByReplacingCharactersInRange:range withString:text];
-				int newTextLen = newTextOrig.length;
+				int newTextLen = newTextOrig.Length;
 
 				// added by Rob Phillips
 				// causes the cc entry field to scroll back if the user deletes back beyond the end of the cc number
 				if (range.Location <= numberLength)
 				{
-					haveFullNumber = false;
+					hasFullNumber = false;
 				}
 
-				if(haveFullNumber)
+				if(hasFullNumber)
 				{
 					// commented out by Rob Phillips
 					//		if(range.location <= numberLength) {	// <= account for space after last cc digit
@@ -257,75 +315,82 @@ namespace JudoDotNetXamariniOSSDK
 
 					if (range.Location > numberLength)
 					{
-						scrollForward = true;
+						ScrollForward(true);
 					}
 
 					// Test for delete of a space or /
 					if(deleting) {
 						formattedText = newTextOrig.Substring(range.Location); //[newTextOrig substringToIndex:range.location];	// handles case of deletion interior to the string
 						updateText = false;
-						EndDelegate();
+						return EndDelegate();
 					}
 
 					if(newTextLen > placeView.Text.Length) {
 						flashForError = true;
-						EndDelegate();
+						return EndDelegate();
 					}
 
 					formattedText = newTextOrig;
 
 					CSRange monthRange = new CSRange(placeView.Text.IndexOf("MM"),2); // rangeOfString:@"MM"];
 					if(newTextLen > monthRange.Location) {
-						if(newTextOrig.Substring(monthRange.Location,1) > '1') {
+						if(newTextOrig.Substring(monthRange.Location,1).ToCharArray()[0] > '1') {
 							// support short cut - we prepend a '0' for them
-							formattedText = newTextOrig = "0"+newTextOrig; // stringByReplacingCharactersInRange:range withString:[@"0" stringByAppendingString:text];
+
+							var aStringBuilder2 = new StringBuilder(textView.Text);
+							aStringBuilder2.Remove(range.Location,range.Length);
+							aStringBuilder2.Insert(range.Location,"0"+ replace);
+							formattedText = aStringBuilder2.ToString();
+
+
+							//formattedText = newTextOrig = "0"+newTextOrig; // stringByReplacingCharactersInRange:range withString:[@"0" stringByAppendingString:text];
 							newTextLen = newTextOrig.Length;
 						}
 						if(newTextLen >= (monthRange.Location + monthRange.Length)) {
 							var month = Int32.Parse( newTextOrig.Substring(monthRange.Location,monthRange.Length));
 							if(month < 1 || month > 12) {
-								flashRecheckExpiryDateMessage = true;
-								EndDelegate();
+								flashRecheckExpiryDateMessage();
+								return EndDelegate();
 							}
 						}
 					}
 
 					CSRange yearRange =  new CSRange(placeView.Text.IndexOf("YY"),2);// rangeOfString:@"YY";
 					if(newTextLen > yearRange.Location) {
-						int proposedDecade = (newTextOrig.Substring(yearRange.Location,1) - '0') * 10;
+						int proposedDecade = (newTextOrig.Substring(yearRange.Location,1).ToCharArray()[0] - '0') * 10;
 						int yearDecade = currentYear - (currentYear % 10);
 						// NSLog(@"proposedDecade=%u yearDecade=%u", proposedDecade, yearDecade);
 						if(proposedDecade < yearDecade) {
-							flashRecheckExpiryDateMessage=true;
-							EndDelegate();
+							flashRecheckExpiryDateMessage();
+							return EndDelegate();
 						}
-						if(newTextLen >= (yearRange.location + yearRange.length)) {
-							year = newTextOrig.Substring(yearRange.Location,yearRange.Length); // [[newTextOrig substringWithRange:yearRange] integerValue];
+						if(newTextLen >= (yearRange.Location + yearRange.Length)) {
+							year = Int32.Parse( newTextOrig.Substring(yearRange.Location,yearRange.Length)); // [[newTextOrig substringWithRange:yearRange] integerValue];
 							int diff = year - currentYear;
 							if(diff < 0 || diff > 10) {	// blogs on internet suggest some CCs have dates 50 yeras in the future
-								flashRecheckExpiryDateMessage=true;
-								EndDelegate(); 
+								flashRecheckExpiryDateMessage();
+								return EndDelegate();
 							}
 							if(diff == 0) { // The entered year is the current year, so check that the month is in the future
 								//NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
 								var todaysDate =DateTime.Today;
 								int currentMonth = todaysDate.Month;
 								if (month < currentMonth) {
-									flashRecheckExpiryDateMessage=true;
-									EndDelegate();
+									flashRecheckExpiryDateMessage();
+									return EndDelegate();
 								}
 							}
 							if(creditCardImage != ccBackImage)
 							{
-								UIViewAnimationOptions transType = (type == AMEX) ? UIViewAnimationOptionTransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
+								UIViewAnimationOptions transType = (type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
 
 
-								creditCardImage.Animate (
+								UIImageView.Animate (
 										duration: 0.25f, 
 										delay: 0,
 										options: transType,
 									animation: () => { creditCardImage = ccBackImage; },
-									completion: () => { self.statusHelpLabel.text = ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });
+									completion: () => { StatusHelpLabel.Text = "Replace with bundled security text";});//ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });
 								
 //								[UIView transitionFromView:creditCardImage toView:ccBackImage duration:0.25f options:transType completion:NULL];
 //								creditCardImage = ccBackImage;
@@ -336,9 +401,9 @@ namespace JudoDotNetXamariniOSSDK
 
 					if(newTextLen == placeView.Text.Length) {
 						completelyDone = true;
-
-						CSRange ccvRange =new CSRange(placeView.Text.IndexOf("C"));// [placeView.text rangeOfString:@"C"]; // first one
-						ccvRange.Length = type == AMEX ? 4 : 3;
+						var cIndex = placeView.Text.IndexOf("C");
+						CSRange ccvRange =new CSRange(cIndex,placeView.Text.Substring(cIndex).Length);// [placeView.text rangeOfString:@"C"]; // first one
+						ccvRange.Length = type == CreditCardType.AMEX ? 4 : 3;
 						ccv = Int32.Parse( newTextOrig.Substring(ccvRange.Location,ccvRange.Length));//   substringWithRange:ccvRange] integerValue];
 					}
 
@@ -348,108 +413,157 @@ namespace JudoDotNetXamariniOSSDK
 				{
 					// added by Rob Phillips
 					// scrolls backward
-					NSUInteger textViewLen = [[CreditCard formatForViewing:ccText.text] length];
-					NSUInteger formattedLen = [placeView.text length];
-					placeView.showTextOffset = MIN(textViewLen, formattedLen);
-					textScroller.scrollEnabled = NO;
-					[textScroller setContentOffset:CGPointMake(0, 0) animated:YES];
+					int textViewLen = ccText.Text.Length; //[[CreditCard formatForViewing:ccText.text] length];
+					int formattedLen = placeView.Text.Length;
+					placeView.ShowTextOffset = Math.Min(textViewLen,formattedLen); //MIN(textViewLen, formattedLen);
+					textScroller.ScrollEnabled = false;
+					//[textScroller setContentOffset:CGPointMake(0, 0) animated:YES];
+					textScroller.SetContentOffset(new CGPoint(0,0),true);
 
-					self.statusHelpLabel.text = [ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterCardDetailsText"];
+					StatusHelpLabel.Text = "replace with proper text";// ThemeBundleReplacement.BundledOrReplacementString("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
+					//self.statusHelpLabel.text = [ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterCardDetailsText"];
+
 					// added by Rob Phillips
 
-					NSString *newText = [newTextOrig stringByReplacingOccurrencesOfString:@" " withString:@""];
-					NSUInteger len = [newText length];
-					if(len < CC_LEN_FOR_TYPE) {
-						updateText = YES;
+				string newText = newTextOrig.Replace(" ", String.Empty);// stringByReplacingOccurrencesOfString:@" " withString:@""];
+					int len = newText.Length;
+					if(len < 16) { //CC_LEN_FOR_TYPE replace with logic
+						updateText = false;
 						formattedText = newTextOrig;
 						// NSLog(@"NEWLEN=%d CC_LEN=%d formattedText=%@", len, CC_LEN_FOR_TYPE, formattedText);
-						type = InvalidCard;
+						type = CreditCardType.InvalidCard;
 					} else {
-						type = [CreditCard ccType:newText];
-						if(type == InvalidCard) {
-							flashForError = YES;
-							goto eND;
+
+					switch (type)
+					{
+					// The following switch section causes an error.
+					case CreditCardType.InvalidCard:
+						flashForError = true;
+						break;
+					case CreditCardType.Maestro:
+						if(!JudoSDKManager.MaestroAccepted)
+						{
+
+							flashForError =true; // maestroNotAcceptedText 
+							return EndDelegate();
 						}
-						if (type == Maestro && ![JudoSDKManager getMaestroAccepted]) {
-							[self flashMessage:[ThemeBundleReplacement bundledOrReplacementStringNamed:@"maestroNotAcceptedText"]];
-							goto eND;
+						break;
+
+					case CreditCardType.AMEX:
+						if(!JudoSDKManager.AmExAccepted)
+						{
+
+							flashForError =true; // amexNotAcceptedText bundled
+							return EndDelegate();
 						}
-						if (type == AMEX && ![JudoSDKManager getAmExAccepted]) {
-							[self flashMessage:[ThemeBundleReplacement bundledOrReplacementStringNamed:@"amexNotAcceptedText"]];
-							goto eND;
+						break;
+					}
+							
+						if(len == 16) {//CC_LEN_FOR_TYPE replace with logic
+						placeView.Text = "CreditCard";
+							/// NEED TO WRITE OR FIND CLASS/Dictionary to return correctPrompt for type      placeView.text = [CreditCard promptStringForType:type justNumber:YES];
 						}
-						if(len == CC_LEN_FOR_TYPE) {
-							placeView.text = [CreditCard promptStringForType:type justNumber:YES];
-						}
-						formattedText = [CreditCard formatForViewing:newText];
-						NSUInteger lenForCard = [CreditCard lengthOfStringForType:type];
+
+					formattedText = newText;   // Probably need to format it to look like a cardNumber //[CreditCard formatForViewing:newText];
+					int lenForCard =  16 ; // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
 
 						// NSLog(@"FT=%@ len=%d", formattedText, lenForCard);
 
 						if(len < lenForCard) {
-							updateText = YES;
+							updateText = true;
 						} else
 							if(len == lenForCard) {
-								if([CreditCard isValidNumber:newText]) {
-									if([CreditCard isLuhnValid:newText]) {
-										numberLength = [CreditCard lengthOfFormattedStringForType:type];
-										creditCardNum = newText;
 
-										updateText = YES;
-										scrollForward = YES;
-										haveFullNumber = YES;
-									} else {
+							///////// NEED CLASSES FOR THIS FINAL VALIDATION BLOCK
 
-										[self flashRecheckNumberMessage];
-									}
-								} else {
-									[self flashRecheckNumberMessage];
-								}				
-							}
-					}
-					[self updateCCimageWithTransitionTime:0.25f];
+//							if([CreditCard isValidNumber:newText]) {
+//								if([CreditCard isLuhnValid:newText]) {
+//									numberLength = [CreditCard lengthOfFormattedStringForType:type];
+//									creditCardNum = newText;
+//
+//									updateText = YES;
+//									scrollForward = YES;
+//									haveFullNumber = YES;
+//								} else {
+//
+//									[self flashRecheckNumberMessage];
+//								}
+//							} else {
+//								[self flashRecheckNumberMessage];
+//							}	
+
+
+							numberLength = 20;// [CreditCard lengthOfFormattedStringForType:type];
+							creditCardNum = newText;
+
+							updateText = false;
+							scrollForward = false;
+							hasFullNumber = false;
+						}
 				}
-				void EndDelegate()
+				///[self updateCCimageWithTransitionTime:0.25f]; ///NEED THIS METHOD
+				
+				}
+				return EndDelegate();
+				};
+
+
+				
+			}
+
+		public void flashRecheckExpiryDateMessage ()
+		{
+			// TODO Implement flash message 
+		}
+
+		public bool EndDelegate()
+		{
+
+			// Order of these blocks important!
+			if(scrollForward) {
+				ScrollForward(true);
+				//dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (long long)250*NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ [textScroller flashScrollIndicators]; } );
+			}
+			if(updateText) {
+				int textViewLen = formattedText.Length;
+				int formattedLen = placeView.Text.Length;
+				placeView.ShowTextOffset = Math.Min(textViewLen, formattedLen);
+
+				if((formattedLen > textViewLen) && !deleting) {
+					char c = placeView.Text.Substring(textViewLen,1).ToCharArray()[0];// characterAtIndex:textViewLen];
+					if (c == ' ')
+						formattedText = formattedText + " "; //[formattedText stringByAppendingString:@" "];
+					else if (c == '/')
+						formattedText = formattedText + "/"; //[formattedText stringByAppendingString:@"/"];
+				}
+				if(!deleting || hasFullNumber || deletedSpace)
 				{
-
-					// Order of these blocks important!
-					if(scrollForward) {
-						[self scrollForward:YES];
-						dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (long long)250*NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ [textScroller flashScrollIndicators]; } );
-					}
-					if(updateText) {
-						NSUInteger textViewLen = [formattedText length];
-						NSUInteger formattedLen = [placeView.text length];
-						placeView.showTextOffset = MIN(textViewLen, formattedLen);
-
-						if((formattedLen > textViewLen) && !deleting) {
-							unichar c = [placeView.text characterAtIndex:textViewLen];
-							if(c == ' ') formattedText = [formattedText stringByAppendingString:@" "];
-							else
-								if(c == '/') formattedText = [formattedText stringByAppendingString:@"/"];
-						}
-						if(!deleting || haveFullNumber || deletedSpace)
-						{
-							textView.text = formattedText;
-						} else
-						{
-							ret = YES; // let textView do it to preserve the cursor location. User updating an incorrect number
-						}
-						// NSLog(@"formattedText=%@ PLACEVIEW=%@ showTextOffset=%u offset=%@ ret=%d", formattedText, placeView.text, placeView.showTextOffset, NSStringFromCGRect(placeView.offset), ret );
-
-					}
-					if(flashForError) {
-						[self flashRecheckNumberMessage];
-					}
-
-					dispatch_async(dispatch_get_main_queue(), ^{ [self updateUI]; });
-					//NSLog(@"placeholder=%@ text=%@", placeView.text, ccText.text);
-
-					return ret;
+					ccText.Text = formattedText;
+				} else
+				{
+					ret = true; // let textView do it to preserve the cursor location. User updating an incorrect number
 				}
-
+				// NSLog(@"formattedText=%@ PLACEVIEW=%@ showTextOffset=%u offset=%@ ret=%d", formattedText, placeView.text, placeView.showTextOffset, NSStringFromCGRect(placeView.offset), ret );
 
 			}
+			if(flashForError) {
+				//[self flashRecheckNumberMessage];
+			}
+
+
+
+			//dispatch_async(dispatch_get_main_queue(), ^{ [self updateUI]; });
+
+
+			//NSLog(@"placeholder=%@ text=%@", placeView.text, ccText.text);
+
+			return ret;
+		}
+
+		void ScrollForward (bool b)
+		{
+			throw new NotImplementedException ();
+		}
 
 		private void keyboardMoving(NSNotification note){
 

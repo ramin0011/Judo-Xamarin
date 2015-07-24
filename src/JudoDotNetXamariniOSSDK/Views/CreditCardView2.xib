@@ -14,6 +14,7 @@
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
                 <outlet property="ReassuringTextCell" destination="Nhg-IX-4mb" id="ZuY-o9-PRn"/>
                 <outlet property="SpacerCell" destination="M6l-WO-IcD" id="uqB-hw-qZV"/>
+                <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="z91-sy-zOF"/>
                 <outlet property="SubmitButton" destination="GEk-Gj-1De" id="hXm-UB-OnX"/>
                 <outlet property="TableView" destination="qyh-BB-iT4" id="tpb-hg-vI2"/>
                 <outlet property="ccText" destination="tOz-2R-QYm" id="tqS-Zd-naN"/>
@@ -254,6 +255,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2cB-DV-G4B" customClass="PlaceHolderTextView">
                                                 <rect key="frame" x="0.0" y="0.0" width="246" height="44"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="246" id="ZpI-Y7-L34"/>
                                                 </constraints>
@@ -332,7 +334,7 @@
                             <constraint firstItem="SB4-0q-naP" firstAttribute="leading" secondItem="dB8-gG-3Ae" secondAttribute="leading" constant="13" id="xu6-sF-obq"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter your card details" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkW-Ut-eeW">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Enter your card details" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkW-Ut-eeW" userLabel="StatusHelpLabel">
                         <rect key="frame" x="10" y="8" width="293" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="SPx-bQ-VsD"/>

@@ -18,8 +18,8 @@ namespace JudoDotNetXamariniOSSDK
 		readonly UIColor TEXT_COLOR = UIColor.LightGray;
 		#endif
 		
-		public string Text { get; set;}
-		public UIFont Font { get; set;}
+		public  string Text { get; set;}
+		public  UIFont Font { get; set;}
 		public int ShowTextOffset { get; set; }
 		public CGRect Offset { get; set;}
 
@@ -31,8 +31,9 @@ namespace JudoDotNetXamariniOSSDK
 		public PlaceHolderTextView(IntPtr p) : base(p)
 		{
 		}
+			
 
-		private void SetText(string newText)
+		public void SetText(string newText)
 		{
 			if (newText == Text) 
 			{
@@ -54,13 +55,13 @@ namespace JudoDotNetXamariniOSSDK
 			SetNeedsDisplay();
 		}
 
-		private void SetShowTextOffSet(int newOffset)
+		public void SetShowTextOffSet(int newOffset)
 		{
 			ShowTextOffset = newOffset;
 			SetNeedsDisplay();
 		}
 
-		private void DrawRect(CGRect rect)
+		public void DrawRect(CGRect rect)
 		{
 			CGRect r = Offset;
 
@@ -69,7 +70,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			CGContext context = UIGraphics.GetCurrentContext ();
 
-			CGColor clearColor = ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+			CGColor clearColor = UIColor.Clear.CGColor;//ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
 			context.SetStrokeColor(clearColor);
 			context.SetFillColor(clearColor);
 			context.FillRect(rect);
@@ -83,7 +84,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (charsToDraw.Length > 0) 
 			{
-				CGColor grayColor = ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+				CGColor grayColor = UIColor.LightGray.CGColor;// ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
 
 				context.SetStrokeColor (grayColor);
 				context.SetFillColor (grayColor);
