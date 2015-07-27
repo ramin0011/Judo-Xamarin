@@ -8,7 +8,7 @@ namespace JudoDotNetXamariniOSSDK
 		MasterCard,
 		AMEX,
 		Discover,
-		DinnersClub,
+		DinersClub,
 		Maestro, 
 		InvalidCard
 	};

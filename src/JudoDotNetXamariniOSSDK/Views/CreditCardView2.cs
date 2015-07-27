@@ -86,9 +86,17 @@ namespace JudoDotNetXamariniOSSDK
 		bool hasFullNumber = false;
 		bool deletedSpace = false;
 
-		float widthToLastGroup;
+		float widthToLastGroup {get{ 
+				int oldOffset = placeView.ShowTextOffset;
+				int offsetToLastGroup = [CreditCard lengthOfFormattedStringTilLastGroupForType:type];
+				placeView.ShowTextOffset = offsetToLastGroup;
+				float width = placeView.WidthToOffset(); //[placeView widthToOffset];
+				placeView.ShowTextOffset = oldOffset;
+				return width;
+			}
 
 
+	
 
 		public CreditCardView2() : base("CreditCardView2",null)
 		{
