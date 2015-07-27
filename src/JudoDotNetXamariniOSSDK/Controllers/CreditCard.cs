@@ -64,7 +64,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public int LengthOfFormattedStringTilLastGroupForType (CreditCardType type)
 		{
-			int idx;
+			int idx =0;
 
 			switch(type) {
 			case CreditCardType.Visa:
@@ -84,6 +84,7 @@ namespace JudoDotNetXamariniOSSDK
 				break;
 			default:
 				idx = 0;
+				break;
 			}
 			return idx;
 		}
@@ -91,33 +92,34 @@ namespace JudoDotNetXamariniOSSDK
 	// http://www.regular-expressions.info/creditcard.html
 	public CreditCardType GetCCType(string proposedNumber)
 	{
-		Regex reg;
+			Regex reg = new Regex (".*");
 
 		if(proposedNumber.Length < CC_LEN_FOR_TYPE) return CreditCardType.InvalidCard;
 
-		for(int idx = 0; idx < CreditCardType.InvalidCard; ++idx) {
+		for(int idx = 0; idx < (int)CreditCardType.InvalidCard; ++idx) {
 			switch(idx) {
-			case  CreditCardType.Visa as Int32:
+			case  (int)CreditCardType.Visa:
 				reg = visaTypeReg;
 				break;
-			case  CreditCardType.MasterCard as Int32:
+			case  (int)CreditCardType.MasterCard:
 				reg = mcTypeReg;
 				break;
-			case  CreditCardType.AMEX as Int32:
+			case  (int)CreditCardType.AMEX:
 				reg = amexTypeReg;
 				break;
-			case  CreditCardType.Discover as Int32:
+			case  (int)CreditCardType.Discover:
 				reg = discoverTypeReg;
 				break;
-			case  CreditCardType.DinersClub as Int32:
+			case  (int)CreditCardType.DinersClub:
 				reg = dinersClubTypeReg;
 				break;
-			case CreditCardType.Maestro as Int32:
+			case (int)CreditCardType.Maestro:
 				reg = maestroTypeReg;
 				break;
 			}
 			CSRange range = new CSRange(0,CC_LEN_FOR_TYPE);
-			int matches = reg.Matches(proposedNumber,0,RegexOptions.None); //[reg numberOfMatchesInString:proposedNumber options:0 range:NSMakeRange(0, CC_LEN_FOR_TYPE)];
+
+			int matches = reg.Matches(proposedNumber).Count;
 			if(matches == 1) return (CreditCardType) idx;
 		}
 		return CreditCardType.InvalidCard;
@@ -135,9 +137,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		if(len <= CC_LEN_FOR_TYPE) return cleaned;
 
-		CSRange  r2; r2.Location = null;
-		CSRange r3; r3.Location = null;
-		CSRange r4; r4.Location = null;
+		CSRange r2 = new CSRange(); r2.Location = 0;
+		CSRange r3 = new CSRange(); r3.Location = 0;
+		CSRange r4 = new CSRange(); r4.Location = 0;
 		string[] gaps= new string[]{@"", @"", @""};
 
 		int[] segmentLengths = new int[3] { 0, 0, 0 };
@@ -164,14 +166,14 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 		len -= CC_LEN_FOR_TYPE;
-		CSRange[] r = new CSRange[3]{ &r2, &r3, &r4 };
+		CSRange[] r = new CSRange[3]{ r2, r3, r4 };
 		int totalLen = CC_LEN_FOR_TYPE;
 		for(int idx=0; idx<3; ++idx) {
 			int segLen = segmentLengths[idx];
-			if(!segLen) break;
+			if(segLen==null) break;
 
-			r[idx]->location = totalLen;
-			r[idx]->length = len >= segLen ? segLen : len;
+			r[idx].Location = totalLen;
+			r[idx].Length = len >= segLen ? segLen : len;
 			totalLen += segLen;
 			len -= segLen;
 			gaps[idx] = @" ";
@@ -196,7 +198,7 @@ namespace JudoDotNetXamariniOSSDK
 
 	public int LengthOfStringForType(CreditCardType type)
 	{
-		int idx;
+		int idx=0;
 
 		switch(type) {
 		case CreditCardType.Visa:
@@ -211,14 +213,15 @@ namespace JudoDotNetXamariniOSSDK
 		case CreditCardType.DinersClub:	// {4-6-4}
 			idx = 14;
 			break;
-		default:
-			idx = 0;
+			default:
+				idx = 0;
+				break;
 		}
 		return idx;
 	}
-	public int lengthOfFormattedStringForType(CreditCardType type)
+	public int LengthOfFormattedStringForType(CreditCardType type)
 	{
-		int idx;
+		int idx=0;
 
 		switch(type) {
 		case CreditCardType.Visa:
@@ -233,33 +236,13 @@ namespace JudoDotNetXamariniOSSDK
 		case CreditCardType.DinersClub:	// {4-6-4}
 			idx = 14 + 2;
 			break;
-		default:
-			idx = 0;
+			default:
+				idx = 0;
+				break;
 		}
 		return idx;
 	}
-	public int lengthOfFormattedStringTilLastGroupForType(CreditCardType type)
-	{
-		int idx;
 
-		switch(type) {
-		case CreditCardType.Visa:
-		case CreditCardType.MasterCard:
-		case CreditCardType.Discover:		// { 4-4-4-4}
-		case CreditCardType.Maestro:
-			idx = 16 + 3 - 4;
-			break;
-		case CreditCardType.AMEX:			// {4-6-5}
-			idx = 15 + 2 - 5;
-			break;
-		case CreditCardType.DinersClub:	// {4-6-4}
-			idx = 14 + 2 - 4;
-			break;
-		default:
-			idx = 0;
-		}
-		return idx;
-	}
 
 	public string ccvFormat(CreditCardType type)
 	{
@@ -268,8 +251,8 @@ namespace JudoDotNetXamariniOSSDK
 
 	public string promptStringForType(CreditCardType type, bool justNumber)
 	{
-		string number;
-		string additions;
+		string number="";
+		string additions="";
 
 		switch(type) {
 		case CreditCardType.Visa:

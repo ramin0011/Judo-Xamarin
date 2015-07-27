@@ -8,7 +8,7 @@ using Foundation;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register("PlaceHolderTextView")]
-	public class PlaceHolderTextView : UIView
+	public partial class PlaceHolderTextView : UIView
 	{
 		
 
@@ -32,6 +32,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 		}
 			
+	
 
 		public void SetText(string newText)
 		{
@@ -61,7 +62,8 @@ namespace JudoDotNetXamariniOSSDK
 			SetNeedsDisplay();
 		}
 
-		public void DrawRect(CGRect rect)
+
+		public override void Draw (CGRect rect)
 		{
 			CGRect r = Offset;
 
@@ -80,7 +82,7 @@ namespace JudoDotNetXamariniOSSDK
 				r.X += clearText.DrawString (Offset.Location, Font).Width;
 			}
 
-			NSRange charsToDraw = new NSRange (0, grayText.Length);
+			CSRange charsToDraw = new CSRange(0, grayText.Length);// grayText.ToCharArray ();
 
 			if (charsToDraw.Length > 0) 
 			{
@@ -89,9 +91,9 @@ namespace JudoDotNetXamariniOSSDK
 				context.SetStrokeColor (grayColor);
 				context.SetFillColor (grayColor);
 
-				var chars = charsToDraw.ToString ().ToCharArray();
-			    int i;
-				for (i = 0; i < charsToDraw.ToString ().Length; i++) 
+				var chars = grayText.ToCharArray();
+				int i;
+				for (i = 0; i < chars.Length; i++) 
 				{
 					char character = chars[i];
 					if (character == ' ') {
@@ -109,7 +111,7 @@ namespace JudoDotNetXamariniOSSDK
 						context.MoveTo (box.GetMinX () + radius, box.GetMinY ());
 						var mask = "0";
 						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
-                        mask.DrawString(box, drawFont);
+						mask.DrawString(box, drawFont);
 						r.X += Offset.Size.Width;
 						continue;
 					}
@@ -118,17 +120,82 @@ namespace JudoDotNetXamariniOSSDK
 
 				charsToDraw.Location += i;
 				charsToDraw.Length -= i;
-				if (charsToDraw.Length == 0) 
+				if (charsToDraw.Length != 0) 
 				{
 					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, Font);
+					grayText.DrawString(new CGPoint(r.X,r.Y),Font);
 				}
 			}
 		}
+			
+//		public override DrawRect (CGRect rect)
+//		{
+//			CGRect r = Offset;
+//
+//			string clearText = Text.Substring (0, ShowTextOffset);
+//			string grayText = Text.Substring (ShowTextOffset, Text.Length - ShowTextOffset);
+//
+//			CGContext context = UIGraphics.GetCurrentContext ();
+//
+//			CGColor clearColor = UIColor.Clear.CGColor;//ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+//			context.SetStrokeColor(clearColor);
+//			context.SetFillColor(clearColor);
+//			context.FillRect(rect);
+//
+//			if (clearText.Length > 0) 
+//			{
+//				r.X += clearText.DrawString (Offset.Location, Font).Width;
+//			}
+//
+//			NSRange charsToDraw = new NSRange (0, grayText.Length);
+//
+//			if (charsToDraw.Length > 0) 
+//			{
+//				CGColor grayColor = UIColor.LightGray.CGColor;// ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+//
+//				context.SetStrokeColor (grayColor);
+//				context.SetFillColor (grayColor);
+//
+//				var chars = charsToDraw.ToString ().ToCharArray();
+//			    int i;
+//				for (i = 0; i < charsToDraw.ToString ().Length; i++) 
+//				{
+//					char character = chars[i];
+//					if (character == ' ') {
+//						r.X += Offset.Size.Width;
+//						continue;
+//					}
+//					if (character == 'X') {
+//						#if LED_FONT
+//						CGRect box = rect.Inset(2, 1);
+//						#else
+//						CGRect box = rect.Inset (3, 3);
+//						#endif
+//						nfloat radius = 3;
+//						context.BeginPath ();
+//						context.MoveTo (box.GetMinX () + radius, box.GetMinY ());
+//						var mask = "0";
+//						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+//                        mask.DrawString(box, drawFont);
+//						r.X += Offset.Size.Width;
+//						continue;
+//					}
+//					break;
+//				}
+//
+//				charsToDraw.Location += i;
+//				charsToDraw.Length -= i;
+//				if (charsToDraw.Length == 0) 
+//				{
+//					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, Font);
+//				}
+//			}
+//		}
 
-		public nfloat WidthToOffset()
+		public float WidthToOffset()
 		{
 			var startText = Text.Substring(0, ShowTextOffset);
-			return startText.StringSize(Font).Width;
+			return (float)startText.StringSize(Font).Width;
 		}
 
 		public nfloat WidthFromOffset()

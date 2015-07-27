@@ -69,6 +69,9 @@
     <Compile Include="TableSources\AddPaymentTableSource.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="Controllers\CreditCard.cs" />
+    <Compile Include="Controllers\PlaceHolderTextView.designer.cs">
+      <DependentUpon>PlaceHolderTextView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

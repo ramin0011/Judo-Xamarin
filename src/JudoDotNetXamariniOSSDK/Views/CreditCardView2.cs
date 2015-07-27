@@ -15,7 +15,7 @@ namespace JudoDotNetXamariniOSSDK
 		public Card judoCard {get; set;}
 		public event Action<bool, Card> CompletionBlock;
 
-
+		CreditCard cardHelper = new CreditCard ();
 		private UILabel PostCodeLabel { get; set;}
 		private UIView PostCodeBackgroundView {get; set;}
 		private UITextField PostCodeTextField {get; set;}
@@ -86,14 +86,6 @@ namespace JudoDotNetXamariniOSSDK
 		bool hasFullNumber = false;
 		bool deletedSpace = false;
 
-		float widthToLastGroup {get{ 
-				int oldOffset = placeView.ShowTextOffset;
-				int offsetToLastGroup = [CreditCard lengthOfFormattedStringTilLastGroupForType:type];
-				placeView.ShowTextOffset = offsetToLastGroup;
-				float width = placeView.WidthToOffset(); //[placeView widthToOffset];
-				placeView.ShowTextOffset = oldOffset;
-				return width;
-			}
 
 
 	
@@ -101,6 +93,17 @@ namespace JudoDotNetXamariniOSSDK
 		public CreditCardView2() : base("CreditCardView2",null)
 		{
 		}
+
+
+		float widthToLastGroup {get{ 
+				int oldOffset = placeView.ShowTextOffset;
+				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (type);// [CreditCard lengthOfFormattedStringTilLastGroupForType:type];
+				placeView.ShowTextOffset = offsetToLastGroup;
+				float width = placeView.WidthToOffset (); //[placeView widthToOffset];
+				placeView.ShowTextOffset = oldOffset;
+				return width;
+			}
+			}
 
 
 		private bool prefersStatusBarHidden()
@@ -166,18 +169,19 @@ namespace JudoDotNetXamariniOSSDK
 			float width =  widthToLastGroup;
 
 			CGRect frame = ccText.Frame;
-			frame.Size.Width = width + textScroller.Frame.Size.Width;
+			frame.Size = new CGSize (width + textScroller.Frame.Size.Width, frame.Size.Height);
+
+
 			ccText.Frame = frame;
 			placeView.Frame = frame;
-			textScroller.ContentSize =  new CGSize(frame.size.width, textScroller.contentSize.height);
+			textScroller.ContentSize =  new CGSize(frame.Size.Width, textScroller.ContentSize.Height);
 
 			textScroller.ScrollEnabled = true;
-			//[textScroller setContentOffset:CGPointMake(0, 0) animated:animated];
 			textScroller.SetContentOffset(new CGPoint(0f,0f),animated);
 			// todo add theses pickerBottomConstraint = -self.pickerViewContainer.bounds.size.height; 
 			//[self.pickerViewContainer layoutIfNeeded];
 
-			if (float.Parse( UIDevice.CurrentDevice.SystemVersion) >= 8.0f) {
+			if (float.Parse( UIDevice.CurrentDevice.SystemVersion.Replace(".","")) >= 800f) {
 				if (this.View.Bounds.Size.Width > 320f) {
 					float margin = 13f;
 					if (this.View.Bounds.Size.Width > 375) {
@@ -245,7 +249,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
-			placeView.SetText ("YES");
 
 			placeView.ShowTextOffset = 0;
 			placeView.Offset = r;
