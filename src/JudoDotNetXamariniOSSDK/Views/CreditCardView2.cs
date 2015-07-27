@@ -567,9 +567,28 @@ namespace JudoDotNetXamariniOSSDK
 			return ret;
 		}
 
-		void ScrollForward (bool b)
+		void ScrollForward (bool animated)
 		{
-			throw new NotImplementedException ();
+
+			if(creditCardImage != ccBackImage)
+			{
+				StatusHelpLabel.Text = "Please enter Expire Date";//[ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterExpiryDateText"];
+			}
+			float width = widthToLastGroup;
+
+			//CGRect frame = ccText.Frame;
+			CGRect frame  = new CGRect(ccText.Frame.Location, new CGSize(width + textScroller.Frame.Size.Width,ccText.Frame.Size.Height));
+			CGSize size = ccText.Frame.Size;
+			//frame.Size.Width = width + textScroller.Frame.Size.Width;
+			ccText.Frame = frame;
+			placeView.Frame = frame;
+			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height); //CGSizeMake(frame.size.width, textScroller.contentSize.height);
+
+			placeView.Text = cardHelper.promptStringForType (type, false);//[CreditCard promptStringForType:type justNumber:NO];
+			textScroller.ScrollEnabled = true;
+
+			textScroller.SetContentOffset(new CGPoint(width,0),animated);
+
 		}
 
 		private void keyboardMoving(NSNotification note){
