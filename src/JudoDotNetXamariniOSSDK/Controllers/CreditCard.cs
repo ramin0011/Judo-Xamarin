@@ -34,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK
 		static Regex dinersClubTypeReg;
 		static Regex maestroTypeReg;
 
-		private int CC_LEN_FOR_TYPE =12; //TODO find the proper dict reference 
+	
 	
 		public CreditCard ()
 		{
@@ -94,7 +94,7 @@ namespace JudoDotNetXamariniOSSDK
 	{
 			Regex reg = new Regex (".*");
 
-		if(proposedNumber.Length < CC_LEN_FOR_TYPE) return CreditCardType.InvalidCard;
+		if(proposedNumber.Length < Card.CC_LEN_FOR_TYPE) return CreditCardType.InvalidCard;
 
 		for(int idx = 0; idx < (int)CreditCardType.InvalidCard; ++idx) {
 			switch(idx) {
@@ -117,7 +117,7 @@ namespace JudoDotNetXamariniOSSDK
 				reg = maestroTypeReg;
 				break;
 			}
-			CSRange range = new CSRange(0,CC_LEN_FOR_TYPE);
+			CSRange range = new CSRange(0,Card.CC_LEN_FOR_TYPE);
 
 			int matches = reg.Matches(proposedNumber).Count;
 			if(matches == 1) return (CreditCardType) idx;
@@ -135,12 +135,12 @@ namespace JudoDotNetXamariniOSSDK
 		string cleaned = CleanNumber(enteredNumber);
 		int len = cleaned.Length;
 
-		if(len <= CC_LEN_FOR_TYPE) return cleaned;
+		if(len <= Card.CC_LEN_FOR_TYPE) return cleaned;
 
 		CSRange r2 = new CSRange(); r2.Location = 0;
 		CSRange r3 = new CSRange(); r3.Location = 0;
 		CSRange r4 = new CSRange(); r4.Location = 0;
-		string[] gaps= new string[]{@"", @"", @""};
+		string[] gaps= new string[]{@"",@"",@""};
 
 		int[] segmentLengths = new int[3] { 0, 0, 0 };
 
@@ -165,9 +165,9 @@ namespace JudoDotNetXamariniOSSDK
 			return enteredNumber;
 		}
 
-		len -= CC_LEN_FOR_TYPE;
+		len -= Card.CC_LEN_FOR_TYPE;
 		CSRange[] r = new CSRange[3]{ r2, r3, r4 };
-		int totalLen = CC_LEN_FOR_TYPE;
+		int totalLen = Card.CC_LEN_FOR_TYPE;
 		for(int idx=0; idx<3; ++idx) {
 			int segLen = segmentLengths[idx];
 			if(segLen==null) break;
@@ -182,12 +182,12 @@ namespace JudoDotNetXamariniOSSDK
 			if(len <= 0) break;
 		}
 			
-		string segment1 = enteredNumber.Substring(0,CC_LEN_FOR_TYPE);// [enteredNumber substringWithRange:NSMakeRange(0, CC_LEN_FOR_TYPE)];
-		string segment2 =  r2.Location == null ? @"" :enteredNumber.Substring(r2.Location,r2.Length);// [enteredNumber substringWithRange:r2];
-		string segment3 = r3.Location == null ? @"" : enteredNumber.Substring(r3.Location,r3.Length);;
-		string segment4 = r4.Location == null ? @"" : enteredNumber.Substring(r4.Location,r4.Length);;
+		string segment1 = enteredNumber.Substring(0,Card.CC_LEN_FOR_TYPE);// [enteredNumber substringWithRange:NSMakeRange(0, CC_LEN_FOR_TYPE)];
+		string segment2 =  r2.Location == 0 ? @"":enteredNumber.Substring(r2.Location,r2.Length);// [enteredNumber substringWithRange:r2];
+		string segment3 = r3.Location == 0 ? @"" : enteredNumber.Substring(r3.Location,r3.Length);;
+		string segment4 = r4.Location == 0 ? @"" : enteredNumber.Substring(r4.Location,r4.Length);;
 
-		string ret = string.Format (@"%@%@%@%@%@%@%@", 
+		string ret = string.Format (@"{0}{1}{2}{3}{4}{5}{6}", 
 			segment1, gaps[0],
 			segment2, gaps[1],
 			segment3, gaps[2],
@@ -195,6 +195,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		return ret;
 	}
+
 
 	public int LengthOfStringForType(CreditCardType type)
 	{
@@ -219,6 +220,7 @@ namespace JudoDotNetXamariniOSSDK
 		}
 		return idx;
 	}
+
 	public int LengthOfFormattedStringForType(CreditCardType type)
 	{
 		int idx=0;
@@ -241,6 +243,70 @@ namespace JudoDotNetXamariniOSSDK
 				break;
 		}
 		return idx;
+	}
+
+		public bool IsLuhnValid (string number)
+		{
+			return true;
+//		string baseNumber = number.Replace (" ", ""); //[number stringByReplacingOccurrencesOfString:@" " withString:@""];
+//		int total = 0;
+//
+//		int len = baseNumber.Length;
+//		for(int i=len; i > 0; )
+//		{
+//			bool odd = (len% 2 ==0);//(len-i)&1;
+//			i--;
+//			int c = baseNumber.ToCharArray()[i];
+//			if(c < '0' || c > '9') continue;
+//			c -= '0';
+//			if(odd) c = 2;
+//			if(c >= 10) {
+//				total += 1;
+//				c -= 10;
+//			}
+//			total += c;
+//		}
+//		return (total%10) == 0 ? true : false;
+		}
+
+	//////////////////////////////////////////////////////////////////////
+	// http://www.regular-expressions.info/creditcard.html
+	public bool isValidNumber(string number)
+	{
+		Regex reg = null;
+		bool ret = false;
+
+		switch(GetCCType(number)) {
+		case CreditCardType.Visa:
+			reg = visaReg;
+			break;
+			case CreditCardType.MasterCard:
+			reg = mcReg;
+			break;
+			case CreditCardType.AMEX:
+			reg = amexReg;
+			break;
+		case CreditCardType.Discover:
+			reg = discoverReg;
+			break;
+			case CreditCardType.DinersClub:
+			reg = dinersClubReg;
+			break;
+			case CreditCardType.Maestro:
+			reg = maestroReg;
+			break;
+
+		default:
+			break;
+		}
+		if(reg!=null)
+		{
+			int matches = reg.Matches (number).Count;//[reg numberOfMatchesInString:number options:0 range:NSMakeRange(0, [number length])];
+			ret = matches == 1 ? true : false;
+
+		}
+
+		return ret;
 	}
 
 

@@ -240,10 +240,10 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect r = ccText.GetFirstRectForRange (range);
 			CGSize frameRect = r.Size;
 			frameRect.Width = (r.Size.Width/ 24.0f);
-
+			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			r .Size= frameRect;
-			ccText.Text = "L";
-		
+			ccText.Text = "";
+			
 			CGRect frame = placeView.Frame;
 
 
@@ -426,7 +426,7 @@ namespace JudoDotNetXamariniOSSDK
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; //[[CreditCard formatForViewing:ccText.text] length];
 					int formattedLen = placeView.Text.Length;
-					placeView.ShowTextOffset = Math.Min(textViewLen,formattedLen); //MIN(textViewLen, formattedLen);
+					placeView.SetShowTextOffSet(Math.Min(textViewLen,formattedLen)); //MIN(textViewLen, formattedLen);
 					textScroller.ScrollEnabled = false;
 					//[textScroller setContentOffset:CGPointMake(0, 0) animated:YES];
 					textScroller.SetContentOffset(new CGPoint(0,0),true);
@@ -438,13 +438,13 @@ namespace JudoDotNetXamariniOSSDK
 
 				string newText = newTextOrig.Replace(" ", String.Empty);// stringByReplacingOccurrencesOfString:@" " withString:@""];
 					int len = newText.Length;
-					if(len < 16) { //CC_LEN_FOR_TYPE replace with logic
-						updateText = false;
+					if(len < Card.CC_LEN_FOR_TYPE) { //CC_LEN_FOR_TYPE replace with logic
+						updateText = true;
 						formattedText = newTextOrig;
 						// NSLog(@"NEWLEN=%d CC_LEN=%d formattedText=%@", len, CC_LEN_FOR_TYPE, formattedText);
 						type = CreditCardType.InvalidCard;
 					} else {
-
+						type = cardHelper.GetCCType(newText);
 					switch (type)
 					{
 					// The following switch section causes an error.
@@ -470,13 +470,13 @@ namespace JudoDotNetXamariniOSSDK
 						break;
 					}
 							
-						if(len == 16) {//CC_LEN_FOR_TYPE replace with logic
-						placeView.Text = "CreditCard";
+						if(len == Card.CC_LEN_FOR_TYPE) {//CC_LEN_FOR_TYPE replace with logic
+							placeView.Text = cardHelper.promptStringForType(type,true);
 							/// NEED TO WRITE OR FIND CLASS/Dictionary to return correctPrompt for type      placeView.text = [CreditCard promptStringForType:type justNumber:YES];
 						}
 
-					formattedText = newText;   // Probably need to format it to look like a cardNumber //[CreditCard formatForViewing:newText];
-					int lenForCard =  16 ; // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
+						formattedText = cardHelper.FormatForViewing(newText);   // Probably need to format it to look like a cardNumber //[CreditCard formatForViewing:newText];
+					int lenForCard =  cardHelper.LengthOfStringForType(type) ; // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
 
 						// NSLog(@"FT=%@ len=%d", formattedText, lenForCard);
 
@@ -484,32 +484,23 @@ namespace JudoDotNetXamariniOSSDK
 							updateText = true;
 						} else
 							if(len == lenForCard) {
+								if(cardHelper.isValidNumber(newText))
+									{
+									if(cardHelper.IsLuhnValid(newText)) {
+									numberLength = cardHelper.LengthOfFormattedStringForType(type);
+									creditCardNum = newText;
 
-							///////// NEED CLASSES FOR THIS FINAL VALIDATION BLOCK
+									updateText = true;
+									scrollForward = true;
+									hasFullNumber = true;
+								} else {
 
-//							if([CreditCard isValidNumber:newText]) {
-//								if([CreditCard isLuhnValid:newText]) {
-//									numberLength = [CreditCard lengthOfFormattedStringForType:type];
-//									creditCardNum = newText;
-//
-//									updateText = YES;
-//									scrollForward = YES;
-//									haveFullNumber = YES;
-//								} else {
-//
-//									[self flashRecheckNumberMessage];
-//								}
-//							} else {
-//								[self flashRecheckNumberMessage];
-//							}	
+										FlashRecheckNumberMessage();
+								}
+							} else {
+									FlashRecheckNumberMessage();
+							}	
 
-
-							numberLength = 20;// [CreditCard lengthOfFormattedStringForType:type];
-							creditCardNum = newText;
-
-							updateText = false;
-							scrollForward = false;
-							hasFullNumber = false;
 						}
 				}
 				///[self updateCCimageWithTransitionTime:0.25f]; ///NEED THIS METHOD
@@ -523,6 +514,11 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 		public void flashRecheckExpiryDateMessage ()
+		{
+			// TODO Implement flash message 
+		}
+
+		void FlashRecheckNumberMessage ()
 		{
 			// TODO Implement flash message 
 		}

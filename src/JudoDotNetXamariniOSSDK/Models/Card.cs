@@ -44,6 +44,7 @@ namespace JudoDotNetXamariniOSSDK
         //    this(cardToken: cardToken, expiryDate: expiryDate, lastFour: lastFour, cardType: cardType, startDate: startDate, issueNumber: issueNumber)
         //{
         //}
+		public static int CC_LEN_FOR_TYPE{get{return 4;}}
 
 		public Card(Dictionary<string, object> details)
 		{

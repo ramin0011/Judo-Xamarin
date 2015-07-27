@@ -205,6 +205,7 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect frame = placeView.Frame;
 
 			//placeView = new PlaceHolderTextView ();
+			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
 			placeView.ShowTextOffset = 0;
@@ -215,7 +216,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			type = CreditCardType.InvalidCard;
 
-			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+
 			dummyTextView.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20; 
 			PostCodeTextField.Font = ccText.Font;
 			PostCodeTextField.TextColor = ccText.TextColor;

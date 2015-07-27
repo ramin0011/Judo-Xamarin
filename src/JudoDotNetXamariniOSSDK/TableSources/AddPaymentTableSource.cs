@@ -23,7 +23,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
 			cell = TableItems[indexPath.Row];
-
+			cell.IndentationLevel = 0;
 			//---- if there are no cells to reuse, create a new one
 			if (cell != null)
 			{
