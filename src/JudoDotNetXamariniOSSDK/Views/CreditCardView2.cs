@@ -578,7 +578,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			//CGRect frame = ccText.Frame;
 			CGRect frame  = new CGRect(ccText.Frame.Location, new CGSize(width + textScroller.Frame.Size.Width,ccText.Frame.Size.Height));
-			CGSize size = ccText.Frame.Size;
+			//CGSize size = ccText.Frame.Size;
 			//frame.Size.Width = width + textScroller.Frame.Size.Width;
 			ccText.Frame = frame;
 			placeView.Frame = frame;
