@@ -68,12 +68,11 @@ namespace JudoDotNetXamariniOSSDK
 
 			switch(type) {
 			case CreditCardType.Visa:
-				idx = 16+3-4;
-				break;
+				
 			case CreditCardType.MasterCard:
-				break;
+				
 			case CreditCardType.Discover:
-				break;		// { 4-4-4-4}
+						// { 4-4-4-4}
 			case CreditCardType.Maestro:
 				idx = 16 + 3 - 4;
 				break;

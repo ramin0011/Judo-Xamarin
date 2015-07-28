@@ -66,7 +66,7 @@ namespace JudoDotNetXamariniOSSDK
 		CreditCardType type;
 		int numberLength;
 		string creditCardNum;
-		int month;
+		//int month;
 		int year;
 		int ccv;
 
@@ -282,6 +282,7 @@ namespace JudoDotNetXamariniOSSDK
 				 deleting = false;
 				 ret = false;
 				 deletedSpace = false;
+				int cardMonth =0;
 
 				completelyDone = false;
 				if(replace.Length == 0)
@@ -295,7 +296,7 @@ namespace JudoDotNetXamariniOSSDK
 						if(range.Location ==1 && range.Length == 1 && (c == ' ' || c == '/')) {
 							range.Location--;
 							range.Length++;
-							deletedSpace = false;
+							deletedSpace = true;
 						}
 					} else {
 						return false;
@@ -327,13 +328,13 @@ namespace JudoDotNetXamariniOSSDK
 
 					if (range.Location > numberLength)
 					{
-						ScrollForward(true);
+						//ScrollForward(true);
 					}
 
 					// Test for delete of a space or /
 					if(deleting) {
 						formattedText = newTextOrig.Substring(range.Location); //[newTextOrig substringToIndex:range.location];	// handles case of deletion interior to the string
-						updateText = false;
+						updateText = true;
 						return EndDelegate();
 					}
 
@@ -359,8 +360,8 @@ namespace JudoDotNetXamariniOSSDK
 							newTextLen = newTextOrig.Length;
 						}
 						if(newTextLen >= (monthRange.Location + monthRange.Length)) {
-							var month = Int32.Parse( newTextOrig.Substring(monthRange.Location,monthRange.Length));
-							if(month < 1 || month > 12) {
+							 cardMonth = Int32.Parse( newTextOrig.Substring(monthRange.Location,monthRange.Length));
+							if(cardMonth < 1 || cardMonth > 12) {
 								flashRecheckExpiryDateMessage();
 								return EndDelegate();
 							}
@@ -387,7 +388,8 @@ namespace JudoDotNetXamariniOSSDK
 								//NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
 								var todaysDate =DateTime.Today;
 								int currentMonth = todaysDate.Month;
-								if (month < currentMonth) {
+
+								if (cardMonth< currentMonth) {
 									flashRecheckExpiryDateMessage();
 									return EndDelegate();
 								}
@@ -402,10 +404,7 @@ namespace JudoDotNetXamariniOSSDK
 										delay: 0,
 										options: transType,
 									animation: () => { creditCardImage = ccBackImage; },
-									completion: () => { StatusHelpLabel.Text = "Replace with bundled security text";});//ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });
-								
-//								[UIView transitionFromView:creditCardImage toView:ccBackImage duration:0.25f options:transType completion:NULL];
-//								creditCardImage = ccBackImage;
+									completion: () => { StatusHelpLabel.Text = "Replace with bundled security text";});//ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });								
 
 							}
 						}
@@ -581,14 +580,15 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect frame  = new CGRect(ccText.Frame.Location, new CGSize((width) + textScroller.Frame.Size.Width,ccText.Frame.Size.Height));
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
-			//placeView.Frame = new CGRect (placeView.Frame.Location.X, placeView.Frame.Location.Y, placeView.Frame.Width + 150f, placeView.Frame.Height);
-			 //CGSizeMake(frame.size.width, textScroller.contentSize.height);
+
 
 			placeView.SetText(cardHelper.promptStringForType (type, false));
 
 			textScroller.ScrollEnabled = true;
-
-			textScroller.SetContentOffset(new CGPoint(width,0),animated);
+			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
+				
+				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
+			}
 
 		}
 
