@@ -208,7 +208,7 @@ namespace JudoDotNetXamariniOSSDK
 			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
-			placeView.ShowTextOffset = 0;
+			placeView.SetShowTextOffSet(0);
 			placeView.Offset = r;
 			placeView.BackgroundColor = ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement);
 

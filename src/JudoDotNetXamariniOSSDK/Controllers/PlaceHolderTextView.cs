@@ -20,16 +20,14 @@ namespace JudoDotNetXamariniOSSDK
 		
 		public  string Text { get; set;}
 		public  UIFont Font { get; set;}
-		public int ShowTextOffset { get; set; }
+		private int _showTextOffset;
+		public int ShowTextOffset { get{return _showTextOffset;} }
 		public CGRect Offset { get; set;}
 
-//		public PlaceHolderTextView (CGRect frame) : base(frame)
-//		{
-//			
-//		}
 
 		public PlaceHolderTextView(IntPtr p) : base(p)
 		{
+			Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 		}
 			
 	
@@ -52,13 +50,12 @@ namespace JudoDotNetXamariniOSSDK
 						Alpha = 1;
 					});
 			}
-
 			SetNeedsDisplay();
 		}
 
 		public void SetShowTextOffSet(int newOffset)
 		{
-			ShowTextOffset = newOffset;
+			_showTextOffset = newOffset;
 			SetNeedsDisplay();
 		}
 
@@ -77,14 +74,14 @@ namespace JudoDotNetXamariniOSSDK
 			context.SetFillColor(clearColor);
 			context.FillRect(rect);
 
-			if (clearText.Length > 0) 
+			if (clearText.Length !=0) 
 			{
-				r.X += clearText.DrawString (Offset.Location, Font).Width;
+				r.Location = new CGPoint(r.Location.X+ clearText.DrawString (Offset.Location, Font).Width,r.Location.Y);
 			}
 
 			CSRange charsToDraw = new CSRange(0, grayText.Length);// grayText.ToCharArray ();
 
-			if (charsToDraw.Length > 0) 
+			if (charsToDraw.Length !=0) 
 			{
 				CGColor grayColor = UIColor.LightGray.CGColor;// ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
 
@@ -97,7 +94,8 @@ namespace JudoDotNetXamariniOSSDK
 				{
 					char character = chars[i];
 					if (character == ' ') {
-						r.X += Offset.Size.Width;
+						//r.Location.X += Offset.Size.Width;
+						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
 					if (character == 'X') {
@@ -112,7 +110,8 @@ namespace JudoDotNetXamariniOSSDK
 						var mask = "0";
 						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 						mask.DrawString(box, drawFont);
-						r.X += Offset.Size.Width;
+						//r.Location.X += Offset.Size.Width;
+						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
 					break;
@@ -122,11 +121,15 @@ namespace JudoDotNetXamariniOSSDK
 				charsToDraw.Length -= i;
 				if (charsToDraw.Length != 0) 
 				{
-					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, Font);
-					grayText.DrawString(new CGPoint(r.X,r.Y),Font);
+					
+					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20);
+					//context.ClearRect()
+					//textToDraw.DrawString(new CGPoint(r.X,r.Y),Font);
 				}
 			}
 		}
+
+
 			
 		public float WidthToOffset()
 		{
@@ -134,11 +137,13 @@ namespace JudoDotNetXamariniOSSDK
 			return (float)startText.StringSize(Font).Width;
 		}
 
-		public nfloat WidthFromOffset()
+
+
+		public float WidthFromOffset()
 		{
 			var endText = Text.Substring (ShowTextOffset, Text.Length - ShowTextOffset);
 
-		    return 0;
+			return (float)endText.StringSize (Font).Width;
 		}
 	}
 }

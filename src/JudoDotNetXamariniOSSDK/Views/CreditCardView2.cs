@@ -5,6 +5,7 @@ using ObjCRuntime;
 using CoreGraphics;
 using CoreAnimation;
 using System.Text;
+using CoreFoundation;
 
 
 namespace JudoDotNetXamariniOSSDK	      
@@ -98,9 +99,9 @@ namespace JudoDotNetXamariniOSSDK
 		float widthToLastGroup {get{ 
 				int oldOffset = placeView.ShowTextOffset;
 				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (type);// [CreditCard lengthOfFormattedStringTilLastGroupForType:type];
-				placeView.ShowTextOffset = offsetToLastGroup;
+				placeView.SetShowTextOffSet(offsetToLastGroup);
 				float width = placeView.WidthToOffset (); //[placeView widthToOffset];
-				placeView.ShowTextOffset = oldOffset;
+				placeView.SetShowTextOffSet(oldOffset);
 				return width;
 			}
 			}
@@ -250,7 +251,7 @@ namespace JudoDotNetXamariniOSSDK
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
 
-			placeView.ShowTextOffset = 0;
+			placeView.SetShowTextOffSet (0);
 			placeView.Offset = r;
 	
 			placeView.BackgroundColor =UIColor.Clear;
@@ -470,12 +471,12 @@ namespace JudoDotNetXamariniOSSDK
 						break;
 					}
 							
-						if(len == Card.CC_LEN_FOR_TYPE) {//CC_LEN_FOR_TYPE replace with logic
+						if(len == Card.CC_LEN_FOR_TYPE) {
 							placeView.Text = cardHelper.promptStringForType(type,true);
-							/// NEED TO WRITE OR FIND CLASS/Dictionary to return correctPrompt for type      placeView.text = [CreditCard promptStringForType:type justNumber:YES];
+
 						}
 
-						formattedText = cardHelper.FormatForViewing(newText);   // Probably need to format it to look like a cardNumber //[CreditCard formatForViewing:newText];
+						formattedText = cardHelper.FormatForViewing(newText); 
 					int lenForCard =  cardHelper.LengthOfStringForType(type) ; // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
 
 						// NSLog(@"FT=%@ len=%d", formattedText, lenForCard);
@@ -523,18 +524,27 @@ namespace JudoDotNetXamariniOSSDK
 			// TODO Implement flash message 
 		}
 
+		DispatchQueue dispatchGetMainQueue()
+		{
+			return  DispatchQueue.MainQueue; // 
+		}
+
 		public bool EndDelegate()
 		{
 
 			// Order of these blocks important!
 			if(scrollForward) {
+
 				ScrollForward(true);
-				//dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (long long)250*NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ [textScroller flashScrollIndicators]; } );
+				var queue = dispatchGetMainQueue ();
+				queue.DispatchAfter(DispatchTime.Now,() => {
+					textScroller.FlashScrollIndicators ();
+				});
 			}
 			if(updateText) {
 				int textViewLen = formattedText.Length;
 				int formattedLen = placeView.Text.Length;
-				placeView.ShowTextOffset = Math.Min(textViewLen, formattedLen);
+				placeView.SetShowTextOffSet(Math.Min(textViewLen, formattedLen));
 
 				if((formattedLen > textViewLen) && !deleting) {
 					char c = placeView.Text.Substring(textViewLen,1).ToCharArray()[0];// characterAtIndex:textViewLen];
@@ -557,13 +567,6 @@ namespace JudoDotNetXamariniOSSDK
 				//[self flashRecheckNumberMessage];
 			}
 
-
-
-			//dispatch_async(dispatch_get_main_queue(), ^{ [self updateUI]; });
-
-
-			//NSLog(@"placeholder=%@ text=%@", placeView.text, ccText.text);
-
 			return ret;
 		}
 
@@ -575,16 +578,14 @@ namespace JudoDotNetXamariniOSSDK
 				StatusHelpLabel.Text = "Please enter Expire Date";//[ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterExpiryDateText"];
 			}
 			float width = widthToLastGroup;
-
-			//CGRect frame = ccText.Frame;
-			CGRect frame  = new CGRect(ccText.Frame.Location, new CGSize(width + textScroller.Frame.Size.Width,ccText.Frame.Size.Height));
-			//CGSize size = ccText.Frame.Size;
-			//frame.Size.Width = width + textScroller.Frame.Size.Width;
+			CGRect frame  = new CGRect(ccText.Frame.Location, new CGSize((width) + textScroller.Frame.Size.Width,ccText.Frame.Size.Height));
+			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
-			placeView.Frame = frame;
-			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height); //CGSizeMake(frame.size.width, textScroller.contentSize.height);
+			//placeView.Frame = new CGRect (placeView.Frame.Location.X, placeView.Frame.Location.Y, placeView.Frame.Width + 150f, placeView.Frame.Height);
+			 //CGSizeMake(frame.size.width, textScroller.contentSize.height);
 
-			placeView.Text = cardHelper.promptStringForType (type, false);//[CreditCard promptStringForType:type justNumber:NO];
+			placeView.SetText(cardHelper.promptStringForType (type, false));
+
 			textScroller.ScrollEnabled = true;
 
 			textScroller.SetContentOffset(new CGPoint(width,0),animated);

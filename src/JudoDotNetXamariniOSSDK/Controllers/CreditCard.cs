@@ -68,6 +68,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			switch(type) {
 			case CreditCardType.Visa:
+				idx = 16+3-4;
 				break;
 			case CreditCardType.MasterCard:
 				break;
@@ -119,8 +120,12 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			CSRange range = new CSRange(0,Card.CC_LEN_FOR_TYPE);
 
-			int matches = reg.Matches(proposedNumber).Count;
-			if(matches == 1) return (CreditCardType) idx;
+
+				var matches = reg.Matches (proposedNumber);
+				if (matches != null) {
+				if(matches.Count == 1) return (CreditCardType) idx;
+				}
+
 		}
 		return CreditCardType.InvalidCard;
 	}
