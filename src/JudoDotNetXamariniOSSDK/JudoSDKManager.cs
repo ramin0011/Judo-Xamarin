@@ -148,6 +148,17 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 		}
+
+		void SetAVSEnabled(bool enabled)
+		{
+			AVSEnabled = enabled;
+		}
+
+		bool GetAVSEnabled()
+		{
+			return AVSEnabled;
+		}
+			
 	}
 }
 

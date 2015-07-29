@@ -72,6 +72,12 @@
     <Compile Include="Controllers\PlaceHolderTextView.designer.cs">
       <DependentUpon>PlaceHolderTextView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\IPaymentService.cs" />
+    <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="ViewModels\CardViewModel.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="Factories\ServiceFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -173,5 +179,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TableSources\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Factories\" />
   </ItemGroup>
 </Project>

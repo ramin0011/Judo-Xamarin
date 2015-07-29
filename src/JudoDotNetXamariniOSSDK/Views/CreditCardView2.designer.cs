@@ -59,9 +59,9 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (StatusHelpLabel != null) {
-				StatusHelpLabel.Dispose ();
-				StatusHelpLabel = null;
+			if (SubmitButton != null) {
+				SubmitButton.Dispose ();
+				SubmitButton = null;
 			}
 
 			if (AVSCell != null) {
@@ -119,9 +119,9 @@ namespace JudoDotNetXamariniOSSDK
 				SpacerCell = null;
 			}
 
-			if (SubmitButton != null) {
-				SubmitButton.Dispose ();
-				SubmitButton = null;
+			if (StatusHelpLabel != null) {
+				StatusHelpLabel.Dispose ();
+				StatusHelpLabel = null;
 			}
 
 			if (TableView != null) {

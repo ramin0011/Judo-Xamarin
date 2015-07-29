@@ -6,6 +6,8 @@ using CoreGraphics;
 using CoreAnimation;
 using System.Text;
 using CoreFoundation;
+using System.Linq;
+using System.Collections.Generic;
 
 
 namespace JudoDotNetXamariniOSSDK	      
@@ -48,7 +50,7 @@ namespace JudoDotNetXamariniOSSDK
 		private UIButton ExpiryInfoButton {get; set;}
 
 		private UILabel PleaseRecheckNumberLabel {get; set;}
-		private UITableViewCell[] CellsToShow {get; set;}
+		private List<UITableViewCell> CellsToShow {get; set;}
 
 		private NSLayoutConstraint PickBottomConstraint {get; set;}
 
@@ -202,7 +204,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetUpTableView ()
 		{
-			CellsToShow = new UITableViewCell[]{CardDetailCell, ReassuringTextCell };
+			CellsToShow = new List<UITableViewCell>(){CardDetailCell, ReassuringTextCell };
 
 			CGRect rectangle = ccText.Frame;
 			//rectangle.Size.Height = 36;
@@ -263,7 +265,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			//dummyTextView.BecomeFirstResponder ();
 
-			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow);
+			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow.ToArray());
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 			SetUpMaskedInput ();
@@ -354,9 +356,6 @@ namespace JudoDotNetXamariniOSSDK
 							aStringBuilder2.Remove(range.Location,range.Length);
 							aStringBuilder2.Insert(range.Location,"0"+ replace);
 							formattedText = aStringBuilder2.ToString();
-
-
-							//formattedText = newTextOrig = "0"+newTextOrig; // stringByReplacingCharactersInRange:range withString:[@"0" stringByAppendingString:text];
 							newTextLen = newTextOrig.Length;
 						}
 						if(newTextLen >= (monthRange.Location + monthRange.Length)) {
@@ -372,7 +371,6 @@ namespace JudoDotNetXamariniOSSDK
 					if(newTextLen > yearRange.Location) {
 						int proposedDecade = (newTextOrig.Substring(yearRange.Location,1).ToCharArray()[0] - '0') * 10;
 						int yearDecade = currentYear - (currentYear % 10);
-						// NSLog(@"proposedDecade=%u yearDecade=%u", proposedDecade, yearDecade);
 						if(proposedDecade < yearDecade) {
 							flashRecheckExpiryDateMessage();
 							return EndDelegate();
@@ -422,21 +420,19 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				else
 				{
-					// added by Rob Phillips
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; //[[CreditCard formatForViewing:ccText.text] length];
 					int formattedLen = placeView.Text.Length;
 					placeView.SetShowTextOffSet(Math.Min(textViewLen,formattedLen)); //MIN(textViewLen, formattedLen);
 					textScroller.ScrollEnabled = false;
-					//[textScroller setContentOffset:CGPointMake(0, 0) animated:YES];
+
 					textScroller.SetContentOffset(new CGPoint(0,0),true);
 
 					StatusHelpLabel.Text = "replace with proper text";// ThemeBundleReplacement.BundledOrReplacementString("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
-					//self.statusHelpLabel.text = [ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterCardDetailsText"];
 
 					// added by Rob Phillips
 
-				string newText = newTextOrig.Replace(" ", String.Empty);// stringByReplacingOccurrencesOfString:@" " withString:@""];
+				string newText = newTextOrig.Replace(" ", String.Empty);
 					int len = newText.Length;
 					if(len < Card.CC_LEN_FOR_TYPE) { //CC_LEN_FOR_TYPE replace with logic
 						updateText = true;
@@ -478,7 +474,7 @@ namespace JudoDotNetXamariniOSSDK
 						formattedText = cardHelper.FormatForViewing(newText); 
 					int lenForCard =  cardHelper.LengthOfStringForType(type) ; // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
 
-						// NSLog(@"FT=%@ len=%d", formattedText, lenForCard);
+
 
 						if(len < lenForCard) {
 							updateText = true;
@@ -525,7 +521,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		DispatchQueue dispatchGetMainQueue()
 		{
-			return  DispatchQueue.MainQueue; // 
+			return  DispatchQueue.MainQueue;  
 		}
 
 		public bool EndDelegate()
@@ -600,6 +596,112 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 		}
+
+		private void UpdateUI()
+		{
+//			bool enable = false;
+//			enable = completelyDone;
+//
+//			this.NavigationItem.RightBarButtonItem.Enabled = true;
+//
+//			//NSMutableArray *cellsToRemove = [NSMutableArray array];
+//			UITableViewCell[] cellsToRemove;
+//			//NSMutableArray *insertedCells = [NSMutableArray array];
+//			UITableViewCell[] insertedCells;
+//			//NSMutableArray *cellsBeforeUpdate = [self.cellsToShow copy];
+//			UITableViewCell[] cellsBeforeUpdate;
+//			Array.Copy (CellsToShow.ToArray(), cellsBeforeUpdate);
+//			TableView.BeginUpdates ();
+//
+//
+//			if(enable)
+//			{
+//				bool ccIsFirstResponder = ccText.IsFirstResponder;
+//				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+//					if (!CellsToShow.Any(x=> x== MaestroCell)) {
+//						int row = CellsToShow.IndexOf(CardDetailCell) + 1;
+//						CellsToShow.Insert (MaestroCell, row);
+//						//[insertedCells addObject:self.maestroCell];
+//						insertedCells.add(MaestroCell);//// you sre here
+//					}
+//
+//					if (_issueNumberTextField.text.length==0 || !(_startDateTextField.text.length == 5)) { //SCRUTINIZE THIS
+//						enable = false;
+//					}
+//
+//					if (ccIsFirstResponder) {
+//						startDateTextField.BecomeFirstResponder;
+//						//[self.startDateTextField becomeFirstResponder];
+//						ccIsFirstResponder = false;
+//					}
+//				}
+//
+//				if (JudoSDKManager.GetAVSEnabled()) {
+//					if (!cellsToShow.Contains(AVSCell)) {
+//						int row = cellsToShow.IndexOfObject(reassuringTextCell);
+//						cellsToShow.InsertObject(AVSCell,row);
+//						insertedCells.add(AVSCell);
+//					}
+//
+//					if (ccIsFirstResponder) {
+//						postCodeTextField.BecomeFirstResponder;
+//						ccIsFirstResponder = false;
+//					}
+//
+//					if (pickerView.SelectedRowInComponent[0] == BillingCountryOptionOther) {
+//						enable = false;
+//					} else {
+//						// check postcode is OK.
+//					}
+//				}
+//
+//				if (ccIsFirstResponder) {
+//					DismissKeyboardAction ();
+//					ccIsFirstResponder = false;
+//				}
+//			} else {
+//				if (JudoSDKManager.GetMaestroAccepted()) {
+//					if (cellsToShow.Contains(MaestroCell)) {
+//						//[cellsToRemove addObject:self.maestroCell];
+//						cellsToRemove.add(MaestroCell);
+//					}
+//				}
+//
+//				if (JudoSDKManager.GetAVSEnabled()) {
+//
+//					if (cellsToShow.Contains(AVSCell)) {
+//						cellsToRemove.add(AVSCell);
+//					}
+//				}
+//			}
+//
+//			NSIndexPath[] indexPathsToRemove;
+//			foreach (UITableViewCell cell in cellsToRemove)
+//			{
+//				//[indexPathsToRemove addObject:[NSIndexPath indexPathForRow:[cellsBeforeUpdate indexOfObject:cell] inSection:0]];
+//
+//			}
+//
+//			TableView.DeleteRows (indexPathsToRemove, UITableViewRowAnimation.Fade); //  deleteRowsAtIndexPaths:indexPathsToRemove withRowAnimation:UITableViewRowAnimationFade];
+//			//[self.cellsToShow removeObjectsInArray:cellsToRemove];
+//			CellsToShow.Remove(cellsToRemove);
+//
+//			NSIndexPath[] indexPathsToAdd;
+//			//NSMutableArray *indexPathsToAdd = [NSMutableArray array];
+//
+//			foreach (UITableViewCell cell in insertedCells)
+//			{
+//				//[indexPathsToAdd addObject:[NSIndexPath indexPathForRow:[self.cellsToShow indexOfObject:cell] inSection:0]];
+//
+//			}
+//
+//			TableView.InsertRows(indexPathsToAdd, UITableViewRowAnimation.Fade);
+//
+//			TableView.EndUpdates ();
+//
+//			SubmitButton.Enabled = enable;
+		}
+
 	}
 
 }
