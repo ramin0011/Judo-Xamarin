@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public interface IPaymentService
 	{
-		void MakePayment (PaymentViewModel payment);
+		Task MakePayment (PaymentViewModel payment);
 	}
 }
 

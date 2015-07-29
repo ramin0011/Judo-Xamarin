@@ -14,8 +14,8 @@ namespace JudoDotNetXamarin
     public static class JudoPaymentsFactory
     {
         private static readonly string LIVE_URL = "https://partnerapi.judopay.com/";
-        private static readonly string SANDBOX_URL = "https://partnerapi.judopay-sandbox.com/";
-		private static readonly string DEV_LIVE_URL = "http://devpartnerapi.judopay.com/";
+		private static readonly string SANDBOX_URL = "https://partnerapi.judopay-sandbox.com/";
+		private static readonly string DEV_LIVE_URL = "http://10.12.44.151:4004";
         private static readonly string API_VERSION = "4.1.0.0";
         private const string Apiversionheader = "api-version";
 
@@ -27,8 +27,8 @@ namespace JudoDotNetXamarin
                 case Environment.Live:
 				baseUrl = DEV_LIVE_URL; //LIVE_URL;
                     break;
-                case Environment.Sandbox:
-                    baseUrl = SANDBOX_URL;
+			case Environment.Sandbox:
+				baseUrl = DEV_LIVE_URL;//SANDBOX_URL;
                     break;
             }
 

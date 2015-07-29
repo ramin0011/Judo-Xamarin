@@ -98,7 +98,10 @@ namespace JudoDotNetXamariniOSSDK
 									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{
             // call UI 
-			CreditCardView2 ctrl = new CreditCardView2();
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			CreditCardView2 ctrl = new CreditCardView2(paymentService);
             // create a new window instance based on the screen size
             window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
 
