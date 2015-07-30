@@ -30,10 +30,18 @@ namespace JudoDotNetXamariniOSSDK
 			{
 				
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
-				var response = await task;
+				IResult<ITransactionResult> response = await task;
 				if (!response.HasError)
 				{
-					Console.WriteLine(response.Response);    
+					PaymentReceiptModel paymentreceipt = response.Response as PaymentReceiptModel;
+					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+					{
+						CreatedAt = paymentreceipt.CreatedAt.DateTime,
+						Currency = paymentreceipt.Currency,
+						OriginalAmount = paymentreceipt.Amount,
+						ReceiptId = paymentreceipt.ReceiptId
+					};
+					JudoSDKManager.ShowReceipt(receipt);
 				}
 				else
 				{

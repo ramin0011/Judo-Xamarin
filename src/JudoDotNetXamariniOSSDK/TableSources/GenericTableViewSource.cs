@@ -4,12 +4,12 @@ using Foundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class AddPaymentTableSource : UITableViewSource {
+	public class GenericTableViewSource : UITableViewSource {
 
 		UITableViewCell[] TableItems;
 		string CellIdentifier = "TableCell";
 
-		public AddPaymentTableSource (UITableViewCell[] items)
+		public GenericTableViewSource (UITableViewCell[] items)
 		{
 			TableItems = items;
 		}
@@ -27,17 +27,17 @@ namespace JudoDotNetXamariniOSSDK
 			//---- if there are no cells to reuse, create a new one
 			if (cell != null)
 			{
-			return cell;
+				return cell;
 			}
 			else return  new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
-	}
+		}
 
 		public override nfloat GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
 		{
-			
+
 			UITableViewCell cell = TableItems[indexPath.Row];
 			return cell.Bounds.Height;
 		}
-}
+	}
 }
 
