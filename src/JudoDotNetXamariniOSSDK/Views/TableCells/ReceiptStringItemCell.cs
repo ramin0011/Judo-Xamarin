@@ -14,11 +14,18 @@ namespace JudoDotNetXamariniOSSDK
 		public string Label { get; set;}
 		public string Value { get; set;}
 
-
+		static bool UserInterfaceIdiomIsPhone {
+			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
+		}
+			
 		static ReceiptStringItemCell ()
 		{
-			Nib = UINib.FromName ("ReceiptStringItemCell", NSBundle.MainBundle);
+			Nib = UINib.FromName (UserInterfaceIdiomIsPhone ? "ReceiptStringItemCell_iphone":"ReceiptStringItemCell_ipad", NSBundle.MainBundle);
 
+		}
+
+		public ReceiptStringItemCell() : base()
+		{
 		}
 
 		public ReceiptStringItemCell (IntPtr handle) : base (handle)
@@ -26,6 +33,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+	
 
 
 		public static ReceiptStringItemCell Create ()
@@ -34,18 +42,20 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public override void RemoveFromSuperview ()
-		{
-			base.RemoveFromSuperview ();
-		}
+//		public override void RemoveFromSuperview ()
+//		{
+//			base.RemoveFromSuperview ();
+//		}
 
 //		public override void LayoutSubviews ()
 //		{
 //			base.LayoutSubviews ();
-//			ItemLabel.Text = this.Label;
-//			ItemValue.Text = this.Value;
+//			prefix.Text = this.Label;
+//			suffix.Text = this.Value;
 //
 //		}
+
+
 	}
 }
 

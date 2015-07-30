@@ -13,21 +13,21 @@ namespace JudoDotNetXamariniOSSDK
 	partial class ReceiptStringItemCell
 	{
 		[Outlet]
-		UIKit.UILabel ItemLabel { get; set; }
+		UIKit.UILabel prefix { get; set; }
 
 		[Outlet]
-		UIKit.UILabel ItemValue { get; set; }
+		UIKit.UILabel suffix { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ItemLabel != null) {
-				ItemLabel.Dispose ();
-				ItemLabel = null;
+			if (prefix != null) {
+				prefix.Dispose ();
+				prefix = null;
 			}
 
-			if (ItemValue != null) {
-				ItemValue.Dispose ();
-				ItemValue = null;
+			if (suffix != null) {
+				suffix.Dispose ();
+				suffix = null;
 			}
 		}
 	}

@@ -97,20 +97,24 @@ namespace JudoDotNetXamariniOSSDK
 		public static void MakeAPayment(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{
-            // call UI 
-			ServiceFactory serviceFactory = new ServiceFactory();
-			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+//			ServiceFactory serviceFactory = new ServiceFactory();
+//			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+//
+//			CreditCardView2 ctrl = new CreditCardView2(paymentService);
+//
+//			UIApplication.SharedApplication.Windows[0].RootViewController =ctrl;
 
-			CreditCardView2 ctrl = new CreditCardView2(paymentService);
-            // create a new window instance based on the screen size
-          // window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
 
+			PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+			{
+				CreatedAt = DateTime.Now,
+				Currency = "GDP",
+				OriginalAmount = 4.99m,
+				ReceiptId = "1234567"
+			};
 
-			UIApplication.SharedApplication.Windows[0].RootViewController =ctrl;
-			//UIApplication.SharedApplication.Windows[0].RootViewController.NavigationController.PushViewController(ctrl,true);
-
-            // make the window visible
-         //   window.MakeKeyAndVisible();
+			PaymentReceipt receiptView = new PaymentReceipt (receipt);
+			UIApplication.SharedApplication.Windows[0].RootViewController = receiptView;
         }
 
 		public static void ShowReceipt(PaymentReceiptViewModel receipt)
@@ -119,6 +123,12 @@ namespace JudoDotNetXamariniOSSDK
 			UIApplication.SharedApplication.Windows[0].RootViewController = receiptView;
 
 		}
+
+//		public static void Root ()
+//		{
+//			RootViewController = new 
+//			UIApplication.SharedApplication.Windows[0].RootViewController =
+//		}
 
 		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)

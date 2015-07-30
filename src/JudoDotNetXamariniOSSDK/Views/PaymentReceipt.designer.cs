@@ -17,17 +17,25 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		UIKit.UITableView ReceiptTableView { get; set; }
+
+		[Outlet]
+		UIKit.NSLayoutConstraint TableVIewHeight { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ReceiptTableView != null) {
-				ReceiptTableView.Dispose ();
-				ReceiptTableView = null;
+			if (TableVIewHeight != null) {
+				TableVIewHeight.Dispose ();
+				TableVIewHeight = null;
 			}
 
 			if (HomeButton != null) {
 				HomeButton.Dispose ();
 				HomeButton = null;
+			}
+
+			if (ReceiptTableView != null) {
+				ReceiptTableView.Dispose ();
+				ReceiptTableView = null;
 			}
 		}
 	}

@@ -11,7 +11,7 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		private PaymentReceiptViewModel _receipt;
 
-		private List<UITableViewCell> CellsToShow { get; set; }
+		private List<ReceiptStringItemCell> CellsToShow { get; set; }
 
 		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
 		{
@@ -33,28 +33,36 @@ namespace JudoDotNetXamariniOSSDK
 			base.ViewDidLoad ();
 			SetUpTableView ();
 			this.View.BackgroundColor = new UIColor(245f, 245f, 245f,1f);
-		
+			HomeButton.TouchUpInside += (sender, ev) => {
+				this.DismissViewController(true,null);
+			};
+		}
+
+		void GoHome ()
+		{
+		//	JudoSDKManager.Root ();
 		}
 
 		void SetUpTableView ()
 		{
-			ReceiptStringItemCell dateCell = new ReceiptStringItemCell (new IntPtr ());
+			ReceiptStringItemCell dateCell = new ReceiptStringItemCell ();
 			dateCell.Label = "Date";
 			dateCell.Value = _receipt.CreatedAt.ToLongDateString() + ", " + DateTime.Now.TimeOfDay.ToString();
 
-			ReceiptStringItemCell amountCell = new ReceiptStringItemCell (new IntPtr ()); 
+			ReceiptStringItemCell amountCell = new ReceiptStringItemCell (); 
 			amountCell.Label ="Amount";
 			amountCell.Value = _receipt.OriginalAmount + " " + _receipt.Currency;
-			ReceiptNoteCell noteCell = new ReceiptNoteCell (new IntPtr ()); 
-			noteCell.Text= @"This is a receipt example showing only the createdAT,amount and currency properties of the receipt object.
-			 Please refer to our API Reference Documentation for all the properties you can display";
 
-			CellsToShow = new List<UITableViewCell> (){ dateCell, amountCell,noteCell };
+			CellsToShow = new List<ReceiptStringItemCell> (){ dateCell, amountCell };
 
-
-			UITableViewSource tableSource = new GenericTableViewSource (CellsToShow.ToArray());
+		
+			ReceiptTableViewSource tableSource = new ReceiptTableViewSource (CellsToShow.ToArray());
 			ReceiptTableView.Source = tableSource;
 			ReceiptTableView.ScrollEnabled = false;
+			float height = tableSource.GetTableHeight();
+
+
+			TableVIewHeight.Constant = height;
 		}
 	}
 }

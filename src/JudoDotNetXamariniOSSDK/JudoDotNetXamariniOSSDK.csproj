@@ -62,8 +62,8 @@
     <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell~iphone.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell~ipad.xib" />
+    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
+    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Views\TableCells\ReceiptNoteCell.designer.cs">
       <DependentUpon>ReceiptNoteCell.cs</DependentUpon>
     </Compile>
-    <Compile Include="TableSources\GenericTableViewSource.cs" />
+    <Compile Include="TableSources\ReceiptTableViewSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
