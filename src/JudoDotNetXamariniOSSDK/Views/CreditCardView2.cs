@@ -22,68 +22,67 @@ namespace JudoDotNetXamariniOSSDK
 
 		CreditCard cardHelper = new CreditCard ();
 
-		private UILabel PostCodeLabel { get; set; }
+		//private UILabel PostCodeLabel { get; set; }
 
-		private UIView PostCodeBackgroundView { get; set; }
+		//private UIView PostCodeBackgroundView { get; set; }
 
-		private UITextField PostCodeTextField { get; set; }
+		//private UITextField PostCodeTextField { get; set; }
 
-		private UIButton CountryButton { get; set; }
+		//private UIButton CountryButton { get; set; }
 
-		private UILabel CountryLabel { get; set; }
+		//private UILabel CountryLabel { get; set; }
 
-		private UIButton HomeButton { get; set; }
+		//private UIButton HomeButton { get; set; }
 
-		private UILabel CountryWarningLabel { get; set; }
+		//private UILabel CountryWarningLabel { get; set; }
 
-		private UIView PostCodeContainerView { get; set; }
+		//private UIView PostCodeContainerView { get; set; }
 
-		private UITextField StartDateTextField { get; set; }
+		//private UITextField StartDateTextField { get; set; }
 
-		private UILabel StartDateLabel { get; set; }
+		//private UILabel StartDateLabel { get; set; }
 
-		private UIView StartDateContainerView { get; set; }
+		//private UIView StartDateContainerView { get; set; }
 
-		private UILabel StartDatePlaceholder { get; set; }
+		//private UILabel StartDatePlaceholder { get; set; }
 
-		private UILabel StartDateWarningLabel { get; set; }
+		//private UILabel StartDateWarningLabel { get; set; }
 
-		private UITextField IssueNumberTextView { get; set; }
+		//private UITextField IssueNumberTextView { get; set; }
 
-		private UILabel IssueNumberLabel { get; set; }
+		//private UILabel IssueNumberLabel { get; set; }
 
-		private UIView IssueNumberContainerView { get; set; }
+		//private UIView IssueNumberContainerView { get; set; }
 
-		private UIView PickerViewContainer { get; set; }
+		//private UIView PickerViewContainer { get; set; }
 
-		private UIPickerView PickerView { get; set; }
+		//private UIPickerView PickerView { get; set; }
 
-		private UIButton PickerDoneCoverButton { get; set; }
+		//private UIButton PickerDoneCoverButton { get; set; }
 
-		private UILabel TransactionInfoLabel { get; set; }
-		//		private UIButton SubmitButton {get; set;}
-		//		private UIButton CancelButton {get; set;}
+		//private UILabel TransactionInfoLabel { get; set; }
+
 
 		//private BSKeyboardControls KeyboardControls {get; set;}
-		private UIButton NumberFieldClearButton { get; set; }
+		//private UIButton NumberFieldClearButton { get; set; }
 
-		private UIButton ExpiryInfoButton { get; set; }
+		//private UIButton ExpiryInfoButton { get; set; }
 
-		private UILabel PleaseRecheckNumberLabel { get; set; }
+		//private UILabel PleaseRecheckNumberLabel { get; set; }
 
 		private List<UITableViewCell> CellsToShow { get; set; }
 
-		private NSLayoutConstraint PickBottomConstraint { get; set; }
+	//	private NSLayoutConstraint PickBottomConstraint { get; set; }
 
 
-		private UIView warningView;
-		private UIButton updateCard;
-		private UITextView dummyTextView;
+		//private UIView warningView;
+		//private UIButton updateCard;
+		//private UITextView dummyTextView;
 
 
 		UIImageView ccBackImage;
 
-		float oldX;
+		//float oldX;
 		int currentYear;
 
 		CreditCardType type;
@@ -297,7 +296,7 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 			SetUpMaskedInput ();
-			NSArray fields = NSArray.FromObjects (ccText, dummyTextView, PostCodeTextField, StartDateTextField, IssueNumberTextView);
+		//	NSArray fields = NSArray.FromObjects (ccText, dummyTextView, PostCodeTextField, StartDateTextField, IssueNumberTextView);
 		}
 
 		void SetUpMaskedInput ()
@@ -775,8 +774,22 @@ namespace JudoDotNetXamariniOSSDK
 		//
 		//			SubmitButton.Enabled = enable;
 		//		}
+		protected override void Dispose (bool disposing)
+		{
+			foreach (UITableViewCell cell in CellsToShow) {
+				if (cell != null) {
+					cell.Dispose ();
+				}
+			}
 
+			if (ccBackImage != null) {
+				ccBackImage.Dispose ();
+			}
+			base.Dispose (disposing);
+		}
 	}
+
+
 
 }
 

@@ -26,16 +26,6 @@ namespace JudoPayiOSXamarinSampleApp
         private const int ACTION_TOKEN_PREAUTH  = 202;
         private const int ACTION_REGISTER_CARD  = 301;
 
-        private volatile string cardToken;
-        private volatile string consumerToken;
-        private volatile string rcp_consumerRef;
-        private volatile string lastFour;
-        //private volatile CardBase.CardType cardType;
-
-        private volatile string preAuth_cardToken;
-        private volatile string preAuth_consumerToken;
-        private volatile string preAuth_rcp_consumerRef;
-        private volatile string preAuth_lastFour;
         //private volatile CardBase.CardType preAuth_cardType;
 
         static bool UserInterfaceIdiomIsPhone
@@ -46,6 +36,7 @@ namespace JudoPayiOSXamarinSampleApp
         public RootViewController(IntPtr handle)
             : base(handle)
         {
+			
         }
 
         public override void DidReceiveMemoryWarning()
@@ -91,6 +82,7 @@ namespace JudoPayiOSXamarinSampleApp
         {
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
             Dictionary<string, string> metaData = new Dictionary<string, string> { { "test1", "test2" } };
+
 
             JudoSDKManager.MakeAPayment( amount, MY_JUDO_ID, paymentReference, consumerRef, metaData, this, SuccessResult, FailedResult);
         }

@@ -31,6 +31,7 @@ namespace JudoDotNetXamariniOSSDK
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			SetUpTableView ();
 			this.View.BackgroundColor = new UIColor(245f, 245f, 245f,1f);
 		
 		}
@@ -45,7 +46,7 @@ namespace JudoDotNetXamariniOSSDK
 			amountCell.Label ="Amount";
 			amountCell.Value = _receipt.OriginalAmount + " " + _receipt.Currency;
 			ReceiptNoteCell noteCell = new ReceiptNoteCell (new IntPtr ()); 
-			noteCell.TextLabel.Text= @"This is a receipt example showing only the createdAT,amount and currency properties of the receipt object.
+			noteCell.Text= @"This is a receipt example showing only the createdAT,amount and currency properties of the receipt object.
 			 Please refer to our API Reference Documentation for all the properties you can display";
 
 			CellsToShow = new List<UITableViewCell> (){ dateCell, amountCell,noteCell };

@@ -103,22 +103,20 @@ namespace JudoDotNetXamariniOSSDK
 
 			CreditCardView2 ctrl = new CreditCardView2(paymentService);
             // create a new window instance based on the screen size
-           window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
+          // window = window ?? new UIWindow(UIScreen.MainScreen.Bounds);
 
-           // var controller = new UIViewController();
-            //controller.View.BackgroundColor = UIColor.White;
 
-			window.RootViewController = ctrl;
+			UIApplication.SharedApplication.Windows[0].RootViewController =ctrl;
 			//UIApplication.SharedApplication.Windows[0].RootViewController.NavigationController.PushViewController(ctrl,true);
 
             // make the window visible
-            window.MakeKeyAndVisible();
+         //   window.MakeKeyAndVisible();
         }
 
 		public static void ShowReceipt(PaymentReceiptViewModel receipt)
 		{
 			PaymentReceipt receiptView = new PaymentReceipt (receipt);
-			UIApplication.SharedApplication.Windows[0].RootViewController.NavigationController.PushViewController (receiptView, true);
+			UIApplication.SharedApplication.Windows[0].RootViewController = receiptView;
 
 		}
 
