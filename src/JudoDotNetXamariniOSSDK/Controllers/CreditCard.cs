@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -251,28 +252,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		public bool IsLuhnValid (string number)
 		{
-			return true;
-//		string baseNumber = number.Replace (" ", ""); //[number stringByReplacingOccurrencesOfString:@" " withString:@""];
-//		int total = 0;
-//
-//		int len = baseNumber.Length;
-//		for(int i=len; i > 0; )
-//		{
-//			bool odd = (len% 2 ==0);//(len-i)&1;
-//			i--;
-//			int c = baseNumber.ToCharArray()[i];
-//			if(c < '0' || c > '9') continue;
-//			c -= '0';
-//			if(odd) c = 2;
-//			if(c >= 10) {
-//				total += 1;
-//				c -= 10;
-//			}
-//			total += c;
-//		}
-//		return (total%10) == 0 ? true : false;
-		}
 
+		var cardArray = number.Select(c => c - '0').ToArray();
+
+		return (cardArray.Select((d, i) => i % 2 == cardArray.Length % 2 ? ((2 * d) % 10) + d / 5 : d).Sum() % 10)==0;
+		}
 	//////////////////////////////////////////////////////////////////////
 	// http://www.regular-expressions.info/creditcard.html
 	public bool isValidNumber(string number)

@@ -182,7 +182,6 @@ namespace JudoDotNetXamariniOSSDK
 			};
 
 
-			editCard ();
 
 		}
 
@@ -525,7 +524,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
-
 				if(!result.HasError)
 				{
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
@@ -544,11 +542,14 @@ namespace JudoDotNetXamariniOSSDK
 							this.NavigationController.PushViewController(view,true);
 	
 					});
-					//var view= new PaymentReceipt (receipt);
-					//this.NavigationController.PushViewController(view,true);
 				}
 				else{
-					Console.WriteLine(result.Error);
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+						
+						var errorText =result.Error.ErrorMessage;
+						UIAlertView _error = new UIAlertView ("Payment failed",errorText, null,"ok" , null);
+					_error.Show();
+					});
 				}
 
 			});
@@ -558,7 +559,7 @@ namespace JudoDotNetXamariniOSSDK
 		CardViewModel GatherCardDetails ()
 		{
 			CardViewModel cardViewModel = new CardViewModel () {
-				CardName = "Steve McLuvvin",
+				CardName = "Ed Xample",
 				CardNumber = creditCardNum,
 				CV2 = ccv,
 				ExpireDate = cardMonth + "/" + year,
@@ -652,18 +653,11 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 		}
-
-		private void editCard ()
-		{
-
-		}
-
+			
 		void DismissKeyboardAction ()
 		{			
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
-
-
 		}
 
 		void PickerDoneButtonPressed ()

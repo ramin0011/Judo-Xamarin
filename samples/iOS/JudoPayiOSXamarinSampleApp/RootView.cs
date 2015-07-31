@@ -28,14 +28,6 @@ namespace JudoPayiOSXamarinSampleApp
 			MakeAPaymentButton.TouchUpInside += (sender, ev) => {
 				
 				var creditCardView =JudoSDKManager.GetPaymentView();
-//				PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-//				{
-//					CreatedAt = DateTime.Now,
-//					Currency = "GDP",
-//					OriginalAmount = 4.99m,
-//					ReceiptId = "1234567"
-//				};
-//				var payment = JudoSDKManager.GetReceiptView(receipt);
 				this.NavigationController.PushViewController(creditCardView,true);
 			};
 		}
