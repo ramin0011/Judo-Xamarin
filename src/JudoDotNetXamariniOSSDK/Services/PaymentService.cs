@@ -15,7 +15,7 @@ namespace JudoDotNetXamariniOSSDK
 			_judoAPI = judoAPI;
 		}
 
-		public async Task MakePayment (PaymentViewModel paymentViewModel)
+		public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel)
 		{
 			CardPaymentModel payment = new CardPaymentModel {
 				JudoId = AppConfig.JudoID,
@@ -30,26 +30,12 @@ namespace JudoDotNetXamariniOSSDK
 			{
 				
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
-				IResult<ITransactionResult> response = await task;
-				if (!response.HasError)
-				{
-					PaymentReceiptModel paymentreceipt = response.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-					{
-						CreatedAt = paymentreceipt.CreatedAt.DateTime,
-						Currency = paymentreceipt.Currency,
-						OriginalAmount = paymentreceipt.Amount,
-						ReceiptId = paymentreceipt.ReceiptId
-					};
-					JudoSDKManager.ShowReceipt(receipt);
-				}
-				else
-				{
-					Console.WriteLine(response.Error);
-				}
+				return await task;
+			//	return response;
 			}
 			catch(Exception e){
 				Console.WriteLine(e.InnerException.ToString());
+				return null;
 			}
 
 

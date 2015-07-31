@@ -31,12 +31,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qyh-BB-iT4" userLabel="TableView">
-                    <rect key="frame" x="0.0" y="56" width="320" height="466"/>
+                    <rect key="frame" x="0.0" y="112" width="320" height="410"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a Payment " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ka3-ia-vlv">
-                    <rect key="frame" x="60" y="8" width="201" height="40"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="60" y="64" width="201" height="40"/>
+                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -46,6 +46,7 @@
                         <constraint firstAttribute="width" constant="105" id="Mfy-52-25c"/>
                     </constraints>
                     <state key="normal" title="PAY">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -54,7 +55,8 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="106" id="qya-ZP-hGY"/>
                     </constraints>
-                    <state key="normal" title="Button">
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -68,13 +70,14 @@
                 <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="I09-CQ-2lj"/>
                 <constraint firstItem="g8y-my-uAW" firstAttribute="leading" secondItem="qyh-BB-iT4" secondAttribute="leading" id="I8t-e9-i54"/>
                 <constraint firstItem="GEk-Gj-1De" firstAttribute="baseline" secondItem="g8y-my-uAW" secondAttribute="baseline" id="TEd-jx-s2Q"/>
-                <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Zwr-ED-oHz"/>
+                <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Zwr-ED-oHz"/>
                 <constraint firstItem="qyh-BB-iT4" firstAttribute="top" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="8" id="aiQ-Cq-vyE"/>
                 <constraint firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="e15-id-dWC"/>
-                <constraint firstAttribute="bottom" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="520" id="iX6-qm-hPi"/>
+                <constraint firstAttribute="bottom" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="464" id="iX6-qm-hPi"/>
                 <constraint firstItem="GEk-Gj-1De" firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="tZz-jL-9ax"/>
                 <constraint firstItem="Ka3-ia-vlv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="xuF-VY-dG0"/>
             </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <point key="canvasLocation" x="417" y="241"/>
         </view>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="74" id="lVa-Ic-UsX" userLabel="AVSCell">

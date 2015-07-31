@@ -13,7 +13,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<ReceiptStringItemCell> CellsToShow { get; set; }
 
-		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
+		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt~iphone", null)
 		{
 			_receipt = receipt;
 		}
@@ -36,18 +36,14 @@ namespace JudoDotNetXamariniOSSDK
 			HomeButton.TouchUpInside += (sender, ev) => {
 				this.DismissViewController(true,null);
 			};
-		}
 
-		void GoHome ()
-		{
-		//	JudoSDKManager.Root ();
 		}
-
+			
 		void SetUpTableView ()
 		{
 			ReceiptStringItemCell dateCell = new ReceiptStringItemCell ();
 			dateCell.Label = "Date";
-			dateCell.Value = _receipt.CreatedAt.ToLongDateString() + ", " + DateTime.Now.TimeOfDay.ToString();
+			dateCell.Value = _receipt.CreatedAt.ToLongDateString () + ", " + DateTime.Now.Hour + ":" + DateTime.Now.Minute;
 
 			ReceiptStringItemCell amountCell = new ReceiptStringItemCell (); 
 			amountCell.Label ="Amount";

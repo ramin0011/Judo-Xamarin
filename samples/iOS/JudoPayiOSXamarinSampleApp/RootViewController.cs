@@ -84,7 +84,7 @@ namespace JudoPayiOSXamarinSampleApp
             Dictionary<string, string> metaData = new Dictionary<string, string> { { "test1", "test2" } };
 
 
-            JudoSDKManager.MakeAPayment( amount, MY_JUDO_ID, paymentReference, consumerRef, metaData, this, SuccessResult, FailedResult);
+            //JudoSDKManager.MakeAPayment( );
         }
 
         private static void SuccessResult(string message)

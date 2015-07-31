@@ -8,6 +8,7 @@ using System.Text;
 using CoreFoundation;
 using System.Linq;
 using System.Collections.Generic;
+using JudoPayDotNet.Models;
 
 
 namespace JudoDotNetXamariniOSSDK
@@ -534,7 +535,36 @@ namespace JudoDotNetXamariniOSSDK
 				Card = cardViewModel
 			};
 
-			_paymentService.MakePayment (payment);
+			_paymentService.MakePayment (payment).ContinueWith (reponse => {
+				var result = reponse.Result;
+
+				if(!result.HasError)
+				{
+					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+					{
+						CreatedAt = paymentreceipt.CreatedAt.DateTime,
+						Currency = paymentreceipt.Currency,
+						OriginalAmount = paymentreceipt.Amount,
+						ReceiptId = paymentreceipt.ReceiptId
+					};
+
+
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+						
+							var view= JudoSDKManager.GetReceiptView(receipt);
+							this.NavigationController.PushViewController(view,true);
+	
+					});
+					//var view= new PaymentReceipt (receipt);
+					//this.NavigationController.PushViewController(view,true);
+				}
+				else{
+					Console.WriteLine(result.Error);
+				}
+
+			});
+
 		}
 
 		CardViewModel GatherCardDetails ()

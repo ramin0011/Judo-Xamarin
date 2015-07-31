@@ -18,6 +18,13 @@ namespace JudoPayiOSXamarinSampleApp
             get;
             set;
         }
+
+		public override bool FinishedLaunching (UIApplication app, NSDictionary options)   {  
+			Window = new UIWindow (UIScreen.MainScreen.Bounds); 
+			RootView root = new RootView ();
+			Window.RootViewController = new UINavigationController (root);
+		 	Window.MakeKeyAndVisible ();
+			return true;   }
 			
         // This method is invoked when the application is about to move from active to inactive state.
         // OpenGL applications should use this method to pause.
@@ -39,4 +46,6 @@ namespace JudoPayiOSXamarinSampleApp
         {
         }
     }
+
+
 }

@@ -17,7 +17,7 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool AVSEnabled { get; set; }
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
-        private static UIWindow window;
+        //private static UIWindow window;
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -94,41 +94,26 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public static void MakeAPayment(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
+		public static CreditCardView2 GetPaymentView()
 		{
-//			ServiceFactory serviceFactory = new ServiceFactory();
-//			IPaymentService paymentService = serviceFactory.GetPaymentService ();
-//
-//			CreditCardView2 ctrl = new CreditCardView2(paymentService);
-//
-//			UIApplication.SharedApplication.Windows[0].RootViewController =ctrl;
+
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			CreditCardView2 ctrl = new CreditCardView2(paymentService);
+
+			return ctrl;
 
 
-			PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-			{
-				CreatedAt = DateTime.Now,
-				Currency = "GDP",
-				OriginalAmount = 4.99m,
-				ReceiptId = "1234567"
-			};
-
-			PaymentReceipt receiptView = new PaymentReceipt (receipt);
-			UIApplication.SharedApplication.Windows[0].RootViewController = receiptView;
         }
 
-		public static void ShowReceipt(PaymentReceiptViewModel receipt)
+		public static PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
 		{
 			PaymentReceipt receiptView = new PaymentReceipt (receipt);
-			UIApplication.SharedApplication.Windows[0].RootViewController = receiptView;
+			return receiptView;
 
 		}
 
-//		public static void Root ()
-//		{
-//			RootViewController = new 
-//			UIApplication.SharedApplication.Windows[0].RootViewController =
-//		}
 
 		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
