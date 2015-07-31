@@ -100,9 +100,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		string successMessage;
 
-		/// <summary>
-		/// DElegate properties here to avoid GOTO
-		/// </summary>
 		string formattedText;
 		bool flashForError = false;
 		bool updateText = false;
@@ -177,11 +174,8 @@ namespace JudoDotNetXamariniOSSDK
 			UIImage resizableActiveImage = activeImage.CreateResizableImage (insets);
 			UIImage resizableInactiveImage = inactiveImage.CreateResizableImage (insets);
 
-			SubmitButton.SetBackgroundImage (resizableActiveImage, UIControlState.Normal);
-			SubmitButton.SetBackgroundImage (resizableInactiveImage, UIControlState.Disabled);
-
-			CancelButton.SetTitleColor (ThemeBundleReplacement.BundledOrReplacementColor ("GRAYw_COLOR", BundledOrReplacementOptions.BundledOrReplacement), UIControlState.Normal);
-
+			//SubmitButton.SetBackgroundImage (resizableActiveImage, UIControlState.Normal);
+			//SubmitButton.SetBackgroundImage (resizableInactiveImage, UIControlState.Disabled);
 
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
@@ -209,8 +203,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			textScroller.ScrollEnabled = true;
 			textScroller.SetContentOffset (new CGPoint (0f, 0f), animated);
-			// todo add theses pickerBottomConstraint = -self.pickerViewContainer.bounds.size.height; 
-			//[self.pickerViewContainer layoutIfNeeded];
 
 			if (float.Parse (UIDevice.CurrentDevice.SystemVersion.Replace (".", "")) >= 800f) {
 				if (this.View.Bounds.Size.Width > 320f) {
@@ -235,7 +227,6 @@ namespace JudoDotNetXamariniOSSDK
 			CellsToShow = new List<UITableViewCell> (){ CardDetailCell, ReassuringTextCell };
 
 			CGRect rectangle = ccText.Frame;
-			//rectangle.Size.Height = 36;
 			ccText.Frame = rectangle;
 
 			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
@@ -290,14 +281,11 @@ namespace JudoDotNetXamariniOSSDK
 
 			type = CreditCardType.InvalidCard;
 
-
-			//dummyTextView.BecomeFirstResponder ();
-
 			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow.ToArray ());
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 			SetUpMaskedInput ();
-		//	NSArray fields = NSArray.FromObjects (ccText, dummyTextView, PostCodeTextField, StartDateTextField, IssueNumberTextView);
+
 		}
 
 		void SetUpMaskedInput ()
@@ -674,12 +662,7 @@ namespace JudoDotNetXamariniOSSDK
 		{			
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
-			//[dummyTextView resignFirstResponder];
-			//[ccText resignFirstResponder];
-			//[_postCodeTextField resignFirstResponder];
-			//[_startDateTextField resignFirstResponder];
-			//[_issueNumberTextField resignFirstResponder];
-			//PickerDoneButtonPressed();
+
 
 		}
 

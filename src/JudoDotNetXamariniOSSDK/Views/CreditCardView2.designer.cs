@@ -52,6 +52,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIButton SubmitButton { get; set; }
 
 		[Outlet]
+		UIKit.NSLayoutConstraint TableHeight { get; set; }
+
+		[Outlet]
 		UIKit.UITableView TableView { get; set; }
 
 		[Outlet]
@@ -59,9 +62,9 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (SubmitButton != null) {
-				SubmitButton.Dispose ();
-				SubmitButton = null;
+			if (TableHeight != null) {
+				TableHeight.Dispose ();
+				TableHeight = null;
 			}
 
 			if (AVSCell != null) {
@@ -122,6 +125,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (StatusHelpLabel != null) {
 				StatusHelpLabel.Dispose ();
 				StatusHelpLabel = null;
+			}
+
+			if (SubmitButton != null) {
+				SubmitButton.Dispose ();
+				SubmitButton = null;
 			}
 
 			if (TableView != null) {

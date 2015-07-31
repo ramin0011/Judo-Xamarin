@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreditCardView2">
             <connections>
                 <outlet property="AVSCell" destination="lVa-Ic-UsX" id="9xq-wq-efT"/>
-                <outlet property="CancelButton" destination="g8y-my-uAW" id="01i-ci-jkk"/>
                 <outlet property="CardDetailCell" destination="3E5-3s-YkV" id="Zrh-33-z5R"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
@@ -27,19 +26,42 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="64" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <userGuides>
+                <userLayoutGuide location="65" affinity="minY"/>
+            </userGuides>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qyh-BB-iT4" userLabel="TableView">
-                    <rect key="frame" x="0.0" y="112" width="320" height="410"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zY-lv-3jx">
+                    <rect key="frame" x="0.0" y="65" width="320" height="351"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a Payment " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ka3-ia-vlv" userLabel="Make a Payment">
+                            <rect key="frame" x="83" y="8" width="154" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="Hvc-rE-C8F"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qyh-BB-iT4" userLabel="TableView">
+                            <rect key="frame" x="0.0" y="33" width="320" height="318"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="999" constant="318" id="C4W-b3-GcZ"/>
+                            </constraints>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a Payment " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ka3-ia-vlv">
-                    <rect key="frame" x="60" y="64" width="201" height="40"/>
-                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <constraints>
+                        <constraint firstItem="qyh-BB-iT4" firstAttribute="centerX" secondItem="Ka3-ia-vlv" secondAttribute="centerX" id="BTm-qQ-Abu"/>
+                        <constraint firstAttribute="bottom" secondItem="qyh-BB-iT4" secondAttribute="bottom" id="IWe-aK-Mbp"/>
+                        <constraint firstItem="qyh-BB-iT4" firstAttribute="top" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="8" id="LhR-DE-QB7"/>
+                        <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" secondItem="8zY-lv-3jx" secondAttribute="top" constant="8" id="PAe-gV-ASQ"/>
+                        <constraint firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="UDM-QR-gFc"/>
+                        <constraint firstItem="qyh-BB-iT4" firstAttribute="leading" secondItem="8zY-lv-3jx" secondAttribute="leading" id="pvQ-eL-0AJ"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEk-Gj-1De" userLabel="SubmitButton">
                     <rect key="frame" x="215" y="530" width="105" height="30"/>
                     <constraints>
@@ -50,32 +72,18 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8y-my-uAW" userLabel="CancelButton">
-                    <rect key="frame" x="0.0" y="530" width="106" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="106" id="qya-ZP-hGY"/>
-                    </constraints>
-                    <state key="normal" title="Cancel">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="qyh-BB-iT4" secondAttribute="bottom" constant="46" id="13I-s6-Uus"/>
                 <constraint firstItem="GEk-Gj-1De" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottomMargin" id="4wV-vh-bHy"/>
-                <constraint firstItem="qyh-BB-iT4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9Bl-Gv-SL3"/>
-                <constraint firstAttribute="trailing" secondItem="Ka3-ia-vlv" secondAttribute="trailing" constant="59" id="H4Y-uE-DhW"/>
-                <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="I09-CQ-2lj"/>
-                <constraint firstItem="g8y-my-uAW" firstAttribute="leading" secondItem="qyh-BB-iT4" secondAttribute="leading" id="I8t-e9-i54"/>
-                <constraint firstItem="GEk-Gj-1De" firstAttribute="baseline" secondItem="g8y-my-uAW" secondAttribute="baseline" id="TEd-jx-s2Q"/>
-                <constraint firstItem="Ka3-ia-vlv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="Zwr-ED-oHz"/>
-                <constraint firstItem="qyh-BB-iT4" firstAttribute="top" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="8" id="aiQ-Cq-vyE"/>
-                <constraint firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="e15-id-dWC"/>
-                <constraint firstAttribute="bottom" secondItem="Ka3-ia-vlv" secondAttribute="bottom" constant="464" id="iX6-qm-hPi"/>
-                <constraint firstItem="GEk-Gj-1De" firstAttribute="trailing" secondItem="qyh-BB-iT4" secondAttribute="trailing" id="tZz-jL-9ax"/>
-                <constraint firstItem="Ka3-ia-vlv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="60" id="xuF-VY-dG0"/>
+                <constraint firstAttribute="bottom" secondItem="GEk-Gj-1De" secondAttribute="bottom" constant="8" id="ODL-HC-t2R"/>
+                <constraint firstItem="8zY-lv-3jx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Qzp-Lm-geR"/>
+                <constraint firstItem="8zY-lv-3jx" firstAttribute="trailing" secondItem="GEk-Gj-1De" secondAttribute="trailing" id="V3t-aw-mAm"/>
+                <constraint firstItem="8zY-lv-3jx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="XqA-Fv-Ztm"/>
+                <constraint firstAttribute="trailing" secondItem="GEk-Gj-1De" secondAttribute="trailing" id="ao5-5h-HZO"/>
+                <constraint firstItem="8zY-lv-3jx" firstAttribute="bottom" secondItem="GEk-Gj-1De" secondAttribute="bottom" constant="-144" id="bhV-Ve-bSn"/>
+                <constraint firstAttribute="trailing" secondItem="GEk-Gj-1De" secondAttribute="trailing" id="sym-tt-iIF"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="GEk-Gj-1De" secondAttribute="bottom" constant="8" id="vlN-Lb-Css"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <point key="canvasLocation" x="417" y="241"/>

@@ -38,6 +38,15 @@ namespace JudoDotNetXamariniOSSDK
 			UITableViewCell cell = TableItems[indexPath.Row];
 			return cell.Bounds.Height;
 		}
+
+		public float GetTableHeight()
+		{
+			float height=0f;
+			foreach (UITableViewCell cell in TableItems) {
+				height += (float)cell.Frame.Height;
+			}
+			return height;
+		}
 }
 }
 

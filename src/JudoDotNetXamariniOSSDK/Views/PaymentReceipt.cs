@@ -34,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK
 			SetUpTableView ();
 			this.View.BackgroundColor = new UIColor(245f, 245f, 245f,1f);
 			HomeButton.TouchUpInside += (sender, ev) => {
-				this.DismissViewController(true,null);
+				this.NavigationController.PopToRootViewController(true);
 			};
 
 		}
