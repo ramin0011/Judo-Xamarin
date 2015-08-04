@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="AVSCell" destination="lVa-Ic-UsX" id="9xq-wq-efT"/>
                 <outlet property="CardDetailCell" destination="3E5-3s-YkV" id="Zrh-33-z5R"/>
+                <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="SJw-H3-hzr"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
                 <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="5Z3-NI-fYV"/>
@@ -297,7 +298,7 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
-                                                <rect key="frame" x="336" y="14" width="20" height="20"/>
+                                                <rect key="frame" x="336" y="8" width="20" height="20"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" image="ic_info.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -325,7 +326,7 @@
                                             <constraint firstItem="Yrk-9E-G1p" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="-303" id="hHu-7z-A1i"/>
                                             <constraint firstItem="LvH-h0-2Rd" firstAttribute="centerX" secondItem="Ylm-Q7-DIT" secondAttribute="centerX" id="sDt-fG-ZMf"/>
                                             <constraint firstItem="tOz-2R-QYm" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leading" id="ws5-mm-blw"/>
-                                            <constraint firstItem="2cB-DV-G4B" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" id="wwO-Qm-0Sz"/>
+                                            <constraint firstItem="2cB-DV-G4B" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" constant="6" id="wwO-Qm-0Sz"/>
                                             <constraint firstItem="2cB-DV-G4B" firstAttribute="top" secondItem="Yrk-9E-G1p" secondAttribute="top" id="ynm-Jy-Nr0"/>
                                             <constraint firstItem="tOz-2R-QYm" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" id="zn6-Ng-gg7"/>
                                         </constraints>

@@ -124,9 +124,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, keyboardMoving);
-			defaultCenter.AddObserver (UIKeyboard.DidShowNotification, keyboardMoving);
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, keyboardMoving);
+
 
 			SubmitButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
@@ -141,7 +139,9 @@ namespace JudoDotNetXamariniOSSDK
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
 			};
-
+			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
+				PushExpiryInfoView();
+			};
 
 
 		}
@@ -181,6 +181,24 @@ namespace JudoDotNetXamariniOSSDK
 				}
 			}
 		}
+
+		void PushExpiryInfoView()
+		{
+			var alertText = "";
+			if(creditCardImage != ccBackImage)
+			{
+				alertText = string.Format (@"MM/YY: {0}\n\n CV2: {1}", "The month and year your card expires", "The security code printed on the signature strip on the back of your card");
+			}
+			else
+			{
+				alertText = string.Format (@"CV2: {0}", "The security code printed on the signature strip on the back of your card");
+			}
+
+			UIAlertView alert = new UIAlertView ("Expiry Info", alertText, null, "OK", null);
+
+			alert.Show ();
+		}
+
 
 		void SetUpTableView ()
 		{
@@ -660,7 +678,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (completelyDone) {
 				DismissKeyboardAction ();
 			}
-				
+			SubmitButton.Hidden = !enable;
 			SubmitButton.Enabled = enable;
 		}
 
