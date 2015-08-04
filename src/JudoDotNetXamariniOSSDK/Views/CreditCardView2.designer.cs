@@ -31,6 +31,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIImageView creditCardImage { get; set; }
 
 		[Outlet]
+		UIKit.UIView EncapsulatingView { get; set; }
+
+		[Outlet]
 		UIKit.UIButton ExpiryInfoButton { get; set; }
 
 		[Outlet]
@@ -68,9 +71,9 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ExpiryInfoButton != null) {
-				ExpiryInfoButton.Dispose ();
-				ExpiryInfoButton = null;
+			if (EncapsulatingView != null) {
+				EncapsulatingView.Dispose ();
+				EncapsulatingView = null;
 			}
 
 			if (AVSCell != null) {
@@ -101,6 +104,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (creditCardImage != null) {
 				creditCardImage.Dispose ();
 				creditCardImage = null;
+			}
+
+			if (ExpiryInfoButton != null) {
+				ExpiryInfoButton.Dispose ();
+				ExpiryInfoButton = null;
 			}
 
 			if (MaestroCell != null) {

@@ -22,6 +22,7 @@ namespace JudoDotNetXamariniOSSDK
 		public event Action<bool, Card> CompletionBlock;
 
 		CreditCard cardHelper = new CreditCard ();
+		bool KeyboardVisible = false;
 	
 		//private UIButton ExpiryInfoButton { get; set; }
 
@@ -124,7 +125,8 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-
+			defaultCenter.AddObserver(UIKeyboard.WillHideNotification, OnKeyboardNotification);
+			defaultCenter.AddObserver(UIKeyboard.WillShowNotification, OnKeyboardNotification);
 
 			SubmitButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
@@ -143,7 +145,24 @@ namespace JudoDotNetXamariniOSSDK
 				PushExpiryInfoView();
 			};
 
+			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
+			tapRecognizer.AddTarget(() => { 
+				if(KeyboardVisible)
+				{
+				DismissKeyboardAction();
+				}
+			});
+
+			tapRecognizer.NumberOfTapsRequired = 1;
+			tapRecognizer.NumberOfTouchesRequired = 1;
+
+			EncapsulatingView.AddGestureRecognizer(tapRecognizer);
+		}
+
+		private void OnKeyboardNotification (NSNotification notification)
+		{
+			KeyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -528,6 +547,7 @@ namespace JudoDotNetXamariniOSSDK
 				Amount = "4.99",
 				Card = cardViewModel
 			};
+			SubmitButton.Hidden = true;
 
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
@@ -538,8 +558,9 @@ namespace JudoDotNetXamariniOSSDK
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId
-					};
 
+					};
+					SubmitButton.Hidden = false;
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						
@@ -619,7 +640,6 @@ namespace JudoDotNetXamariniOSSDK
 				} else {
 					ret = true; // let textView do it to preserve the cursor location. User updating an incorrect number
 				}
-				// NSLog(@"formattedText=%@ PLACEVIEW=%@ showTextOffset=%u offset=%@ ret=%d", formattedText, placeView.text, placeView.showTextOffset, NSStringFromCGRect(placeView.offset), ret );
 
 			}
 			if (flashForError) {
@@ -650,10 +670,7 @@ namespace JudoDotNetXamariniOSSDK
 				
 				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
 			}
-
-			//UpdateCCimageWithTransitionTime (0.25f, true);
-
-			//UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
+				
 
 			creditCardImage = ccBackImage;
 			UIView.Transition (creditCardImage, ccBackImage, 0.25f, UIViewAnimationOptions.TransitionFlipFromLeft, null);
@@ -664,11 +681,7 @@ namespace JudoDotNetXamariniOSSDK
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
 		}
-
-		void PickerDoneButtonPressed ()
-		{
-			throw new NotImplementedException ();
-		}
+			
 
 		private void UpdateUI ()
 		{
@@ -682,110 +695,7 @@ namespace JudoDotNetXamariniOSSDK
 			SubmitButton.Enabled = enable;
 		}
 
-		//		private void UpdateUI ()
-		//		{
-		//			bool enable = false;
-		//			enable = completelyDone;
-		//
-		//			this.NavigationItem.RightBarButtonItem.Enabled = true;
-		//
-		//			//NSMutableArray *cellsToRemove = [NSMutableArray array];
-		//			UITableViewCell[] cellsToRemove;
-		//			//NSMutableArray *insertedCells = [NSMutableArray array];
-		//			UITableViewCell[] insertedCells;
-		//			//NSMutableArray *cellsBeforeUpdate = [self.cellsToShow copy];
-		//			UITableViewCell[] cellsBeforeUpdate;
-		//			Array.Copy (CellsToShow.ToArray(), cellsBeforeUpdate);
-		//			TableView.BeginUpdates ();
-		//
-		//
-		//			if(enable)
-		//			{
-		//				bool ccIsFirstResponder = ccText.IsFirstResponder;
-		//				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
-		//					if (!CellsToShow.Any(x=> x== MaestroCell)) {
-		//						int row = CellsToShow.IndexOf(CardDetailCell) + 1;
-		//						CellsToShow.Insert (MaestroCell, row);
-		//						//[insertedCells addObject:self.maestroCell];
-		//						insertedCells.add(MaestroCell);//// you sre here
-		//					}
-		//
-		//					if (_issueNumberTextField.text.length==0 || !(_startDateTextField.text.length == 5)) { //SCRUTINIZE THIS
-		//						enable = false;
-		//					}
-		//
-		//					if (ccIsFirstResponder) {
-		//						startDateTextField.BecomeFirstResponder;
-		//						//[self.startDateTextField becomeFirstResponder];
-		//						ccIsFirstResponder = false;
-		//					}
-		//				}
-		//
-		//				if (JudoSDKManager.GetAVSEnabled()) {
-		//					if (!cellsToShow.Contains(AVSCell)) {
-		//						int row = cellsToShow.IndexOfObject(reassuringTextCell);
-		//						cellsToShow.InsertObject(AVSCell,row);
-		//						insertedCells.add(AVSCell);
-		//					}
-		//
-		//					if (ccIsFirstResponder) {
-		//						postCodeTextField.BecomeFirstResponder;
-		//						ccIsFirstResponder = false;
-		//					}
-		//
-		//					if (pickerView.SelectedRowInComponent[0] == BillingCountryOptionOther) {
-		//						enable = false;
-		//					} else {
-		//						// check postcode is OK.
-		//					}
-		//				}
-		//
-		//				if (ccIsFirstResponder) {
-		//					DismissKeyboardAction ();
-		//					ccIsFirstResponder = false;
-		//				}
-		//			} else {
-		//				if (JudoSDKManager.GetMaestroAccepted()) {
-		//					if (cellsToShow.Contains(MaestroCell)) {
-		//						//[cellsToRemove addObject:self.maestroCell];
-		//						cellsToRemove.add(MaestroCell);
-		//					}
-		//				}
-		//
-		//				if (JudoSDKManager.GetAVSEnabled()) {
-		//
-		//					if (cellsToShow.Contains(AVSCell)) {
-		//						cellsToRemove.add(AVSCell);
-		//					}
-		//				}
-		//			}
-		//
-		//			NSIndexPath[] indexPathsToRemove;
-		//			foreach (UITableViewCell cell in cellsToRemove)
-		//			{
-		//				//[indexPathsToRemove addObject:[NSIndexPath indexPathForRow:[cellsBeforeUpdate indexOfObject:cell] inSection:0]];
-		//
-		//			}
-		//
-		//			TableView.DeleteRows (indexPathsToRemove, UITableViewRowAnimation.Fade); //  deleteRowsAtIndexPaths:indexPathsToRemove withRowAnimation:UITableViewRowAnimationFade];
-		//			//[self.cellsToShow removeObjectsInArray:cellsToRemove];
-		//			CellsToShow.Remove(cellsToRemove);
-		//
-		//			NSIndexPath[] indexPathsToAdd;
-		//			//NSMutableArray *indexPathsToAdd = [NSMutableArray array];
-		//
-		//			foreach (UITableViewCell cell in insertedCells)
-		//			{
-		//				//[indexPathsToAdd addObject:[NSIndexPath indexPathForRow:[self.cellsToShow indexOfObject:cell] inSection:0]];
-		//
-		//			}
-		//
-		//			TableView.InsertRows(indexPathsToAdd, UITableViewRowAnimation.Fade);
-		//
-		//			TableView.EndUpdates ();
-		//
-		//			SubmitButton.Enabled = enable;
-		//		}
+
 		protected override void Dispose (bool disposing)
 		{
 			foreach (UITableViewCell cell in CellsToShow) {

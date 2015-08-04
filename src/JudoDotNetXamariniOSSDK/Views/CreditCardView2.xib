@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="AVSCell" destination="lVa-Ic-UsX" id="9xq-wq-efT"/>
                 <outlet property="CardDetailCell" destination="3E5-3s-YkV" id="Zrh-33-z5R"/>
+                <outlet property="EncapsulatingView" destination="8zY-lv-3jx" id="dVd-UB-Rj2"/>
                 <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="SJw-H3-hzr"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
@@ -64,7 +65,7 @@
                         <constraint firstItem="qyh-BB-iT4" firstAttribute="leading" secondItem="8zY-lv-3jx" secondAttribute="leading" id="pvQ-eL-0AJ"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEk-Gj-1De" userLabel="SubmitButton">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEk-Gj-1De" userLabel="SubmitButton">
                     <rect key="frame" x="215" y="530" width="105" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="105" id="Mfy-52-25c"/>
