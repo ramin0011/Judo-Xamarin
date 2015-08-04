@@ -231,8 +231,6 @@ namespace JudoDotNetXamariniOSSDK
 			creditCardImage.Layer.CornerRadius = 4.0f;
 			creditCardImage.Layer.MasksToBounds = true;
 
-			//StatusHelpLabel.Text = ThemeBundleReplacement.BundledOrReplacementString ("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
-
 			UIImage image = ThemeBundleReplacement.BundledOrReplacementImage ("ic_card_large_unknown", BundledOrReplacementOptions.BundledOrReplacement);
 
 			creditCardImage.Image = image;
@@ -242,7 +240,7 @@ namespace JudoDotNetXamariniOSSDK
 			CALayer layer = containerView.Layer;
 			layer.CornerRadius = 4.0f;
 			layer.MasksToBounds = true;
-			layer.BorderColor = ColourHelper.GetColour ("0xC3C3C3FF").CGColor;  //ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.Bundled).CGColor;
+			layer.BorderColor = ColourHelper.GetColour ("0xC3C3C3FF").CGColor; 
 			layer.BorderWidth = 1;
 			layer = textScroller.Layer;
 			layer.CornerRadius = 4.0f;
@@ -328,12 +326,7 @@ namespace JudoDotNetXamariniOSSDK
 				}
 
 				if (hasFullNumber) {
-					// commented out by Rob Phillips
-					//		if(range.location <= numberLength) {	// <= account for space after last cc digit
-					//			updateText = NO;
-					//			flashForError = YES;
-					//			goto eND;
-					//		}
+
 
 
 					if (range.Location > numberLength) {
@@ -560,10 +553,10 @@ namespace JudoDotNetXamariniOSSDK
 						ReceiptId = paymentreceipt.ReceiptId
 
 					};
-					SubmitButton.Hidden = false;
+
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						
+						SubmitButton.Hidden = false;
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);
 	
@@ -574,6 +567,7 @@ namespace JudoDotNetXamariniOSSDK
 						var errorText = result.Error.ErrorMessage;
 						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
 						_error.Show ();
+						SubmitButton.Hidden = false;
 					});
 				}
 
@@ -629,16 +623,16 @@ namespace JudoDotNetXamariniOSSDK
 				placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 
 				if ((formattedLen > textViewLen) && !deleting) {
-					char c = placeView.Text.Substring (textViewLen, 1).ToCharArray () [0];// characterAtIndex:textViewLen];
+					char c = placeView.Text.Substring (textViewLen, 1).ToCharArray () [0];
 					if (c == ' ')
-						formattedText = formattedText + " "; //[formattedText stringByAppendingString:@" "];
+						formattedText = formattedText + " ";
 					else if (c == '/')
-						formattedText = formattedText + "/"; //[formattedText stringByAppendingString:@"/"];
+						formattedText = formattedText + "/"; 
 				}
 				if (!deleting || hasFullNumber || deletedSpace) {
 					ccText.Text = formattedText;
 				} else {
-					ret = true; // let textView do it to preserve the cursor location. User updating an incorrect number
+					ret = true;
 				}
 
 			}
@@ -655,7 +649,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 			if (creditCardImage != ccBackImage) {
-				StatusHelpLabel.Text = "Please enter Expire Date";//[ThemeBundleReplacement bundledOrReplacementStringNamed:@"enterExpiryDateText"];
+				StatusHelpLabel.Text = "Please enter Expire Date";
 			}
 			float width = widthToLastGroup;
 			CGRect frame = new CGRect (ccText.Frame.Location, new CGSize ((width) + textScroller.Frame.Size.Width, ccText.Frame.Size.Height));

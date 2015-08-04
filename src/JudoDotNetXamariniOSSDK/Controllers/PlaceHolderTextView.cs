@@ -69,7 +69,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			CGContext context = UIGraphics.GetCurrentContext ();
 
-			CGColor clearColor = UIColor.Clear.CGColor;//ThemeBundleReplacement.BundledOrReplacementColor ("CLEAR_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+			CGColor clearColor = UIColor.Clear.CGColor;
 			context.SetStrokeColor(clearColor);
 			context.SetFillColor(clearColor);
 			context.FillRect(rect);
@@ -79,11 +79,11 @@ namespace JudoDotNetXamariniOSSDK
 				r.Location = new CGPoint(r.Location.X+ clearText.DrawString (Offset.Location, Font).Width,r.Location.Y);
 			}
 
-			CSRange charsToDraw = new CSRange(0, grayText.Length);// grayText.ToCharArray ();
+			CSRange charsToDraw = new CSRange(0, grayText.Length);
 
 			if (charsToDraw.Length !=0) 
 			{
-				CGColor grayColor = UIColor.LightGray.CGColor;// ThemeBundleReplacement.BundledOrReplacementColor ("LIGHT_GRAY_COLOR", BundledOrReplacementOptions.BundledOrReplacement).CGColor;
+				CGColor grayColor = UIColor.LightGray.CGColor;
 
 				context.SetStrokeColor (grayColor);
 				context.SetFillColor (grayColor);
@@ -94,7 +94,6 @@ namespace JudoDotNetXamariniOSSDK
 				{
 					char character = chars[i];
 					if (character == ' ') {
-						//r.Location.X += Offset.Size.Width;
 						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
@@ -110,7 +109,6 @@ namespace JudoDotNetXamariniOSSDK
 						var mask = "0";
 						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 						mask.DrawString(box, drawFont);
-						//r.Location.X += Offset.Size.Width;
 						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
@@ -123,8 +121,6 @@ namespace JudoDotNetXamariniOSSDK
 				{
 					
 					grayText.Substring((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20);
-					//context.ClearRect()
-					//textToDraw.DrawString(new CGPoint(r.X,r.Y),Font);
 				}
 			}
 		}

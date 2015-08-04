@@ -82,7 +82,6 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Enum\CreditCardType.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Controllers\CreditCardController.cs" />
     <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
