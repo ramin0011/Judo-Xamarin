@@ -135,8 +135,6 @@ namespace JudoDotNetXamariniOSSDK
 			UIImage resizableActiveImage = activeImage.CreateResizableImage (insets);
 			UIImage resizableInactiveImage = inactiveImage.CreateResizableImage (insets);
 
-			//SubmitButton.SetBackgroundImage (resizableActiveImage, UIControlState.Normal);
-			//SubmitButton.SetBackgroundImage (resizableInactiveImage, UIControlState.Disabled);
 
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
@@ -337,7 +335,7 @@ namespace JudoDotNetXamariniOSSDK
 
 					// Test for delete of a space or /
 					if (deleting) {
-						formattedText = newTextOrig.Substring (0, range.Location); //[newTextOrig substringToIndex:range.location];	// handles case of deletion interior to the string
+						formattedText = newTextOrig.Substring (0, range.Location);
 						updateText = true;
 						return EndDelegate ();
 					}
@@ -349,7 +347,7 @@ namespace JudoDotNetXamariniOSSDK
 
 					formattedText = newTextOrig;
 
-					CSRange monthRange = new CSRange (placeView.Text.IndexOf ("MM"), 2); // rangeOfString:@"MM"];
+					CSRange monthRange = new CSRange (placeView.Text.IndexOf ("MM"), 2);
 					if (newTextLen > monthRange.Location) {
 						if (newTextOrig.Substring (monthRange.Location, 1).ToCharArray () [0] > '1') {
 							// support short cut - we prepend a '0' for them
@@ -369,7 +367,7 @@ namespace JudoDotNetXamariniOSSDK
 						}
 					}
 
-					CSRange yearRange = new CSRange (placeView.Text.IndexOf ("YY"), 2);// rangeOfString:@"YY";
+					CSRange yearRange = new CSRange (placeView.Text.IndexOf ("YY"), 2);
 					if (newTextLen > yearRange.Location) {
 						int proposedDecade = (newTextOrig.Substring (yearRange.Location, 1).ToCharArray () [0] - '0') * 10;
 						int yearDecade = currentYear - (currentYear % 10);
@@ -378,14 +376,14 @@ namespace JudoDotNetXamariniOSSDK
 							return EndDelegate ();
 						}
 						if (newTextLen >= (yearRange.Location + yearRange.Length)) {
-							year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); // [[newTextOrig substringWithRange:yearRange] integerValue];
+							year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
 							int diff = year - currentYear;
 							if (diff < 0 || diff > 10) {	// blogs on internet suggest some CCs have dates 50 yeras in the future
 								flashRecheckExpiryDateMessage ();
 								return EndDelegate ();
 							}
 							if (diff == 0) { // The entered year is the current year, so check that the month is in the future
-								//NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+								
 								var todaysDate = DateTime.Today;
 								int currentMonth = todaysDate.Month;
 
@@ -407,8 +405,7 @@ namespace JudoDotNetXamariniOSSDK
 									},
 									completion: () => {
 										StatusHelpLabel.Text = "Please enter CV2";
-									});//ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });								
-
+									});
 							}
 						}
 					}
