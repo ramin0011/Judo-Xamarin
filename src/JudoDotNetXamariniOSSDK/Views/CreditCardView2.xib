@@ -11,6 +11,7 @@
                 <outlet property="CardDetailCell" destination="3E5-3s-YkV" id="Zrh-33-z5R"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
+                <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="5Z3-NI-fYV"/>
                 <outlet property="ReassuringTextCell" destination="Nhg-IX-4mb" id="ZuY-o9-PRn"/>
                 <outlet property="SpacerCell" destination="M6l-WO-IcD" id="uqB-hw-qZV"/>
                 <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="z91-sy-zOF"/>
@@ -329,6 +330,13 @@
                                             <constraint firstItem="tOz-2R-QYm" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" id="zn6-Ng-gg7"/>
                                         </constraints>
                                     </scrollView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flt-bf-DfN">
+                                        <rect key="frame" x="0.0" y="0.0" width="221" height="44"/>
+                                        <color key="backgroundColor" red="0.75237669429999998" green="1.3539218340000001e-05" blue="0.038479235020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>

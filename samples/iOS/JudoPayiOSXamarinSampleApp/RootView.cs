@@ -11,6 +11,7 @@ namespace JudoPayiOSXamarinSampleApp
 	{
 		public RootView () : base ("RootView", null)
 		{
+			
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -29,6 +30,7 @@ namespace JudoPayiOSXamarinSampleApp
 				
 				var creditCardView =JudoSDKManager.GetPaymentView();
 				this.NavigationController.PushViewController(creditCardView,true);
+
 			};
 		}
 	}

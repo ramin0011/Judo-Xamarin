@@ -37,6 +37,10 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UITableViewCell PayCell { get; set; }
 
 		[Outlet]
+		UIKit.UILabel PaymentErrorLabel { get; set; }
+
+
+		[Outlet]
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView placeView { get; set; }
 
 		[Outlet]
@@ -62,9 +66,9 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (TableHeight != null) {
-				TableHeight.Dispose ();
-				TableHeight = null;
+			if (PaymentErrorLabel != null) {
+				PaymentErrorLabel.Dispose ();
+				PaymentErrorLabel = null;
 			}
 
 			if (AVSCell != null) {
@@ -107,6 +111,11 @@ namespace JudoDotNetXamariniOSSDK
 				PayCell = null;
 			}
 
+			if (PaymentErrorLabel != null) {
+				PaymentErrorLabel.Dispose ();
+				PaymentErrorLabel = null;
+			}
+
 			if (placeView != null) {
 				placeView.Dispose ();
 				placeView = null;
@@ -130,6 +139,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (SubmitButton != null) {
 				SubmitButton.Dispose ();
 				SubmitButton = null;
+			}
+
+			if (TableHeight != null) {
+				TableHeight.Dispose ();
+				TableHeight = null;
 			}
 
 			if (TableView != null) {

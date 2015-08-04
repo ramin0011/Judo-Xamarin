@@ -23,6 +23,7 @@ namespace JudoPayiOSXamarinSampleApp
 			Window = new UIWindow (UIScreen.MainScreen.Bounds); 
 			RootView root = new RootView ();
 			Window.RootViewController = new UINavigationController (root);
+			Window.TintColor = UIColor.Black;
 		 	Window.MakeKeyAndVisible ();
 			return true;   }
 			

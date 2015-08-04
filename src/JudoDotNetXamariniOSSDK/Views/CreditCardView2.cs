@@ -22,74 +22,21 @@ namespace JudoDotNetXamariniOSSDK
 		public event Action<bool, Card> CompletionBlock;
 
 		CreditCard cardHelper = new CreditCard ();
-
-		//private UILabel PostCodeLabel { get; set; }
-
-		//private UIView PostCodeBackgroundView { get; set; }
-
-		//private UITextField PostCodeTextField { get; set; }
-
-		//private UIButton CountryButton { get; set; }
-
-		//private UILabel CountryLabel { get; set; }
-
-		//private UIButton HomeButton { get; set; }
-
-		//private UILabel CountryWarningLabel { get; set; }
-
-		//private UIView PostCodeContainerView { get; set; }
-
-		//private UITextField StartDateTextField { get; set; }
-
-		//private UILabel StartDateLabel { get; set; }
-
-		//private UIView StartDateContainerView { get; set; }
-
-		//private UILabel StartDatePlaceholder { get; set; }
-
-		//private UILabel StartDateWarningLabel { get; set; }
-
-		//private UITextField IssueNumberTextView { get; set; }
-
-		//private UILabel IssueNumberLabel { get; set; }
-
-		//private UIView IssueNumberContainerView { get; set; }
-
-		//private UIView PickerViewContainer { get; set; }
-
-		//private UIPickerView PickerView { get; set; }
-
-		//private UIButton PickerDoneCoverButton { get; set; }
-
-		//private UILabel TransactionInfoLabel { get; set; }
-
-
-		//private BSKeyboardControls KeyboardControls {get; set;}
-		//private UIButton NumberFieldClearButton { get; set; }
-
+	
 		//private UIButton ExpiryInfoButton { get; set; }
-
-		//private UILabel PleaseRecheckNumberLabel { get; set; }
 
 		private List<UITableViewCell> CellsToShow { get; set; }
 
-	//	private NSLayoutConstraint PickBottomConstraint { get; set; }
-
-
-		//private UIView warningView;
-		//private UIButton updateCard;
-		//private UITextView dummyTextView;
-
 
 		UIImageView ccBackImage;
+		UIImageView ccImage;
 
-		//float oldX;
+
 		int currentYear;
 
 		CreditCardType type;
 		int numberLength;
 		string creditCardNum;
-		//int month;
 		int year;
 		int ccv;
 
@@ -128,6 +75,20 @@ namespace JudoDotNetXamariniOSSDK
 				placeView.SetShowTextOffSet (oldOffset);
 				return width;
 			}
+		}
+
+
+		void FlashMessage (string message)
+		{
+			PaymentErrorLabel.Text = message;
+			PaymentErrorLabel.Hidden = false;
+
+			DispatchQueue.MainQueue.DispatchAfter (new DispatchTime (DispatchTime.Now, 1 * 1000000000), () => {
+				PaymentErrorLabel.Hidden = true;
+
+			});
+
+			
 		}
 
 
@@ -307,7 +268,7 @@ namespace JudoDotNetXamariniOSSDK
 					if (textView.Text.Length != 0) {	// handle case of delete when there are no characters left to delete
 						
 						char c = textView.Text.Substring (range.Location, 1).ToCharArray () [0];
-						if (range.Location == 1 && range.Length == 1 && (c == ' ' || c == '/')) {
+						if (range.Location != null && range.Length == 1 && (c == ' ' || c == '/')) {
 							range.Location--;
 							range.Length++;
 							deletedSpace = true;
@@ -339,12 +300,14 @@ namespace JudoDotNetXamariniOSSDK
 
 
 					if (range.Location > numberLength) {
-						//ScrollForward(true);
+						//	ScrollForward (true);
 					}
+
+
 
 					// Test for delete of a space or /
 					if (deleting) {
-						formattedText = newTextOrig.Substring (range.Location); //[newTextOrig substringToIndex:range.location];	// handles case of deletion interior to the string
+						formattedText = newTextOrig.Substring (0, range.Location); //[newTextOrig substringToIndex:range.location];	// handles case of deletion interior to the string
 						updateText = true;
 						return EndDelegate ();
 					}
@@ -413,7 +376,7 @@ namespace JudoDotNetXamariniOSSDK
 										creditCardImage = ccBackImage;
 									},
 									completion: () => {
-										StatusHelpLabel.Text = "Replace with bundled security text";
+										StatusHelpLabel.Text = "Please enter CV2";
 									});//ThemeBundleReplacement.BundledOrReplacementString("enterCardSecurityCodeText", BundledOrReplacementOptions.BundledOrReplacement); });								
 
 							}
@@ -438,16 +401,15 @@ namespace JudoDotNetXamariniOSSDK
 
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
 
-					StatusHelpLabel.Text = "replace with proper text";// ThemeBundleReplacement.BundledOrReplacementString("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
+					StatusHelpLabel.Text = "Enter Card Details";// ThemeBundleReplacement.BundledOrReplacementString("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
 
-					// added by Rob Phillips
 
 					string newText = newTextOrig.Replace (" ", String.Empty);
 					int len = newText.Length;
-					if (len < Card.CC_LEN_FOR_TYPE) { //CC_LEN_FOR_TYPE replace with logic
+					if (len < Card.CC_LEN_FOR_TYPE) {
 						updateText = true;
 						formattedText = newTextOrig;
-						// NSLog(@"NEWLEN=%d CC_LEN=%d formattedText=%@", len, CC_LEN_FOR_TYPE, formattedText);
+
 						type = CreditCardType.InvalidCard;
 					} else {
 						type = cardHelper.GetCCType (newText);
@@ -479,7 +441,7 @@ namespace JudoDotNetXamariniOSSDK
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
-						int lenForCard = cardHelper.LengthOfStringForType (type); // NEED DICTIONARY NSObjectFlag Card TYPES TO LENGTH //CardHelper. //[CreditCard lengthOfStringForType:type];
+						int lenForCard = cardHelper.LengthOfStringForType (type); 
 
 
 
@@ -503,9 +465,9 @@ namespace JudoDotNetXamariniOSSDK
 							}	
 
 						}
+
 					}
-					///[self updateCCimageWithTransitionTime:0.25f]; ///NEED THIS METHOD
-				
+					UpdateCCimageWithTransitionTime (0.25f);
 				}
 				return EndDelegate ();
 			};
@@ -513,6 +475,33 @@ namespace JudoDotNetXamariniOSSDK
 
 				
 		}
+
+
+		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
+		{
+			if (creditCardImage.Tag != (int)type) {
+
+				UIImage frontImage = cardHelper.CreditCardImage (type);
+				ccImage = new UIImageView (frontImage); //[[UIImageView alloc] initWithImage:frontImage];
+				ccImage.Frame = creditCardImage.Frame;
+				ccImage.Tag = (int)type;
+				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (type));
+				ccBackImage.Frame = creditCardImage.Frame;
+				ccBackImage.Tag = (int)type;
+
+				var finalImage = new UIImageView ();
+				if (isBack) {
+					finalImage = ccBackImage;
+				} else {
+					finalImage = ccImage;
+				}
+				UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
+
+				creditCardImage = ccImage;
+
+			}
+		}
+
 
 		public void MakePayment ()
 		{
@@ -524,11 +513,9 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if(!result.HasError)
-				{
+				if (!result.HasError) {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-					{
+					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
@@ -538,17 +525,16 @@ namespace JudoDotNetXamariniOSSDK
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						
-							var view= JudoSDKManager.GetReceiptView(receipt);
-							this.NavigationController.PushViewController(view,true);
+						var view = JudoSDKManager.GetReceiptView (receipt);
+						this.NavigationController.PushViewController (view, true);
 	
 					});
-				}
-				else{
+				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						
-						var errorText =result.Error.ErrorMessage;
-						UIAlertView _error = new UIAlertView ("Payment failed",errorText, null,"ok" , null);
-					_error.Show();
+						var errorText = result.Error.ErrorMessage;
+						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
+						_error.Show ();
 					});
 				}
 
@@ -573,12 +559,12 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void flashRecheckExpiryDateMessage ()
 		{
-			// TODO Implement flash message 
+			FlashMessage ("Invalid Expiry Date");
 		}
 
 		void FlashRecheckNumberMessage ()
 		{
-			// TODO Implement flash message 
+			FlashMessage ("Invalid Card Number");
 		}
 
 		DispatchQueue dispatchGetMainQueue ()
@@ -619,7 +605,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 			if (flashForError) {
-				//[self flashRecheckNumberMessage];
+				FlashMessage ("Please recheck number");
 			}
 			queue.DispatchAsync (() => {
 				UpdateUI ();
@@ -647,13 +633,14 @@ namespace JudoDotNetXamariniOSSDK
 				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
 			}
 
+			//UpdateCCimageWithTransitionTime (0.25f, true);
+
+			//UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
+
+			creditCardImage = ccBackImage;
+			UIView.Transition (creditCardImage, ccBackImage, 0.25f, UIViewAnimationOptions.TransitionFlipFromLeft, null);
 		}
 
-		private void keyboardMoving (NSNotification note)
-		{
-
-		}
-			
 		void DismissKeyboardAction ()
 		{			
 			placeView.ResignFirstResponder ();

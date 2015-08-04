@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using UIKit;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -93,7 +94,7 @@ namespace JudoDotNetXamariniOSSDK
 	// http://www.regular-expressions.info/creditcard.html
 	public CreditCardType GetCCType(string proposedNumber)
 	{
-			Regex reg = new Regex (".*");
+			Regex reg = new Regex ("");
 
 		if(proposedNumber.Length < Card.CC_LEN_FOR_TYPE) return CreditCardType.InvalidCard;
 
@@ -108,22 +109,26 @@ namespace JudoDotNetXamariniOSSDK
 			case  (int)CreditCardType.AMEX:
 				reg = amexTypeReg;
 				break;
-			case  (int)CreditCardType.Discover:
-				reg = discoverTypeReg;
-				break;
-			case  (int)CreditCardType.DinersClub:
-				reg = dinersClubTypeReg;
-				break;
+//			case  (int)CreditCardType.Discover:
+//				reg = discoverTypeReg;
+//				break;
+//			case  (int)CreditCardType.DinersClub:
+//				reg = dinersClubTypeReg;
+//				break;
 			case (int)CreditCardType.Maestro:
 				reg = maestroTypeReg;
 				break;
 			}
+
+
 			CSRange range = new CSRange(0,Card.CC_LEN_FOR_TYPE);
 
 
 				var matches = reg.Matches (proposedNumber);
 				if (matches != null) {
-				if(matches.Count == 1) return (CreditCardType) idx;
+					if (matches.Count == 1) {
+						return (CreditCardType)idx;
+					}
 				}
 
 		}
@@ -274,7 +279,7 @@ namespace JudoDotNetXamariniOSSDK
 			case CreditCardType.AMEX:
 			reg = amexReg;
 			break;
-		case CreditCardType.Discover:
+			case CreditCardType.Discover:
 			reg = discoverReg;
 			break;
 			case CreditCardType.DinersClub:
@@ -305,8 +310,8 @@ namespace JudoDotNetXamariniOSSDK
 
 	public string promptStringForType(CreditCardType type, bool justNumber)
 	{
-		string number="";
-		string additions="";
+		string number="0000 0000 0000 0000";
+		string additions = @"";
 
 		switch(type) {
 		case CreditCardType.Visa:
@@ -330,6 +335,54 @@ namespace JudoDotNetXamariniOSSDK
 		}
 			return justNumber ? number : number + additions; // [number stringByAppendingString:additions];
 	}
+
+
+	public UIImage CreditCardImage(CreditCardType type)
+	{
+		string name;
+
+		switch(type) {
+		case CreditCardType.Visa:
+			name = @"ic_card_large_visa";
+			break;
+		case CreditCardType.MasterCard:
+			name = @"ic_card_large_mastercard";
+			break;
+		case CreditCardType.Maestro:
+			name = @"ic_card_large_maestro";
+			break;
+		case CreditCardType.AMEX:
+			name = @"ic_card_large_amex";
+			break;
+		case CreditCardType.Discover:
+			name = @"ic_card_large_unknown";
+			break;
+		case CreditCardType.DinersClub:
+			name = @"ic_card_large_unknown";
+			break;
+			default:
+				name = @"ic_card_large_unknown";
+				break;
+		}
+		return ThemeBundleReplacement.BundledOrReplacementImage (name, BundledOrReplacementOptions.BundledOrReplacement);
+	}
+
+
+	public UIImage CreditCardBackImage(CreditCardType type)
+	{
+		string backName;
+
+		switch(type) {
+		case CreditCardType.AMEX:
+			backName = @"ic_card_large_cv2_amex";
+			break;
+		default:
+			backName = @"ic_card_large_cv2";
+			break;
+		}	
+		return ThemeBundleReplacement.BundledOrReplacementImage (backName, BundledOrReplacementOptions.BundledOrReplacement);
+	}
+
 
 
 
