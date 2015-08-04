@@ -13,7 +13,7 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class CreditCardView2 : UIViewController, IUIScrollViewDelegate
+	public partial class CreditCardView : UIViewController, IUIScrollViewDelegate
 	{
 		public CreditCardControllerType CreditCardControllerType { get; set; }
 
@@ -61,7 +61,7 @@ namespace JudoDotNetXamariniOSSDK
 		IPaymentService _paymentService;
 
 
-		public CreditCardView2 (IPaymentService paymentService) : base ("CreditCardView2", null)
+		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
 			_paymentService = paymentService;
 		}

@@ -90,13 +90,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public static CreditCardView2 GetPaymentView()
+		public static CreditCardView GetPaymentView()
 		{
 
 			ServiceFactory serviceFactory = new ServiceFactory();
 			IPaymentService paymentService = serviceFactory.GetPaymentService ();
 
-			CreditCardView2 ctrl = new CreditCardView2(paymentService);
+			CreditCardView ctrl = new CreditCardView(paymentService);
 
 			return ctrl;
 

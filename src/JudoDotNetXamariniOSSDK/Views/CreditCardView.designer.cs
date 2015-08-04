@@ -9,8 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	[Register ("CreditCardView2")]
-	partial class CreditCardView2
+	[Register ("CreditCardView")]
+	partial class CreditCardView
 	{
 		[Outlet]
 		UIKit.UITableViewCell AVSCell { get; set; }
@@ -71,11 +71,6 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (EncapsulatingView != null) {
-				EncapsulatingView.Dispose ();
-				EncapsulatingView = null;
-			}
-
 			if (AVSCell != null) {
 				AVSCell.Dispose ();
 				AVSCell = null;
@@ -104,6 +99,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (creditCardImage != null) {
 				creditCardImage.Dispose ();
 				creditCardImage = null;
+			}
+
+			if (EncapsulatingView != null) {
+				EncapsulatingView.Dispose ();
+				EncapsulatingView = null;
 			}
 
 			if (ExpiryInfoButton != null) {

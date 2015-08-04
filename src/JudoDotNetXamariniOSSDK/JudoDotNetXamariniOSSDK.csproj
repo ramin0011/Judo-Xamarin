@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
-    <InterfaceDefinition Include="Views\CreditCardView2.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~iphone.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
@@ -65,6 +64,7 @@
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
+    <InterfaceDefinition Include="Views\CreditCardView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -88,10 +88,6 @@
     <Compile Include="Enum\BSKeyboardControl.cs" />
     <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
     <Compile Include="Utils\CardBase.cs" />
-    <Compile Include="Views\CreditCardView2.cs" />
-    <Compile Include="Views\CreditCardView2.designer.cs">
-      <DependentUpon>CreditCardView2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="TableSources\AddPaymentTableSource.cs" />
     <Compile Include="Helpers\CSRange.cs" />
@@ -119,6 +115,10 @@
       <DependentUpon>ReceiptNoteCell.cs</DependentUpon>
     </Compile>
     <Compile Include="TableSources\ReceiptTableViewSource.cs" />
+    <Compile Include="Views\CreditCardView.cs" />
+    <Compile Include="Views\CreditCardView.designer.cs">
+      <DependentUpon>CreditCardView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
