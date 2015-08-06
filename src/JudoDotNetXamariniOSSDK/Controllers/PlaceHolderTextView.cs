@@ -4,6 +4,7 @@ using System;
 using UIKit;
 using CoreGraphics;
 using Foundation;
+using System.Drawing;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -29,7 +30,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 		}
-			
+
 	
 
 		public void SetText(string newText)

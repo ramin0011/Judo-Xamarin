@@ -65,6 +65,7 @@
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
     <InterfaceDefinition Include="Views\CreditCardView.xib" />
+    <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -118,6 +119,10 @@
     <Compile Include="Views\CreditCardView.cs" />
     <Compile Include="Views\CreditCardView.designer.cs">
       <DependentUpon>CreditCardView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SlideUpMenu.cs" />
+    <Compile Include="Views\SlideUpMenu.designer.cs">
+      <DependentUpon>SlideUpMenu.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -204,7 +209,9 @@
     <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\CV2EntryViewController.xib" />
+    <InterfaceDefinition Include="Views\CV2EntryViewController.xib">
+      <DependentUpon>ExpiryInfoVC.xib</DependentUpon>
+    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />

@@ -4,22 +4,20 @@ using System;
 using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
+using System.Drawing;
 
 namespace JudoPayiOSXamarinSampleApp
 {
 	public partial class RootView : UIViewController
 	{
+		SlideUpMenu menu;
 		public RootView () : base ("RootView", null)
 		{
 			
 		}
-
 		public override void DidReceiveMemoryWarning ()
 		{
-			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
 		}
 
 		public override void ViewDidLoad ()
@@ -32,7 +30,34 @@ namespace JudoPayiOSXamarinSampleApp
 				this.NavigationController.PushViewController(creditCardView,true);
 
 			};
+
+
 		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+		 	menu = new SlideUpMenu (new RectangleF(0,(float)this.View.Frame.Bottom-40f,(float)this.View.Frame.Width,248f));
+			menu.AwakeFromNib ();
+			menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+			this.View.AddSubview (menu);
+		}
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			menu.RemoveFromSuperview ();
+			base.ViewWillDisappear (animated);
+
+		}
+
+		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
+		{
+			base.DidRotate (fromInterfaceOrientation);
+			menu.ResetMenu ();
+		}
+
+
+
 	}
 }
 

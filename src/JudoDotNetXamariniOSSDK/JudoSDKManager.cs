@@ -17,7 +17,7 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool AVSEnabled { get; set; }
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
-        //private static UIWindow window;
+		public static bool RiskSignals{ get; set; }
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -147,16 +147,6 @@ namespace JudoDotNetXamariniOSSDK
 		public void PutPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
 		{
 
-		}
-
-		void SetAVSEnabled(bool enabled)
-		{
-			AVSEnabled = enabled;
-		}
-
-		bool GetAVSEnabled()
-		{
-			return AVSEnabled;
 		}
 			
 	}
