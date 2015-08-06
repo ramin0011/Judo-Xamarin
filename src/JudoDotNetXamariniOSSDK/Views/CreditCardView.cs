@@ -21,10 +21,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		public event Action<bool, Card> CompletionBlock;
 
+		public UIActionSheet countrySheet;
+
 		CreditCard cardHelper = new CreditCard ();
 		bool KeyboardVisible = false;
-	
-		//private UIButton ExpiryInfoButton { get; set; }
+		BillingCountryOptions selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
 
 		private List<UITableViewCell> CellsToShow { get; set; }
 
@@ -70,9 +71,9 @@ namespace JudoDotNetXamariniOSSDK
 		float widthToLastGroup {
 			get { 
 				int oldOffset = placeView.ShowTextOffset;
-				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (type);// [CreditCard lengthOfFormattedStringTilLastGroupForType:type];
+				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (type);
 				placeView.SetShowTextOffSet (offsetToLastGroup);
-				float width = placeView.WidthToOffset (); //[placeView widthToOffset];
+				float width = placeView.WidthToOffset ();
 				placeView.SetShowTextOffSet (oldOffset);
 				return width;
 			}
@@ -104,12 +105,64 @@ namespace JudoDotNetXamariniOSSDK
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 		}
 
+		void SetAVSComponents ()
+		{
+			countrySheet = new UIActionSheet ("Select Country");
+			countrySheet.TintColor = UIColor.Black;
+			countrySheet.Clicked += delegate(object sender, UIButtonEventArgs button) {
+				switch (button.ButtonIndex) {
+				case (int) BillingCountryOptions.BillingCountryOptionUK:
+					selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
+
+					break;
+				case (int)BillingCountryOptions.BillingCountryOptionUSA:
+					selectedCountry = BillingCountryOptions.BillingCountryOptionUSA;
+				
+					break;
+				case (int)BillingCountryOptions.BillingCountryOptionCanada:
+					selectedCountry = BillingCountryOptions.BillingCountryOptionCanada;
+
+					break;
+				case (int)BillingCountryOptions.BillingCountryOptionOther:
+					selectedCountry = BillingCountryOptions.BillingCountryOptionOther;
+
+					break;
+
+				default:
+					selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
+					break;
+
+
+
+				}
+				CountryLabel.Text = selectedCountry.ToDescriptionString ();
+			};
+
+			foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
+				countrySheet.AddButton (option.ToDescriptionString ());
+			}
+			CountryButton.TouchUpInside += (sender, ev) => {
+				countrySheet.ShowInView (this.View);
+			};
+				
+			PostcodeTextField.Font = ccText.Font;
+			PostcodeTextField.TextColor = ccText.TextColor;
+
+		}
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
 
 			SetUpTableView ();
+
+			if (JudoSDKManager.AVSEnabled) {
+				SetAVSComponents ();
+
+
+			}
+
 
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 
@@ -125,8 +178,8 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver(UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver(UIKeyboard.WillShowNotification, OnKeyboardNotification);
+			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
 
 			SubmitButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
@@ -140,22 +193,21 @@ namespace JudoDotNetXamariniOSSDK
 				MakePayment ();
 			};
 			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
-				PushExpiryInfoView();
+				PushExpiryInfoView ();
 			};
 
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
-			tapRecognizer.AddTarget(() => { 
-				if(KeyboardVisible)
-				{
-				DismissKeyboardAction();
+			tapRecognizer.AddTarget (() => { 
+				if (KeyboardVisible) {
+					DismissKeyboardAction ();
 				}
 			});
 
 			tapRecognizer.NumberOfTapsRequired = 1;
 			tapRecognizer.NumberOfTouchesRequired = 1;
 
-			EncapsulatingView.AddGestureRecognizer(tapRecognizer);
+			EncapsulatingView.AddGestureRecognizer (tapRecognizer);
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -199,15 +251,12 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		void PushExpiryInfoView()
+		void PushExpiryInfoView ()
 		{
 			var alertText = "";
-			if(creditCardImage != ccBackImage)
-			{
+			if (creditCardImage != ccBackImage) {
 				alertText = string.Format (@"MM/YY: {0}\n\n CV2: {1}", "The month and year your card expires", "The security code printed on the signature strip on the back of your card");
-			}
-			else
-			{
+			} else {
 				alertText = string.Format (@"CV2: {0}", "The security code printed on the signature strip on the back of your card");
 			}
 
@@ -220,6 +269,9 @@ namespace JudoDotNetXamariniOSSDK
 		void SetUpTableView ()
 		{
 			CellsToShow = new List<UITableViewCell> (){ CardDetailCell, ReassuringTextCell };
+			if (JudoSDKManager.AVSEnabled) {
+				CellsToShow.Insert (1, AVSCell);
+			}
 
 			CGRect rectangle = ccText.Frame;
 			ccText.Frame = rectangle;
@@ -583,6 +635,28 @@ namespace JudoDotNetXamariniOSSDK
 					
 			};
 
+			if (JudoSDKManager.AVSEnabled) {
+
+				cardViewModel.PostCode = PostcodeTextField.Text;
+
+				switch (selectedCountry) {
+				case BillingCountryOptions.BillingCountryOptionUK:
+					cardViewModel.CountryCode = @"826";
+					break;
+				case BillingCountryOptions.BillingCountryOptionUSA:
+					cardViewModel.CountryCode = @"840";
+					break;
+				case BillingCountryOptions.BillingCountryOptionCanada:
+					cardViewModel.CountryCode = @"124";
+					break;
+
+				default:
+					
+					break;
+				}
+
+			}
+
 			return cardViewModel;
 
 		}
@@ -671,8 +745,9 @@ namespace JudoDotNetXamariniOSSDK
 		{			
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
+			PostcodeTextField.ResignFirstResponder ();
 		}
-			
+
 
 		private void UpdateUI ()
 		{

@@ -28,6 +28,12 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIView containerView { get; set; }
 
 		[Outlet]
+		UIKit.UIButton CountryButton { get; set; }
+
+		[Outlet]
+		UIKit.UILabel CountryLabel { get; set; }
+
+		[Outlet]
 		UIKit.UIImageView creditCardImage { get; set; }
 
 		[Outlet]
@@ -35,6 +41,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		UIKit.UIButton ExpiryInfoButton { get; set; }
+
+		[Outlet]
+		UIKit.UIButton HomeButton { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell MaestroCell { get; set; }
@@ -47,6 +56,12 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView placeView { get; set; }
+
+		[Outlet]
+		UIKit.UIView PostCodeContainerView { get; set; }
+
+		[Outlet]
+		UIKit.UITextField PostcodeTextField { get; set; }
 
 		[Outlet]
 		UIKit.UITableViewCell ReassuringTextCell { get; set; }
@@ -71,6 +86,31 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (CountryButton != null) {
+				CountryButton.Dispose ();
+				CountryButton = null;
+			}
+
+			if (CountryLabel != null) {
+				CountryLabel.Dispose ();
+				CountryLabel = null;
+			}
+
+			if (PostCodeContainerView != null) {
+				PostCodeContainerView.Dispose ();
+				PostCodeContainerView = null;
+			}
+
+			if (PostcodeTextField != null) {
+				PostcodeTextField.Dispose ();
+				PostcodeTextField = null;
+			}
+
+			if (HomeButton != null) {
+				HomeButton.Dispose ();
+				HomeButton = null;
+			}
+
 			if (AVSCell != null) {
 				AVSCell.Dispose ();
 				AVSCell = null;

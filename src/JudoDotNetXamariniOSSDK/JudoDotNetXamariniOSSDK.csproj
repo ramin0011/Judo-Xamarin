@@ -124,6 +124,7 @@
     <Compile Include="Views\SlideUpMenu.designer.cs">
       <DependentUpon>SlideUpMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

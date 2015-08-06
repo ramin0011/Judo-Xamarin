@@ -9,11 +9,16 @@
             <connections>
                 <outlet property="AVSCell" destination="lVa-Ic-UsX" id="9xq-wq-efT"/>
                 <outlet property="CardDetailCell" destination="3E5-3s-YkV" id="Zrh-33-z5R"/>
+                <outlet property="CountryButton" destination="wcS-TK-aa4" id="Cul-KF-lXR"/>
+                <outlet property="CountryLabel" destination="b54-Wu-XZC" id="ZNy-Ci-owH"/>
                 <outlet property="EncapsulatingView" destination="8zY-lv-3jx" id="dVd-UB-Rj2"/>
                 <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="SJw-H3-hzr"/>
+                <outlet property="HomeButton" destination="lZO-6T-ebY" id="Rsc-Bm-L3D"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
                 <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="5Z3-NI-fYV"/>
+                <outlet property="PostCodeContainerView" destination="Xml-yb-e93" id="vcT-Pi-xLv"/>
+                <outlet property="PostcodeTextField" destination="f7p-3O-IGv" id="BDL-Sf-ZZB"/>
                 <outlet property="ReassuringTextCell" destination="Nhg-IX-4mb" id="ZuY-o9-PRn"/>
                 <outlet property="SpacerCell" destination="M6l-WO-IcD" id="uqB-hw-qZV"/>
                 <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="z91-sy-zOF"/>
