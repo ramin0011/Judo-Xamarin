@@ -14,6 +14,7 @@
                 <outlet property="EncapsulatingView" destination="8zY-lv-3jx" id="dVd-UB-Rj2"/>
                 <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="SJw-H3-hzr"/>
                 <outlet property="HomeButton" destination="lZO-6T-ebY" id="Rsc-Bm-L3D"/>
+                <outlet property="IssueNumberTextField" destination="8kj-UI-NCf" id="DAu-TZ-faQ"/>
                 <outlet property="MaestroCell" destination="WFQ-Iv-vAQ" id="TJG-6o-ePF"/>
                 <outlet property="PayCell" destination="QwG-YF-lSh" id="zQ3-Ee-OfI"/>
                 <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="5Z3-NI-fYV"/>
@@ -21,6 +22,9 @@
                 <outlet property="PostcodeTextField" destination="f7p-3O-IGv" id="BDL-Sf-ZZB"/>
                 <outlet property="ReassuringTextCell" destination="Nhg-IX-4mb" id="ZuY-o9-PRn"/>
                 <outlet property="SpacerCell" destination="M6l-WO-IcD" id="uqB-hw-qZV"/>
+                <outlet property="StartDateTextField" destination="14G-Xh-baS" id="uIa-wC-DEe"/>
+                <outlet property="StartDateWarningLabel" destination="hKj-Zx-4Ue" id="aci-rA-PXu"/>
+                <outlet property="StateDatePlaceholder" destination="5aV-hV-WC4" id="Ny9-M3-0ja"/>
                 <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="z91-sy-zOF"/>
                 <outlet property="SubmitButton" destination="GEk-Gj-1De" id="paP-PY-8Hb"/>
                 <outlet property="TableView" destination="qyh-BB-iT4" id="tpb-hg-vI2"/>
@@ -514,7 +518,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKj-Zx-4Ue">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKj-Zx-4Ue">
                                 <rect key="frame" x="5" y="5" width="135" height="30"/>
                                 <color key="backgroundColor" red="0.75237669429999998" green="1.3539218340000001e-05" blue="0.038479235020000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>

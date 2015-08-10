@@ -46,6 +46,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIButton HomeButton { get; set; }
 
 		[Outlet]
+		UIKit.UITextField IssueNumberTextField { get; set; }
+
+		[Outlet]
 		UIKit.UITableViewCell MaestroCell { get; set; }
 
 		[Outlet]
@@ -70,6 +73,15 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UITableViewCell SpacerCell { get; set; }
 
 		[Outlet]
+		UIKit.UITextField StartDateTextField { get; set; }
+
+		[Outlet]
+		UIKit.UILabel StartDateWarningLabel { get; set; }
+
+		[Outlet]
+		UIKit.UILabel StateDatePlaceholder { get; set; }
+
+		[Outlet]
 		UIKit.UILabel StatusHelpLabel { get; set; }
 
 		[Outlet]
@@ -86,29 +98,24 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (CountryButton != null) {
-				CountryButton.Dispose ();
-				CountryButton = null;
+			if (StartDateWarningLabel != null) {
+				StartDateWarningLabel.Dispose ();
+				StartDateWarningLabel = null;
 			}
 
-			if (CountryLabel != null) {
-				CountryLabel.Dispose ();
-				CountryLabel = null;
+			if (StateDatePlaceholder != null) {
+				StateDatePlaceholder.Dispose ();
+				StateDatePlaceholder = null;
 			}
 
-			if (PostCodeContainerView != null) {
-				PostCodeContainerView.Dispose ();
-				PostCodeContainerView = null;
+			if (StartDateTextField != null) {
+				StartDateTextField.Dispose ();
+				StartDateTextField = null;
 			}
 
-			if (PostcodeTextField != null) {
-				PostcodeTextField.Dispose ();
-				PostcodeTextField = null;
-			}
-
-			if (HomeButton != null) {
-				HomeButton.Dispose ();
-				HomeButton = null;
+			if (IssueNumberTextField != null) {
+				IssueNumberTextField.Dispose ();
+				IssueNumberTextField = null;
 			}
 
 			if (AVSCell != null) {
@@ -136,6 +143,16 @@ namespace JudoDotNetXamariniOSSDK
 				containerView = null;
 			}
 
+			if (CountryButton != null) {
+				CountryButton.Dispose ();
+				CountryButton = null;
+			}
+
+			if (CountryLabel != null) {
+				CountryLabel.Dispose ();
+				CountryLabel = null;
+			}
+
 			if (creditCardImage != null) {
 				creditCardImage.Dispose ();
 				creditCardImage = null;
@@ -149,6 +166,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (ExpiryInfoButton != null) {
 				ExpiryInfoButton.Dispose ();
 				ExpiryInfoButton = null;
+			}
+
+			if (HomeButton != null) {
+				HomeButton.Dispose ();
+				HomeButton = null;
 			}
 
 			if (MaestroCell != null) {
@@ -169,6 +191,16 @@ namespace JudoDotNetXamariniOSSDK
 			if (placeView != null) {
 				placeView.Dispose ();
 				placeView = null;
+			}
+
+			if (PostCodeContainerView != null) {
+				PostCodeContainerView.Dispose ();
+				PostCodeContainerView = null;
+			}
+
+			if (PostcodeTextField != null) {
+				PostcodeTextField.Dispose ();
+				PostcodeTextField = null;
 			}
 
 			if (ReassuringTextCell != null) {

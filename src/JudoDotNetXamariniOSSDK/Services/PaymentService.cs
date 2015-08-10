@@ -25,14 +25,15 @@ namespace JudoDotNetXamariniOSSDK
 				CardNumber = paymentViewModel.Card.CardNumber,
 				CV2 = paymentViewModel.Card.CV2.ToString(),
 				ExpiryDate = paymentViewModel.Card.ExpireDate,
-				CardAddress = new CardAddressModel(){PostCode=paymentViewModel.Card.PostCode}
+				CardAddress = new CardAddressModel(){PostCode=paymentViewModel.Card.PostCode},
+				StartDate = paymentViewModel.Card.StartDate,		
 			};
+			//TODO update dotnet SDK to take the issue number
 			try
 			{
 				
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
-			//	return response;
 			}
 			catch(Exception e){
 				Console.WriteLine(e.InnerException.ToString());

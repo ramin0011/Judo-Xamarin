@@ -1,22 +1,23 @@
 ﻿using System;
 using UIKit;
 using Foundation;
+using System.Collections.Generic;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public class AddPaymentTableSource : UITableViewSource {
 
-		UITableViewCell[] TableItems;
+		public List<UITableViewCell> TableItems;
 		string CellIdentifier = "TableCell";
 
-		public AddPaymentTableSource (UITableViewCell[] items)
+		public AddPaymentTableSource (List<UITableViewCell> items)
 		{
 			TableItems = items;
 		}
 
 		public override nint RowsInSection (UITableView tableview, nint section)
 		{
-			return TableItems.Length;
+			return TableItems.Count;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)

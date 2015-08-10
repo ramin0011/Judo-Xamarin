@@ -93,6 +93,15 @@ namespace JudoDotNetXamariniOSSDK
 			
 		}
 
+		void FlashCheckDateLabel ()
+		{
+			StartDateWarningLabel.Hidden = false;
+			DispatchQueue.MainQueue.DispatchAfter (new DispatchTime (DispatchTime.Now, 1 * 1000000000), () => {
+				StartDateWarningLabel.Hidden = true;
+
+			});
+		}
+
 
 		private bool prefersStatusBarHidden ()
 		{
@@ -269,9 +278,9 @@ namespace JudoDotNetXamariniOSSDK
 		void SetUpTableView ()
 		{
 			CellsToShow = new List<UITableViewCell> (){ CardDetailCell, ReassuringTextCell };
-			if (JudoSDKManager.AVSEnabled) {
-				CellsToShow.Insert (1, AVSCell);
-			}
+//			if (JudoSDKManager.AVSEnabled) {
+//				CellsToShow.Insert (1, AVSCell);
+//			}
 
 			CGRect rectangle = ccText.Frame;
 			ccText.Frame = rectangle;
@@ -326,7 +335,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			type = CreditCardType.InvalidCard;
 
-			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow.ToArray ());
+			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow);
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 			SetUpMaskedInput ();
@@ -552,8 +561,11 @@ namespace JudoDotNetXamariniOSSDK
 			};
 
 
-				
+			if (JudoSDKManager.MaestroAccepted) {
+				SetUpStartDateMask ();
+			}	
 		}
+
 
 
 		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
@@ -599,7 +611,7 @@ namespace JudoDotNetXamariniOSSDK
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
-						ReceiptId = paymentreceipt.ReceiptId
+						ReceiptId = paymentreceipt.ReceiptId,
 
 					};
 
@@ -656,6 +668,12 @@ namespace JudoDotNetXamariniOSSDK
 				}
 
 			}
+
+			if (type == CreditCardType.Maestro) {
+				cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
+				cardViewModel.IssueNumber = IssueNumberTextField.Text;
+			}
+
 
 			return cardViewModel;
 
@@ -746,7 +764,35 @@ namespace JudoDotNetXamariniOSSDK
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
 			PostcodeTextField.ResignFirstResponder ();
+			StartDateTextField.ResignFirstResponder ();
+			IssueNumberTextField.ResignFirstResponder ();
+
 		}
+
+
+		//		private void UpdateUI ()
+		//		{
+		//			bool enable = false;
+		//			enable = completelyDone;
+		//
+		//			if (completelyDone) {
+		//				DismissKeyboardAction ();
+		//			}
+		//			SubmitButton.Hidden = !enable;
+		//			SubmitButton.Enabled = enable;
+		//
+		//			if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+		//				if (!CellsToShow.Contains (MaestroCell)) {
+		//					CellsToShow.Add (MaestroCell);
+		//					TableView.ReloadData ();
+		//				}
+		//
+		//				if (IssueNumberTextField.Text.Length != 0 || !(StartDateTextField.Text.Length == 5)) {
+		//					enable = false;
+		//				}
+		//			}
+		//		}
+		//
 
 
 		private void UpdateUI ()
@@ -754,13 +800,262 @@ namespace JudoDotNetXamariniOSSDK
 			bool enable = false;
 			enable = completelyDone;
 
-			if (completelyDone) {
-				DismissKeyboardAction ();
+			//self.navigationItem.rightBarButtonItem.enabled = YES;
+
+			List<UITableViewCell> cellsToRemove = new List<UITableViewCell> ();
+			List<UITableViewCell> insertedCells = new List<UITableViewCell> ();
+			List<UITableViewCell> cellsBeforeUpdate = cellsToRemove.ToList ();
+			TableView.BeginUpdates ();
+
+			if (enable) {
+				bool ccIsFirstResponder = ccText.IsFirstResponder;
+
+				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+					if (!CellsToShow.Contains (MaestroCell)) {
+						int row = CellsToShow.IndexOf (CardDetailCell) + 1; //[self.cellsToShow indexOfObject:self.cardDetailsCell] + 1;
+						CellsToShow.Insert (row, MaestroCell);//[self.cellsToShow insertObject:self.maestroCell atIndex:row];
+						TableView.ReloadData ();
+						insertedCells.Add (MaestroCell);
+					}
+
+					if (IssueNumberTextField.Text.Length == 0 || !(StartDateTextField.Text.Length == 5)) {
+						enable = false;
+					}
+
+					if (ccIsFirstResponder) {
+						StartDateTextField.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+					}
+				}
+
+				if (JudoSDKManager.AVSEnabled) {
+					if (!CellsToShow.Contains (AVSCell)) {
+						int row = CellsToShow.IndexOf (ReassuringTextCell); //self.cellsToShow indexOfObject:self.reassuringTextCell];
+						CellsToShow.Insert (row, AVSCell);//[self.cellsToShow insertObject:self.AVSCell atIndex:row];
+						TableView.ReloadData ();
+						insertedCells.Add (AVSCell);
+					}
+
+					if (ccIsFirstResponder) {
+						PostcodeTextField.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+					}
+
+				}
+
+				if (ccIsFirstResponder) {
+					DismissKeyboardAction ();
+
+					ccIsFirstResponder = false;
+					TableView.ReloadData ();
+				}
+			} else {
+				if (JudoSDKManager.MaestroAccepted) {
+					if (CellsToShow.Contains (MaestroCell)) {
+						cellsToRemove.Add (MaestroCell);
+					}
+				}
+
+				if (JudoSDKManager.AVSEnabled) {
+
+					if (CellsToShow.Contains (AVSCell)) {
+						cellsToRemove.Add (AVSCell);
+					}
+				}
 			}
-			SubmitButton.Hidden = !enable;
+			List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
+			//NSMutableArray *indexPathsToRemove = [NSMutableArray array];
+			foreach (UITableViewCell cell in cellsToRemove) {
+				indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
+			}
+
+//			for (UITableViewCell *cell in cellsToRemove) {
+//				[indexPathsToRemove addObject:[NSIndexPath indexPathForRow:[cellsBeforeUpdate indexOfObject:cell] inSection:0]];
+//			}
+			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
+
+			//[self.tableView deleteRowsAtIndexPaths:indexPathsToRemove withRowAnimation:UITableViewRowAnimationFade];
+
+			foreach (UITableViewCell cell in cellsToRemove) {
+				CellsToShow.Remove (cell);
+			}
+			//TableView.ReloadData ();
+			//[self.cellsToShow removeObjectsInArray:cellsToRemove];
+
+			List<NSIndexPath> indexPathsToAdd = new List<NSIndexPath> ();
+			//	NSMutableArray *indexPathsToAdd = [NSMutableArray array];
+			foreach (UITableViewCell cell in insertedCells) {
+				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
+			}
+
+			//[self.tableView insertRowsAtIndexPaths:indexPathsToAdd withRowAnimation:UITableViewRowAnimationFade];
+			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
+			TableView.EndUpdates ();
+
 			SubmitButton.Enabled = enable;
+			SubmitButton.Hidden = !enable;
 		}
 
+
+		void SetUpStartDateMask ()
+		{
+
+			StartDateTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
+				DispatchQueue.MainQueue.DispatchAsync (() => {
+					UpdateUI ();
+				});
+
+
+				if (range.Length > 1) {
+					return false;
+				}
+				if (replacementString.Length > 1) {
+					return false;
+				}
+				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {//!isdigit([replacementString characterAtIndex:0])) {
+					return false;
+				}
+				if (textField.Text.Length + replacementString.Length - range.Length > 5) {
+					return false;
+				}
+				bool changeText = true;
+				int textLengthAfter = (int)(textField.Text.Length + replacementString.Length - range.Length);
+				if (range.Length == 1 && textField.Text.Substring (range.Location, 1) == "/") { //[textField.text characterAtIndex:range.location] == '/') {
+					textField.Text = textField.Text.Substring (0, 2);//[textField.text substringToIndex:1];
+					textLengthAfter = 1;
+					changeText = false;
+				}
+				if (range.Location == 1 && textField.Text.Length == 1) {
+						
+					StringBuilder myStringBuilder = new StringBuilder (textField.Text);
+					if (textField.Text.Length <= range.Location+ range.Length ) {
+						myStringBuilder.Append(replacementString);
+					} else {
+						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+					}
+
+						
+					var myString = myStringBuilder.ToString ();
+
+					string text = myString;
+					if (Int32.Parse (text) > 12 || Int32.Parse (text) == 0) {
+						FlashCheckDateLabel ();
+						return false;
+					}
+
+					textField.Text = text;
+					textField.Text = textField.Text + @"/";//[textField.text stringByAppendingString:@"/"];
+					textLengthAfter++;
+					changeText = false;
+				} else if (range.Location == 0 && textField.Text.Length == 0) {
+					if (replacementString.Substring (0, 1).ToCharArray () [0] > '1') { //[replacementString characterAtIndex:0] > '1') {
+							
+						StringBuilder myStringBuilder = new StringBuilder ();
+						myStringBuilder.Replace (textField.Text, string.Format (@"0{0}/", replacementString), range.Location, range.Length);
+						var myString = myStringBuilder.ToString ();
+
+						textField.Text = myString;
+						textLengthAfter += 2;
+						changeText = false;
+					}
+				}
+
+				if (textLengthAfter >= 4) {
+
+					StringBuilder myStringBuilder = new StringBuilder (textField.Text);
+
+					if (textField.Text.Length <= range.Location+ range.Length ) {
+						myStringBuilder.Append(replacementString);
+					} else {
+						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+					}
+
+//					myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+					var myString = myStringBuilder.ToString ();
+
+					string textAfter = myString;//[textField.text stringByReplacingCharactersInRange:range withString:replacementString];
+
+
+					int proposedDecade = (textAfter.ToCharArray () [3] - '0') * 10; //([textAfter characterAtIndex:3] - '0') * 10;
+					int yearDecade = currentYear - (currentYear % 10);
+
+					if (proposedDecade > yearDecade) {
+						FlashCheckDateLabel ();
+						return false;
+					}
+
+					if (textLengthAfter == 5) {
+						if (!cardHelper.IsStartDateValid (textAfter)) {
+							FlashCheckDateLabel ();
+							return false;
+						}
+
+						//textField.text = [textField.text stringByReplacingCharactersInRange:range withString:replacementString];
+
+
+						myStringBuilder = new StringBuilder (textField.Text);
+						if (textField.Text.Length <= range.Location+ range.Length ) {
+							myStringBuilder.Append(replacementString);
+						} else {
+							myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+						}
+						//myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+						myString = myStringBuilder.ToString ();
+						textField.Text = myString;
+						IssueNumberTextField.BecomeFirstResponder ();
+						changeText = false;
+					}
+				}
+
+				char[] placeHolder = "MM/YY".ToCharArray ();
+				for (int iii = 0; iii < textLengthAfter; iii++) {
+					placeHolder [iii] = ' ';
+				}
+				//NSString placeHolderText = [NSString stringWithCString:placeHolder encoding:NSUTF8StringEncoding];
+				//self.startDatePlaceholder.text = placeHolderText;
+
+				//StateDatePlaceholder.Text = Encoding.UTF8.GetString(placeHolder);
+				StateDatePlaceholder.Text = new string (placeHolder);
+				return changeText;
+
+			};
+
+
+			IssueNumberTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
+				DispatchQueue.MainQueue.DispatchAsync (() => {
+					UpdateUI ();
+				});
+				if (range.Length > 1) {
+					return false;
+				}
+				if (replacementString.Length > 1) {
+					return false;
+				}
+				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {///!isdigit([string characterAtIndex:0])) {
+					return false;
+				}
+				if (textField.Text.Length + replacementString.Length - range.Length > 3) {
+					return false;
+				}
+				return true;
+
+			};
+
+			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
+				DispatchQueue.MainQueue.DispatchAsync (() => {
+					UpdateUI ();
+				});
+				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
+				if (textLengthAfter > 10) {
+					return false;
+				}
+				return true;
+
+			};
+		}
 
 		protected override void Dispose (bool disposing)
 		{
