@@ -482,9 +482,9 @@ namespace JudoDotNetXamariniOSSDK
 					updateText = true;
 				} else {
 					// scrolls backward
-					int textViewLen = ccText.Text.Length; //[[CreditCard formatForViewing:ccText.text] length];
+					int textViewLen = ccText.Text.Length; 
 					int formattedLen = placeView.Text.Length;
-					placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen)); //MIN(textViewLen, formattedLen);
+					placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 					textScroller.ScrollEnabled = false;
 
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
@@ -864,31 +864,26 @@ namespace JudoDotNetXamariniOSSDK
 				}
 			}
 			List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
-			//NSMutableArray *indexPathsToRemove = [NSMutableArray array];
+
 			foreach (UITableViewCell cell in cellsToRemove) {
 				indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
 			}
 
-//			for (UITableViewCell *cell in cellsToRemove) {
-//				[indexPathsToRemove addObject:[NSIndexPath indexPathForRow:[cellsBeforeUpdate indexOfObject:cell] inSection:0]];
-//			}
 			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
 
-			//[self.tableView deleteRowsAtIndexPaths:indexPathsToRemove withRowAnimation:UITableViewRowAnimationFade];
 
 			foreach (UITableViewCell cell in cellsToRemove) {
 				CellsToShow.Remove (cell);
 			}
-			//TableView.ReloadData ();
-			//[self.cellsToShow removeObjectsInArray:cellsToRemove];
+
 
 			List<NSIndexPath> indexPathsToAdd = new List<NSIndexPath> ();
-			//	NSMutableArray *indexPathsToAdd = [NSMutableArray array];
+
 			foreach (UITableViewCell cell in insertedCells) {
 				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
 			}
 
-			//[self.tableView insertRowsAtIndexPaths:indexPathsToAdd withRowAnimation:UITableViewRowAnimationFade];
+
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
 
@@ -905,7 +900,8 @@ namespace JudoDotNetXamariniOSSDK
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();
 				});
-
+				bool changeText = true;
+				string placeholderDateMask="MM/YY";
 
 				if (range.Length > 1) {
 					return false;
@@ -919,26 +915,29 @@ namespace JudoDotNetXamariniOSSDK
 				if (textField.Text.Length + replacementString.Length - range.Length > 5) {
 					return false;
 				}
-				bool changeText = true;
+			
 				int textLengthAfter = (int)(textField.Text.Length + replacementString.Length - range.Length);
+
+				if(replacementString.Length==0&& range.Location<2&&  textField.Text.Contains("/"))
+					{
+					textField.Text =textField.Text.Replace(@"/",@"");
+					textLengthAfter--;
+					}
 				if (range.Length == 1 && textField.Text.Substring (range.Location, 1) == "/") { //[textField.text characterAtIndex:range.location] == '/') {
-					textField.Text = textField.Text.Substring (0, 2);//[textField.text substringToIndex:1];
+					textField.Text = textField.Text.Substring (0, 1);//[textField.text substringToIndex:1];
 					textLengthAfter = 1;
 					changeText = false;
 				}
-				if (range.Location == 1 && textField.Text.Length == 1) {
-						
-					StringBuilder myStringBuilder = new StringBuilder (textField.Text);
-					if (textField.Text.Length <= range.Location+ range.Length ) {
-						myStringBuilder.Append(replacementString);
-					} else {
-						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
-					}
+				//CSRange monthRange = new CSRange (placeView.Text.IndexOf ("MM"), 2);
 
-						
-					var myString = myStringBuilder.ToString ();
+				if (range.Location == 1 && textField.Text.Length == 1) {						
 
-					string text = myString;
+					var aStringBuilder = new StringBuilder (textField.Text);
+					aStringBuilder.Remove (range.Location, range.Length);
+					aStringBuilder.Insert (range.Location, replacementString);
+					string newTextOrig = aStringBuilder.ToString ();
+
+					string text = newTextOrig;
 					if (Int32.Parse (text) > 12 || Int32.Parse (text) == 0) {
 						FlashCheckDateLabel ();
 						return false;
@@ -949,13 +948,16 @@ namespace JudoDotNetXamariniOSSDK
 					textLengthAfter++;
 					changeText = false;
 				} else if (range.Location == 0 && textField.Text.Length == 0) {
-					if (replacementString.Substring (0, 1).ToCharArray () [0] > '1') { //[replacementString characterAtIndex:0] > '1') {
+					if (replacementString.Substring (0, 1).ToCharArray () [0] > '1') { 
 							
-						StringBuilder myStringBuilder = new StringBuilder ();
-						myStringBuilder.Replace (textField.Text, string.Format (@"0{0}/", replacementString), range.Location, range.Length);
-						var myString = myStringBuilder.ToString ();
 
-						textField.Text = myString;
+						var formatedString =string.Format (@"0{0}/", replacementString);
+
+						var aStringBuilder = new StringBuilder (textField.Text);
+						aStringBuilder.Remove (range.Location, range.Length);
+						aStringBuilder.Insert (range.Location, formatedString);
+
+						textField.Text = aStringBuilder.ToString ();
 						textLengthAfter += 2;
 						changeText = false;
 					}
@@ -971,7 +973,7 @@ namespace JudoDotNetXamariniOSSDK
 						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
 					}
 
-//					myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
+//				
 					var myString = myStringBuilder.ToString ();
 
 					string textAfter = myString;//[textField.text stringByReplacingCharactersInRange:range withString:replacementString];
@@ -1012,10 +1014,7 @@ namespace JudoDotNetXamariniOSSDK
 				for (int iii = 0; iii < textLengthAfter; iii++) {
 					placeHolder [iii] = ' ';
 				}
-				//NSString placeHolderText = [NSString stringWithCString:placeHolder encoding:NSUTF8StringEncoding];
-				//self.startDatePlaceholder.text = placeHolderText;
 
-				//StateDatePlaceholder.Text = Encoding.UTF8.GetString(placeHolder);
 				StateDatePlaceholder.Text = new string (placeHolder);
 				return changeText;
 
