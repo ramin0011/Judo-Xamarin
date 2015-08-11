@@ -476,9 +476,9 @@ namespace JudoDotNetXamariniOSSDK
 					if (newTextLen == placeView.Text.Length) {
 						completelyDone = true;
 						var cIndex = placeView.Text.IndexOf ("C");
-						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);// [placeView.text rangeOfString:@"C"]; // first one
+						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);
 						ccvRange.Length = type == CreditCardType.AMEX ? 4 : 3;
-						ccv = Int32.Parse (newTextOrig.Substring (ccvRange.Location, ccvRange.Length));//   substringWithRange:ccvRange] integerValue];
+						ccv = Int32.Parse (newTextOrig.Substring (ccvRange.Location, ccvRange.Length));
 					}
 
 					updateText = true;
@@ -772,8 +772,8 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (JudoSDKManager.AVSEnabled) {
 					if (!CellsToShow.Contains (AVSCell)) {
-						int row = CellsToShow.IndexOf (ReassuringTextCell); //self.cellsToShow indexOfObject:self.reassuringTextCell];
-						CellsToShow.Insert (row, AVSCell);//[self.cellsToShow insertObject:self.AVSCell atIndex:row];
+						int row = CellsToShow.IndexOf (ReassuringTextCell);
+						CellsToShow.Insert (row, AVSCell);
 						TableView.ReloadData ();
 						insertedCells.Add (AVSCell);
 					}
@@ -836,7 +836,6 @@ namespace JudoDotNetXamariniOSSDK
 					UpdateUI ();
 				});
 				bool changeText = true;
-				string placeholderDateMask = "MM/YY";
 
 				if (range.Length > 1) {
 					return false;
@@ -901,11 +900,8 @@ namespace JudoDotNetXamariniOSSDK
 					var aStringBuilder = new StringBuilder (textField.Text);
 					aStringBuilder.Remove (range.Location, range.Length);
 					aStringBuilder.Insert (range.Location, replacementString);
-					string newTextOrig = aStringBuilder.ToString ();
-									
-					var myString = aStringBuilder.ToString ();
 
-					string textAfter = myString;
+					string textAfter =  aStringBuilder.ToString ();
 
 
 					int proposedDecade = (textAfter.ToCharArray () [3] - '0') * 10;
