@@ -898,16 +898,12 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (textLengthAfter >= 4) {
 
-					StringBuilder myStringBuilder = new StringBuilder (textField.Text);
-
-					if (textField.Text.Length <= range.Location + range.Length) {
-						myStringBuilder.Append (replacementString);
-					} else {
-						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
-					}
-
-				
-					var myString = myStringBuilder.ToString ();
+					var aStringBuilder = new StringBuilder (textField.Text);
+					aStringBuilder.Remove (range.Location, range.Length);
+					aStringBuilder.Insert (range.Location, replacementString);
+					string newTextOrig = aStringBuilder.ToString ();
+									
+					var myString = aStringBuilder.ToString ();
 
 					string textAfter = myString;
 
@@ -925,14 +921,13 @@ namespace JudoDotNetXamariniOSSDK
 							FlashCheckDateLabel ();
 							return false;
 						}							
-						myStringBuilder = new StringBuilder (textField.Text);
-						if (textField.Text.Length <= range.Location + range.Length) {
-							myStringBuilder.Append (replacementString);
-						} else {
-							myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
-						}
-						myString = myStringBuilder.ToString ();
-						textField.Text = myString;
+
+						var bStringBuilder = new StringBuilder (textField.Text);
+						bStringBuilder.Remove (range.Location, range.Length);
+						bStringBuilder.Insert (range.Location, replacementString);
+
+
+						textField.Text =  bStringBuilder.ToString ();
 						IssueNumberTextField.BecomeFirstResponder ();
 						changeText = false;
 					}
