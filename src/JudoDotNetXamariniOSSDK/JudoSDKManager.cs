@@ -97,8 +97,6 @@ namespace JudoDotNetXamariniOSSDK
 			CreditCardView ctrl = new CreditCardView(paymentService);
 
 			return ctrl;
-
-
         }
 
 		public static PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)

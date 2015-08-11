@@ -44,7 +44,6 @@ namespace JudoPayiOSXamarinSampleApp
 		{
 			menu.RemoveFromSuperview ();
 			base.ViewWillDisappear (animated);
-
 		}
 
 		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)

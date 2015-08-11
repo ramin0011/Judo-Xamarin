@@ -564,7 +564,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (creditCardImage.Tag != (int)type) {
 
 				UIImage frontImage = cardHelper.CreditCardImage (type);
-				ccImage = new UIImageView (frontImage); //[[UIImageView alloc] initWithImage:frontImage];
+				ccImage = new UIImageView (frontImage);
 				ccImage.Frame = creditCardImage.Frame;
 				ccImage.Tag = (int)type;
 				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (type));
@@ -950,7 +950,7 @@ namespace JudoDotNetXamariniOSSDK
 				if (replacementString.Length > 1) {
 					return false;
 				}
-				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {///!isdigit([string characterAtIndex:0])) {
+				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {
 					return false;
 				}
 				if (textField.Text.Length + replacementString.Length - range.Length > 3) {

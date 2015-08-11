@@ -28,10 +28,8 @@ namespace JudoDotNetXamariniOSSDK
 				CardAddress = new CardAddressModel(){PostCode=paymentViewModel.Card.PostCode},
 				StartDate = paymentViewModel.Card.StartDate,		
 			};
-			//TODO update dotnet SDK to take the issue number
 			try
 			{
-				
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
 			}
@@ -39,10 +37,6 @@ namespace JudoDotNetXamariniOSSDK
 				Console.WriteLine(e.InnerException.ToString());
 				return null;
 			}
-
-
-
-
 
 		}
 	}

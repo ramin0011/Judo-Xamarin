@@ -28,13 +28,7 @@ namespace JudoPayiOSXamarinSampleApp
 			Window.RootViewController = new UINavigationController (root);
 			Window.TintColor = UIColor.Black;
 		 	Window.MakeKeyAndVisible ();
-
-
-//			SlideUpMenu menu = new SlideUpMenu (new RectangleF(0,(float)Window.Frame.Bottom-40f,(float)Window.Frame.Width,248f));
-//			menu.AwakeFromNib ();
-//			Window.AddSubview (menu);
-
-
+		
 			return true;   }
 			
         // This method is invoked when the application is about to move from active to inactive state.
