@@ -135,7 +135,7 @@ namespace JudoDotNetXamariniOSSDK
 				CSRange range = new CSRange (0, Card.CC_LEN_FOR_TYPE);
 
 
-				var matches = reg.Matches (proposedNumber);
+				var matches = reg.Matches (proposedNumber.Substring(range.Location,range.Length));
 				if (matches != null) {
 					if (matches.Count == 1) {
 						return (CreditCardType)idx;
@@ -387,12 +387,12 @@ namespace JudoDotNetXamariniOSSDK
 			case CreditCardType.MasterCard:
 			case CreditCardType.Discover:		// { 4-4-4-4}
 			case CreditCardType.Maestro:
-				number = @"XXXX XXXX XXXX XXXX";
+				
 				number = @"0000 0000 0000 0000";
 				additions = @" MM/YY CV2";
 				break;
 			case CreditCardType.AMEX:			// {4-6-5}
-				number = @"XXXX XXXXXX XXXXX";
+				number = @"0000 000000 00000";
 				additions = @" MM/YY CIDV";
 				break;
 			case CreditCardType.DinersClub:	// {4-6-4}
@@ -402,7 +402,7 @@ namespace JudoDotNetXamariniOSSDK
 			default:
 				break;
 			}
-			return justNumber ? number : number + additions; // [number stringByAppendingString:additions];
+			return justNumber ? number : number + additions;
 		}
 
 
