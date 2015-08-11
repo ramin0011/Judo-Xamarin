@@ -9,8 +9,6 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
 
-		Card currentCard {get; set;}
-		CLLocation location {get; set;}
 		Dictionary<string, string> clientDetails {get; set;}
 		public static bool LocationEnabled{ get; set; }
 		public static bool ThreeDSecureEnabled{ get; set; }

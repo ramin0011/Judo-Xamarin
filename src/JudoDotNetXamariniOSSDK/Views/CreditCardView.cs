@@ -1,4 +1,38 @@
-﻿using System;
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * This file is part of CreditCard -- an iOS project that provides a smooth and elegant 
+ * means to enter or edit credit cards. It was inspired by  a similar form created from 
+ * scratch by Square (https://squareup.com/). To see this form in action visit:
+ * 
+ *   http://functionsource.com/post/beautiful-forms)
+ *
+ * Copyright 2012 Lot18 Holdings, Inc. All Rights Reserved.
+ *
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are
+ * permitted provided that the following conditions are met:
+ *
+ *    1. Redistributions of source code must retain the above copyright notice, this list of
+ *       conditions and the following disclaimer.
+ *
+ *    2. Redistributions in binary form must reproduce the above copyright notice, this list
+ *       of conditions and the following disclaimer in the documentation and/or other materials
+ *       provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY Lot18 Holdings ''AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL David Hoerl OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+using System;
 using UIKit;
 using Foundation;
 using ObjCRuntime;
@@ -32,7 +66,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		UIImageView ccBackImage;
 		UIImageView ccImage;
-
 
 		int currentYear;
 
@@ -89,8 +122,6 @@ namespace JudoDotNetXamariniOSSDK
 				PaymentErrorLabel.Hidden = true;
 
 			});
-
-			
 		}
 
 		void FlashCheckDateLabel ()
@@ -98,11 +129,9 @@ namespace JudoDotNetXamariniOSSDK
 			StartDateWarningLabel.Hidden = false;
 			DispatchQueue.MainQueue.DispatchAfter (new DispatchTime (DispatchTime.Now, 1 * 1000000000), () => {
 				StartDateWarningLabel.Hidden = true;
-
 			});
 		}
-
-
+			
 		private bool prefersStatusBarHidden ()
 		{
 			return NavigationController == null;
@@ -136,12 +165,9 @@ namespace JudoDotNetXamariniOSSDK
 					selectedCountry = BillingCountryOptions.BillingCountryOptionOther;
 
 					break;
-
 				default:
 					selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
 					break;
-
-
 
 				}
 				CountryLabel.Text = selectedCountry.ToDescriptionString ();
@@ -168,8 +194,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (JudoSDKManager.AVSEnabled) {
 				SetAVSComponents ();
-
-
 			}
 
 
@@ -194,9 +218,6 @@ namespace JudoDotNetXamariniOSSDK
 			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
 			UIImage activeImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_normal_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
 			UIImage inactiveImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_inactive_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
-			UIImage resizableActiveImage = activeImage.CreateResizableImage (insets);
-			UIImage resizableInactiveImage = inactiveImage.CreateResizableImage (insets);
-
 
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
@@ -234,7 +255,6 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect frame = ccText.Frame;
 			frame.Size = new CGSize (width + textScroller.Frame.Size.Width, frame.Size.Height);
 
-
 			ccText.Frame = frame;
 			placeView.Frame = frame;
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
@@ -268,9 +288,7 @@ namespace JudoDotNetXamariniOSSDK
 			} else {
 				alertText = string.Format (@"CV2: {0}", "The security code printed on the signature strip on the back of your card");
 			}
-
 			UIAlertView alert = new UIAlertView ("Expiry Info", alertText, null, "OK", null);
-
 			alert.Show ();
 		}
 
@@ -278,9 +296,6 @@ namespace JudoDotNetXamariniOSSDK
 		void SetUpTableView ()
 		{
 			CellsToShow = new List<UITableViewCell> (){ CardDetailCell, ReassuringTextCell };
-//			if (JudoSDKManager.AVSEnabled) {
-//				CellsToShow.Insert (1, AVSCell);
-//			}
 
 			CGRect rectangle = ccText.Frame;
 			ccText.Frame = rectangle;
@@ -321,8 +336,6 @@ namespace JudoDotNetXamariniOSSDK
 			ccText.Text = "";
 			
 			CGRect frame = placeView.Frame;
-
-
 			placeView.Font = ccText.Font;
 			placeView.Text = "0000 0000 0000 0000";
 
@@ -331,7 +344,6 @@ namespace JudoDotNetXamariniOSSDK
 	
 			placeView.BackgroundColor = UIColor.Clear;
 			textScroller.InsertSubview (placeView, 0);
-
 
 			type = CreditCardType.InvalidCard;
 
@@ -378,21 +390,12 @@ namespace JudoDotNetXamariniOSSDK
 
 				int newTextLen = newTextOrig.Length;
 
-				// added by Rob Phillips
 				// causes the cc entry field to scroll back if the user deletes back beyond the end of the cc number
 				if (range.Location <= numberLength) {
 					hasFullNumber = false;
 				}
 
 				if (hasFullNumber) {
-
-
-
-					if (range.Location > numberLength) {
-						//	ScrollForward (true);
-					}
-
-
 
 					// Test for delete of a space or /
 					if (deleting) {
@@ -439,11 +442,11 @@ namespace JudoDotNetXamariniOSSDK
 						if (newTextLen >= (yearRange.Location + yearRange.Length)) {
 							year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
 							int diff = year - currentYear;
-							if (diff < 0 || diff > 10) {	// blogs on internet suggest some CCs have dates 50 yeras in the future
+							if (diff < 0 || diff > 10) {	
 								flashRecheckExpiryDateMessage ();
 								return EndDelegate ();
 							}
-							if (diff == 0) { // The entered year is the current year, so check that the month is in the future
+							if (diff == 0) { 
 								
 								var todaysDate = DateTime.Today;
 								int currentMonth = todaysDate.Month;
@@ -455,8 +458,7 @@ namespace JudoDotNetXamariniOSSDK
 							}
 							if (creditCardImage != ccBackImage) {
 								UIViewAnimationOptions transType = (type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
-
-
+							
 								UIImageView.Animate (
 									duration: 0.25f, 
 									delay: 0,
@@ -489,7 +491,7 @@ namespace JudoDotNetXamariniOSSDK
 
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
 
-					StatusHelpLabel.Text = "Enter Card Details";// ThemeBundleReplacement.BundledOrReplacementString("enterCardDetailsText", BundledOrReplacementOptions.BundledOrReplacement);
+					StatusHelpLabel.Text = "Enter Card Details";
 
 
 					string newText = newTextOrig.Replace (" ", String.Empty);
@@ -502,22 +504,21 @@ namespace JudoDotNetXamariniOSSDK
 					} else {
 						type = cardHelper.GetCCType (newText);
 						switch (type) {
-						// The following switch section causes an error.
+
 						case CreditCardType.InvalidCard:
 							flashForError = true;
 							break;
 						case CreditCardType.Maestro:
 							if (!JudoSDKManager.MaestroAccepted) {
 
-								flashForError = true; // maestroNotAcceptedText 
+								flashForError = true;
 								return EndDelegate ();
 							}
 							break;
-
 						case CreditCardType.AMEX:
 							if (!JudoSDKManager.AmExAccepted) {
-
-								flashForError = true; // amexNotAcceptedText bundled
+								
+								flashForError = true; 
 								return EndDelegate ();
 							}
 							break;
@@ -525,13 +526,10 @@ namespace JudoDotNetXamariniOSSDK
 							
 						if (len == Card.CC_LEN_FOR_TYPE) {
 							placeView.Text = cardHelper.promptStringForType (type, true);
-
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
 						int lenForCard = cardHelper.LengthOfStringForType (type); 
-
-
 
 						if (len < lenForCard) {
 							updateText = true;
@@ -545,29 +543,22 @@ namespace JudoDotNetXamariniOSSDK
 									scrollForward = true;
 									hasFullNumber = true;
 								} else {
-
 									FlashRecheckNumberMessage ();
 								}
 							} else {
 								FlashRecheckNumberMessage ();
 							}	
-
 						}
-
 					}
 					UpdateCCimageWithTransitionTime (0.25f);
 				}
 				return EndDelegate ();
 			};
-
-
 			if (JudoSDKManager.MaestroAccepted) {
 				SetUpStartDateMask ();
 			}	
 		}
-
-
-
+			
 		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
 		{
 			if (creditCardImage.Tag != (int)type) {
@@ -587,13 +578,10 @@ namespace JudoDotNetXamariniOSSDK
 					finalImage = ccImage;
 				}
 				UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
-
 				creditCardImage = ccImage;
-
 			}
 		}
-
-
+			
 		public void MakePayment ()
 		{
 			CardViewModel cardViewModel = GatherCardDetails ();
@@ -612,28 +600,22 @@ namespace JudoDotNetXamariniOSSDK
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId,
-
 					};
-
-
+						
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						SubmitButton.Hidden = false;
 						var view = JudoSDKManager.GetReceiptView (receipt);
-						this.NavigationController.PushViewController (view, true);
-	
+						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						var errorText = result.Error.ErrorMessage;
 						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
 						_error.Show ();
 						SubmitButton.Hidden = false;
 					});
 				}
-
 			});
-
 		}
 
 		CardViewModel GatherCardDetails ()
@@ -643,12 +625,10 @@ namespace JudoDotNetXamariniOSSDK
 				CardNumber = creditCardNum,
 				CV2 = ccv,
 				ExpireDate = cardMonth + "/" + year,
-				CardType = type
-					
+				CardType = type					
 			};
 
 			if (JudoSDKManager.AVSEnabled) {
-
 				cardViewModel.PostCode = PostcodeTextField.Text;
 
 				switch (selectedCountry) {
@@ -661,9 +641,7 @@ namespace JudoDotNetXamariniOSSDK
 				case BillingCountryOptions.BillingCountryOptionCanada:
 					cardViewModel.CountryCode = @"124";
 					break;
-
-				default:
-					
+				default:					
 					break;
 				}
 
@@ -674,9 +652,7 @@ namespace JudoDotNetXamariniOSSDK
 				cardViewModel.IssueNumber = IssueNumberTextField.Text;
 			}
 
-
 			return cardViewModel;
-
 		}
 
 		public void flashRecheckExpiryDateMessage ()
@@ -697,11 +673,8 @@ namespace JudoDotNetXamariniOSSDK
 		public bool EndDelegate ()
 		{
 			var queue = dispatchGetMainQueue ();
-			// Order of these blocks important!
 			if (scrollForward) {
-
 				ScrollForward (true);
-
 				queue.DispatchAfter (DispatchTime.Now, () => {
 					textScroller.FlashScrollIndicators ();
 				});
@@ -736,7 +709,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		void ScrollForward (bool animated)
 		{
-
 			if (creditCardImage != ccBackImage) {
 				StatusHelpLabel.Text = "Please enter Expire Date";
 			}
@@ -744,7 +716,6 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect frame = new CGRect (ccText.Frame.Location, new CGSize ((width) + textScroller.Frame.Size.Width, ccText.Frame.Size.Height));
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
-
 
 			placeView.SetText (cardHelper.promptStringForType (type, false));
 
@@ -754,7 +725,6 @@ namespace JudoDotNetXamariniOSSDK
 				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
 			}
 				
-
 			creditCardImage = ccBackImage;
 			UIView.Transition (creditCardImage, ccBackImage, 0.25f, UIViewAnimationOptions.TransitionFlipFromLeft, null);
 		}
@@ -769,38 +739,10 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-
-		//		private void UpdateUI ()
-		//		{
-		//			bool enable = false;
-		//			enable = completelyDone;
-		//
-		//			if (completelyDone) {
-		//				DismissKeyboardAction ();
-		//			}
-		//			SubmitButton.Hidden = !enable;
-		//			SubmitButton.Enabled = enable;
-		//
-		//			if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
-		//				if (!CellsToShow.Contains (MaestroCell)) {
-		//					CellsToShow.Add (MaestroCell);
-		//					TableView.ReloadData ();
-		//				}
-		//
-		//				if (IssueNumberTextField.Text.Length != 0 || !(StartDateTextField.Text.Length == 5)) {
-		//					enable = false;
-		//				}
-		//			}
-		//		}
-		//
-
-
 		private void UpdateUI ()
 		{
 			bool enable = false;
 			enable = completelyDone;
-
-			//self.navigationItem.rightBarButtonItem.enabled = YES;
 
 			List<UITableViewCell> cellsToRemove = new List<UITableViewCell> ();
 			List<UITableViewCell> insertedCells = new List<UITableViewCell> ();
@@ -812,8 +754,8 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (MaestroCell)) {
-						int row = CellsToShow.IndexOf (CardDetailCell) + 1; //[self.cellsToShow indexOfObject:self.cardDetailsCell] + 1;
-						CellsToShow.Insert (row, MaestroCell);//[self.cellsToShow insertObject:self.maestroCell atIndex:row];
+						int row = CellsToShow.IndexOf (CardDetailCell) + 1;
+						CellsToShow.Insert (row, MaestroCell);
 						TableView.ReloadData ();
 						insertedCells.Add (MaestroCell);
 					}
@@ -840,7 +782,6 @@ namespace JudoDotNetXamariniOSSDK
 						PostcodeTextField.BecomeFirstResponder ();
 						ccIsFirstResponder = false;
 					}
-
 				}
 
 				if (ccIsFirstResponder) {
@@ -857,7 +798,6 @@ namespace JudoDotNetXamariniOSSDK
 				}
 
 				if (JudoSDKManager.AVSEnabled) {
-
 					if (CellsToShow.Contains (AVSCell)) {
 						cellsToRemove.Add (AVSCell);
 					}
@@ -871,7 +811,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
 
-
 			foreach (UITableViewCell cell in cellsToRemove) {
 				CellsToShow.Remove (cell);
 			}
@@ -882,26 +821,22 @@ namespace JudoDotNetXamariniOSSDK
 			foreach (UITableViewCell cell in insertedCells) {
 				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
 			}
-
-
+				
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
-
 			SubmitButton.Enabled = enable;
 			SubmitButton.Hidden = !enable;
 		}
-
-
+			
 		void SetUpStartDateMask ()
 		{
-
 			StartDateTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();
 				});
 				bool changeText = true;
-				string placeholderDateMask="MM/YY";
+				string placeholderDateMask = "MM/YY";
 
 				if (range.Length > 1) {
 					return false;
@@ -909,7 +844,7 @@ namespace JudoDotNetXamariniOSSDK
 				if (replacementString.Length > 1) {
 					return false;
 				}
-				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {//!isdigit([replacementString characterAtIndex:0])) {
+				if (replacementString.Length == 1 && !char.IsDigit (replacementString.ToCharArray () [0])) {
 					return false;
 				}
 				if (textField.Text.Length + replacementString.Length - range.Length > 5) {
@@ -918,17 +853,15 @@ namespace JudoDotNetXamariniOSSDK
 			
 				int textLengthAfter = (int)(textField.Text.Length + replacementString.Length - range.Length);
 
-				if(replacementString.Length==0&& range.Location<2&&  textField.Text.Contains("/"))
-					{
-					textField.Text =textField.Text.Replace(@"/",@"");
+				if (replacementString.Length == 0 && range.Location < 2 && textField.Text.Contains ("/")) {
+					textField.Text = textField.Text.Replace (@"/", @"");
 					textLengthAfter--;
-					}
-				if (range.Length == 1 && textField.Text.Substring (range.Location, 1) == "/") { //[textField.text characterAtIndex:range.location] == '/') {
-					textField.Text = textField.Text.Substring (0, 1);//[textField.text substringToIndex:1];
+				}
+				if (range.Length == 1 && textField.Text.Substring (range.Location, 1) == "/") { 
+					textField.Text = textField.Text.Substring (0, 1);
 					textLengthAfter = 1;
 					changeText = false;
 				}
-				//CSRange monthRange = new CSRange (placeView.Text.IndexOf ("MM"), 2);
 
 				if (range.Location == 1 && textField.Text.Length == 1) {						
 
@@ -944,14 +877,14 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 					textField.Text = text;
-					textField.Text = textField.Text + @"/";//[textField.text stringByAppendingString:@"/"];
+					textField.Text = textField.Text + @"/";
 					textLengthAfter++;
 					changeText = false;
 				} else if (range.Location == 0 && textField.Text.Length == 0) {
 					if (replacementString.Substring (0, 1).ToCharArray () [0] > '1') { 
 							
 
-						var formatedString =string.Format (@"0{0}/", replacementString);
+						var formatedString = string.Format (@"0{0}/", replacementString);
 
 						var aStringBuilder = new StringBuilder (textField.Text);
 						aStringBuilder.Remove (range.Location, range.Length);
@@ -967,19 +900,19 @@ namespace JudoDotNetXamariniOSSDK
 
 					StringBuilder myStringBuilder = new StringBuilder (textField.Text);
 
-					if (textField.Text.Length <= range.Location+ range.Length ) {
-						myStringBuilder.Append(replacementString);
+					if (textField.Text.Length <= range.Location + range.Length) {
+						myStringBuilder.Append (replacementString);
 					} else {
 						myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
 					}
 
-//				
+				
 					var myString = myStringBuilder.ToString ();
 
-					string textAfter = myString;//[textField.text stringByReplacingCharactersInRange:range withString:replacementString];
+					string textAfter = myString;
 
 
-					int proposedDecade = (textAfter.ToCharArray () [3] - '0') * 10; //([textAfter characterAtIndex:3] - '0') * 10;
+					int proposedDecade = (textAfter.ToCharArray () [3] - '0') * 10;
 					int yearDecade = currentYear - (currentYear % 10);
 
 					if (proposedDecade > yearDecade) {
@@ -991,18 +924,13 @@ namespace JudoDotNetXamariniOSSDK
 						if (!cardHelper.IsStartDateValid (textAfter)) {
 							FlashCheckDateLabel ();
 							return false;
-						}
-
-						//textField.text = [textField.text stringByReplacingCharactersInRange:range withString:replacementString];
-
-
+						}							
 						myStringBuilder = new StringBuilder (textField.Text);
-						if (textField.Text.Length <= range.Location+ range.Length ) {
-							myStringBuilder.Append(replacementString);
+						if (textField.Text.Length <= range.Location + range.Length) {
+							myStringBuilder.Append (replacementString);
 						} else {
 							myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
 						}
-						//myStringBuilder.Replace (textField.Text, replacementString, range.Location, range.Length);
 						myString = myStringBuilder.ToString ();
 						textField.Text = myString;
 						IssueNumberTextField.BecomeFirstResponder ();
@@ -1017,7 +945,6 @@ namespace JudoDotNetXamariniOSSDK
 
 				StateDatePlaceholder.Text = new string (placeHolder);
 				return changeText;
-
 			};
 
 
@@ -1039,7 +966,6 @@ namespace JudoDotNetXamariniOSSDK
 					return false;
 				}
 				return true;
-
 			};
 
 			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
@@ -1052,7 +978,6 @@ namespace JudoDotNetXamariniOSSDK
 					return false;
 				}
 				return true;
-
 			};
 		}
 

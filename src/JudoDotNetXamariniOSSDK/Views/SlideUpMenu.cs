@@ -44,24 +44,25 @@ namespace JudoDotNetXamariniOSSDK
 			SetUpToggle (AmexSwitch, JudoSDKManager.AmExAccepted, () => {
 				JudoSDKManager.AmExAccepted = !JudoSDKManager.AmExAccepted;
 			});
-
-
+				
 			AttachTouchEvents ();
 			ArrowIcon.Transform = CGAffineTransform.MakeRotation ((nfloat)(180.0f * Math.PI) / 180.0f);
-
-
-
 
 		}
 
 		public override void WillRemoveSubview (UIView uiview)
 		{
 			base.WillRemoveSubview (uiview);
-			AVSSwitch.ValueChanged -= delegate {};
-			ThreeDSwitch.ValueChanged -= delegate {};
-			RiskSwitch.ValueChanged -= delegate {};
-			MaestroSwitch.ValueChanged -= delegate {};
-			AmexSwitch.ValueChanged -= delegate {};
+			AVSSwitch.ValueChanged -= delegate {
+			};
+			ThreeDSwitch.ValueChanged -= delegate {
+			};
+			RiskSwitch.ValueChanged -= delegate {
+			};
+			MaestroSwitch.ValueChanged -= delegate {
+			};
+			AmexSwitch.ValueChanged -= delegate {
+			};
 
 		}
 
@@ -90,11 +91,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		void ExpandConfigurationMenu ()
-		{
-			throw new NotImplementedException ();
-		}
-
 		void SlideAndFix (UIPanGestureRecognizer gesture)
 		{
 			var state = ComponentExpanded;
@@ -106,8 +102,6 @@ namespace JudoDotNetXamariniOSSDK
 				ComponentExpanded = true;
 
 			} else {
-
-
 				yComponent = piece.Superview.Frame.Height - 40f;
 				ComponentExpanded = false;
 			}
@@ -120,17 +114,14 @@ namespace JudoDotNetXamariniOSSDK
 					piece.Frame = new CGRect (new CGPoint (piece.Frame.X, yComponent), piece.Frame.Size);
 
 					gesture.SetTranslation (new CGPoint (0, 0), piece.Superview);
-
 				},
 				completion: () => {
 					
-				});
-			
+				});			
 		}
 
-		public void ResetMenu()
+		public void ResetMenu ()
 		{
-
 			UIView piece = panGesture.View;
 			var yComponent = piece.Superview.Frame.Height - 40f;
 			ComponentExpanded = false;
@@ -147,10 +138,7 @@ namespace JudoDotNetXamariniOSSDK
 			
 			UIView piece = gesture.View;
 
-
-
 			AdjustAnchorPointForGestureRecognizer (gesture);
-
 
 			if (gesture.State == UIGestureRecognizerState.Began || gesture.State == UIGestureRecognizerState.Changed) {
 
@@ -160,41 +148,31 @@ namespace JudoDotNetXamariniOSSDK
 				 
 				gesture.SetTranslation (new CGPoint (0, 0), piece.Superview);
 
-
 			} else if (gesture.State == UIGestureRecognizerState.Ended) {
 				SlideAndFix (gesture);
-
-			} 
-
-				
+			} 		
 		}
 
 		void AdjustAnchorPointForGestureRecognizer (UIGestureRecognizer gestureRecognizer)
 		{
-			
 			if (gestureRecognizer.State == UIGestureRecognizerState.Began) {
 				UIView piece = gestureRecognizer.View;
 				CGPoint locationInView = gestureRecognizer.LocationInView (piece);
 				CGPoint locationInSuperview = gestureRecognizer.LocationInView (piece.Superview);
 
-				piece.Layer.AnchorPoint = new CGPoint (locationInView.X / piece.Bounds.Size.Width, locationInView.Y / piece.Bounds.Size.Height);
-			
+				piece.Layer.AnchorPoint = new CGPoint (locationInView.X / piece.Bounds.Size.Width, locationInView.Y / piece.Bounds.Size.Height);			
 				piece.Center = locationInSuperview;
-
 			}
 		}
 
 		private void AttachTouchEvents ()
 		{
 
-			 panGesture = new UIPanGestureRecognizer ();
+			panGesture = new UIPanGestureRecognizer ();
 
-			panGesture.AddTarget (() => { 
-				
+			panGesture.AddTarget (() => { 				
 				PanGestureMoveAround (panGesture);
-
 			});
-
 			panGesture.MaximumNumberOfTouches = 2;
 			this.AddGestureRecognizer (panGesture);
 		}
@@ -208,9 +186,7 @@ namespace JudoDotNetXamariniOSSDK
 				UIColor.Black.SetFill ();
 				UIColor.Black.SetStroke ();
 				var currentPath = new CGPath ();
-				//var points = new CGPoint[]{ new CGPoint (5, 5), new CGPoint (Frame.Width, 5) };
-
-				//currentPath.AddLines (points);
+	
 				currentPath.AddLines (new CGPoint[] {
 					new CGPoint (10, 20),
 					new CGPoint (16, 10), 

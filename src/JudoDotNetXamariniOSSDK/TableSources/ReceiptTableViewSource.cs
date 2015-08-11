@@ -30,7 +30,6 @@ namespace JudoDotNetXamariniOSSDK
 			cell.IndentationLevel = 0;
 			cell.TextLabel.Text = receiptcell.Label;
 			cell.DetailTextLabel.Text = receiptcell.Value;
-			//---- if there are no cells to reuse, create a new one
 			if (cell != null) {
 				return cell;
 			} else

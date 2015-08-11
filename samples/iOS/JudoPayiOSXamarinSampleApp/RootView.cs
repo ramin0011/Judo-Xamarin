@@ -28,10 +28,7 @@ namespace JudoPayiOSXamarinSampleApp
 				
 				var creditCardView =JudoSDKManager.GetPaymentView();
 				this.NavigationController.PushViewController(creditCardView,true);
-
 			};
-
-
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -55,9 +52,6 @@ namespace JudoPayiOSXamarinSampleApp
 			base.DidRotate (fromInterfaceOrientation);
 			menu.ResetMenu ();
 		}
-
-
-
 	}
 }
 
