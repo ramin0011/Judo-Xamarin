@@ -620,11 +620,15 @@ namespace JudoDotNetXamariniOSSDK
 
 		CardViewModel GatherCardDetails ()
 		{
+			string _cardMonth = cardMonth.ToString ();
+			if (cardMonth < 10) {
+				_cardMonth = "0" + _cardMonth;
+			}
 			CardViewModel cardViewModel = new CardViewModel () {
 				CardName = "Ed Xample",
 				CardNumber = creditCardNum,
 				CV2 = ccv,
-				ExpireDate = cardMonth + "/" + year,
+				ExpireDate = _cardMonth + "/" + year,
 				CardType = type					
 			};
 

@@ -28,7 +28,7 @@ namespace JudoPayiOSXamarinSampleApp
 			Window.RootViewController = new UINavigationController (root);
 			Window.TintColor = UIColor.Black;
 		 	Window.MakeKeyAndVisible ();
-		
+			//ConfigureJudoSettings ();
 			return true;   }
 			
         // This method is invoked when the application is about to move from active to inactive state.
@@ -50,6 +50,11 @@ namespace JudoPayiOSXamarinSampleApp
         public override void WillTerminate(UIApplication application)
         {
         }
+
+		void ConfigureJudoSettings ()
+		{
+			
+		}
     }
 
 
