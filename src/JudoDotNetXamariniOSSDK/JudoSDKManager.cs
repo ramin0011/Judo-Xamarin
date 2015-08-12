@@ -105,6 +105,15 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+		public static RegisterCardView GetRegisterCardView ()
+		{
+			ServiceFactory serviceFactory = new ServiceFactory();
+			ITokenService tokenService = serviceFactory.GetTokenService ();
+
+			RegisterCardView ctrl = new RegisterCardView(tokenService);
+
+			return ctrl;
+		}
 
 		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
 										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)

@@ -24,11 +24,17 @@ namespace JudoPayiOSXamarinSampleApp
 		{
 			base.ViewDidLoad ();
 			
-			MakeAPaymentButton.TouchUpInside += (sender, ev) => {
-				
+			MakeAPaymentButton.TouchUpInside += (sender, ev) => {				
 				var creditCardView =JudoSDKManager.GetPaymentView();
 				this.NavigationController.PushViewController(creditCardView,true);
 			};
+
+			RegisterCardButton.TouchUpInside += (sender, ev) => {				
+				var registerCardView =JudoSDKManager.GetRegisterCardView();
+				this.NavigationController.PushViewController(registerCardView,true);
+			};
+
+
 		}
 
 		public override void ViewWillAppear (bool animated)

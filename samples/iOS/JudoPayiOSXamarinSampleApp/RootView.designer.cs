@@ -14,9 +14,17 @@ namespace JudoPayiOSXamarinSampleApp
 	{
 		[Outlet]
 		UIKit.UIButton MakeAPaymentButton { get; set; }
+
+		[Outlet]
+		UIKit.UIButton RegisterCardButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (RegisterCardButton != null) {
+				RegisterCardButton.Dispose ();
+				RegisterCardButton = null;
+			}
+
 			if (MakeAPaymentButton != null) {
 				MakeAPaymentButton.Dispose ();
 				MakeAPaymentButton = null;

@@ -2,6 +2,7 @@
 using UIKit;
 using Foundation;
 using System.Collections.Generic;
+using ObjCRuntime;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -9,7 +10,7 @@ namespace JudoDotNetXamariniOSSDK
 	{
 
 		public List<UITableViewCell> TableItems;
-		string CellIdentifier = "TableCell";
+		string CellIdentifier = "CellID";
 
 		public AddPaymentTableSource (List<UITableViewCell> items)
 		{
@@ -23,14 +24,28 @@ namespace JudoDotNetXamariniOSSDK
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
-			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
-			cell = TableItems [indexPath.Row];
-			cell.IndentationLevel = 0;
+			var cell = tableView.DequeueReusableCell("CardDetailCell") as CardDetailCell;
 
-			if (cell != null) {
-				return cell;
-			} else
-				return  new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
+			if (cell == null)
+			{
+				cell = TableItems [indexPath.Row] as CardDetailCell;
+				var views = NSBundle.MainBundle.LoadNib("CardDetailCell", cell, null);
+				cell = Runtime.GetNSObject( views.ValueAt(0) ) as CardDetailCell;
+			}
+
+			//cell.BindDataToCell("You are on row " + indexPath.Row);
+
+			return cell;
+
+
+//			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
+//			cell = TableItems [indexPath.Row];
+//			cell.IndentationLevel = 0;
+//			cell.BackgroundColor = UIColor.Black;
+//			if (cell != null) {
+//				return cell;
+//			} else
+//				return  new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
 		}
 
 		public override nfloat GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
@@ -39,6 +54,7 @@ namespace JudoDotNetXamariniOSSDK
 			UITableViewCell cell = TableItems [indexPath.Row];
 			return cell.Bounds.Height;
 		}
+			
 
 		public float GetTableHeight ()
 		{

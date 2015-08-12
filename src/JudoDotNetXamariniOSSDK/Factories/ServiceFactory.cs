@@ -17,6 +17,12 @@ namespace JudoDotNetXamariniOSSDK
 			var judoApi = JudoPaymentsFactory.Create (JudoPayDotNet.Enums.Environment.Sandbox, JudoConfiguration.Instance.ApiToken, JudoConfiguration.Instance.ApiSecret);
 			return  new PaymentService(judoApi);
 		}
+
+		public ITokenService GetTokenService ()
+		{
+			var judoApi = JudoPaymentsFactory.Create (JudoPayDotNet.Enums.Environment.Sandbox, JudoConfiguration.Instance.ApiToken, JudoConfiguration.Instance.ApiSecret);
+			return  new TokenService(judoApi);
+		}
 	}
 
 }

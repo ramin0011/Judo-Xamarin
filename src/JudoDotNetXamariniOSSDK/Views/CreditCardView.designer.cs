@@ -98,26 +98,6 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (StartDateWarningLabel != null) {
-				StartDateWarningLabel.Dispose ();
-				StartDateWarningLabel = null;
-			}
-
-			if (StateDatePlaceholder != null) {
-				StateDatePlaceholder.Dispose ();
-				StateDatePlaceholder = null;
-			}
-
-			if (StartDateTextField != null) {
-				StartDateTextField.Dispose ();
-				StartDateTextField = null;
-			}
-
-			if (IssueNumberTextField != null) {
-				IssueNumberTextField.Dispose ();
-				IssueNumberTextField = null;
-			}
-
 			if (AVSCell != null) {
 				AVSCell.Dispose ();
 				AVSCell = null;
@@ -173,6 +153,11 @@ namespace JudoDotNetXamariniOSSDK
 				HomeButton = null;
 			}
 
+			if (IssueNumberTextField != null) {
+				IssueNumberTextField.Dispose ();
+				IssueNumberTextField = null;
+			}
+
 			if (MaestroCell != null) {
 				MaestroCell.Dispose ();
 				MaestroCell = null;
@@ -211,6 +196,21 @@ namespace JudoDotNetXamariniOSSDK
 			if (SpacerCell != null) {
 				SpacerCell.Dispose ();
 				SpacerCell = null;
+			}
+
+			if (StartDateTextField != null) {
+				StartDateTextField.Dispose ();
+				StartDateTextField = null;
+			}
+
+			if (StartDateWarningLabel != null) {
+				StartDateWarningLabel.Dispose ();
+				StartDateWarningLabel = null;
+			}
+
+			if (StateDatePlaceholder != null) {
+				StateDatePlaceholder.Dispose ();
+				StateDatePlaceholder = null;
 			}
 
 			if (StatusHelpLabel != null) {
