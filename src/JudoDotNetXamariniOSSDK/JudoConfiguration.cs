@@ -22,12 +22,6 @@ namespace JudoDotNetXamariniOSSDK
 		public  string PaymentReference { get; set;}
 		public  string ConsumerRef { get; set;}
 
-//		public  string ApiToken = "5tZfrXDngpvu8iGS";
-//		public  string ApiSecret = "da36e4c8f5805173060c934b12dcc14bb05761af310ea364cd787710b1da346b";
-//		public  string JudoID = "100515592";//100515-592
-//
-//		public  string PaymentReference = "payment101010102";
-//		public  string ConsumerRef = "consumer1010102";
 	}
 }
 

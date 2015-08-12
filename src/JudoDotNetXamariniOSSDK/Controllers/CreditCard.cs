@@ -35,15 +35,13 @@ namespace JudoDotNetXamariniOSSDK
 		static Regex visaReg;
 		static Regex mcReg;
 		static Regex amexReg;
-		static Regex discoverReg;
-		static Regex dinersClubReg;
+
 		static Regex maestroReg;
 
 		static Regex visaTypeReg;
 		static Regex mcTypeReg;
 		static Regex amexTypeReg;
-		static Regex discoverTypeReg;
-		static Regex dinersClubTypeReg;
+
 		static Regex maestroTypeReg;
 
 	
@@ -62,16 +60,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			amexTypeReg = new Regex (AMEX_REG_TYPE,	RegexOptions.None);
 
-			/*
-	        discoverReg			= [NSRegularExpression regularExpressionWithPattern:DISCOVER options:0 error:&error];
-			dinersClubReg		= [NSRegularExpression regularExpressionWithPattern:DINERS_CLUB options:0 error:&error];
-			*/
-
-			/*
-			discoverTypeReg		= [NSRegularExpression regularExpressionWithPattern:DISCOVER_TYPE options:0 error:&error];
-			dinersClubTypeReg	= [NSRegularExpression regularExpressionWithPattern:DINERS_CLUB_TYPE options:0 error:&error];	
-			}
-			*/
 		}
 
 		public int LengthOfFormattedStringTilLastGroupForType (CreditCardType type)
@@ -120,12 +108,6 @@ namespace JudoDotNetXamariniOSSDK
 				case  (int)CreditCardType.AMEX:
 					reg = amexTypeReg;
 					break;
-//			case  (int)CreditCardType.Discover:
-//				reg = discoverTypeReg;
-//				break;
-//			case  (int)CreditCardType.DinersClub:
-//				reg = dinersClubTypeReg;
-//				break;
 				case (int)CreditCardType.Maestro:
 					reg = maestroTypeReg;
 					break;
@@ -135,7 +117,7 @@ namespace JudoDotNetXamariniOSSDK
 				CSRange range = new CSRange (0, Card.CC_LEN_FOR_TYPE);
 
 
-				var matches = reg.Matches (proposedNumber.Substring(range.Location,range.Length));
+				var matches = reg.Matches (proposedNumber.Substring (range.Location, range.Length));
 				if (matches != null) {
 					if (matches.Count == 1) {
 						return (CreditCardType)idx;
@@ -209,18 +191,18 @@ namespace JudoDotNetXamariniOSSDK
 					break;
 			}
 			
-			string segment1 = enteredNumber.Substring (0, Card.CC_LEN_FOR_TYPE);// [enteredNumber substringWithRange:NSMakeRange(0, CC_LEN_FOR_TYPE)];
-			string segment2 = r2.Location == 0 ? @"" : enteredNumber.Substring (r2.Location, r2.Length);// [enteredNumber substringWithRange:r2];
+			string segment1 = enteredNumber.Substring (0, Card.CC_LEN_FOR_TYPE);
+			string segment2 = r2.Location == 0 ? @"" : enteredNumber.Substring (r2.Location, r2.Length);
 			string segment3 = r3.Location == 0 ? @"" : enteredNumber.Substring (r3.Location, r3.Length);
 			;
 			string segment4 = r4.Location == 0 ? @"" : enteredNumber.Substring (r4.Location, r4.Length);
 			;
 
 			string ret = string.Format (@"{0}{1}{2}{3}{4}{5}{6}", 
-				            segment1, gaps [0],
-				            segment2, gaps [1],
-				            segment3, gaps [2],
-				            segment4);
+				             segment1, gaps [0],
+				             segment2, gaps [1],
+				             segment3, gaps [2],
+				             segment4);
 
 			return ret;
 		}
@@ -299,12 +281,6 @@ namespace JudoDotNetXamariniOSSDK
 			case CreditCardType.AMEX:
 				reg = amexReg;
 				break;
-			case CreditCardType.Discover:
-				reg = discoverReg;
-				break;
-			case CreditCardType.DinersClub:
-				reg = dinersClubReg;
-				break;
 			case CreditCardType.Maestro:
 				reg = maestroReg;
 				break;
@@ -313,7 +289,7 @@ namespace JudoDotNetXamariniOSSDK
 				break;
 			}
 			if (reg != null) {
-				int matches = reg.Matches (number).Count;//[reg numberOfMatchesInString:number options:0 range:NSMakeRange(0, [number length])];
+				int matches = reg.Matches (number).Count;
 				ret = matches == 1 ? true : false;
 
 			}
@@ -323,51 +299,48 @@ namespace JudoDotNetXamariniOSSDK
 
 		public bool IsStartDateValid (string proposedDate)
 		{
-		if (proposedDate.Length != 5) {
-			return false;
-		}
-		//NSError *error = nil;
-		Regex regex = new Regex(@"([0-9]{2})/([0-9]{2})",RegexOptions.None); //[NSRegularExpression regularExpressionWithPattern:@"([0-9]{2})/([0-9]{2})" options:0 error:&error];
-		MatchCollection results = regex.Matches(proposedDate.Substring(0,proposedDate.Length)); //[regex matchesInString:proposedDate options:0 range:NSMakeRange(0, proposedDate.length)];
-		if (results.Count==0) {
-			return false;
-		}
-
-		var result = results [results.Count-1];
-		if (result.Groups.Count != 3) {
-			return false;
-
-//			NSTextCheckingResult* result = results [results.Count];
-//		if (result.numberOfRanges != 3) {
-//			return NO;
-		}
-
-		string monthString = proposedDate.Substring (result.Groups[1].Index, result.Groups[1].Length);// [proposedDate substringWithRange:[result rangeAtIndex:1]];
-		string yearString =proposedDate.Substring (result.Groups[2].Index, result.Groups[2].Length); //[proposedDate substringWithRange:[result rangeAtIndex:2]];
-
-		int proposedMonth = Int32.Parse (monthString); //[monthString intValue];
-		int proposedYear = Int32.Parse (yearString)+ 2000;
-
-
-		//NSDateComponents *components = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:[NSDate date]];
-		DateTime today = DateTime.Now;
-		int currentMonth = today.Month;
-			int currentYear = today.Year;
-
-		if (currentYear < proposedYear) {
-			return false;
-		}
-		if (currentYear == proposedYear) {
-			if (currentMonth < proposedMonth) {
+			if (proposedDate.Length != 5) {
 				return false;
 			}
-		}
-		// no more than 10 years in the past
-		if (currentYear - 10 > proposedYear || (currentYear - 10 == proposedYear && currentMonth > proposedMonth)) {
-			return false;
-		}
 
-		return true;
+			Regex regex = new Regex (@"([0-9]{2})/([0-9]{2})", RegexOptions.None);
+			MatchCollection results = regex.Matches (proposedDate.Substring (0, proposedDate.Length));
+			if (results.Count == 0) {
+				return false;
+			}
+
+			var result = results [results.Count - 1];
+			if (result.Groups.Count != 3) {
+				return false;
+
+			}
+
+			string monthString = proposedDate.Substring (result.Groups [1].Index, result.Groups [1].Length);
+			string yearString = proposedDate.Substring (result.Groups [2].Index, result.Groups [2].Length);
+
+			int proposedMonth = Int32.Parse (monthString);
+			int proposedYear = Int32.Parse (yearString) + 2000;
+
+
+
+			DateTime today = DateTime.Now;
+			int currentMonth = today.Month;
+			int currentYear = today.Year;
+
+			if (currentYear < proposedYear) {
+				return false;
+			}
+			if (currentYear == proposedYear) {
+				if (currentMonth < proposedMonth) {
+					return false;
+				}
+			}
+			// no more than 10 years in the past
+			if (currentYear - 10 > proposedYear || (currentYear - 10 == proposedYear && currentMonth > proposedMonth)) {
+				return false;
+			}
+
+			return true;
 
 		}
 

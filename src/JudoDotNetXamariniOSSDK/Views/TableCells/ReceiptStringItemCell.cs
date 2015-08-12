@@ -33,29 +33,12 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-	
-
-
 		public static ReceiptStringItemCell Create ()
 		{
 			return (ReceiptStringItemCell)Nib.Instantiate (null, null) [0];
 
 		}
-
-//		public override void RemoveFromSuperview ()
-//		{
-//			base.RemoveFromSuperview ();
-//		}
-
-//		public override void LayoutSubviews ()
-//		{
-//			base.LayoutSubviews ();
-//			prefix.Text = this.Label;
-//			suffix.Text = this.Value;
-//
-//		}
-
-
+			
 	}
 }
 
