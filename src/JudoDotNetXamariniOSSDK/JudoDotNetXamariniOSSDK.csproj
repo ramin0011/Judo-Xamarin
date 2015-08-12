@@ -100,7 +100,6 @@
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
-    <Compile Include="AppConfig.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
     <Compile Include="Views\PaymentReceipt.cs" />
     <Compile Include="Views\PaymentReceipt.designer.cs">

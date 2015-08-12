@@ -28,7 +28,7 @@ namespace JudoPayiOSXamarinSampleApp
 			Window.RootViewController = new UINavigationController (root);
 			Window.TintColor = UIColor.Black;
 		 	Window.MakeKeyAndVisible ();
-			//ConfigureJudoSettings ();
+			ConfigureJudoSettings ();
 			return true;   }
 			
         // This method is invoked when the application is about to move from active to inactive state.
@@ -53,7 +53,13 @@ namespace JudoPayiOSXamarinSampleApp
 
 		void ConfigureJudoSettings ()
 		{
-			
+			//Configure JudoPay app here
+			var configInstance = JudoConfiguration.Instance;
+			configInstance.ApiToken  = "5tZfrXDngpvu8iGS";
+			configInstance.ApiSecret = "da36e4c8f5805173060c934b12dcc14bb05761af310ea364cd787710b1da346b";
+			configInstance.JudoID = "100515592";//100515-592
+			configInstance.PaymentReference = "payment101010102";
+			configInstance.ConsumerRef = "consumer1010102";
 		}
     }
 
