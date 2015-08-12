@@ -81,7 +81,6 @@ namespace JudoDotNetXamariniOSSDK
 		}
 			
 
-		//TODO: correct the parameter for failureBlock action to be something meaningful instead of a string
 		public static void MakeAPaymentCustomUI(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, UIViewController viewController, 
 								 Card card, UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{

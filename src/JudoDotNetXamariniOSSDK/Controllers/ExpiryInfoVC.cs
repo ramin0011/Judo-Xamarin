@@ -21,7 +21,6 @@ namespace JudoDotNetXamariniOSSDK
 
         public bool prefersStatusBarHidden()
         {
-            //this.NavigationController = null;
             return false;
         }
 

@@ -22,15 +22,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.RemoveFromSuperview ();
 		}
-
-//		public override void LayoutSubviews ()
-//		{
-//
-//		
-//			base.LayoutSubviews ();
-//			NoteText.Text = this.Text;
-//		}
-
 	}
 }
 
