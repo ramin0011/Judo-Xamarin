@@ -137,13 +137,15 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\JudoDotNetXamariniOSSDK\JudoDotNetXamariniOSSDK.csproj">
       <Project>{5E165F2E-27FC-4C2E-9ABD-7B54431D4333}</Project>
       <Name>JudoDotNetXamariniOSSDK</Name>
-      <IsAppExtension>False</IsAppExtension>
-      <IsWatchApp>False</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
+      <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
+      <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

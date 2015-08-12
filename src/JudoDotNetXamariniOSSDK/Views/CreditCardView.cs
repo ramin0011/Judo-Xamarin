@@ -73,7 +73,7 @@ namespace JudoDotNetXamariniOSSDK
 		int numberLength;
 		string creditCardNum;
 		int year;
-		int ccv;
+		string ccv;
 
 		int cardMonth;
 
@@ -147,6 +147,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			countrySheet = new UIActionSheet ("Select Country");
 			countrySheet.TintColor = UIColor.Black;
+			selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
 			countrySheet.Clicked += delegate(object sender, UIButtonEventArgs button) {
 				switch (button.ButtonIndex) {
 				case (int) BillingCountryOptions.BillingCountryOptionUK:
@@ -179,9 +180,21 @@ namespace JudoDotNetXamariniOSSDK
 			CountryButton.TouchUpInside += (sender, ev) => {
 				countrySheet.ShowInView (this.View);
 			};
-				
+			PostcodeTextField.Text = "";	
 			PostcodeTextField.Font = ccText.Font;
 			PostcodeTextField.TextColor = ccText.TextColor;
+
+			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
+				DispatchQueue.MainQueue.DispatchAsync (() => {
+					UpdateUI ();
+				});
+				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
+				if (textLengthAfter > 10) {
+					return false;
+				}
+				return true;
+			};
 
 		}
 
@@ -195,6 +208,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (JudoSDKManager.AVSEnabled) {
 				SetAVSComponents ();
 			}
+
 
 
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
@@ -478,7 +492,7 @@ namespace JudoDotNetXamariniOSSDK
 						var cIndex = placeView.Text.IndexOf ("C");
 						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);
 						ccvRange.Length = type == CreditCardType.AMEX ? 4 : 3;
-						ccv = Int32.Parse (newTextOrig.Substring (ccvRange.Location, ccvRange.Length));
+						ccv = newTextOrig.Substring (ccvRange.Location, ccvRange.Length);
 					}
 
 					updateText = true;
@@ -567,6 +581,7 @@ namespace JudoDotNetXamariniOSSDK
 				ccImage = new UIImageView (frontImage);
 				ccImage.Frame = creditCardImage.Frame;
 				ccImage.Tag = (int)type;
+
 				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (type));
 				ccBackImage.Frame = creditCardImage.Frame;
 				ccBackImage.Tag = (int)type;
@@ -604,6 +619,7 @@ namespace JudoDotNetXamariniOSSDK
 						
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						SubmitButton.Hidden = false;
+						CleanOutCardDetails();
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
 					});
@@ -616,6 +632,28 @@ namespace JudoDotNetXamariniOSSDK
 					});
 				}
 			});
+		}
+
+		void CleanOutCardDetails ()
+		{
+			SetUpTableView ();
+
+			if (JudoSDKManager.MaestroAccepted) {
+				SetUpStartDateMask ();
+
+			}	
+			if (JudoSDKManager.AVSEnabled) {
+				SetAVSComponents ();
+			}
+
+			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
+				creditCardImage.Image = defaultImage;
+
+			});
+
+
+
 		}
 
 		CardViewModel GatherCardDetails ()
@@ -729,7 +767,7 @@ namespace JudoDotNetXamariniOSSDK
 				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
 			}
 				
-			creditCardImage = ccBackImage;
+
 			UIView.Transition (creditCardImage, ccBackImage, 0.25f, UIViewAnimationOptions.TransitionFlipFromLeft, null);
 		}
 
@@ -963,17 +1001,7 @@ namespace JudoDotNetXamariniOSSDK
 				return true;
 			};
 
-			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
-				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
-				DispatchQueue.MainQueue.DispatchAsync (() => {
-					UpdateUI ();
-				});
-				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
-				if (textLengthAfter > 10) {
-					return false;
-				}
-				return true;
-			};
+
 		}
 
 		protected override void Dispose (bool disposing)

@@ -23,7 +23,7 @@ namespace JudoDotNetXamariniOSSDK
 				YourConsumerReference = AppConfig.ConsumerRef,
 				Amount = decimal.Parse(paymentViewModel.Amount),
 				CardNumber = paymentViewModel.Card.CardNumber,
-				CV2 = paymentViewModel.Card.CV2.ToString(),
+				CV2 = paymentViewModel.Card.CV2,
 				ExpiryDate = paymentViewModel.Card.ExpireDate,
 				CardAddress = new CardAddressModel(){PostCode=paymentViewModel.Card.PostCode},
 				StartDate = paymentViewModel.Card.StartDate,		

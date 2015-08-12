@@ -10,7 +10,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public string ExpireDate { get; set; }
 
-		public int CV2 { get; set; }
+		public string CV2 { get; set; }
 
 		public CreditCardType CardType { get; set; }
 
