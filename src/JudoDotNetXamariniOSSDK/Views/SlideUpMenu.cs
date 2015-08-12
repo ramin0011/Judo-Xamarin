@@ -93,7 +93,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SlideAndFix (UIPanGestureRecognizer gesture)
 		{
-			var state = ComponentExpanded;
 
 			UIView piece = gesture.View;
 			nfloat yComponent = piece.Superview.Center.Y;

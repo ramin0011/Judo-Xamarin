@@ -53,8 +53,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		public Card judoCard { get; set; }
 
-		public event Action<bool, Card> CompletionBlock;
-
 		public UIActionSheet countrySheet;
 
 		CreditCard cardHelper = new CreditCard ();
@@ -76,11 +74,7 @@ namespace JudoDotNetXamariniOSSDK
 		string ccv;
 
 		int cardMonth;
-
-		bool haveFullNames;
 		bool completelyDone;
-
-		string successMessage;
 
 		string formattedText;
 		bool flashForError = false;
@@ -91,16 +85,13 @@ namespace JudoDotNetXamariniOSSDK
 		bool hasFullNumber = false;
 		bool deletedSpace = false;
 
-
 		IPaymentService _paymentService;
-
 
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
 			_paymentService = paymentService;
 		}
-
-
+			
 		float widthToLastGroup {
 			get { 
 				int oldOffset = placeView.ShowTextOffset;
@@ -111,8 +102,7 @@ namespace JudoDotNetXamariniOSSDK
 				return width;
 			}
 		}
-
-
+			
 		void FlashMessage (string message)
 		{
 			PaymentErrorLabel.Text = message;
@@ -132,11 +122,6 @@ namespace JudoDotNetXamariniOSSDK
 			});
 		}
 			
-		private bool prefersStatusBarHidden ()
-		{
-			return NavigationController == null;
-		}
-
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
@@ -229,9 +214,6 @@ namespace JudoDotNetXamariniOSSDK
 			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
 
 			SubmitButton.SetTitleColor (UIColor.Black, UIControlState.Application);
-			UIEdgeInsets insets = new UIEdgeInsets (0, 20, 0, 20);
-			UIImage activeImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_normal_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
-			UIImage inactiveImage = ThemeBundleReplacement.BundledOrReplacementImage ("btn_pay_inactive_iPhone6", BundledOrReplacementOptions.BundledOrReplacement);
 
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
@@ -388,7 +370,7 @@ namespace JudoDotNetXamariniOSSDK
 					if (textView.Text.Length != 0) {	// handle case of delete when there are no characters left to delete
 						
 						char c = textView.Text.Substring (range.Location, 1).ToCharArray () [0];
-						if (range.Location != null && range.Length == 1 && (c == ' ' || c == '/')) {
+						if (range.Location != 0 && range.Length == 1 && (c == ' ' || c == '/')) {
 							range.Location--;
 							range.Length++;
 							deletedSpace = true;
@@ -651,9 +633,6 @@ namespace JudoDotNetXamariniOSSDK
 				creditCardImage.Image = defaultImage;
 
 			});
-
-
-
 		}
 
 		CardViewModel GatherCardDetails ()
@@ -1000,8 +979,6 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				return true;
 			};
-
-
 		}
 
 		protected override void Dispose (bool disposing)
