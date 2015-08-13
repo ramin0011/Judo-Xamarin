@@ -33,8 +33,6 @@ namespace JudoPayiOSXamarinSampleApp
 				var registerCardView =JudoSDKManager.GetRegisterCardView();
 				this.NavigationController.PushViewController(registerCardView,true);
 			};
-
-
 		}
 
 		public override void ViewWillAppear (bool animated)

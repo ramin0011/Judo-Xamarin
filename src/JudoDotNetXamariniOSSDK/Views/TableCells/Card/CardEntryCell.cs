@@ -18,14 +18,11 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		public static readonly UINib Nib = UINib.FromName ("CardEntryCell", NSBundle.MainBundle);
 
+		public UITextView ccTextOutlet { get { return ccText; } }
 
-
-
-		// //// //// //// //// //// //// //// //// //// //
 		int currentYear;
 
 		CreditCard cardHelper = new CreditCard ();
-
 		CreditCardType type;
 
 		string formattedText;
@@ -39,26 +36,19 @@ namespace JudoDotNetXamariniOSSDK
 		UIImageView ccImage;
 
 		string ccv;
-
 		string creditCardNum;
-
 		bool deleting = false;
 		bool ret = false;
-
 		int year;
-
 		bool hasFullNumber = false;
-
 		int cardMonth;
 
-		bool completelyDone {get;set;}
-
-
-
+		public bool CompletelyDone {
+			get;
+			set;
+		}
+			
 		bool deletedSpace = false;
-		// //// //// //// //// //// //// //// //// //// //
-
-
 
 		public CardEntryCell (IntPtr handle) : base (handle)
 		{
@@ -71,13 +61,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			return (CardEntryCell)Nib.Instantiate (null, null) [0];
 		}
-
-
-
-//		public  CardCell Create ()
-//		{
-//			
-//		}
 
 		public override void LayoutSubviews ()
 		{
@@ -152,7 +135,7 @@ namespace JudoDotNetXamariniOSSDK
 				deletedSpace = false;
 				cardMonth = 0;
 
-				completelyDone = false;
+				CompletelyDone = false;
 				if (replace.Length == 0) {
 					updateText = true;
 					deleting = true;
@@ -259,7 +242,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 					if (newTextLen == placeView.Text.Length) {
-						completelyDone = true;
+						CompletelyDone = true;
 						var cIndex = placeView.Text.IndexOf ("C");
 						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);
 						ccvRange.Length = type == CreditCardType.AMEX ? 4 : 3;
@@ -402,6 +385,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			DispatchQueue.MainQueue.DispatchAsync (() => {
 				//UpdateUI (); TODO work this out
+				UpdateUI.Invoke();
 			});
 			return ret;
 		}

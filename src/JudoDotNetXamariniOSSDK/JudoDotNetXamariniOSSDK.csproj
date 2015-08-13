@@ -70,6 +70,8 @@
     <InterfaceDefinition Include="Views\RegisterCardView~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
+    <InterfaceDefinition Include="Views\TableCells\Card\AVSCell.xib" />
+    <InterfaceDefinition Include="Views\TableCells\Card\MaestroCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -144,6 +146,14 @@
     </Compile>
     <Compile Include="Views\TableCells\Card\CardCell.cs" />
     <Compile Include="TableSources\CardCellSource.cs" />
+    <Compile Include="Views\TableCells\Card\AVSCell.cs" />
+    <Compile Include="Views\TableCells\Card\AVSCell.designer.cs">
+      <DependentUpon>AVSCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableCells\Card\MaestroCell.cs" />
+    <Compile Include="Views\TableCells\Card\MaestroCell.designer.cs">
+      <DependentUpon>MaestroCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

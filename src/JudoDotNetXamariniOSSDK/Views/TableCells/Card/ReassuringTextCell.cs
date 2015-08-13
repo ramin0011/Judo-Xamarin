@@ -9,8 +9,6 @@ namespace JudoDotNetXamariniOSSDK
 	public partial class ReassuringTextCell : CardCell
 	{
 		public static readonly UINib Nib = UINib.FromName ("ReassuringTextCell", NSBundle.MainBundle);
-		//public static readonly NSString Key = new NSString ("");
-
 
 
 		public ReassuringTextCell (IntPtr handle) : base (handle)

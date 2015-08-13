@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="cxk-wN-pdQ" customClass="MaestroCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cxk-wN-pdQ" id="YTl-1W-gDM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ddf-yy-YPJ">
+                        <rect key="frame" x="163" y="21" width="145" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8kj-UI-NCf">
+                                <rect key="frame" x="5" y="0.0" width="135" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.35294118520000001" green="0.35294118520000001" blue="0.35294118520000001" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="wj5-FV-M3N"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Issue number" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xR-oZ-xr3">
+                        <rect key="frame" x="163" y="0.0" width="84" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="84" id="PzP-cg-oKe"/>
+                            <constraint firstAttribute="height" constant="17" id="Rt1-rz-ooj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="10"/>
+                        <color key="textColor" red="0.54901963470000004" green="0.54901963470000004" blue="0.54901963470000004" alpha="1" colorSpace="deviceRGB"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qL2-v7-BzY">
+                        <rect key="frame" x="10" y="21" width="145" height="40"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="14G-Xh-baS">
+                                <rect key="frame" x="5" y="0.0" width="135" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.35294118520000001" green="0.35294118520000001" blue="0.35294118520000001" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="next"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/YY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5aV-hV-WC4">
+                                <rect key="frame" x="6" y="10" width="77" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Wn8-Tt-3fN"/>
+                                    <constraint firstAttribute="width" constant="77" id="npa-Dg-afH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKj-Zx-4Ue">
+                                <rect key="frame" x="5" y="5" width="135" height="30"/>
+                                <color key="backgroundColor" red="0.75237669429999998" green="1.3539218340000001e-05" blue="0.038479235020000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hKj-Zx-4Ue" secondAttribute="trailing" constant="5" id="2C9-xX-U89"/>
+                            <constraint firstAttribute="height" constant="40" id="61q-hu-LvS"/>
+                            <constraint firstItem="5aV-hV-WC4" firstAttribute="top" secondItem="qL2-v7-BzY" secondAttribute="top" constant="10" id="EK0-0W-3hb"/>
+                            <constraint firstItem="hKj-Zx-4Ue" firstAttribute="top" secondItem="qL2-v7-BzY" secondAttribute="top" constant="5" id="Ki4-a1-15B"/>
+                            <constraint firstAttribute="bottom" secondItem="14G-Xh-baS" secondAttribute="bottom" id="TVs-D1-ehf"/>
+                            <constraint firstAttribute="bottom" secondItem="hKj-Zx-4Ue" secondAttribute="bottom" constant="5" id="cmm-VS-wer"/>
+                            <constraint firstItem="14G-Xh-baS" firstAttribute="leading" secondItem="qL2-v7-BzY" secondAttribute="leading" constant="5" id="dmk-zi-4QH"/>
+                            <constraint firstItem="5aV-hV-WC4" firstAttribute="leading" secondItem="qL2-v7-BzY" secondAttribute="leading" constant="6" id="tKl-eT-LBb"/>
+                            <constraint firstItem="14G-Xh-baS" firstAttribute="top" secondItem="qL2-v7-BzY" secondAttribute="top" id="uRj-Zj-UPx"/>
+                            <constraint firstItem="hKj-Zx-4Ue" firstAttribute="leading" secondItem="qL2-v7-BzY" secondAttribute="leading" constant="5" id="vgI-wv-YBX"/>
+                            <constraint firstAttribute="trailing" secondItem="14G-Xh-baS" secondAttribute="trailing" constant="5" id="y3d-fu-ptB"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Start date" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXI-JM-88b">
+                        <rect key="frame" x="10" y="0.0" width="84" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="84" id="8j7-Xc-tjN"/>
+                            <constraint firstAttribute="height" constant="17" id="Fhq-Lq-Tsb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="10"/>
+                        <color key="textColor" red="0.54901963470000004" green="0.54901963470000004" blue="0.54901963470000004" alpha="1" colorSpace="deviceRGB"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="3xR-oZ-xr3" firstAttribute="leading" secondItem="tXI-JM-88b" secondAttribute="trailing" constant="69" id="52P-Gk-JmA"/>
+                    <constraint firstItem="tXI-JM-88b" firstAttribute="top" secondItem="YTl-1W-gDM" secondAttribute="top" id="AAa-7A-lgD"/>
+                    <constraint firstItem="tXI-JM-88b" firstAttribute="leading" secondItem="YTl-1W-gDM" secondAttribute="leadingMargin" constant="2" id="KYt-f6-Cd7"/>
+                    <constraint firstItem="qL2-v7-BzY" firstAttribute="top" secondItem="tXI-JM-88b" secondAttribute="bottom" constant="4" id="Tyl-Ns-GYW"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ddf-yy-YPJ" secondAttribute="trailing" constant="4" id="U0V-Vx-iUl"/>
+                    <constraint firstItem="ddf-yy-YPJ" firstAttribute="top" secondItem="qL2-v7-BzY" secondAttribute="top" id="c7s-oz-iR8"/>
+                    <constraint firstItem="tXI-JM-88b" firstAttribute="baseline" secondItem="3xR-oZ-xr3" secondAttribute="baseline" id="flS-qX-t5s"/>
+                    <constraint firstItem="ddf-yy-YPJ" firstAttribute="leading" secondItem="3xR-oZ-xr3" secondAttribute="leading" id="jtz-H5-fOX"/>
+                    <constraint firstItem="tXI-JM-88b" firstAttribute="leading" secondItem="qL2-v7-BzY" secondAttribute="leading" id="vM1-SN-bwA"/>
+                    <constraint firstItem="ddf-yy-YPJ" firstAttribute="leading" secondItem="qL2-v7-BzY" secondAttribute="trailing" constant="8" symbolic="YES" id="x4j-Az-4rB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="IssueNumberTextField" destination="8kj-UI-NCf" id="qHB-4a-FAF"/>
+                <outlet property="StartDatePlaceHolder" destination="5aV-hV-WC4" id="xjm-BV-TTJ"/>
+                <outlet property="StartDateTextField" destination="14G-Xh-baS" id="bWa-JU-QCI"/>
+                <outlet property="StartDateWarningLabel" destination="hKj-Zx-4Ue" id="kZE-LP-A4s"/>
+            </connections>
+            <point key="canvasLocation" x="338" y="427"/>
+        </tableViewCell>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

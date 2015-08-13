@@ -5,15 +5,25 @@ using Foundation;
 using UIKit;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public partial class RegisterCardView : UIViewController
 	{
+
+
+
 		ITokenService _tokenService;
 		bool KeyboardVisible = false;
 		CreditCardType type;
 		private List<CardCell> CellsToShow { get; set; }
+
+		CardEntryCell detailCell;
+		ReassuringTextCell reassuringCell{ get; set;}
+		MaestroCell maestroCell { get; set;}
+		AVSCell avsCell{ get; set;}
+
 
 		public RegisterCardView (ITokenService tokenService) : base ("RegisterCardView", null)
 		{
@@ -43,14 +53,14 @@ namespace JudoDotNetXamariniOSSDK
 
 			tapRecognizer.AddTarget (() => { 
 				if (KeyboardVisible) {
-					//DismissKeyboardAction ();
+					DismissKeyboardAction ();
 				}
 			});
 
 			tapRecognizer.NumberOfTapsRequired = 1;
 			tapRecognizer.NumberOfTouchesRequired = 1;
 
-			//EncapsulatingView.AddGestureRecognizer (tapRecognizer);
+			EncapsulatingView.AddGestureRecognizer (tapRecognizer);
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -64,11 +74,130 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+		void DismissKeyboardAction ()
+		{
+			//detailCell.PlaceViewOutlet.ResignFirstResponder ();
+			detailCell.ccTextOutlet.ResignFirstResponder ();
+			avsCell.PostcodeTextFieldOutlet.ResignFirstResponder ();
+			maestroCell.StartDateTextFieldOutlet.ResignFirstResponder ();
+			maestroCell.IssueNumberTextFieldOutlet.ResignFirstResponder ();
+		}
+
+		private void UpdateUI ()
+		{
+			bool enable = false;
+			enable = detailCell.CompletelyDone;
+
+			List<CardCell> cellsToRemove = new List<CardCell> ();
+			List<CardCell> insertedCells = new List<CardCell> ();
+			List<CardCell> cellsBeforeUpdate = cellsToRemove.ToList();
+			TableView.BeginUpdates ();
+
+			if (enable) {
+				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
+
+				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+					if (!CellsToShow.Contains (maestroCell)) {
+						int row = CellsToShow.IndexOf (detailCell) + 1;
+						CellsToShow.Insert (row, maestroCell);
+
+						insertedCells.Add (maestroCell);
+					}
+
+					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
+						enable = false;
+					}
+
+					if (ccIsFirstResponder) {
+						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+					}
+				}
+
+				if (JudoSDKManager.AVSEnabled) {
+					if (!CellsToShow.Contains (avsCell)) {
+						int row = CellsToShow.IndexOf (reassuringCell);
+						CellsToShow.Insert (row, avsCell);
+
+						insertedCells.Add (avsCell);
+					}
+
+					if (ccIsFirstResponder) {
+						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+					}
+				}
+
+				if (ccIsFirstResponder) {
+					DismissKeyboardAction ();
+
+					ccIsFirstResponder = false;
+				}
+			} else {
+				if (JudoSDKManager.MaestroAccepted) {
+					if (CellsToShow.Contains (maestroCell)) {
+						cellsToRemove.Add (maestroCell);
+					}
+				}
+
+				if (JudoSDKManager.AVSEnabled) {
+					if (CellsToShow.Contains (avsCell)) {
+						cellsToRemove.Add (avsCell);
+					}
+				}
+			}
+			List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
+
+			foreach (CardCell cell in cellsToRemove) {
+				indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
+			}
+
+			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
+
+			foreach (CardCell cell in cellsToRemove) {
+				CellsToShow.Remove (cell);
+			}
+
+
+			List<NSIndexPath> indexPathsToAdd = new List<NSIndexPath> ();
+
+			foreach (CardCell cell in insertedCells) {
+				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
+			}
+
+			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
+			TableView.EndUpdates ();
+			//SubmitButton.Enabled = enable;
+			//SubmitButton.Hidden = !enable;
+		}
+
 		void SetUpTableView ()
 		{
-			var detailCell = new CardEntryCell (new IntPtr ());
+			detailCell = new CardEntryCell (new IntPtr ());
+		    reassuringCell =new ReassuringTextCell (new IntPtr ());
+			avsCell =new AVSCell (new IntPtr ());
+			maestroCell =new MaestroCell (new IntPtr ());
 
-			CellsToShow = new List<CardCell> (){detailCell, new ReassuringTextCell (new IntPtr ())};
+
+			detailCell = (CardEntryCell)detailCell.Create ();
+			reassuringCell = (ReassuringTextCell)reassuringCell.Create ();
+			avsCell = (AVSCell)avsCell.Create ();
+			maestroCell = (MaestroCell)maestroCell.Create ();
+
+
+			detailCell.UpdateUI = () => {
+				UpdateUI();
+			};
+
+			avsCell.UpdateUI = () => {
+				UpdateUI();
+			};
+
+			maestroCell.UpdateUI = () => {
+				UpdateUI();
+			};
+
+			CellsToShow = new List<CardCell> (){detailCell,reassuringCell };
 
 //			CGRect rectangle = ccText.Frame;
 //			ccText.Frame = rectangle;

@@ -13,10 +13,18 @@ namespace JudoDotNetXamariniOSSDK
 	partial class RegisterCardView
 	{
 		[Outlet]
+		UIKit.UIView EncapsulatingView { get; set; }
+
+		[Outlet]
 		UIKit.UITableView TableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (EncapsulatingView != null) {
+				EncapsulatingView.Dispose ();
+				EncapsulatingView = null;
+			}
+
 			if (TableView != null) {
 				TableView.Dispose ();
 				TableView = null;

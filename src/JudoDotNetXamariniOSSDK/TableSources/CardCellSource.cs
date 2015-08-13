@@ -28,7 +28,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			var cell = tableView.DequeueReusableCell (TableItems [indexPath.Row].Key);
 			if (cell == null) {
-				cell = TableItems [indexPath.Row].Create ();
+				cell = (CardCell)TableItems [indexPath.Row];
 
 			}
 			return cell;
@@ -36,10 +36,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		public override nfloat GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
 		{
-			string identifier = TableItems [indexPath.Row].Key;
-			var cell = tableView.DequeueReusableCell (identifier);
+			var cell = tableView.DequeueReusableCell (TableItems [indexPath.Row].Key);
 			if (cell == null) {
-				cell = TableItems [indexPath.Row].Create ();
+				cell = (CardCell)TableItems [indexPath.Row];
 
 			}
 			return cell.Bounds.Height;

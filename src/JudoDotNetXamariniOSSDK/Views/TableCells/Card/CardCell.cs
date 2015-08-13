@@ -8,6 +8,7 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		public string Key{ get; set; }
 
+		public Action UpdateUI{ get; set; }
 
 		public CardCell (IntPtr handle) : base (handle)
 		{
