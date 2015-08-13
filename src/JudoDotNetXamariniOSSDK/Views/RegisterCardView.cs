@@ -13,7 +13,7 @@ namespace JudoDotNetXamariniOSSDK
 		ITokenService _tokenService;
 		bool KeyboardVisible = false;
 		CreditCardType type;
-		private List<UITableViewCell> CellsToShow { get; set; }
+		private List<CardCell> CellsToShow { get; set; }
 
 		public RegisterCardView (ITokenService tokenService) : base ("RegisterCardView", null)
 		{
@@ -66,9 +66,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetUpTableView ()
 		{
-			var detailCell = new CardDetailCell ();
+			var detailCell = new CardEntryCell (new IntPtr ());
 
-			CellsToShow = new List<UITableViewCell> (){detailCell  };
+			CellsToShow = new List<CardCell> (){detailCell, new ReassuringTextCell (new IntPtr ())};
 
 //			CGRect rectangle = ccText.Frame;
 //			ccText.Frame = rectangle;
@@ -120,7 +120,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			type = CreditCardType.InvalidCard;
 
-			AddPaymentTableSource tableSource = new AddPaymentTableSource (CellsToShow);
+			CardCellSource tableSource = new CardCellSource (CellsToShow);
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 

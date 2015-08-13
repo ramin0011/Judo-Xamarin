@@ -68,7 +68,8 @@
     <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
     <InterfaceDefinition Include="Views\RegisterCardView~iphone.xib" />
     <InterfaceDefinition Include="Views\RegisterCardView~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\Card\CardDetailCell.xib" />
+    <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
+    <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -133,10 +134,16 @@
     <Compile Include="Views\RegisterCardView.designer.cs">
       <DependentUpon>RegisterCardView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TableCells\Card\CardDetailCell.cs" />
-    <Compile Include="Views\TableCells\Card\CardDetailCell.designer.cs">
-      <DependentUpon>CardDetailCell.cs</DependentUpon>
+    <Compile Include="Views\TableCells\Card\CardEntryCell.cs" />
+    <Compile Include="Views\TableCells\Card\CardEntryCell.designer.cs">
+      <DependentUpon>CardEntryCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\TableCells\Card\ReassuringTextCell.cs" />
+    <Compile Include="Views\TableCells\Card\ReassuringTextCell.designer.cs">
+      <DependentUpon>ReassuringTextCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableCells\Card\CardCell.cs" />
+    <Compile Include="TableSources\CardCellSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

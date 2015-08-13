@@ -9,7 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	partial class CardDetailCell
+	[Register ("CardEntryCell")]
+	partial class CardEntryCell
 	{
 		[Outlet]
 		UIKit.UITextView ccText { get; set; }
@@ -37,6 +38,11 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (PaymentErrorLabel != null) {
+				PaymentErrorLabel.Dispose ();
+				PaymentErrorLabel = null;
+			}
+
 			if (ccText != null) {
 				ccText.Dispose ();
 				ccText = null;
@@ -55,11 +61,6 @@ namespace JudoDotNetXamariniOSSDK
 			if (ExpiryInfoButton != null) {
 				ExpiryInfoButton.Dispose ();
 				ExpiryInfoButton = null;
-			}
-
-			if (PaymentErrorLabel != null) {
-				PaymentErrorLabel.Dispose ();
-				PaymentErrorLabel = null;
 			}
 
 			if (placeView != null) {

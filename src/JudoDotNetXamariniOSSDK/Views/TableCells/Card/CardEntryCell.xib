@@ -5,23 +5,13 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardDetailCell">
-            <connections>
-                <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="SJw-H3-hzr"/>
-                <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="5Z3-NI-fYV"/>
-                <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="z91-sy-zOF"/>
-                <outlet property="ccText" destination="tOz-2R-QYm" id="tqS-Zd-naN"/>
-                <outlet property="containerView" destination="dB8-gG-3Ae" id="hCA-yS-o1k"/>
-                <outlet property="creditCardImage" destination="9Tv-4F-d2j" id="5zs-ed-9yi"/>
-                <outlet property="placeView" destination="2cB-DV-G4B" id="5HZ-9E-Kbt"/>
-                <outlet property="textScroller" destination="9sL-ek-4SN" id="lgI-JY-QKh"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="3E5-3s-YkV" userLabel="CardDetailCell" customClass="CardDetailCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3E5-3s-YkV" id="ZNR-a8-R8e">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="102" id="cxk-wN-pdQ" customClass="CardEntryCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cxk-wN-pdQ" id="YTl-1W-gDM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-gG-3Ae" userLabel="Credit Card Enclosing View">
@@ -121,8 +111,8 @@
                                             <constraint firstItem="tOz-2R-QYm" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="6" id="zn6-Ng-gg7"/>
                                         </constraints>
                                     </scrollView>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flt-bf-DfN">
-                                        <rect key="frame" x="4" y="0.0" width="221" height="44"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flt-bf-DfN">
+                                        <rect key="frame" x="8" y="0.0" width="213" height="44"/>
                                         <color key="backgroundColor" red="0.75237669429999998" green="1.3539218340000001e-05" blue="0.038479235020000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -131,8 +121,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="9sL-ek-4SN" secondAttribute="trailing" id="Ikx-xn-3C9"/>
                                     <constraint firstAttribute="bottom" secondItem="9sL-ek-4SN" secondAttribute="bottom" id="T40-C3-grZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="flt-bf-DfN" secondAttribute="trailing" constant="8" id="X68-Mb-OGv"/>
                                     <constraint firstItem="9sL-ek-4SN" firstAttribute="leading" secondItem="jFY-A7-hc3" secondAttribute="leading" id="XHl-GQ-PxM"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="top" secondItem="jFY-A7-hc3" secondAttribute="top" id="jch-86-Bgj"/>
+                                    <constraint firstAttribute="bottom" secondItem="flt-bf-DfN" secondAttribute="bottom" id="lKv-65-YJe"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="leading" secondItem="jFY-A7-hc3" secondAttribute="leading" constant="8" id="oEY-lh-mqv"/>
                                     <constraint firstItem="9sL-ek-4SN" firstAttribute="top" secondItem="jFY-A7-hc3" secondAttribute="top" id="xNO-mO-F8m"/>
                                 </constraints>
                             </view>
@@ -157,18 +152,25 @@
                         <color key="textColor" red="0.54901963470000004" green="0.54901963470000004" blue="0.54901963470000004" alpha="1" colorSpace="deviceRGB"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="top" secondItem="IkW-Ut-eeW" secondAttribute="bottom" constant="4" id="GKV-y3-JTO"/>
-                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="leading" secondItem="ZNR-a8-R8e" secondAttribute="leadingMargin" constant="-4" id="Mfp-3f-vPq"/>
-                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="leading" secondItem="IkW-Ut-eeW" secondAttribute="trailing" constant="-299" id="Nbd-nV-MbG"/>
-                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="bottom" secondItem="ZNR-a8-R8e" secondAttribute="bottomMargin" id="S9H-zh-Fvi"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="dB8-gG-3Ae" secondAttribute="trailing" id="jrB-0C-rdC"/>
-                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="top" secondItem="ZNR-a8-R8e" secondAttribute="topMargin" constant="21" id="v2o-PP-lfc"/>
+                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="top" secondItem="IkW-Ut-eeW" secondAttribute="bottom" constant="4" id="3Dh-Ad-p6J"/>
+                    <constraint firstItem="IkW-Ut-eeW" firstAttribute="leading" secondItem="YTl-1W-gDM" secondAttribute="leadingMargin" constant="2" id="FlO-bA-f1D"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="dB8-gG-3Ae" secondAttribute="bottom" constant="2" id="iWZ-Ct-pif"/>
+                    <constraint firstItem="IkW-Ut-eeW" firstAttribute="top" secondItem="YTl-1W-gDM" secondAttribute="topMargin" id="kEF-wL-wWX"/>
+                    <constraint firstItem="dB8-gG-3Ae" firstAttribute="leading" secondItem="YTl-1W-gDM" secondAttribute="leadingMargin" constant="-4" id="w1g-8J-FR8"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="215" y="-137"/>
+            <connections>
+                <outlet property="ExpiryInfoButton" destination="LvH-h0-2Rd" id="Edl-Ls-gQd"/>
+                <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="KbJ-D1-rzi"/>
+                <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="3zG-cw-1rN"/>
+                <outlet property="ccText" destination="tOz-2R-QYm" id="fXH-sM-JDD"/>
+                <outlet property="containerView" destination="jFY-A7-hc3" id="vOx-gi-VNd"/>
+                <outlet property="creditCardImage" destination="9Tv-4F-d2j" id="Oam-ai-i6n"/>
+                <outlet property="placeView" destination="2cB-DV-G4B" id="KWf-Dc-5k0"/>
+                <outlet property="textScroller" destination="9sL-ek-4SN" id="s1H-7o-vAL"/>
+            </connections>
+            <point key="canvasLocation" x="333" y="465"/>
         </tableViewCell>
     </objects>
     <resources>

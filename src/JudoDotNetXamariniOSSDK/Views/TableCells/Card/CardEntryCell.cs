@@ -10,13 +10,16 @@ using CoreAnimation;
 using System.Text;
 using CoreFoundation;
 
+
+
 namespace JudoDotNetXamariniOSSDK
 {
-	[Register ("CardDetailCell")]
-	public partial class CardDetailCell :UITableViewCell
+	public partial class CardEntryCell : CardCell
 	{
-		bool ComponentExpanded;
-		UIPanGestureRecognizer panGesture;
+		public static readonly UINib Nib = UINib.FromName ("CardEntryCell", NSBundle.MainBundle);
+
+
+
 
 		// //// //// //// //// //// //// //// //// //// //
 		int currentYear;
@@ -48,50 +51,43 @@ namespace JudoDotNetXamariniOSSDK
 
 		int cardMonth;
 
-		bool completelyDone {
-			get;
-			set;
-		}
+		bool completelyDone {get;set;}
+
+
 
 		bool deletedSpace = false;
 		// //// //// //// //// //// //// //// //// //// //
-		public CardDetailCell (IntPtr p) : base (p)
-		{
 
+
+
+		public CardEntryCell (IntPtr handle) : base (handle)
+		{
+			Key= "CardEntryCell";
 		}
 
-		public CardDetailCell () : base ()
-		{
 
+
+		public override CardCell Create ()
+		{
+			return (CardEntryCell)Nib.Instantiate (null, null) [0];
 		}
 
-//		public CardDetailCell (RectangleF frame) : base (frame)
+
+
+//		public  CardCell Create ()
 //		{
-//			this.Frame = frame;
+//			
 //		}
 
-
-			
-//
-//		public override void AwakeFromNib ()
-//		{
-//			var arr = NSBundle.MainBundle.LoadNib ("CardDetailCell", this, null);
-//			var v = Runtime.GetNSObject (arr.ValueAt (0)) as UITableViewCell;
-//			v.Frame = new CGRect (0, 0, Frame.Width, Frame.Height);
-//			AddSubview (v);
-//		}
-
-		public override void MovedToSuperview ()
+		public override void LayoutSubviews ()
 		{
+			base.LayoutSubviews ();
 			SetUpCell ();
 		}
 
 
 		void SetUpCell ()
 		{
-			
-
-
 
 			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
 
@@ -339,18 +335,43 @@ namespace JudoDotNetXamariniOSSDK
 							}	
 						}
 					}
-					//UpdateCCimageWithTransitionTime (0.25f); TODO
+					UpdateCCimageWithTransitionTime (0.25f); 
 				}
 				return EndDelegate ();
 			};
-//			if (JudoSDKManager.MaestroAccepted) {
-//				SetUpStartDateMask ();
-//			}	
+			//			if (JudoSDKManager.MaestroAccepted) {
+			//				SetUpStartDateMask ();
+			//			}	
+		}
+
+
+		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
+		{
+			if (creditCardImage.Tag != (int)type) {
+
+				UIImage frontImage = cardHelper.CreditCardImage (type);
+				ccImage = new UIImageView (frontImage);
+				ccImage.Frame = creditCardImage.Frame;
+				ccImage.Tag = (int)type;
+
+				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (type));
+				ccBackImage.Frame = creditCardImage.Frame;
+				ccBackImage.Tag = (int)type;
+
+				var finalImage = new UIImageView ();
+				if (isBack) {
+					finalImage = ccBackImage;
+				} else {
+					finalImage = ccImage;
+				}
+				UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
+				creditCardImage = ccImage;
+			}
 		}
 
 		public bool EndDelegate ()
 		{
-			
+
 			if (scrollForward) {
 				ScrollForward (true);
 				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
@@ -429,7 +450,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-
 		public void flashRecheckExpiryDateMessage ()
 		{
 			FlashMessage ("Invalid Expiry Date");
@@ -449,25 +469,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			});
 		}
-
-		public override void Draw (CGRect rect)
-		{
-			base.Draw (rect);
-
-		}
-
-	
-
-
-
-
-
-
-
-
-
-
-
 	}
 }
 
