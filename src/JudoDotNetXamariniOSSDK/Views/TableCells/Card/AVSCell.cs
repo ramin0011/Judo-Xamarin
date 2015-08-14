@@ -88,6 +88,31 @@ namespace JudoDotNetXamariniOSSDK
 			};
 
 		}
+
+		public void GatherCardDetails (CardViewModel cardViewModel)
+		{
+			
+
+			cardViewModel.PostCode = PostcodeTextField.Text;
+
+			switch (selectedCountry) {
+			case BillingCountryOptions.BillingCountryOptionUK:
+				cardViewModel.CountryCode = @"826";
+				break;
+			case BillingCountryOptions.BillingCountryOptionUSA:
+				cardViewModel.CountryCode = @"840";
+				break;
+			case BillingCountryOptions.BillingCountryOptionCanada:
+				cardViewModel.CountryCode = @"124";
+				break;
+			default:					
+				break;
+			}
+		}
+		public void CleanUp ()
+		{
+			SetUpCell ();
+		}
 	}
 }
 

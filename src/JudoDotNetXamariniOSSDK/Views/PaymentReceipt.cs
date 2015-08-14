@@ -29,6 +29,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidLoad ();
 			SetUpTableView ();
+			ViewHeader.Text = _receipt.Message;
 			this.View.BackgroundColor = new UIColor(245f, 245f, 245f,1f);
 			HomeButton.TouchUpInside += (sender, ev) => {
 				this.NavigationController.PopToRootViewController(true);

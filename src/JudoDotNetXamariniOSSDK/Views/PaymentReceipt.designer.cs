@@ -20,12 +20,23 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		UIKit.NSLayoutConstraint TableVIewHeight { get; set; }
+
+		[Outlet]
+		UIKit.UITextView ViewFooter { get; set; }
+
+		[Outlet]
+		UIKit.UILabel ViewHeader { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (TableVIewHeight != null) {
-				TableVIewHeight.Dispose ();
-				TableVIewHeight = null;
+			if (ViewHeader != null) {
+				ViewHeader.Dispose ();
+				ViewHeader = null;
+			}
+
+			if (ViewFooter != null) {
+				ViewFooter.Dispose ();
+				ViewFooter = null;
 			}
 
 			if (HomeButton != null) {
@@ -36,6 +47,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (ReceiptTableView != null) {
 				ReceiptTableView.Dispose ();
 				ReceiptTableView = null;
+			}
+
+			if (TableVIewHeight != null) {
+				TableVIewHeight.Dispose ();
+				TableVIewHeight = null;
 			}
 		}
 	}

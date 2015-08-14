@@ -590,13 +590,14 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if (!result.HasError) {
+				if (result!=null||!result.HasError) {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
 					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId,
+						Message="Payment Receipt"
 					};
 						
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {

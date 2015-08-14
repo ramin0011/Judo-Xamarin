@@ -22,6 +22,8 @@ namespace JudoDotNetXamariniOSSDK
 		public  string PaymentReference { get; set;}
 		public  string ConsumerRef { get; set;}
 
+		public string CardToken {get;set;}
+		public CreditCardType TokenCardType {get;set;}
 	}
 }
 

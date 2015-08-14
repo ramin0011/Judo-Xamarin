@@ -7,6 +7,7 @@ namespace JudoDotNetXamariniOSSDK
 	public interface IPaymentService
 	{
 		Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel payment);
+		Task<IResult<ITransactionResult>> PreAuthoriseCard (PreAuthorisationViewModel authorisation);
 	}
 }
 

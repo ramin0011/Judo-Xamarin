@@ -9,8 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	[Register ("RegisterCardView")]
-	partial class RegisterCardView
+	[Register ("PreAuthorisationView")]
+	partial class PreAuthorisationView
 	{
 		[Outlet]
 		UIKit.UIView EncapsulatingView { get; set; }

@@ -8,6 +8,7 @@ namespace JudoDotNetXamariniOSSDK
 		public DateTime CreatedAt { get; set; }
 		public Decimal OriginalAmount { get; set; }
 		public string Currency { get; set; }
+		public string Message { get; set;}
 	}
 }
 

@@ -176,6 +176,17 @@ namespace JudoDotNetXamariniOSSDK
 				return true;
 			};
 		}
+
+		public void GatherCardDetails (CardViewModel cardViewModel)
+		{
+			cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
+			cardViewModel.IssueNumber = IssueNumberTextField.Text;
+		}
+
+		public void CleanUp ()
+		{
+			SetUpCell ();
+		}
 	}
 }
 

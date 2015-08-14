@@ -444,10 +444,6 @@ namespace JudoDotNetXamariniOSSDK
 		{			
 			placeView.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
-			//PostcodeTextField.ResignFirstResponder ();
-			//StartDateTextField.ResignFirstResponder ();
-			//IssueNumberTextField.ResignFirstResponder ();
-
 		}
 
 		public void flashRecheckExpiryDateMessage ()
@@ -466,6 +462,28 @@ namespace JudoDotNetXamariniOSSDK
 
 			DispatchQueue.MainQueue.DispatchAfter (new DispatchTime (DispatchTime.Now, 1 * 1000000000), () => {
 				PaymentErrorLabel.Hidden = true;
+
+			});
+		}
+
+		public void GatherCardDetails (CardViewModel cardViewModel)
+		{
+			string _cardMonth = cardMonth.ToString ();
+			if (cardMonth < 10) {
+				_cardMonth = "0" + _cardMonth;
+			}
+			cardViewModel.CardNumber = creditCardNum;
+			cardViewModel.CV2 = ccv;
+			cardViewModel.ExpireDate = _cardMonth + "/" + year;
+			cardViewModel.CardType = type;
+		}
+
+		public void CleanUp ()
+		{
+			SetUpCell ();
+			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
+				creditCardImage.Image = defaultImage;
 
 			});
 		}

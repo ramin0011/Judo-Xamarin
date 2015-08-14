@@ -105,12 +105,12 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public static RegisterCardView GetRegisterCardView ()
+		public static PreAuthorisationView GetRegisterCardView ()
 		{
 			ServiceFactory serviceFactory = new ServiceFactory();
-			ITokenService tokenService = serviceFactory.GetTokenService ();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
 
-			RegisterCardView ctrl = new RegisterCardView(tokenService);
+			PreAuthorisationView ctrl = new PreAuthorisationView(paymentService);
 
 			return ctrl;
 		}

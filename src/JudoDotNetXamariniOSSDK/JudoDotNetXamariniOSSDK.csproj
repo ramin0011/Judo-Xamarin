@@ -66,12 +66,12 @@
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
     <InterfaceDefinition Include="Views\CreditCardView.xib" />
     <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
-    <InterfaceDefinition Include="Views\RegisterCardView~iphone.xib" />
-    <InterfaceDefinition Include="Views\RegisterCardView~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\AVSCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\MaestroCell.xib" />
+    <InterfaceDefinition Include="Views\PreAuthorisationView~ipad.xib" />
+    <InterfaceDefinition Include="Views\PreAuthorisationView~iphone.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -132,10 +132,6 @@
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\TokenService.cs" />
     <Compile Include="ViewModels\CardRegistrationViewModel.cs" />
-    <Compile Include="Views\RegisterCardView.cs" />
-    <Compile Include="Views\RegisterCardView.designer.cs">
-      <DependentUpon>RegisterCardView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\TableCells\Card\CardEntryCell.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.designer.cs">
       <DependentUpon>CardEntryCell.cs</DependentUpon>
@@ -154,6 +150,11 @@
     <Compile Include="Views\TableCells\Card\MaestroCell.designer.cs">
       <DependentUpon>MaestroCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\PreAuthorisationView.cs" />
+    <Compile Include="Views\PreAuthorisationView.designer.cs">
+      <DependentUpon>PreAuthorisationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\PreAuthorisationViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

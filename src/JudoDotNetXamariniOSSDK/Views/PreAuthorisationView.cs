@@ -7,25 +7,30 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CoreFoundation;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class RegisterCardView : UIViewController
+	public partial class PreAuthorisationView : UIViewController
 	{
-		ITokenService _tokenService;
+		IPaymentService _paymentService;
 		bool KeyboardVisible = false;
 		CreditCardType type;
+
 		private List<CardCell> CellsToShow { get; set; }
 
 		CardEntryCell detailCell;
-		ReassuringTextCell reassuringCell{ get; set;}
-		MaestroCell maestroCell { get; set;}
-		AVSCell avsCell{ get; set;}
+
+		ReassuringTextCell reassuringCell{ get; set; }
+
+		MaestroCell maestroCell { get; set; }
+
+		AVSCell avsCell{ get; set; }
 
 
-		public RegisterCardView (ITokenService tokenService) : base ("RegisterCardView", null)
+		public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
 		{
-			_tokenService = tokenService;
+			_paymentService = paymentService;
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -63,7 +68,7 @@ namespace JudoDotNetXamariniOSSDK
 			RegisterButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 
 			RegisterButton.TouchUpInside += (sender, ev) => {
-				RegisterCard ();
+				PreAuthCard ();
 			};
 
 		}
@@ -94,7 +99,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
-			List<CardCell> cellsBeforeUpdate = cellsToRemove.ToList();
+			List<CardCell> cellsBeforeUpdate = cellsToRemove.ToList ();
 			TableView.BeginUpdates ();
 
 			if (enable) {
@@ -178,9 +183,9 @@ namespace JudoDotNetXamariniOSSDK
 		void SetUpTableView ()
 		{
 			detailCell = new CardEntryCell (new IntPtr ());
-		    reassuringCell =new ReassuringTextCell (new IntPtr ());
-			avsCell =new AVSCell (new IntPtr ());
-			maestroCell =new MaestroCell (new IntPtr ());
+			reassuringCell = new ReassuringTextCell (new IntPtr ());
+			avsCell = new AVSCell (new IntPtr ());
+			maestroCell = new MaestroCell (new IntPtr ());
 
 
 			detailCell = (CardEntryCell)detailCell.Create ();
@@ -190,18 +195,18 @@ namespace JudoDotNetXamariniOSSDK
 
 
 			detailCell.UpdateUI = () => {
-				UpdateUI();
+				UpdateUI ();
 			};
 
 			avsCell.UpdateUI = () => {
-				UpdateUI();
+				UpdateUI ();
 			};
 
 			maestroCell.UpdateUI = () => {
-				UpdateUI();
+				UpdateUI ();
 			};
 
-			CellsToShow = new List<CardCell> (){detailCell,reassuringCell };
+			CellsToShow = new List<CardCell> (){ detailCell, reassuringCell };
 
 			type = CreditCardType.InvalidCard;
 
@@ -211,35 +216,38 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public void RegisterCard ()
+		public void PreAuthCard ()
 		{
 			CardViewModel cardViewModel = GatherCardDetails ();
-			CardRegistrationViewModel card = new CardRegistrationViewModel () {
-				
+			PreAuthorisationViewModel authorisation = new PreAuthorisationViewModel () {
+				Card = cardViewModel,
+				Amount = "1.01",
 			};
 			RegisterButton.Hidden = true;
 
-			_tokenService.RegisterCard (card).ContinueWith (reponse => {
+			_paymentService.PreAuthoriseCard (authorisation).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if (!result.HasError) {
+				if (result != null || !result.HasError) {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
 					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId,
+						Message = "Pre-Authorisation Success"
 					};
-
+					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+					JudoConfiguration.Instance.TokenCardType = authorisation.Card.CardType;
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						RegisterButton.Hidden = false;
-						CleanOutCardDetails();
+						CleanOutCardDetails ();
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						var errorText = result.Error.ErrorMessage;
-						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
+						UIAlertView _error = new UIAlertView ("Pre-Authorisation has failed", errorText, null, "ok", null);
 						_error.Show ();
 						RegisterButton.Hidden = false;
 					});
@@ -250,59 +258,31 @@ namespace JudoDotNetXamariniOSSDK
 
 		void CleanOutCardDetails ()
 		{
-			SetUpTableView ();
+			detailCell.CleanUp ();
 
 			if (JudoSDKManager.MaestroAccepted) {
-				SetUpStartDateMask ();
+				maestroCell.CleanUp ();
 
 			}	
 			if (JudoSDKManager.AVSEnabled) {
-				SetAVSComponents ();
+				avsCell.CleanUp ();
 			}
-
-			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
-				creditCardImage.Image = defaultImage;
-
-			});
 		}
 
 		CardViewModel GatherCardDetails ()
 		{
-			string _cardMonth = cardMonth.ToString ();
-			if (cardMonth < 10) {
-				_cardMonth = "0" + _cardMonth;
-			}
-			CardViewModel cardViewModel = new CardViewModel () {
-				CardName = "Ed Xample",
-				CardNumber = creditCardNum,
-				CV2 = ccv,
-				ExpireDate = _cardMonth + "/" + year,
-				CardType = type					
-			};
+			CardViewModel cardViewModel = new CardViewModel ();
+			detailCell.GatherCardDetails (cardViewModel);
+
 
 			if (JudoSDKManager.AVSEnabled) {
-				cardViewModel.PostCode = PostcodeTextField.Text;
-
-				switch (selectedCountry) {
-				case BillingCountryOptions.BillingCountryOptionUK:
-					cardViewModel.CountryCode = @"826";
-					break;
-				case BillingCountryOptions.BillingCountryOptionUSA:
-					cardViewModel.CountryCode = @"840";
-					break;
-				case BillingCountryOptions.BillingCountryOptionCanada:
-					cardViewModel.CountryCode = @"124";
-					break;
-				default:					
-					break;
-				}
+				avsCell.GatherCardDetails (cardViewModel);
 
 			}
 
 			if (type == CreditCardType.Maestro) {
-				cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
-				cardViewModel.IssueNumber = IssueNumberTextField.Text;
+				maestroCell.GatherCardDetails (cardViewModel);
+
 			}
 
 			return cardViewModel;
