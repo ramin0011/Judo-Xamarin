@@ -6,14 +6,12 @@ using UIKit;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using CoreFoundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public partial class RegisterCardView : UIViewController
 	{
-
-
-
 		ITokenService _tokenService;
 		bool KeyboardVisible = false;
 		CreditCardType type;
@@ -61,6 +59,13 @@ namespace JudoDotNetXamariniOSSDK
 			tapRecognizer.NumberOfTouchesRequired = 1;
 
 			EncapsulatingView.AddGestureRecognizer (tapRecognizer);
+
+			RegisterButton.SetTitleColor (UIColor.Black, UIControlState.Application);
+
+			RegisterButton.TouchUpInside += (sender, ev) => {
+				RegisterCard ();
+			};
+
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -76,7 +81,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		void DismissKeyboardAction ()
 		{
-			//detailCell.PlaceViewOutlet.ResignFirstResponder ();
 			detailCell.ccTextOutlet.ResignFirstResponder ();
 			avsCell.PostcodeTextFieldOutlet.ResignFirstResponder ();
 			maestroCell.StartDateTextFieldOutlet.ResignFirstResponder ();
@@ -167,8 +171,8 @@ namespace JudoDotNetXamariniOSSDK
 
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
-			//SubmitButton.Enabled = enable;
-			//SubmitButton.Hidden = !enable;
+			RegisterButton.Enabled = enable;
+			RegisterButton.Hidden = !enable;
 		}
 
 		void SetUpTableView ()
@@ -199,63 +203,109 @@ namespace JudoDotNetXamariniOSSDK
 
 			CellsToShow = new List<CardCell> (){detailCell,reassuringCell };
 
-//			CGRect rectangle = ccText.Frame;
-//			ccText.Frame = rectangle;
-//
-//			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
-//
-//			creditCardImage.Layer.CornerRadius = 4.0f;
-//			creditCardImage.Layer.MasksToBounds = true;
-//
-//			UIImage image = ThemeBundleReplacement.BundledOrReplacementImage ("ic_card_large_unknown", BundledOrReplacementOptions.BundledOrReplacement);
-//
-//			creditCardImage.Image = image;
-//
-//			currentYear = DateTime.Now.Year - 2000;
-//
-//			CALayer layer = containerView.Layer;
-//			layer.CornerRadius = 4.0f;
-//			layer.MasksToBounds = true;
-//			layer.BorderColor = ColourHelper.GetColour ("0xC3C3C3FF").CGColor; 
-//			layer.BorderWidth = 1;
-//			layer = textScroller.Layer;
-//			layer.CornerRadius = 4.0f;
-//			layer.MasksToBounds = true;
-//			layer.BorderWidth = 0;
-//
-//			textScroller.ScrollEnabled = false;
-//
-//			ccText.Text = "000011112222333344445555";
-//
-//			UITextPosition start = ccText.BeginningOfDocument;
-//			UITextPosition end = ccText.GetPosition (start, 24);
-//			UITextRange range = ccText.GetTextRange (start, end);
-//			CGRect r = ccText.GetFirstRectForRange (range);
-//			CGSize frameRect = r.Size;
-//			frameRect.Width = (r.Size.Width / 24.0f);
-//			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
-//			r.Size = frameRect;
-//			ccText.Text = "";
-//
-//			CGRect frame = placeView.Frame;
-//			placeView.Font = ccText.Font;
-//			placeView.Text = "0000 0000 0000 0000";
-//
-//			placeView.SetShowTextOffSet (0);
-//			placeView.Offset = r;
-//
-//			placeView.BackgroundColor = UIColor.Clear;
-//			textScroller.InsertSubview (placeView, 0);
-
 			type = CreditCardType.InvalidCard;
 
 			CardCellSource tableSource = new CardCellSource (CellsToShow);
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 
+		}
 
-			//SetUpMaskedInput ();
+		public void RegisterCard ()
+		{
+			CardViewModel cardViewModel = GatherCardDetails ();
+			CardRegistrationViewModel card = new CardRegistrationViewModel () {
+				
+			};
+			RegisterButton.Hidden = true;
 
+			_tokenService.RegisterCard (card).ContinueWith (reponse => {
+				var result = reponse.Result;
+				if (!result.HasError) {
+					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
+						CreatedAt = paymentreceipt.CreatedAt.DateTime,
+						Currency = paymentreceipt.Currency,
+						OriginalAmount = paymentreceipt.Amount,
+						ReceiptId = paymentreceipt.ReceiptId,
+					};
+
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+						RegisterButton.Hidden = false;
+						CleanOutCardDetails();
+						var view = JudoSDKManager.GetReceiptView (receipt);
+						this.NavigationController.PushViewController (view, true);	
+					});
+				} else {
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
+						var errorText = result.Error.ErrorMessage;
+						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
+						_error.Show ();
+						RegisterButton.Hidden = false;
+					});
+				}
+			});
+
+		}
+
+		void CleanOutCardDetails ()
+		{
+			SetUpTableView ();
+
+			if (JudoSDKManager.MaestroAccepted) {
+				SetUpStartDateMask ();
+
+			}	
+			if (JudoSDKManager.AVSEnabled) {
+				SetAVSComponents ();
+			}
+
+			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
+				creditCardImage.Image = defaultImage;
+
+			});
+		}
+
+		CardViewModel GatherCardDetails ()
+		{
+			string _cardMonth = cardMonth.ToString ();
+			if (cardMonth < 10) {
+				_cardMonth = "0" + _cardMonth;
+			}
+			CardViewModel cardViewModel = new CardViewModel () {
+				CardName = "Ed Xample",
+				CardNumber = creditCardNum,
+				CV2 = ccv,
+				ExpireDate = _cardMonth + "/" + year,
+				CardType = type					
+			};
+
+			if (JudoSDKManager.AVSEnabled) {
+				cardViewModel.PostCode = PostcodeTextField.Text;
+
+				switch (selectedCountry) {
+				case BillingCountryOptions.BillingCountryOptionUK:
+					cardViewModel.CountryCode = @"826";
+					break;
+				case BillingCountryOptions.BillingCountryOptionUSA:
+					cardViewModel.CountryCode = @"840";
+					break;
+				case BillingCountryOptions.BillingCountryOptionCanada:
+					cardViewModel.CountryCode = @"124";
+					break;
+				default:					
+					break;
+				}
+
+			}
+
+			if (type == CreditCardType.Maestro) {
+				cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
+				cardViewModel.IssueNumber = IssueNumberTextField.Text;
+			}
+
+			return cardViewModel;
 		}
 	}
 }

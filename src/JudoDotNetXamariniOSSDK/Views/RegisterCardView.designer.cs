@@ -16,10 +16,18 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIView EncapsulatingView { get; set; }
 
 		[Outlet]
+		UIKit.UIButton RegisterButton { get; set; }
+
+		[Outlet]
 		UIKit.UITableView TableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (RegisterButton != null) {
+				RegisterButton.Dispose ();
+				RegisterButton = null;
+			}
+
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
