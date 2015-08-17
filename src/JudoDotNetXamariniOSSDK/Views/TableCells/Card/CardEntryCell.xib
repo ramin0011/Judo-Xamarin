@@ -165,7 +165,7 @@
                 <outlet property="PaymentErrorLabel" destination="flt-bf-DfN" id="KbJ-D1-rzi"/>
                 <outlet property="StatusHelpLabel" destination="IkW-Ut-eeW" id="3zG-cw-1rN"/>
                 <outlet property="ccText" destination="tOz-2R-QYm" id="fXH-sM-JDD"/>
-                <outlet property="containerView" destination="jFY-A7-hc3" id="vOx-gi-VNd"/>
+                <outlet property="containerView" destination="dB8-gG-3Ae" id="hl5-q7-arH"/>
                 <outlet property="creditCardImage" destination="9Tv-4F-d2j" id="Oam-ai-i6n"/>
                 <outlet property="placeView" destination="2cB-DV-G4B" id="KWf-Dc-5k0"/>
                 <outlet property="textScroller" destination="9sL-ek-4SN" id="s1H-7o-vAL"/>

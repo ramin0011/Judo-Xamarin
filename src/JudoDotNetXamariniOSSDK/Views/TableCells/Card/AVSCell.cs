@@ -78,7 +78,7 @@ namespace JudoDotNetXamariniOSSDK
 			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
-					UpdateUI ();
+				//	UpdateUI ();
 				});
 				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
 				if (textLengthAfter > 10) {

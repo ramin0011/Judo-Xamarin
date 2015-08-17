@@ -23,7 +23,7 @@ namespace JudoDotNetXamariniOSSDK
 		int currentYear;
 
 		CreditCard cardHelper = new CreditCard ();
-		CreditCardType type;
+		public CreditCardType Type {get; set;}
 
 		string formattedText;
 		bool flashForError = false;
@@ -47,12 +47,12 @@ namespace JudoDotNetXamariniOSSDK
 			get;
 			set;
 		}
-			
+
 		bool deletedSpace = false;
 
 		public CardEntryCell (IntPtr handle) : base (handle)
 		{
-			Key= "CardEntryCell";
+			Key = "CardEntryCell";
 		}
 
 
@@ -117,7 +117,7 @@ namespace JudoDotNetXamariniOSSDK
 			placeView.BackgroundColor = UIColor.Clear;
 			textScroller.InsertSubview (placeView, 0);
 
-			type = CreditCardType.InvalidCard;
+			Type = CreditCardType.InvalidCard;
 			SetUpMaskedInput ();
 
 			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
@@ -241,7 +241,7 @@ namespace JudoDotNetXamariniOSSDK
 								}
 							}
 							if (creditCardImage != ccBackImage) {
-								UIViewAnimationOptions transType = (type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
+								UIViewAnimationOptions transType = (Type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
 
 								UIImageView.Animate (
 									duration: 0.25f, 
@@ -261,7 +261,7 @@ namespace JudoDotNetXamariniOSSDK
 						CompletelyDone = true;
 						var cIndex = placeView.Text.IndexOf ("C");
 						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);
-						ccvRange.Length = type == CreditCardType.AMEX ? 4 : 3;
+						ccvRange.Length = Type == CreditCardType.AMEX ? 4 : 3;
 						ccv = newTextOrig.Substring (ccvRange.Location, ccvRange.Length);
 					}
 
@@ -284,10 +284,10 @@ namespace JudoDotNetXamariniOSSDK
 						updateText = true;
 						formattedText = newTextOrig;
 
-						type = CreditCardType.InvalidCard;
+						Type = CreditCardType.InvalidCard;
 					} else {
-						type = cardHelper.GetCCType (newText);
-						switch (type) {
+						Type = cardHelper.GetCCType (newText);
+						switch (Type) {
 
 						case CreditCardType.InvalidCard:
 							flashForError = true;
@@ -309,18 +309,18 @@ namespace JudoDotNetXamariniOSSDK
 						}
 
 						if (len == Card.CC_LEN_FOR_TYPE) {
-							placeView.Text = cardHelper.promptStringForType (type, true);
+							placeView.Text = cardHelper.promptStringForType (Type, true);
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
-						int lenForCard = cardHelper.LengthOfStringForType (type); 
+						int lenForCard = cardHelper.LengthOfStringForType (Type); 
 
 						if (len < lenForCard) {
 							updateText = true;
 						} else if (len == lenForCard) {
 							if (cardHelper.isValidNumber (newText)) {
 								if (cardHelper.IsLuhnValid (newText)) {
-									numberLength = cardHelper.LengthOfFormattedStringForType (type);
+									numberLength = cardHelper.LengthOfFormattedStringForType (Type);
 									creditCardNum = newText;
 
 									updateText = true;
@@ -338,24 +338,22 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				return EndDelegate ();
 			};
-			//			if (JudoSDKManager.MaestroAccepted) {
-			//				SetUpStartDateMask ();
-			//			}	
+
 		}
 
 
 		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
 		{
-			if (creditCardImage.Tag != (int)type) {
+			if (creditCardImage.Tag != (int)Type) {
 
-				UIImage frontImage = cardHelper.CreditCardImage (type);
+				UIImage frontImage = cardHelper.CreditCardImage (Type);
 				ccImage = new UIImageView (frontImage);
 				ccImage.Frame = creditCardImage.Frame;
-				ccImage.Tag = (int)type;
+				ccImage.Tag = (int)Type;
 
-				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (type));
+				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (Type));
 				ccBackImage.Frame = creditCardImage.Frame;
-				ccBackImage.Tag = (int)type;
+				ccBackImage.Tag = (int)Type;
 
 				var finalImage = new UIImageView ();
 				if (isBack) {
@@ -400,8 +398,8 @@ namespace JudoDotNetXamariniOSSDK
 				FlashMessage ("Please recheck number");
 			}
 			DispatchQueue.MainQueue.DispatchAsync (() => {
-				//UpdateUI (); TODO work this out
-				UpdateUI.Invoke();
+
+				UpdateUI.Invoke ();
 			});
 			return ret;
 		}
@@ -409,7 +407,7 @@ namespace JudoDotNetXamariniOSSDK
 		float widthToLastGroup {
 			get { 
 				int oldOffset = placeView.ShowTextOffset;
-				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (type);
+				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (Type);
 				placeView.SetShowTextOffSet (offsetToLastGroup);
 				float width = placeView.WidthToOffset ();
 				placeView.SetShowTextOffSet (oldOffset);
@@ -428,7 +426,7 @@ namespace JudoDotNetXamariniOSSDK
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
 
-			placeView.SetText (cardHelper.promptStringForType (type, false));
+			placeView.SetText (cardHelper.promptStringForType (Type, false));
 
 			textScroller.ScrollEnabled = true;
 			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
@@ -455,6 +453,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			FlashMessage ("Invalid Card Number");
 		}
+
 		void FlashMessage (string message)
 		{
 			PaymentErrorLabel.Text = message;
@@ -475,7 +474,7 @@ namespace JudoDotNetXamariniOSSDK
 			cardViewModel.CardNumber = creditCardNum;
 			cardViewModel.CV2 = ccv;
 			cardViewModel.ExpireDate = _cardMonth + "/" + year;
-			cardViewModel.CardType = type;
+			cardViewModel.CardType = Type;
 		}
 
 		public void CleanUp ()

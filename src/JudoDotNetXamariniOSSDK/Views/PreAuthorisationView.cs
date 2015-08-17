@@ -8,14 +8,18 @@ using System.Drawing;
 using System.Linq;
 using CoreFoundation;
 using JudoPayDotNet.Models;
+using CoreGraphics;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public partial class PreAuthorisationView : UIViewController
 	{
+
+		private UIView activeview;
+		private bool moveViewUp = false;
+
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;
-		CreditCardType type;
 
 		private List<CardCell> CellsToShow { get; set; }
 
@@ -50,7 +54,7 @@ namespace JudoDotNetXamariniOSSDK
 			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
 			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
 			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
-
+			defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
 
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
@@ -76,6 +80,38 @@ namespace JudoDotNetXamariniOSSDK
 		private void OnKeyboardNotification (NSNotification notification)
 		{
 			KeyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
+
+			if (!KeyboardVisible) {
+				if(moveViewUp){ScrollTheView(false);}
+			}
+		}
+
+		private void KeyBoardUpNotification(NSNotification notification)
+		{
+
+			CGRect r = UIKeyboard.BoundsFromNotification (notification);
+
+			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
+				activeview = avsCell.PostcodeTextFieldOutlet;
+			if (activeview != null) {
+				moveViewUp = true;
+				ScrollTheView (moveViewUp);
+
+			}
+			}
+
+
+		private void ScrollTheView (bool move)
+		{
+			if (move) {
+				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 100f), true);
+				TableView.ScrollEnabled = false;
+			} else {
+				//TableView.ScrollToNearestSelected (UITableViewScrollPosition.Top,true);
+				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 0), true);
+
+			}
+
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -99,13 +135,13 @@ namespace JudoDotNetXamariniOSSDK
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
-			List<CardCell> cellsBeforeUpdate = cellsToRemove.ToList ();
+			List<CardCell> cellsBeforeUpdate = CellsToShow.ToList ();
 			TableView.BeginUpdates ();
 
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
 
-				if (type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						int row = CellsToShow.IndexOf (detailCell) + 1;
 						CellsToShow.Insert (row, maestroCell);
@@ -178,6 +214,7 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.EndUpdates ();
 			RegisterButton.Enabled = enable;
 			RegisterButton.Hidden = !enable;
+
 		}
 
 		void SetUpTableView ()
@@ -208,7 +245,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			CellsToShow = new List<CardCell> (){ detailCell, reassuringCell };
 
-			type = CreditCardType.InvalidCard;
+
 
 			CardCellSource tableSource = new CardCellSource (CellsToShow);
 			TableView.Source = tableSource;
@@ -280,13 +317,15 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			if (type == CreditCardType.Maestro) {
+			if (detailCell.Type == CreditCardType.Maestro) {
 				maestroCell.GatherCardDetails (cardViewModel);
 
 			}
 
 			return cardViewModel;
 		}
+
+
 	}
 }
 
