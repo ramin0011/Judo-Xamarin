@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="MakeAPaymentButton" destination="BV4-Bq-Bre" id="NLj-XK-meY"/>
                 <outlet property="RegisterCardButton" destination="vAG-bL-Ynx" id="cTq-yG-HuM"/>
+                <outlet property="TokenPaymentButton" destination="znr-lg-NRg" id="yVR-xL-meL"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
             </connections>
         </placeholder>
@@ -17,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BV4-Bq-Bre">
-                    <rect key="frame" x="82" y="87" width="156" height="34"/>
+                    <rect key="frame" x="82" y="90" width="156" height="34"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="Make A Payment">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
@@ -25,9 +26,17 @@
                     </state>
                 </button>
                 <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAG-bL-Ynx">
-                    <rect key="frame" x="82" y="161" width="156" height="34"/>
+                    <rect key="frame" x="84" y="150" width="156" height="34"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="PreAuthorise">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znr-lg-NRg">
+                    <rect key="frame" x="84" y="209" width="156" height="34"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="Token Payment">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -35,7 +44,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="BV4-Bq-Bre" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="87" id="Loh-bH-0Ns"/>
+                <constraint firstItem="BV4-Bq-Bre" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="Loh-bH-0Ns"/>
                 <constraint firstItem="BV4-Bq-Bre" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="82" id="YMT-F0-KhQ"/>
                 <constraint firstAttribute="trailing" secondItem="BV4-Bq-Bre" secondAttribute="trailing" constant="82" id="laz-ux-vAj"/>
             </constraints>

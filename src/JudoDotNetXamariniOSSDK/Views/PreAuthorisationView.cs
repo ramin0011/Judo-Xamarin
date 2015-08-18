@@ -1,6 +1,4 @@
-﻿
-using System;
-
+﻿using System;
 using Foundation;
 using UIKit;
 using System.Collections.Generic;
@@ -107,7 +105,6 @@ namespace JudoDotNetXamariniOSSDK
 				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 100f), true);
 				TableView.ScrollEnabled = false;
 			} else {
-				//TableView.ScrollToNearestSelected (UITableViewScrollPosition.Top,true);
 				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 0), true);
 
 			}
@@ -275,6 +272,9 @@ namespace JudoDotNetXamariniOSSDK
 					};
 					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
 					JudoConfiguration.Instance.TokenCardType = authorisation.Card.CardType;
+					JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
+					JudoConfiguration.Instance.LastFour = authorisation.Card.CardNumber.Substring(authorisation.Card.CardNumber.Length - Math.Min(4, authorisation.Card.CardNumber.Length));
+
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						RegisterButton.Hidden = false;
 						CleanOutCardDetails ();

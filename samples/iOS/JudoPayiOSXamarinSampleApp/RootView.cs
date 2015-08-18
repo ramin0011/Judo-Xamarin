@@ -33,6 +33,10 @@ namespace JudoPayiOSXamarinSampleApp
 				var registerCardView =JudoSDKManager.GetRegisterCardView();
 				this.NavigationController.PushViewController(registerCardView,true);
 			};
+			TokenPaymentButton.TouchUpInside += (sender, ev) => {				
+				var tokenView =JudoSDKManager.GetTokenPaymentView();
+				this.NavigationController.PushViewController(tokenView,true);
+			};
 		}
 
 		public override void ViewWillAppear (bool animated)

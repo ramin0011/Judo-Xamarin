@@ -599,7 +599,10 @@ namespace JudoDotNetXamariniOSSDK
 						ReceiptId = paymentreceipt.ReceiptId,
 						Message="Payment Receipt"
 					};
-						
+					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+					JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
+					JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
+					JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));	
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						SubmitButton.Hidden = false;
 						CleanOutCardDetails();
