@@ -41,16 +41,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetUpCell ()
 		{
-			
 			UIImage frontImage = cardHelper.CreditCardImage (JudoConfiguration.Instance.TokenCardType);
 			var ccImage = new UIImageView (frontImage);
-			////ccImage.Frame = cardImage.Frame;
 		
 			cardImage.Image = frontImage;
 
 			PreviousCardNumber.Text = "xxxx " + JudoConfiguration.Instance.LastFour;
 			LengthForType = JudoConfiguration.Instance.TokenCardType == CreditCardType.AMEX ? 4 : 3;
-
 
 			entryField.ShouldChangeCharacters = (UITextField textView, NSRange NSRange, string replace) => {
 				
@@ -82,6 +79,13 @@ namespace JudoDotNetXamariniOSSDK
 				return true;
 
 			};
+		}
+
+		public void CleanUp ()
+		{
+			CCV="";
+			Complete = false;
+			entryField.Text="";
 		}
 			
 	}

@@ -39,8 +39,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 		}
-
-
+			
 		public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PreAuthorisationViewModel authorisation)
 		{
 			CardPaymentModel payment = new CardPaymentModel {

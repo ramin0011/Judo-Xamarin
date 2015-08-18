@@ -131,19 +131,19 @@ namespace JudoDotNetXamariniOSSDK
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId,
-						Message = "Pre-Authorisation Success"
+						Message = "Token Payment Success"
 					};
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						PaymentButton.Hidden = false;
-						CleanOutCardDetails ();
+						tokenCell.CleanUp ();
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						var errorText = result.Error.ErrorMessage;
-						UIAlertView _error = new UIAlertView ("Pre-Authorisation has failed", errorText, null, "ok", null);
+						UIAlertView _error = new UIAlertView ("Token Payment has failed", errorText, null, "ok", null);
 						_error.Show ();
 						PaymentButton.Hidden = false;
 					});
