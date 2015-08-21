@@ -101,7 +101,10 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{	
 			PaymentButton.Enabled = tokenCell.Complete;
-			PaymentButton.Hidden = !tokenCell.Complete;
+			PaymentButton.Hidden = !thel;lo world
+			io;'jsakflsdajfie jfjsadf 
+			\
+			dsafkje984389ljfaksfjsdf kdsjrew90klsdklg  dksfl;okenCell.Complete;
 			if (tokenCell.Complete) {
 				DismissKeyboardAction ();
 			}
