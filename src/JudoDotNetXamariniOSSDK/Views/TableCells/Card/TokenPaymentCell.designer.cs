@@ -16,6 +16,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIImageView cardImage { get; set; }
 
 		[Outlet]
+		UIKit.UIView EntryEnclosingView { get; set; }
+
+		[Outlet]
 		UIKit.UITextField entryField { get; set; }
 
 		[Outlet]
@@ -23,14 +26,19 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (entryField != null) {
-				entryField.Dispose ();
-				entryField = null;
+			if (EntryEnclosingView != null) {
+				EntryEnclosingView.Dispose ();
+				EntryEnclosingView = null;
 			}
 
 			if (cardImage != null) {
 				cardImage.Dispose ();
 				cardImage = null;
+			}
+
+			if (entryField != null) {
+				entryField.Dispose ();
+				entryField = null;
 			}
 
 			if (PreviousCardNumber != null) {

@@ -5,6 +5,7 @@ using Foundation;
 using UIKit;
 using System.Text;
 using CoreFoundation;
+using CoreAnimation;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -42,8 +43,13 @@ namespace JudoDotNetXamariniOSSDK
 		void SetUpCell ()
 		{
 			UIImage frontImage = cardHelper.CreditCardImage (JudoConfiguration.Instance.TokenCardType);
-			var ccImage = new UIImageView (frontImage);
-		
+
+			CALayer layer = EntryEnclosingView.Layer;
+			layer.CornerRadius = 4.0f;
+			layer.MasksToBounds = true;
+			layer.BorderColor = ColourHelper.GetColour ("0xC3C3C3FF").CGColor; 
+			layer.BorderWidth = 1;
+
 			cardImage.Image = frontImage;
 
 			PreviousCardNumber.Text = "xxxx " + JudoConfiguration.Instance.LastFour;
@@ -71,6 +77,11 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				if(replace!=""&&textView.Text.Length + replace.Length==LengthForType)
 				{
+					var aStringBuilder = new StringBuilder (textView.Text);
+					aStringBuilder.Remove (range.Location, range.Length);
+					aStringBuilder.Insert (range.Location, replace);
+					string newTextOrig = aStringBuilder.ToString ();
+					CCV = newTextOrig;
 				Complete = true;
 				}
 				DispatchQueue.MainQueue.DispatchAsync (() => {
@@ -79,6 +90,7 @@ namespace JudoDotNetXamariniOSSDK
 				return true;
 
 			};
+			entryField.BecomeFirstResponder ();
 		}
 
 		public void CleanUp ()

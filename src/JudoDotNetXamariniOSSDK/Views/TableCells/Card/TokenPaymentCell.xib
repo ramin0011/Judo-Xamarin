@@ -31,8 +31,9 @@
                                 <color key="textColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X4U-bD-5eV">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X4U-bD-5eV">
                                 <rect key="frame" x="197" y="16" width="52" height="30"/>
+                                <color key="backgroundColor" white="0.89325486567982448" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done"/>
@@ -104,6 +105,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="EntryEnclosingView" destination="75" id="RqO-g3-0wy"/>
                 <outlet property="PreviousCardNumber" destination="XOC-BB-bZO" id="KsI-SI-u0r"/>
                 <outlet property="cardImage" destination="85" id="zCC-Hr-Cwh"/>
                 <outlet property="entryField" destination="X4U-bD-5eV" id="o9L-Kd-RNA"/>

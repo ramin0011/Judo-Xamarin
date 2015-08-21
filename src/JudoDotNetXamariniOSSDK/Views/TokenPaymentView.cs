@@ -19,6 +19,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			_paymentService = paymentService;
 		}
+
 		TokenPaymentCell tokenCell;
 
 		private List<CardCell> CellsToShow { get; set; }
@@ -93,17 +94,12 @@ namespace JudoDotNetXamariniOSSDK
 				
 			CellsToShow = new List<CardCell> (){ tokenCell };
 
-
-
 			CardCellSource tableSource = new CardCellSource (CellsToShow);
 			TableView.Source = tableSource;
-
-
 		}
 
 		private void UpdateUI ()
-		{
-	
+		{	
 			PaymentButton.Enabled = tokenCell.Complete;
 			PaymentButton.Hidden = !tokenCell.Complete;
 			if (tokenCell.Complete) {
@@ -113,11 +109,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void MakeTokenPayment ()
 		{
-			var instance =JudoConfiguration.Instance;
+			var instance = JudoConfiguration.Instance;
 			TokenPaymentViewModel tokenPayment = new TokenPaymentViewModel () {
 				ConsumerToken = instance.ConsumerToken,
-				CV2= tokenCell.CCV,
-				Token= instance.CardToken,
+				CV2 = tokenCell.CCV,
+				Token = instance.CardToken,
 				Amount = "6.66",
 			};
 			PaymentButton.Hidden = true;
