@@ -590,9 +590,10 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if (result!=null||!result.HasError) {
+				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
+					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel ()
+					{
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
@@ -610,8 +611,13 @@ namespace JudoDotNetXamariniOSSDK
 						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						var errorText = result.Error.ErrorMessage;
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {	
+						var errorText = "No Response from Server";
+						if(result!=null)
+						{
+							 errorText = result.Response.Message;
+						}
+
 						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
 						_error.Show ();
 						SubmitButton.Hidden = false;
