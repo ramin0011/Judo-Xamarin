@@ -17,13 +17,17 @@ namespace JudoDotNetXamariniOSSDK
 
 
 
-		public void DisplayError (string test)
+		public void DisplayError (IResult<ITransactionResult> result,string failHeader)
 		{
-			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-				var errorText = "";//result.Error.ErrorMessage;
-				UIAlertView _error = new UIAlertView ("Token Payment has failed", errorText, null, "ok", null);
-				_error.Show ();
+			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+				var errorText = "No Response from Server";
+				if(result!=null)
+				{
+					errorText = result.Response.Message;
+				}
 
+				UIAlertView _error = new UIAlertView (failHeader, errorText, null, "ok", null);
+				_error.Show ();
 			});
 		}
 

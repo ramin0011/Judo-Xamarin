@@ -29,10 +29,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
+		IErrorPresenter errorPresenter;
+
 
 		public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
 		{
 			_paymentService = paymentService;
+			errorPresenter = new ResponseErrorPresenter ();
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -261,7 +264,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.PreAuthoriseCard (authorisation).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if (result != null || !result.HasError) {
+				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
 					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
@@ -283,9 +286,7 @@ namespace JudoDotNetXamariniOSSDK
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						var errorText = result.Error.ErrorMessage;
-						UIAlertView _error = new UIAlertView ("Pre-Authorisation has failed", errorText, null, "ok", null);
-						_error.Show ();
+						errorPresenter.DisplayError(result,"Pre-Authorisation has failed");	
 						RegisterButton.Hidden = false;
 					});
 				}

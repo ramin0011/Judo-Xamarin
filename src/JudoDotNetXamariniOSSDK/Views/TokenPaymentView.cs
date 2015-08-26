@@ -14,15 +14,18 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;
-
+		IErrorPresenter errorPresenter;
 		public TokenPaymentView (IPaymentService paymentService) : base ("TokenPaymentView", null)
 		{
 			_paymentService = paymentService;
+			errorPresenter = new ResponseErrorPresenter ();
 		}
 
 		TokenPaymentCell tokenCell;
 
 		private List<CardCell> CellsToShow { get; set; }
+
+
 
 		public override void ViewDidLoad ()
 		{
@@ -120,7 +123,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			_paymentService.MakeTokenPayment (tokenPayment).ContinueWith (reponse => {
 				var result = reponse.Result;
-				if (result != null || !result.HasError) {
+				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
 					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
 						CreatedAt = paymentreceipt.CreatedAt.DateTime,
@@ -138,9 +141,7 @@ namespace JudoDotNetXamariniOSSDK
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						var errorText = result.Error.ErrorMessage;
-						UIAlertView _error = new UIAlertView ("Token Payment has failed", errorText, null, "ok", null);
-						_error.Show ();
+						errorPresenter.DisplayError(result,"Token Payment has failed");	
 						PaymentButton.Hidden = false;
 					});
 				}

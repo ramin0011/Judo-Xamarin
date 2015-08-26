@@ -66,7 +66,7 @@ namespace JudoDotNetXamariniOSSDK
 		UIImageView ccImage;
 
 		int currentYear;
-
+		IErrorPresenter errorPresenter;
 		CreditCardType type;
 		int numberLength;
 		string creditCardNum;
@@ -90,6 +90,7 @@ namespace JudoDotNetXamariniOSSDK
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
 			_paymentService = paymentService;
+			errorPresenter = new ResponseErrorPresenter ();
 		}
 			
 		float widthToLastGroup {
@@ -611,15 +612,9 @@ namespace JudoDotNetXamariniOSSDK
 						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {	
-						var errorText = "No Response from Server";
-						if(result!=null)
-						{
-							 errorText = result.Response.Message;
-						}
+					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+						errorPresenter.DisplayError(result,"PaymentFailed");	
 
-						UIAlertView _error = new UIAlertView ("Payment failed", errorText, null, "ok", null);
-						_error.Show ();
 						SubmitButton.Hidden = false;
 					});
 				}
