@@ -75,7 +75,8 @@ namespace JudoDotNetXamariniOSSDK
 			RegisterButton.TouchUpInside += (sender, ev) => {
 				PreAuthCard ();
 			};
-
+			RegisterButton.Enabled = false;
+			RegisterButton.Hidden = true;
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
