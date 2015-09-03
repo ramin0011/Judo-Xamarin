@@ -95,6 +95,21 @@ namespace JudoDotNetXamariniOSSDK
 
 			textScroller.ScrollEnabled = false;
 
+
+
+
+
+			Type = CreditCardType.InvalidCard;
+			SetUpMaskedInput ();
+
+			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
+				PushExpiryInfoView ();
+			};
+
+		}
+
+		void SetupPlaceViews()
+		{
 			ccText.Text = "000011112222333344445555";
 
 			UITextPosition start = ccText.BeginningOfDocument;
@@ -107,23 +122,66 @@ namespace JudoDotNetXamariniOSSDK
 			r.Size = frameRect;
 			ccText.Text = "";
 
-			CGRect frame = placeView.Frame;
-			placeView.Font = ccText.Font;
-			placeView.Text = "0000 0000 0000 0000";
 
-			placeView.SetShowTextOffSet (0);
-			placeView.Offset = r;
+			CGRect frame = ccPlaceHolder.Frame;
+			ccPlaceHolder.Font = ccText.Font;
+			ccPlaceHolder.Text = "0000 0000 0000 0000";
 
-			placeView.BackgroundColor = UIColor.Clear;
-			textScroller.InsertSubview (placeView, 0);
+			ccPlaceHolder.SetShowTextOffSet (0);
+			ccPlaceHolder.Offset = r;
 
-			Type = CreditCardType.InvalidCard;
-			SetUpMaskedInput ();
+			ccPlaceHolder.BackgroundColor = UIColor.Clear;
+			textScroller.InsertSubview (ccPlaceHolder, 0);
 
-			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
-				PushExpiryInfoView ();
-			};
+			/////////
 
+			expiryText.Text = "YM/YY";
+
+			UITextPosition exStart = expiryText.BeginningOfDocument;
+			UITextPosition exEnd = expiryText.GetPosition (exStart, 24);
+			UITextRange exRange = expiryText.GetTextRange (exStart, exEnd);
+			CGRect exR = expiryText.GetFirstRectForRange (exRange);
+			CGSize exFrameRect = exR.Size;
+			exFrameRect.Width = (exR.Size.Width / 24.0f);
+			expiryText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+			exR.Size = exFrameRect;
+			expiryText.Text = "";
+
+
+	
+			CGRect expiryFrame = expiryPlaceHolder.Frame;
+			expiryPlaceHolder.Font = expiryText.Font;
+			expiryPlaceHolder.Text = "MM/YY";
+
+			expiryPlaceHolder.SetShowTextOffSet (0);
+			expiryPlaceHolder.Offset = exR;
+
+			expiryPlaceHolder.BackgroundColor = UIColor.Clear;
+			textScroller.InsertSubview (expiryPlaceHolder, 0);
+
+			////
+
+			cvTwoText.Text = "CV2";
+
+			UITextPosition cvStart = cvTwoText.BeginningOfDocument;
+			UITextPosition cvEnd = cvTwoText.GetPosition (cvStart, 24);
+			UITextRange cvRange = cvTwoText.GetTextRange (cvStart, cvEnd);
+			CGRect cvR = cvTwoText.GetFirstRectForRange (cvRange);
+			CGSize cvFrameRect = cvR.Size;
+			cvFrameRect.Width = (cvR.Size.Width / 24.0f);
+			cvTwoText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+			cvR.Size = cvFrameRect;
+			cvTwoText.Text = "";
+
+			CGRect cvTwoFrame = cvTwoPlaceHolder.Frame;
+			cvTwoPlaceHolder.Font = cvTwoText.Font;
+			cvTwoPlaceHolder.Text = "CV2";
+
+			cvTwoPlaceHolder.SetShowTextOffSet (0);
+			cvTwoPlaceHolder.Offset = cvR;
+
+			cvTwoPlaceHolder.BackgroundColor = UIColor.Clear;
+			textScroller.InsertSubview (cvTwoPlaceHolder, 0);
 		}
 
 		void PushExpiryInfoView ()
