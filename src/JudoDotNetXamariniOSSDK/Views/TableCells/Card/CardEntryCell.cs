@@ -25,7 +25,7 @@ namespace JudoDotNetXamariniOSSDK
 		CreditCard cardHelper = new CreditCard ();
 		public CreditCardType Type {get; set;}
 
-		string formattedText;
+		//string formattedText;
 		bool flashForError = false;
 		bool updateText = false;
 		bool scrollForward = false;
@@ -41,6 +41,11 @@ namespace JudoDotNetXamariniOSSDK
 		bool ret = false;
 		int year;
 		bool hasFullNumber = false;
+
+		bool hasFullDate = false;
+
+		bool hasFullCCV = false;
+
 		int cardMonth;
 
 		public bool CompletelyDone {
@@ -206,7 +211,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			ccText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
-				formattedText = "";
+				var formattedText = "";
 				flashForError = false;
 				updateText = false;
 				scrollForward = false;
@@ -245,7 +250,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (hasFullNumber) 
 				{
-					expiryText.BecomeFirstResponder();
+					// something
 				} else {
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
@@ -275,14 +280,14 @@ namespace JudoDotNetXamariniOSSDK
 							if (!JudoSDKManager.MaestroAccepted) {
 
 								flashForError = true;
-								return EndDelegate (ccPlaceHolder);
+								return EndDelegate (ccPlaceHolder,ccText,formattedText);
 							}
 							break;
 						case CreditCardType.AMEX:
 							if (!JudoSDKManager.AmExAccepted) {
 
 								flashForError = true; 
-								return EndDelegate (ccPlaceHolder);
+								return EndDelegate (ccPlaceHolder,ccText,formattedText);
 							}
 							break;
 						}
@@ -315,7 +320,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 					UpdateCCimageWithTransitionTime (0.25f); 
 				}
-				return EndDelegate (ccPlaceHolder);
+				return EndDelegate (ccPlaceHolder,ccText,formattedText);
 			};
 		}
 
@@ -325,6 +330,8 @@ namespace JudoDotNetXamariniOSSDK
 			expiryText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
 
+				var formattedText = "";
+				scrollForward=false;
 
 				var aStringBuilder = new StringBuilder (textView.Text);
 				aStringBuilder.Remove (range.Location, range.Length);
@@ -337,12 +344,12 @@ namespace JudoDotNetXamariniOSSDK
 				if (deleting) {
 					formattedText = newTextOrig.Substring (0, range.Location);
 					updateText = true;
-					return EndDelegate (expiryPlaceHolder);
+					return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 				}
 
 				if (newTextLen > expiryPlaceHolder.Text.Length) {
 					flashForError = true;
-					return EndDelegate (expiryPlaceHolder);
+					return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 				}
 
 				formattedText = newTextOrig;
@@ -362,7 +369,7 @@ namespace JudoDotNetXamariniOSSDK
 						cardMonth = Int32.Parse (newTextOrig.Substring (monthRange.Location, monthRange.Length));
 						if (cardMonth < 1 || cardMonth > 12) {
 							flashRecheckExpiryDateMessage ();
-							return EndDelegate (expiryPlaceHolder);
+							return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 						}
 					}
 				}
@@ -373,14 +380,14 @@ namespace JudoDotNetXamariniOSSDK
 					int yearDecade = currentYear - (currentYear % 10);
 					if (proposedDecade < yearDecade) {
 						flashRecheckExpiryDateMessage ();
-						return EndDelegate (expiryPlaceHolder);
+						return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 					}
 					if (newTextLen >= (yearRange.Location + yearRange.Length)) {
 						year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
 						int diff = year - currentYear;
 						if (diff < 0 || diff > 10) {	
 							flashRecheckExpiryDateMessage ();
-							return EndDelegate (expiryPlaceHolder);
+							return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 						}
 						if (diff == 0) { 
 
@@ -389,7 +396,7 @@ namespace JudoDotNetXamariniOSSDK
 
 							if (cardMonth < currentMonth) {
 								flashRecheckExpiryDateMessage ();
-								return EndDelegate (expiryPlaceHolder);
+								return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 							}
 						}
 						if (creditCardImage != ccBackImage) {
@@ -409,7 +416,11 @@ namespace JudoDotNetXamariniOSSDK
 					}
 				}
 				updateText = true;
-				return EndDelegate (expiryPlaceHolder);
+				if (formattedText.Length==5) {
+					hasFullDate=true;
+					cvTwoText.BecomeFirstResponder();
+				} 
+				return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
 			};
 
 		}
@@ -419,6 +430,8 @@ namespace JudoDotNetXamariniOSSDK
 			cvTwoText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
 
+
+				scrollForward=false;
 				var aStringBuilder = new StringBuilder (textView.Text);
 				aStringBuilder.Remove (range.Location, range.Length);
 				aStringBuilder.Insert (range.Location, replace);
@@ -435,7 +448,11 @@ namespace JudoDotNetXamariniOSSDK
 				}
 
 				updateText = true;
-				return EndDelegate (cvTwoPlaceHolder);
+				if (newTextOrig.Length==cardHelper.ccvFormat(Type).Length) {
+					hasFullCCV=true;
+					DismissKeyboardAction ();
+				} 
+				return EndDelegate (cvTwoPlaceHolder,cvTwoText,newTextOrig);
 			};
 		}
 
@@ -463,7 +480,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public bool EndDelegate (PlaceHolderTextView placeView)
+		public bool EndDelegate (PlaceHolderTextView placeView,UITextView textview,string formattedText)
 		{
 
 			if (scrollForward) {
@@ -485,7 +502,7 @@ namespace JudoDotNetXamariniOSSDK
 						formattedText = formattedText + "/"; 
 				}
 				if (!deleting || hasFullNumber || deletedSpace) {
-					ccText.Text = formattedText;
+					textview.Text = formattedText;
 				} else {
 					ret = true;
 				}
@@ -515,6 +532,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		void ScrollForward (bool animated)
 		{
+			expiryText.BecomeFirstResponder ();
 			if (creditCardImage != ccBackImage) {
 				StatusHelpLabel.Text = "Please enter Expire Date";
 			}

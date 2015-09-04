@@ -375,7 +375,7 @@ namespace JudoDotNetXamariniOSSDK
 			default:
 				break;
 			}
-			return justNumber ? number : number + additions;
+			return number;
 		}
 
 

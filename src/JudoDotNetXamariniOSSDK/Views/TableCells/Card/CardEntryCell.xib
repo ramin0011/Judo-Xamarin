@@ -37,7 +37,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J00-S8-9Hm" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="10" y="6" width="223" height="32"/>
+                                                <rect key="frame" x="10" y="6" width="209" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="yLC-wb-doE" userLabel="ccText">
                                                         <rect key="frame" x="0.0" y="0.0" width="209" height="32"/>
@@ -54,23 +54,12 @@
                                                     <constraint firstItem="yLC-wb-doE" firstAttribute="leading" secondItem="J00-S8-9Hm" secondAttribute="leading" id="Bty-Ly-FZf"/>
                                                     <constraint firstAttribute="bottom" secondItem="yLC-wb-doE" secondAttribute="bottom" id="KXG-Cz-hKG"/>
                                                     <constraint firstItem="yLC-wb-doE" firstAttribute="top" secondItem="J00-S8-9Hm" secondAttribute="top" id="M97-VQ-Pbg"/>
-                                                    <constraint firstAttribute="width" constant="223" id="Swm-Ou-0KH"/>
-                                                    <constraint firstAttribute="trailing" secondItem="yLC-wb-doE" secondAttribute="trailing" constant="14" id="u7m-g2-52z"/>
+                                                    <constraint firstAttribute="width" constant="209" id="Swm-Ou-0KH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="yLC-wb-doE" secondAttribute="trailing" id="u7m-g2-52z"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
-                                                <rect key="frame" x="364" y="12" width="20" height="20"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="ic_info.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0N-Zt-sIi" userLabel="expiryPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="236" y="6" width="65" height="32"/>
+                                                <rect key="frame" x="229" y="6" width="65" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
                                                         <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
@@ -82,14 +71,18 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="9bO-np-awO" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="leading" id="2ZB-aB-unZ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="9bO-np-awO" secondAttribute="bottom" id="5Cb-cG-fzi"/>
                                                     <constraint firstItem="9bO-np-awO" firstAttribute="top" secondItem="S0N-Zt-sIi" secondAttribute="top" id="DaU-zI-UFU"/>
                                                     <constraint firstAttribute="width" constant="65" id="IIG-P1-L81"/>
+                                                    <constraint firstItem="9bO-np-awO" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="leading" id="Utl-2p-FnU"/>
                                                     <constraint firstAttribute="trailing" secondItem="9bO-np-awO" secondAttribute="trailing" id="dMt-xo-CFK"/>
+                                                    <constraint firstItem="9bO-np-awO" firstAttribute="top" secondItem="S0N-Zt-sIi" secondAttribute="top" id="f8D-IU-Nle"/>
                                                     <constraint firstAttribute="bottom" secondItem="9bO-np-awO" secondAttribute="bottom" id="gaG-Z8-poH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9bO-np-awO" secondAttribute="trailing" id="wa4-WQ-hW4"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="309" y="5" width="47" height="32"/>
+                                                <rect key="frame" x="289" y="5" width="47" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="32"/>
@@ -103,22 +96,31 @@
                                                     <constraint firstAttribute="width" constant="47" id="ywa-HM-ySN"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
+                                                <rect key="frame" x="316" y="12" width="20" height="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="ic_info.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="J00-S8-9Hm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="10" id="BMc-lE-rfP"/>
-                                            <constraint firstAttribute="trailing" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="95" id="Dw5-81-boe"/>
+                                            <constraint firstAttribute="trailing" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="115" id="Dw5-81-boe"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="top" secondItem="J00-S8-9Hm" secondAttribute="top" id="HKn-YW-lmD"/>
-                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="8" id="IzZ-PF-iex"/>
-                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" id="Lsu-tP-hXm"/>
-                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="leading" secondItem="J00-S8-9Hm" secondAttribute="trailing" constant="3" id="MXd-nE-6kn"/>
-                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="8" id="Qje-z5-eU7"/>
+                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="-5" id="Qje-z5-eU7"/>
                                             <constraint firstItem="J00-S8-9Hm" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="10" id="RVU-jg-iJM"/>
                                             <constraint firstAttribute="width" constant="396" id="TCm-RB-HxT"/>
                                             <constraint firstItem="RdY-kw-XYs" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="5" id="bKT-2E-1z2"/>
                                             <constraint firstAttribute="bottom" secondItem="J00-S8-9Hm" secondAttribute="bottom" constant="6" id="bd3-1R-R7O"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="bottom" secondItem="J00-S8-9Hm" secondAttribute="bottom" id="iMv-xE-EbG"/>
                                             <constraint firstItem="J00-S8-9Hm" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="6" id="oJc-2y-IqH"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="leading" secondItem="J00-S8-9Hm" secondAttribute="trailing" constant="10" id="raD-TC-G6R"/>
                                             <constraint firstAttribute="bottom" secondItem="RdY-kw-XYs" secondAttribute="bottom" constant="7" id="uZ5-iO-HM5"/>
                                         </constraints>
                                     </scrollView>
