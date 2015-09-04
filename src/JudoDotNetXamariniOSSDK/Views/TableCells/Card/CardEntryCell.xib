@@ -33,6 +33,95 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFY-A7-hc3">
                                 <rect key="frame" x="79" y="9" width="229" height="44"/>
                                 <subviews>
+                                    <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sL-ek-4SN">
+                                        <rect key="frame" x="0.0" y="0.0" width="396" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J00-S8-9Hm" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
+                                                <rect key="frame" x="10" y="6" width="223" height="32"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="yLC-wb-doE" userLabel="ccText">
+                                                        <rect key="frame" x="0.0" y="0.0" width="209" height="32"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="8Af-Fc-sjF"/>
+                                                    <constraint firstItem="yLC-wb-doE" firstAttribute="leading" secondItem="J00-S8-9Hm" secondAttribute="leading" id="Bty-Ly-FZf"/>
+                                                    <constraint firstAttribute="bottom" secondItem="yLC-wb-doE" secondAttribute="bottom" id="KXG-Cz-hKG"/>
+                                                    <constraint firstItem="yLC-wb-doE" firstAttribute="top" secondItem="J00-S8-9Hm" secondAttribute="top" id="M97-VQ-Pbg"/>
+                                                    <constraint firstAttribute="width" constant="223" id="Swm-Ou-0KH"/>
+                                                    <constraint firstAttribute="trailing" secondItem="yLC-wb-doE" secondAttribute="trailing" constant="14" id="u7m-g2-52z"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
+                                                <rect key="frame" x="364" y="12" width="20" height="20"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" image="ic_info.png">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0N-Zt-sIi" userLabel="expiryPlaceHolder" customClass="PlaceHolderTextView">
+                                                <rect key="frame" x="236" y="6" width="65" height="32"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
+                                                        <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="9bO-np-awO" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="leading" id="2ZB-aB-unZ"/>
+                                                    <constraint firstItem="9bO-np-awO" firstAttribute="top" secondItem="S0N-Zt-sIi" secondAttribute="top" id="DaU-zI-UFU"/>
+                                                    <constraint firstAttribute="width" constant="65" id="IIG-P1-L81"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9bO-np-awO" secondAttribute="trailing" id="dMt-xo-CFK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="9bO-np-awO" secondAttribute="bottom" id="gaG-Z8-poH"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
+                                                <rect key="frame" x="309" y="5" width="47" height="32"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="32"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="47" id="ywa-HM-ySN"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="J00-S8-9Hm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="10" id="BMc-lE-rfP"/>
+                                            <constraint firstAttribute="trailing" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="95" id="Dw5-81-boe"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="top" secondItem="J00-S8-9Hm" secondAttribute="top" id="HKn-YW-lmD"/>
+                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="8" id="IzZ-PF-iex"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" id="Lsu-tP-hXm"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="leading" secondItem="J00-S8-9Hm" secondAttribute="trailing" constant="3" id="MXd-nE-6kn"/>
+                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="8" id="Qje-z5-eU7"/>
+                                            <constraint firstItem="J00-S8-9Hm" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="10" id="RVU-jg-iJM"/>
+                                            <constraint firstAttribute="width" constant="396" id="TCm-RB-HxT"/>
+                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="5" id="bKT-2E-1z2"/>
+                                            <constraint firstAttribute="bottom" secondItem="J00-S8-9Hm" secondAttribute="bottom" constant="6" id="bd3-1R-R7O"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="bottom" secondItem="J00-S8-9Hm" secondAttribute="bottom" id="iMv-xE-EbG"/>
+                                            <constraint firstItem="J00-S8-9Hm" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="6" id="oJc-2y-IqH"/>
+                                            <constraint firstAttribute="bottom" secondItem="RdY-kw-XYs" secondAttribute="bottom" constant="7" id="uZ5-iO-HM5"/>
+                                        </constraints>
+                                    </scrollView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flt-bf-DfN">
                                         <rect key="frame" x="8" y="0.0" width="213" height="44"/>
                                         <color key="backgroundColor" red="0.75237669429999998" green="1.3539218340000001e-05" blue="0.038479235020000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,55 +133,16 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sL-ek-4SN">
-                                        <rect key="frame" x="0.0" y="0.0" width="229" height="44"/>
-                                        <subviews>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ylm-Q7-DIT" userLabel="Clear Button">
-                                                <rect key="frame" x="324" y="0.0" width="44" height="48"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="48" id="2gy-iM-p2s"/>
-                                                    <constraint firstAttribute="width" constant="44" id="gZZ-Hf-1CW"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
-                                                <rect key="frame" x="376" y="12" width="20" height="20"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" image="ic_info.png">
-                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="Ylm-Q7-DIT" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" id="7c7-PW-8fD"/>
-                                            <constraint firstAttribute="bottom" secondItem="LvH-h0-2Rd" secondAttribute="bottom" constant="12" id="NwS-oe-ihR"/>
-                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leading" constant="376" id="SrM-cM-Ao9"/>
-                                            <constraint firstAttribute="width" constant="229" id="TCm-RB-HxT"/>
-                                            <constraint firstItem="Ylm-Q7-DIT" firstAttribute="centerX" secondItem="LvH-h0-2Rd" secondAttribute="centerX" constant="-40" id="ue0-fc-xM4"/>
-                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="centerY" secondItem="9sL-ek-4SN" secondAttribute="centerY" id="wRa-Qk-nfF"/>
-                                            <constraint firstAttribute="trailing" secondItem="LvH-h0-2Rd" secondAttribute="trailing" constant="-167" id="ynL-u4-3wh"/>
-                                        </constraints>
-                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="flt-bf-DfN" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" id="0Hy-WP-wc4"/>
-                                    <constraint firstItem="flt-bf-DfN" firstAttribute="centerX" secondItem="9sL-ek-4SN" secondAttribute="centerX" id="7Cj-yp-lfl"/>
-                                    <constraint firstItem="9sL-ek-4SN" firstAttribute="leading" secondItem="jFY-A7-hc3" secondAttribute="leading" id="BH6-8Y-EPP"/>
-                                    <constraint firstAttribute="bottom" secondItem="9sL-ek-4SN" secondAttribute="bottom" id="T40-C3-grZ"/>
-                                    <constraint firstItem="9sL-ek-4SN" firstAttribute="top" secondItem="jFY-A7-hc3" secondAttribute="top" id="xNO-mO-F8m"/>
+                                    <constraint firstItem="9sL-ek-4SN" firstAttribute="top" secondItem="jFY-A7-hc3" secondAttribute="top" id="376-OM-HMd"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="leading" secondItem="jFY-A7-hc3" secondAttribute="leadingMargin" id="3qx-0k-IcI"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="bottom" secondItem="9sL-ek-4SN" secondAttribute="bottom" id="4Tm-e3-1BI"/>
+                                    <constraint firstItem="9sL-ek-4SN" firstAttribute="leading" secondItem="jFY-A7-hc3" secondAttribute="leading" id="RQH-Mz-eHl"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="top" secondItem="jFY-A7-hc3" secondAttribute="top" id="SFD-PX-3Pl"/>
+                                    <constraint firstItem="flt-bf-DfN" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" id="Xcb-p6-SGj"/>
+                                    <constraint firstAttribute="bottom" secondItem="9sL-ek-4SN" secondAttribute="bottom" id="fDI-sI-uKg"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -139,53 +189,8 @@
                 <outlet property="expiryText" destination="9bO-np-awO" id="SLX-dF-c9g"/>
                 <outlet property="textScroller" destination="9sL-ek-4SN" id="s1H-7o-vAL"/>
             </connections>
-            <point key="canvasLocation" x="290" y="-72"/>
+            <point key="canvasLocation" x="213" y="-55"/>
         </tableViewCell>
-        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rbr-vq-kyY">
-            <rect key="frame" x="0.0" y="0.0" width="365" height="44"/>
-            <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0N-Zt-sIi" userLabel="expiryPlaceHolder" customClass="PlaceHolderTextView">
-                    <rect key="frame" x="225" y="6" width="65" height="32"/>
-                    <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
-                            <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
-                        </textView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
-                    <rect key="frame" x="298" y="6" width="47" height="32"/>
-                    <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
-                            <rect key="frame" x="0.0" y="0.0" width="47" height="32"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
-                        </textView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J00-S8-9Hm" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
-                    <rect key="frame" x="8" y="6" width="209" height="32"/>
-                    <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="yLC-wb-doE" userLabel="ccText">
-                            <rect key="frame" x="0.0" y="0.0" width="209" height="32"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
-                        </textView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
-            </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="264.5" y="68"/>
-        </view>
     </objects>
     <resources>
         <image name="ic_card_large_unknown.png" width="54" height="35"/>

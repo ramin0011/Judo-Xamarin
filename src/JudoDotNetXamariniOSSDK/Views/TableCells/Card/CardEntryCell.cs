@@ -129,7 +129,7 @@ namespace JudoDotNetXamariniOSSDK
 			ccPlaceHolder.SetShowTextOffSet (0);
 			ccPlaceHolder.Offset = r;
 
-			ccPlaceHolder.BackgroundColor = UIColor.LightGray;
+			ccPlaceHolder.BackgroundColor = UIColor.Clear;
 			textScroller.InsertSubview (ccPlaceHolder, 0);
 
 			/////////
@@ -156,7 +156,7 @@ namespace JudoDotNetXamariniOSSDK
 			expiryPlaceHolder.Offset = exR;
 
 			expiryPlaceHolder.BackgroundColor = UIColor.Clear;
-			textScroller.InsertSubview (expiryPlaceHolder, 0);
+			textScroller.InsertSubview (expiryPlaceHolder, 1);
 
 			////
 
@@ -180,7 +180,7 @@ namespace JudoDotNetXamariniOSSDK
 			cvTwoPlaceHolder.Offset = cvR;
 
 			cvTwoPlaceHolder.BackgroundColor = UIColor.Clear;
-			textScroller.InsertSubview (cvTwoPlaceHolder, 0);
+			textScroller.InsertSubview (cvTwoPlaceHolder, 2);
 		}
 
 		void PushExpiryInfoView ()
@@ -245,7 +245,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (hasFullNumber) 
 				{
-					//jump to expiry
+					expiryText.BecomeFirstResponder();
 				} else {
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
