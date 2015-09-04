@@ -95,9 +95,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			textScroller.ScrollEnabled = false;
 
-
-
-
+			SetupPlaceViews ();
 
 			Type = CreditCardType.InvalidCard;
 			SetUpMaskedInput ();
@@ -110,10 +108,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetupPlaceViews()
 		{
+  
 			ccText.Text = "000011112222333344445555";
 
 			UITextPosition start = ccText.BeginningOfDocument;
-			UITextPosition end = ccText.GetPosition (start, 24);
+			UITextPosition end = ccText.GetPosition (start, 16);
 			UITextRange range = ccText.GetTextRange (start, end);
 			CGRect r = ccText.GetFirstRectForRange (range);
 			CGSize frameRect = r.Size;
@@ -130,15 +129,15 @@ namespace JudoDotNetXamariniOSSDK
 			ccPlaceHolder.SetShowTextOffSet (0);
 			ccPlaceHolder.Offset = r;
 
-			ccPlaceHolder.BackgroundColor = UIColor.Clear;
+			ccPlaceHolder.BackgroundColor = UIColor.LightGray;
 			textScroller.InsertSubview (ccPlaceHolder, 0);
 
 			/////////
 
-			expiryText.Text = "YM/YY";
+			expiryText.Text = "MM/YY";
 
 			UITextPosition exStart = expiryText.BeginningOfDocument;
-			UITextPosition exEnd = expiryText.GetPosition (exStart, 24);
+			UITextPosition exEnd = expiryText.GetPosition (exStart, 5);
 			UITextRange exRange = expiryText.GetTextRange (exStart, exEnd);
 			CGRect exR = expiryText.GetFirstRectForRange (exRange);
 			CGSize exFrameRect = exR.Size;
@@ -164,7 +163,7 @@ namespace JudoDotNetXamariniOSSDK
 			cvTwoText.Text = "CV2";
 
 			UITextPosition cvStart = cvTwoText.BeginningOfDocument;
-			UITextPosition cvEnd = cvTwoText.GetPosition (cvStart, 24);
+			UITextPosition cvEnd = cvTwoText.GetPosition (cvStart, 3);
 			UITextRange cvRange = cvTwoText.GetTextRange (cvStart, cvEnd);
 			CGRect cvR = cvTwoText.GetFirstRectForRange (cvRange);
 			CGSize cvFrameRect = cvR.Size;
@@ -197,6 +196,13 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 		void SetUpMaskedInput ()
+		{
+			SetupCC ();
+			SetupExpire ();
+			SetupCVTwo ();
+		}
+
+		void SetupCC()
 		{
 			ccText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
@@ -237,104 +243,19 @@ namespace JudoDotNetXamariniOSSDK
 					hasFullNumber = false;
 				}
 
-				if (hasFullNumber) {
-
-					// Test for delete of a space or /
-					if (deleting) {
-						formattedText = newTextOrig.Substring (0, range.Location);
-						updateText = true;
-						return EndDelegate ();
-					}
-
-					if (newTextLen > placeView.Text.Length) {
-						flashForError = true;
-						return EndDelegate ();
-					}
-
-					formattedText = newTextOrig;
-
-					CSRange monthRange = new CSRange (placeView.Text.IndexOf ("MM"), 2);
-					if (newTextLen > monthRange.Location) {
-						if (newTextOrig.Substring (monthRange.Location, 1).ToCharArray () [0] > '1') {
-							// support short cut - we prepend a '0' for them
-
-							var aStringBuilder2 = new StringBuilder (textView.Text);
-							aStringBuilder2.Remove (range.Location, range.Length);
-							aStringBuilder2.Insert (range.Location, "0" + replace);
-							formattedText = aStringBuilder2.ToString ();
-							newTextLen = newTextOrig.Length;
-						}
-						if (newTextLen >= (monthRange.Location + monthRange.Length)) {
-							cardMonth = Int32.Parse (newTextOrig.Substring (monthRange.Location, monthRange.Length));
-							if (cardMonth < 1 || cardMonth > 12) {
-								flashRecheckExpiryDateMessage ();
-								return EndDelegate ();
-							}
-						}
-					}
-
-					CSRange yearRange = new CSRange (placeView.Text.IndexOf ("YY"), 2);
-					if (newTextLen > yearRange.Location) {
-						int proposedDecade = (newTextOrig.Substring (yearRange.Location, 1).ToCharArray () [0] - '0') * 10;
-						int yearDecade = currentYear - (currentYear % 10);
-						if (proposedDecade < yearDecade) {
-							flashRecheckExpiryDateMessage ();
-							return EndDelegate ();
-						}
-						if (newTextLen >= (yearRange.Location + yearRange.Length)) {
-							year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
-							int diff = year - currentYear;
-							if (diff < 0 || diff > 10) {	
-								flashRecheckExpiryDateMessage ();
-								return EndDelegate ();
-							}
-							if (diff == 0) { 
-
-								var todaysDate = DateTime.Today;
-								int currentMonth = todaysDate.Month;
-
-								if (cardMonth < currentMonth) {
-									flashRecheckExpiryDateMessage ();
-									return EndDelegate ();
-								}
-							}
-							if (creditCardImage != ccBackImage) {
-								UIViewAnimationOptions transType = (Type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
-
-								UIImageView.Animate (
-									duration: 0.25f, 
-									delay: 0,
-									options: transType,
-									animation: () => {
-										creditCardImage = ccBackImage;
-									},
-									completion: () => {
-										StatusHelpLabel.Text = "Please enter CV2";
-									});
-							}
-						}
-					}
-
-					if (newTextLen == placeView.Text.Length) {
-						CompletelyDone = true;
-						var cIndex = placeView.Text.IndexOf ("C");
-						CSRange ccvRange = new CSRange (cIndex, placeView.Text.Substring (cIndex).Length);
-						ccvRange.Length = Type == CreditCardType.AMEX ? 4 : 3;
-						ccv = newTextOrig.Substring (ccvRange.Location, ccvRange.Length);
-					}
-
-					updateText = true;
+				if (hasFullNumber) 
+				{
+					//jump to expiry
 				} else {
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
-					int formattedLen = placeView.Text.Length;
-					placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
+					int formattedLen = ccPlaceHolder.Text.Length;
+					ccPlaceHolder.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 					textScroller.ScrollEnabled = false;
 
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
 
 					StatusHelpLabel.Text = "Enter Card Details";
-
 
 					string newText = newTextOrig.Replace (" ", String.Empty);
 					int len = newText.Length;
@@ -354,20 +275,20 @@ namespace JudoDotNetXamariniOSSDK
 							if (!JudoSDKManager.MaestroAccepted) {
 
 								flashForError = true;
-								return EndDelegate ();
+								return EndDelegate (ccPlaceHolder);
 							}
 							break;
 						case CreditCardType.AMEX:
 							if (!JudoSDKManager.AmExAccepted) {
 
 								flashForError = true; 
-								return EndDelegate ();
+								return EndDelegate (ccPlaceHolder);
 							}
 							break;
 						}
 
 						if (len == Card.CC_LEN_FOR_TYPE) {
-							placeView.Text = cardHelper.promptStringForType (Type, true);
+							ccPlaceHolder.Text = cardHelper.promptStringForType (Type, true);
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
@@ -394,11 +315,129 @@ namespace JudoDotNetXamariniOSSDK
 					}
 					UpdateCCimageWithTransitionTime (0.25f); 
 				}
-				return EndDelegate ();
+				return EndDelegate (ccPlaceHolder);
+			};
+		}
+
+		void SetupExpire ()
+		{
+
+			expiryText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
+				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
+
+
+				var aStringBuilder = new StringBuilder (textView.Text);
+				aStringBuilder.Remove (range.Location, range.Length);
+				aStringBuilder.Insert (range.Location, replace);
+				string newTextOrig = aStringBuilder.ToString ();
+
+				int newTextLen = newTextOrig.Length;
+
+				// Test for delete of a space or /
+				if (deleting) {
+					formattedText = newTextOrig.Substring (0, range.Location);
+					updateText = true;
+					return EndDelegate (expiryPlaceHolder);
+				}
+
+				if (newTextLen > expiryPlaceHolder.Text.Length) {
+					flashForError = true;
+					return EndDelegate (expiryPlaceHolder);
+				}
+
+				formattedText = newTextOrig;
+
+				CSRange monthRange = new CSRange (expiryPlaceHolder.Text.IndexOf ("MM"), 2);
+				if (newTextLen > monthRange.Location) {
+					if (newTextOrig.Substring (monthRange.Location, 1).ToCharArray () [0] > '1') {
+						// support short cut - we prepend a '0' for them
+
+						var aStringBuilder2 = new StringBuilder (textView.Text);
+						aStringBuilder2.Remove (range.Location, range.Length);
+						aStringBuilder2.Insert (range.Location, "0" + replace);
+						formattedText = aStringBuilder2.ToString ();
+						newTextLen = newTextOrig.Length;
+					}
+					if (newTextLen >= (monthRange.Location + monthRange.Length)) {
+						cardMonth = Int32.Parse (newTextOrig.Substring (monthRange.Location, monthRange.Length));
+						if (cardMonth < 1 || cardMonth > 12) {
+							flashRecheckExpiryDateMessage ();
+							return EndDelegate (expiryPlaceHolder);
+						}
+					}
+				}
+
+				CSRange yearRange = new CSRange (expiryPlaceHolder.Text.IndexOf ("YY"), 2);
+				if (newTextLen > yearRange.Location) {
+					int proposedDecade = (newTextOrig.Substring (yearRange.Location, 1).ToCharArray () [0] - '0') * 10;
+					int yearDecade = currentYear - (currentYear % 10);
+					if (proposedDecade < yearDecade) {
+						flashRecheckExpiryDateMessage ();
+						return EndDelegate (expiryPlaceHolder);
+					}
+					if (newTextLen >= (yearRange.Location + yearRange.Length)) {
+						year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
+						int diff = year - currentYear;
+						if (diff < 0 || diff > 10) {	
+							flashRecheckExpiryDateMessage ();
+							return EndDelegate (expiryPlaceHolder);
+						}
+						if (diff == 0) { 
+
+							var todaysDate = DateTime.Today;
+							int currentMonth = todaysDate.Month;
+
+							if (cardMonth < currentMonth) {
+								flashRecheckExpiryDateMessage ();
+								return EndDelegate (expiryPlaceHolder);
+							}
+						}
+						if (creditCardImage != ccBackImage) {
+							UIViewAnimationOptions transType = (Type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
+
+							UIImageView.Animate (
+								duration: 0.25f, 
+								delay: 0,
+								options: transType,
+								animation: () => {
+									creditCardImage = ccBackImage;
+								},
+								completion: () => {
+									StatusHelpLabel.Text = "Please enter CV2";
+								});
+						}
+					}
+				}
+				updateText = true;
+				return EndDelegate (expiryPlaceHolder);
 			};
 
 		}
 
+		void SetupCVTwo ()
+		{
+			cvTwoText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
+				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
+
+				var aStringBuilder = new StringBuilder (textView.Text);
+				aStringBuilder.Remove (range.Location, range.Length);
+				aStringBuilder.Insert (range.Location, replace);
+				string newTextOrig = aStringBuilder.ToString ();
+
+				int newTextLen = newTextOrig.Length;
+
+				if (newTextLen == cvTwoPlaceHolder.Text.Length) {
+					CompletelyDone = true;
+					var cIndex = cvTwoPlaceHolder.Text.IndexOf ("C");
+					CSRange ccvRange = new CSRange (cIndex, cvTwoPlaceHolder.Text.Substring (cIndex).Length);
+					ccvRange.Length = Type == CreditCardType.AMEX ? 4 : 3;
+					ccv = newTextOrig.Substring (ccvRange.Location, ccvRange.Length);
+				}
+
+				updateText = true;
+				return EndDelegate (cvTwoPlaceHolder);
+			};
+		}
 
 		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false)
 		{
@@ -424,7 +463,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public bool EndDelegate ()
+		public bool EndDelegate (PlaceHolderTextView placeView)
 		{
 
 			if (scrollForward) {
@@ -464,11 +503,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		float widthToLastGroup {
 			get { 
-				int oldOffset = placeView.ShowTextOffset;
+				int oldOffset = ccPlaceHolder.ShowTextOffset;
 				int offsetToLastGroup = cardHelper.LengthOfFormattedStringTilLastGroupForType (Type);
-				placeView.SetShowTextOffSet (offsetToLastGroup);
-				float width = placeView.WidthToOffset ();
-				placeView.SetShowTextOffSet (oldOffset);
+				ccPlaceHolder.SetShowTextOffSet (offsetToLastGroup);
+				float width = ccPlaceHolder.WidthToOffset ();
+				ccPlaceHolder.SetShowTextOffSet (oldOffset);
 				return width;
 			}
 		}
@@ -484,7 +523,7 @@ namespace JudoDotNetXamariniOSSDK
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
 
-			placeView.SetText (cardHelper.promptStringForType (Type, false));
+			ccPlaceHolder.SetText (cardHelper.promptStringForType (Type, false));
 
 			textScroller.ScrollEnabled = true;
 			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
@@ -498,8 +537,14 @@ namespace JudoDotNetXamariniOSSDK
 
 		void DismissKeyboardAction ()
 		{			
-			placeView.ResignFirstResponder ();
+			ccPlaceHolder.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
+
+			expiryText.ResignFirstResponder ();
+			expiryText.ResignFirstResponder ();
+
+			cvTwoPlaceHolder.ResignFirstResponder ();
+			cvTwoText.ResignFirstResponder ();
 		}
 
 		public void flashRecheckExpiryDateMessage ()

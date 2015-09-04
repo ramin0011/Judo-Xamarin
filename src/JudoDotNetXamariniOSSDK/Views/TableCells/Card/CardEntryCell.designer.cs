@@ -50,11 +50,6 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (cvTwoPlaceHolder != null) {
-				cvTwoPlaceHolder.Dispose ();
-				cvTwoPlaceHolder = null;
-			}
-
 			if (ccPlaceHolder != null) {
 				ccPlaceHolder.Dispose ();
 				ccPlaceHolder = null;
@@ -73,6 +68,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (creditCardImage != null) {
 				creditCardImage.Dispose ();
 				creditCardImage = null;
+			}
+
+			if (cvTwoPlaceHolder != null) {
+				cvTwoPlaceHolder.Dispose ();
+				cvTwoPlaceHolder = null;
 			}
 
 			if (cvTwoText != null) {
