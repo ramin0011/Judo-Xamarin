@@ -97,6 +97,8 @@ namespace JudoDotNetXamariniOSSDK
 			layer.MasksToBounds = true;
 			layer.BorderWidth = 0;
 
+			textScroller.SetContentOffset (new CGPoint (0, 0), true);
+
 			textScroller.ScrollEnabled = false;
 
 			SetupPlaceViews ();
@@ -656,7 +658,16 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void CleanUp ()
 		{
-			SetUpCell ();
+		SetUpCell ();
+
+//			string ccv;
+//			string creditCardNum;
+//			bool deleting = false;
+//			bool ret = false;
+//			int year;
+//			bool hasFullNumber = false;
+//			SetupPlaceViews ();
+//
 			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
 				creditCardImage.Image = defaultImage;
