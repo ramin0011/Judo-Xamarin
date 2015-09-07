@@ -234,7 +234,10 @@ namespace JudoDotNetXamariniOSSDK
 						}
 					} else {
 						return false;
+
+
 					}
+
 				}
 				var aStringBuilder = new StringBuilder (textView.Text);
 				aStringBuilder.Remove (range.Location, range.Length);
@@ -258,7 +261,10 @@ namespace JudoDotNetXamariniOSSDK
 					ccPlaceHolder.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 					textScroller.ScrollEnabled = false;
 
+
+
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
+
 
 					StatusHelpLabel.Text = "Enter Card Details";
 
@@ -329,6 +335,36 @@ namespace JudoDotNetXamariniOSSDK
 
 			expiryText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
+				flashForError = false;
+				updateText = false;
+				scrollForward = false;
+				deleting = false;
+				ret = false;
+				deletedSpace = false;
+
+				if (replace.Length == 0) {
+					updateText = true;
+					deleting = true;
+
+
+					if (textView.Text.Length != 0) {	// handle case of delete when there are no characters left to delete
+
+						char c = textView.Text.Substring (range.Location, 1).ToCharArray () [0];
+						if (range.Location != 0 && range.Length == 1 && (c == ' ' || c == '/')) {
+							range.Location--;
+							range.Length++;
+							deletedSpace = true;
+						}
+					} else {
+						ccText.BecomeFirstResponder();
+
+						if(ccText.Text.Length ==(cardHelper.LengthOfFormattedStringForType(Type)))
+						{
+							ccText.Text = ccText.Text.Remove(ccText.Text.Length - 1);
+						}
+						return false;
+					}
+				}
 
 				var formattedText = "";
 				scrollForward=false;
@@ -431,6 +467,21 @@ namespace JudoDotNetXamariniOSSDK
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
 
 
+
+				if (replace.Length == 0) {
+
+				if (textView.Text.Length == 0) {	// handle case of delete when there are no characters left to delete
+						expiryText.BecomeFirstResponder();
+
+						if(expiryText.Text.Length ==5)
+						{
+							expiryText.Text = expiryText.Text.Remove(expiryText.Text.Length - 1);
+						}
+				
+				}
+				}
+
+
 				scrollForward=false;
 				var aStringBuilder = new StringBuilder (textView.Text);
 				aStringBuilder.Remove (range.Location, range.Length);
@@ -448,7 +499,7 @@ namespace JudoDotNetXamariniOSSDK
 				}
 
 				updateText = true;
-				if (newTextOrig.Length==cardHelper.ccvFormat(Type).Length) {
+				if (newTextOrig.Length== (Type == CreditCardType.AMEX ? 4 : 3)) {
 					hasFullCCV=true;
 					DismissKeyboardAction ();
 				} 
