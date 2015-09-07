@@ -99,6 +99,12 @@ namespace JudoDotNetXamariniOSSDK
 			entryField.Text="";
 		}
 			
+
+		public override void DismissKeyboardAction ()
+		{
+			entryField.ResignFirstResponder ();
+		}
+
 	}
 }
 

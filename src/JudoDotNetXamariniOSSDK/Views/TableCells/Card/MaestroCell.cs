@@ -186,6 +186,15 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			SetUpCell ();
 		}
+
+
+
+		public override void DismissKeyboardAction ()
+		{
+			IssueNumberTextField.ResignFirstResponder ();
+			StartDateTextField.ResignFirstResponder ();
+		}
+			
 	}
 }
 

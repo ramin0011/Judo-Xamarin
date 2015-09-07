@@ -61,7 +61,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0N-Zt-sIi" userLabel="expiryPlaceHolder" customClass="PlaceHolderTextView">
                                                 <rect key="frame" x="212" y="6" width="65" height="32"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
                                                         <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
@@ -84,7 +84,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
                                                 <rect key="frame" x="281" y="6" width="47" height="32"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="32"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>

@@ -253,14 +253,12 @@ namespace JudoDotNetXamariniOSSDK
 					hasFullNumber = false;
 				}
 
-				if (hasFullNumber) 
+				if (!hasFullNumber) 
 				{
-					// something
-				} else {
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
 					int formattedLen = ccPlaceHolder.Text.Length;
-					//ccPlaceHolder.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
+				
 					textScroller.ScrollEnabled = false;
 
 
@@ -481,7 +479,13 @@ namespace JudoDotNetXamariniOSSDK
 						}
 				
 				}
+
 				}
+
+				if (cvTwoText.Text.Length== (Type == CreditCardType.AMEX ? 4 : 3)&& replace.Length != 0) 
+					{
+						return false;
+					}
 
 
 				scrollForward=false;
@@ -545,7 +549,6 @@ namespace JudoDotNetXamariniOSSDK
 			if (updateText) {
 				int textViewLen = formattedText.Length;
 				int formattedLen = placeView.Text.Length;
-			//	placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 
 				if ((formattedLen > textViewLen) && !deleting) {
 					char c = placeView.Text.Substring (textViewLen, 1).ToCharArray () [0];
@@ -611,13 +614,13 @@ namespace JudoDotNetXamariniOSSDK
 			UIView.Transition (creditCardImage, ccBackImage, 0.25f, UIViewAnimationOptions.TransitionFlipFromLeft, null);
 		}
 
-		void DismissKeyboardAction ()
+		public override void DismissKeyboardAction ()
 		{			
 			ccPlaceHolder.ResignFirstResponder ();
 			ccText.ResignFirstResponder ();
 
 			expiryText.ResignFirstResponder ();
-			expiryText.ResignFirstResponder ();
+			expiryPlaceHolder.ResignFirstResponder ();
 
 			cvTwoPlaceHolder.ResignFirstResponder ();
 			cvTwoText.ResignFirstResponder ();
@@ -659,15 +662,7 @@ namespace JudoDotNetXamariniOSSDK
 		public void CleanUp ()
 		{
 		SetUpCell ();
-
-//			string ccv;
-//			string creditCardNum;
-//			bool deleting = false;
-//			bool ret = false;
-//			int year;
-//			bool hasFullNumber = false;
-//			SetupPlaceViews ();
-//
+	
 			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
 				creditCardImage.Image = defaultImage;

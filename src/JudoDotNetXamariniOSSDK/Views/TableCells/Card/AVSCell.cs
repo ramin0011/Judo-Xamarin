@@ -112,6 +112,15 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			SetUpCell ();
 		}
+
+	
+
+		public override void DismissKeyboardAction ()
+		{
+			PostcodeTextField.ResignFirstResponder ();
+		}
+
+
 	}
 }
 

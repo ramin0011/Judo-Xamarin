@@ -81,7 +81,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		void DismissKeyboardAction ()
 		{
-			tokenCell.CCVEntryOutlet.ResignFirstResponder ();
+			tokenCell.DismissKeyboardAction ();
 		}
 
 		void SetUpTableView ()

@@ -18,6 +18,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		public abstract void SetUpCell ();
 
+		public abstract void DismissKeyboardAction();
+
 	}
 
 
