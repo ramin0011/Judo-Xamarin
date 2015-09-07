@@ -30,11 +30,10 @@ namespace JudoDotNetXamariniOSSDK
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-			SetUpCell ();
 		}
 
 
-		void SetUpCell ()
+		public override void  SetUpCell ()
 		{
 			countrySheet = new UIActionSheet ("Select Country");
 			countrySheet.TintColor = UIColor.Black;

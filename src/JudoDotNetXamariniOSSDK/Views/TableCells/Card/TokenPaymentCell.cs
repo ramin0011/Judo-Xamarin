@@ -37,10 +37,9 @@ namespace JudoDotNetXamariniOSSDK
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-			SetUpCell ();
 		}
 
-		void SetUpCell ()
+		public override void SetUpCell ()
 		{
 			UIImage frontImage = cardHelper.CreditCardImage (JudoConfiguration.Instance.TokenCardType);
 

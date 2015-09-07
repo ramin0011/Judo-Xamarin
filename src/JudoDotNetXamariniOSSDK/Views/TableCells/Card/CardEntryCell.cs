@@ -70,11 +70,10 @@ namespace JudoDotNetXamariniOSSDK
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-			SetUpCell ();
+
 		}
 
-
-		void SetUpCell ()
+		public override void SetUpCell ()
 		{
 
 			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
@@ -105,6 +104,7 @@ namespace JudoDotNetXamariniOSSDK
 			Type = CreditCardType.InvalidCard;
 			SetUpMaskedInput ();
 
+
 			ExpiryInfoButton.TouchUpInside += (sender, ev) => {
 				PushExpiryInfoView ();
 			};
@@ -114,10 +114,10 @@ namespace JudoDotNetXamariniOSSDK
 		void SetupPlaceViews()
 		{
   
-			ccText.Text = "000011112222333344445555";
+			ccText.Text = "11112222333344445555";
 
 			UITextPosition start = ccText.BeginningOfDocument;
-			UITextPosition end = ccText.GetPosition (start, 16);
+			UITextPosition end = ccText.GetPosition (start, 20);
 			UITextRange range = ccText.GetTextRange (start, end);
 			CGRect r = ccText.GetFirstRectForRange (range);
 			CGSize frameRect = r.Size;
@@ -128,7 +128,7 @@ namespace JudoDotNetXamariniOSSDK
 
 
 			CGRect frame = ccPlaceHolder.Frame;
-			ccPlaceHolder.Font = ccText.Font;
+			ccPlaceHolder.Font =  JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			ccPlaceHolder.Text = "0000 0000 0000 0000";
 
 			ccPlaceHolder.SetShowTextOffSet (0);
@@ -258,7 +258,7 @@ namespace JudoDotNetXamariniOSSDK
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
 					int formattedLen = ccPlaceHolder.Text.Length;
-					ccPlaceHolder.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
+					//ccPlaceHolder.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 					textScroller.ScrollEnabled = false;
 
 
@@ -543,7 +543,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (updateText) {
 				int textViewLen = formattedText.Length;
 				int formattedLen = placeView.Text.Length;
-				placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
+			//	placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 
 				if ((formattedLen > textViewLen) && !deleting) {
 					char c = placeView.Text.Substring (textViewLen, 1).ToCharArray () [0];
@@ -551,7 +551,12 @@ namespace JudoDotNetXamariniOSSDK
 						formattedText = formattedText + " ";
 					else if (c == '/')
 						formattedText = formattedText + "/"; 
+
+					textViewLen = formattedText.Length;
+					formattedLen = placeView.Text.Length;
+
 				}
+				placeView.SetShowTextOffSet (Math.Min (textViewLen, formattedLen));
 				if (!deleting || hasFullNumber || deletedSpace) {
 					textview.Text = formattedText;
 				} else {
@@ -658,6 +663,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			});
 		}
+			
 	}
 }
 

@@ -21,5 +21,11 @@ namespace JudoDotNetXamariniOSSDK
 			return (ReassuringTextCell)Nib.Instantiate (null, null) [0];
 		}
 	
+
+		public override void SetUpCell ()
+		{
+
+		}
+
 	}
 }

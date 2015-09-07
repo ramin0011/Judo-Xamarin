@@ -28,9 +28,11 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			var cell = tableView.DequeueReusableCell (TableItems [indexPath.Row].Key);
 			if (cell == null) {
-				cell = (CardCell)TableItems [indexPath.Row];
-
+				var ccell = (CardCell)TableItems [indexPath.Row];
+				ccell.SetUpCell ();
+				return ccell;
 			}
+
 			return cell;
 		}
 

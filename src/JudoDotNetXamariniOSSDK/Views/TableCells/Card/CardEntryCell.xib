@@ -36,19 +36,25 @@
                                     <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sL-ek-4SN">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="44"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa5-fr-OQD" userLabel="xHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="8" y="6" width="208" height="32"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa5-fr-OQD" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
+                                                <rect key="frame" x="8" y="6" width="248" height="32"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-0P-eKk" userLabel="xText">
-                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="32"/>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-0P-eKk" userLabel="ccText">
+                                                        <rect key="frame" x="0.0" y="0.0" width="248" height="32"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="32" id="dCl-xV-Z5T"/>
+                                                            <constraint firstAttribute="width" constant="248" id="srO-IC-b1B"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
                                                     </textView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="208" id="1uA-5w-NJS"/>
+                                                    <constraint firstAttribute="width" constant="248" id="1uA-5w-NJS"/>
+                                                    <constraint firstItem="xRq-0P-eKk" firstAttribute="top" secondItem="aa5-fr-OQD" secondAttribute="top" id="H5q-An-NmS"/>
+                                                    <constraint firstItem="xRq-0P-eKk" firstAttribute="leading" secondItem="aa5-fr-OQD" secondAttribute="leading" id="Igi-pE-68B"/>
                                                     <constraint firstAttribute="height" constant="32" id="Y4K-FV-EQf"/>
                                                 </constraints>
                                             </view>
@@ -76,7 +82,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="281" y="5" width="47" height="32"/>
+                                                <rect key="frame" x="281" y="6" width="47" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="32"/>
@@ -111,11 +117,11 @@
                                             <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="8" symbolic="YES" id="Rse-Wi-ulO"/>
                                             <constraint firstAttribute="width" constant="396" id="TCm-RB-HxT"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" id="aqb-jT-9K6"/>
-                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="5" id="bKT-2E-1z2"/>
+                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="6" id="bKT-2E-1z2"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="top" secondItem="aa5-fr-OQD" secondAttribute="top" id="ezH-i3-keh"/>
                                             <constraint firstAttribute="bottom" secondItem="S0N-Zt-sIi" secondAttribute="bottom" constant="6" id="hNc-Sp-IVV"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="bottom" secondItem="aa5-fr-OQD" secondAttribute="bottom" id="ifb-vU-lwL"/>
-                                            <constraint firstAttribute="bottom" secondItem="RdY-kw-XYs" secondAttribute="bottom" constant="7" id="uZ5-iO-HM5"/>
+                                            <constraint firstAttribute="bottom" secondItem="RdY-kw-XYs" secondAttribute="bottom" constant="6" id="uZ5-iO-HM5"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="9sL-ek-4SN" secondAttribute="centerY" id="ysA-Fj-vFT"/>
                                         </constraints>
                                     </scrollView>
