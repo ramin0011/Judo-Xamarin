@@ -674,7 +674,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			if (type == CreditCardType.Maestro) {
-				cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
+				cardViewModel.StartDate = StartDateTextField.Text;
 				cardViewModel.IssueNumber = IssueNumberTextField.Text;
 			}
 

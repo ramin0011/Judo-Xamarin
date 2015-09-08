@@ -177,7 +177,7 @@
     <BundleResource Include="Resources\ic_3ds_logos%403x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_shadow_light.png" />
@@ -225,7 +225,7 @@
     <BundleResource Include="Resources\ic_lock%403x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_shadow_light.png" />
@@ -236,7 +236,7 @@
     <BundleResource Include="Resources\ic_selector_country_%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\btn_cancel_light_%403x.png" />
@@ -244,10 +244,10 @@
     <BundleResource Include="Resources\btn_cancel_light%402x.png" />
     <BundleResource Include="Resources\btn_pay_inactive_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_inactive_iPhone6%402x.png" />
-    <BundleResource Include="Resources\btn_pay_inactive_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\btn_pay_inactive_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6%402x.png" />
-    <BundleResource Include="Resources\btn_pay_normal_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
     <BundleResource Include="JudoTheme.strings" />
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,8 @@ namespace JudoPayiOSXamarinSampleApp
 			Window.TintColor = UIColor.Black;
 		 	Window.MakeKeyAndVisible ();
 			ConfigureJudoSettings ();
-			return true;   }
+			return true;   
+        }
 			
         // This method is invoked when the application is about to move from active to inactive state.
         // OpenGL applications should use this method to pause.
