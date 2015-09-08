@@ -9,28 +9,28 @@ using System.CodeDom.Compiler;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	[Register ("CreditCardView")]
-	partial class CreditCardView
+	[Register ("TokenPreAuthorisationView")]
+	partial class TokenPreAuthorisationView
 	{
 		[Outlet]
 		UIKit.UIView EncapsulatingView { get; set; }
 
 		[Outlet]
-		UIKit.UIButton SubmitButton { get; set; }
+		UIKit.UIButton PaymentButton { get; set; }
 
 		[Outlet]
 		UIKit.UITableView TableView { get; set; }
-
+		
 		void ReleaseDesignerOutlets ()
 		{
-			if (SubmitButton != null) {
-				SubmitButton.Dispose ();
-				SubmitButton = null;
-			}
-
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
+			}
+
+			if (PaymentButton != null) {
+				PaymentButton.Dispose ();
+				PaymentButton = null;
 			}
 
 			if (TableView != null) {

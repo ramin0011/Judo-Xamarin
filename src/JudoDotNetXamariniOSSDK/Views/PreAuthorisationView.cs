@@ -123,10 +123,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		void DismissKeyboardAction ()
 		{
-			detailCell.ccTextOutlet.ResignFirstResponder ();
-			avsCell.PostcodeTextFieldOutlet.ResignFirstResponder ();
-			maestroCell.StartDateTextFieldOutlet.ResignFirstResponder ();
-			maestroCell.IssueNumberTextFieldOutlet.ResignFirstResponder ();
+			detailCell.DismissKeyboardAction();
+			avsCell.DismissKeyboardAction();
+			maestroCell.DismissKeyboardAction();
 		}
 
 		private void UpdateUI ()

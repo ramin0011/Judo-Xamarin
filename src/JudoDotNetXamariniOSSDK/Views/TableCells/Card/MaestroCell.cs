@@ -33,7 +33,6 @@ namespace JudoDotNetXamariniOSSDK
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-			SetUpCell ();
 		}
 
 		void FlashCheckDateLabel ()
@@ -45,7 +44,7 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		void SetUpCell ()
+		public override void SetUpCell ()
 		{
 			StartDateTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
@@ -187,6 +186,15 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			SetUpCell ();
 		}
+
+
+
+		public override void DismissKeyboardAction ()
+		{
+			IssueNumberTextField.ResignFirstResponder ();
+			StartDateTextField.ResignFirstResponder ();
+		}
+			
 	}
 }
 

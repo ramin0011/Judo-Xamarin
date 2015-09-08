@@ -20,6 +20,17 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			return (ReassuringTextCell)Nib.Instantiate (null, null) [0];
 		}
-	
+
+
+		public override void DismissKeyboardAction ()
+		{
+
+		}
+
+		public override void SetUpCell ()
+		{
+
+		}
+
 	}
 }

@@ -234,7 +234,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public int LengthOfFormattedStringForType (CreditCardType type)
 		{
-			int idx = 0;
+			int idx = 16;
 
 			switch (type) {
 			case CreditCardType.Visa:
@@ -375,7 +375,7 @@ namespace JudoDotNetXamariniOSSDK
 			default:
 				break;
 			}
-			return justNumber ? number : number + additions;
+			return number;
 		}
 
 

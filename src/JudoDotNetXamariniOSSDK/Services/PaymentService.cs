@@ -72,7 +72,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenPaymentViewModel tokenPayment)
+		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenOperationViewModel tokenPayment)
 		{
             try
             {
@@ -94,6 +94,28 @@ namespace JudoDotNetXamariniOSSDK
 				return null;
 			}
 
+		}
+
+		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenOperationViewModel tokenPayment)
+		{
+			TokenPaymentModel payment = new TokenPaymentModel {
+				JudoId = JudoConfiguration.Instance.JudoID,
+				YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
+				YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
+				Amount = decimal.Parse(tokenPayment.Amount),
+				CardToken = tokenPayment.Token,
+				CV2 = tokenPayment.CV2,
+				ConsumerToken=tokenPayment.ConsumerToken
+			};
+			try
+			{
+				Task<IResult<ITransactionResult>> task =  _judoAPI.PreAuths.Create(payment);
+				return await task;
+			}
+			catch(Exception e){
+				Console.WriteLine(e.InnerException.ToString());
+				return null;
+			}
 		}
 	}
 }

@@ -13,6 +13,9 @@ namespace JudoDotNetXamariniOSSDK
 	partial class CardEntryCell
 	{
 		[Outlet]
+		JudoDotNetXamariniOSSDK.PlaceHolderTextView ccPlaceHolder { get; set; }
+
+		[Outlet]
 		UIKit.UITextView ccText { get; set; }
 
 		[Outlet]
@@ -22,13 +25,22 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIImageView creditCardImage { get; set; }
 
 		[Outlet]
+		JudoDotNetXamariniOSSDK.PlaceHolderTextView cvTwoPlaceHolder { get; set; }
+
+		[Outlet]
+		UIKit.UITextView cvTwoText { get; set; }
+
+		[Outlet]
 		UIKit.UIButton ExpiryInfoButton { get; set; }
 
 		[Outlet]
-		UIKit.UILabel PaymentErrorLabel { get; set; }
+		JudoDotNetXamariniOSSDK.PlaceHolderTextView expiryPlaceHolder { get; set; }
 
 		[Outlet]
-		JudoDotNetXamariniOSSDK.PlaceHolderTextView placeView { get; set; }
+		UIKit.UITextView expiryText { get; set; }
+
+		[Outlet]
+		UIKit.UILabel PaymentErrorLabel { get; set; }
 
 		[Outlet]
 		UIKit.UILabel StatusHelpLabel { get; set; }
@@ -38,6 +50,11 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (ccPlaceHolder != null) {
+				ccPlaceHolder.Dispose ();
+				ccPlaceHolder = null;
+			}
+
 			if (ccText != null) {
 				ccText.Dispose ();
 				ccText = null;
@@ -53,19 +70,34 @@ namespace JudoDotNetXamariniOSSDK
 				creditCardImage = null;
 			}
 
+			if (cvTwoPlaceHolder != null) {
+				cvTwoPlaceHolder.Dispose ();
+				cvTwoPlaceHolder = null;
+			}
+
+			if (cvTwoText != null) {
+				cvTwoText.Dispose ();
+				cvTwoText = null;
+			}
+
 			if (ExpiryInfoButton != null) {
 				ExpiryInfoButton.Dispose ();
 				ExpiryInfoButton = null;
 			}
 
+			if (expiryPlaceHolder != null) {
+				expiryPlaceHolder.Dispose ();
+				expiryPlaceHolder = null;
+			}
+
+			if (expiryText != null) {
+				expiryText.Dispose ();
+				expiryText = null;
+			}
+
 			if (PaymentErrorLabel != null) {
 				PaymentErrorLabel.Dispose ();
 				PaymentErrorLabel = null;
-			}
-
-			if (placeView != null) {
-				placeView.Dispose ();
-				placeView = null;
 			}
 
 			if (StatusHelpLabel != null) {

@@ -10,12 +10,12 @@ using CoreGraphics;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class TokenPaymentView : UIViewController
+	public partial class TokenPreAuthorisationView : UIViewController
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;
 		IErrorPresenter errorPresenter;
-		public TokenPaymentView (IPaymentService paymentService) : base ("TokenPaymentView", null)
+		public TokenPreAuthorisationView (IPaymentService paymentService) : base ("TokenPreAuthorisationView", null)
 		{
 			_paymentService = paymentService;
 			errorPresenter = new ResponseErrorPresenter ();
@@ -117,11 +117,11 @@ namespace JudoDotNetXamariniOSSDK
 				ConsumerToken = instance.ConsumerToken,
 				CV2 = tokenCell.CCV,
 				Token = instance.CardToken,
-				Amount = "6.66",
+				Amount = "4.50",
 			};
 			PaymentButton.Hidden = true;
 
-			_paymentService.MakeTokenPayment (tokenPayment).ContinueWith (reponse => {
+			_paymentService.MakeTokenPreAuthorisation (tokenPayment).ContinueWith (reponse => {
 				var result = reponse.Result;
 				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
 					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
@@ -130,7 +130,7 @@ namespace JudoDotNetXamariniOSSDK
 						Currency = paymentreceipt.Currency,
 						OriginalAmount = paymentreceipt.Amount,
 						ReceiptId = paymentreceipt.ReceiptId,
-						Message = "Token Payment Success"
+						Message = "Pre Authorisation Success"
 					};
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
@@ -141,7 +141,7 @@ namespace JudoDotNetXamariniOSSDK
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						errorPresenter.DisplayError(result,"Token Payment has failed");	
+						errorPresenter.DisplayError(result,"Token Pre Authorisation has failed");	
 						PaymentButton.Hidden = false;
 					});
 				}

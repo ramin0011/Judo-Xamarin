@@ -20,12 +20,15 @@ namespace JudoPayiOSXamarinSampleApp
 
 		[Outlet]
 		UIKit.UIButton TokenPaymentButton { get; set; }
+
+		[Outlet]
+		UIKit.UIButton TokenPreauthButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (TokenPaymentButton != null) {
-				TokenPaymentButton.Dispose ();
-				TokenPaymentButton = null;
+			if (TokenPreauthButton != null) {
+				TokenPreauthButton.Dispose ();
+				TokenPreauthButton = null;
 			}
 
 			if (MakeAPaymentButton != null) {
@@ -36,6 +39,11 @@ namespace JudoPayiOSXamarinSampleApp
 			if (RegisterCardButton != null) {
 				RegisterCardButton.Dispose ();
 				RegisterCardButton = null;
+			}
+
+			if (TokenPaymentButton != null) {
+				TokenPaymentButton.Dispose ();
+				TokenPaymentButton = null;
 			}
 		}
 	}
