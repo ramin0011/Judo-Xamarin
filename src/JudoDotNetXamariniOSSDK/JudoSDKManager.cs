@@ -104,8 +104,9 @@ namespace JudoDotNetXamariniOSSDK
 			return receiptView;
 
 		}
+			
 
-		public static PreAuthorisationView GetRegisterCardView ()
+		public static PreAuthorisationView GetPreAuthView ()
 		{
 			ServiceFactory serviceFactory = new ServiceFactory();
 			IPaymentService paymentService = serviceFactory.GetPaymentService ();
@@ -121,6 +122,16 @@ namespace JudoDotNetXamariniOSSDK
 			IPaymentService paymentService = serviceFactory.GetPaymentService ();
 
 			TokenPaymentView ctrl = new TokenPaymentView(paymentService);
+
+			return ctrl;
+		}
+
+		public static TokenPreAuthorisationView GetTokenPreAuthView ()
+		{
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView(paymentService);
 
 			return ctrl;
 		}

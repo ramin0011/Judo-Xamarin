@@ -30,12 +30,17 @@ namespace JudoPayiOSXamarinSampleApp
 			};
 
 			RegisterCardButton.TouchUpInside += (sender, ev) => {				
-				var registerCardView =JudoSDKManager.GetRegisterCardView();
+				var registerCardView =JudoSDKManager.GetPreAuthView();
 				this.NavigationController.PushViewController(registerCardView,true);
 			};
 			TokenPaymentButton.TouchUpInside += (sender, ev) => {				
-				var tokenView =JudoSDKManager.GetTokenPaymentView();
-				this.NavigationController.PushViewController(tokenView,true);
+				var tokenPaymentView =JudoSDKManager.GetTokenPaymentView();
+				this.NavigationController.PushViewController(tokenPaymentView,true);
+			};
+
+			TokenPreauthButton.TouchUpInside += (sender, ev) => {				
+				var tokenPreAuth =JudoSDKManager.GetTokenPreAuthView();
+				this.NavigationController.PushViewController(tokenPreAuth,true);
 			};
 		}
 

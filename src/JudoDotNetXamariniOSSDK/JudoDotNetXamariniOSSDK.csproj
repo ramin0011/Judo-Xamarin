@@ -75,6 +75,8 @@
     <InterfaceDefinition Include="Views\TableCells\Card\TokenPaymentCell.xib" />
     <InterfaceDefinition Include="Views\TokenPaymentView~iphone.xib" />
     <InterfaceDefinition Include="Views\TokenPaymentView~ipad.xib" />
+    <InterfaceDefinition Include="Views\TokenPreAuthorisationView~ipad.xib" />
+    <InterfaceDefinition Include="Views\TokenPreAuthorisationView~iphone.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
@@ -169,6 +171,10 @@
     <Compile Include="ViewModels\TokenPaymentViewModel.cs" />
     <Compile Include="Helpers\ResonseErrorPresenter.cs" />
     <Compile Include="Helpers\IErrorPresenter.cs" />
+    <Compile Include="Views\TokenPreAuthorisationView.cs" />
+    <Compile Include="Views\TokenPreAuthorisationView.designer.cs">
+      <DependentUpon>TokenPreAuthorisationView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
