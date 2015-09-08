@@ -5,6 +5,7 @@ using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -42,7 +43,46 @@ namespace JudoPayiOSXamarinSampleApp
 				var tokenPreAuth =JudoSDKManager.GetTokenPreAuthView();
 				this.NavigationController.PushViewController(tokenPreAuth,true);
 			};
+
+
+
 		}
+
+
+		void SetUpTableView ()
+		{
+
+			Dictionary<string,Delegate> buttonDictionary = new Dictionary<string,Delegate> ();
+
+			buttonDictionary.Add ("Make a Payment", delegate {    	
+				var creditCardView = JudoSDKManager.GetPaymentView ();
+				this.NavigationController.PushViewController (creditCardView, true);
+			});
+
+			buttonDictionary.Add ("PreAuthorise", delegate  {				
+				var preAuthoriseView =JudoSDKManager.GetPreAuthView();
+				this.NavigationController.PushViewController(preAuthoriseView,true);
+			});
+
+			buttonDictionary.Add ("Token Payment", delegate {				
+				var tokenPaymentView =JudoSDKManager.GetTokenPaymentView();
+				this.NavigationController.PushViewController(tokenPaymentView,true);
+			});
+
+			buttonDictionary.Add ("Token PreAuthorise", delegate {				
+				var tokenPreAuth =JudoSDKManager.GetTokenPreAuthView();
+				this.NavigationController.PushViewController(tokenPreAuth,true);
+			});
+
+
+
+
+			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
+			ButtonTable.Source = menuSource;
+//			TableView.SeparatorColor = UIColor.Clear;
+
+		}
+
 
 		public override void ViewWillAppear (bool animated)
 		{

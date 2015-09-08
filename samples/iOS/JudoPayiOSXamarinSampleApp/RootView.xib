@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootView">
             <connections>
+                <outlet property="ButtonTable" destination="4VD-Bi-aTJ" id="vrd-5J-63Q"/>
                 <outlet property="MakeAPaymentButton" destination="BV4-Bq-Bre" id="NLj-XK-meY"/>
                 <outlet property="RegisterCardButton" destination="vAG-bL-Ynx" id="cTq-yG-HuM"/>
                 <outlet property="TokenPaymentButton" destination="znr-lg-NRg" id="yVR-xL-meL"/>
@@ -50,6 +51,10 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4VD-Bi-aTJ">
+                    <rect key="frame" x="0.0" y="331" width="320" height="168"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

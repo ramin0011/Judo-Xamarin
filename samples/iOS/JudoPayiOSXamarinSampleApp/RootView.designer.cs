@@ -13,6 +13,9 @@ namespace JudoPayiOSXamarinSampleApp
 	partial class RootView
 	{
 		[Outlet]
+		UIKit.UITableView ButtonTable { get; set; }
+
+		[Outlet]
 		UIKit.UIButton MakeAPaymentButton { get; set; }
 
 		[Outlet]
@@ -26,9 +29,9 @@ namespace JudoPayiOSXamarinSampleApp
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (TokenPreauthButton != null) {
-				TokenPreauthButton.Dispose ();
-				TokenPreauthButton = null;
+			if (ButtonTable != null) {
+				ButtonTable.Dispose ();
+				ButtonTable = null;
 			}
 
 			if (MakeAPaymentButton != null) {
@@ -44,6 +47,11 @@ namespace JudoPayiOSXamarinSampleApp
 			if (TokenPaymentButton != null) {
 				TokenPaymentButton.Dispose ();
 				TokenPaymentButton = null;
+			}
+
+			if (TokenPreauthButton != null) {
+				TokenPreauthButton.Dispose ();
+				TokenPreauthButton = null;
 			}
 		}
 	}

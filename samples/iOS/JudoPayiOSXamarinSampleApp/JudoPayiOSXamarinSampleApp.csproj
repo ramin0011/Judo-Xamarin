@@ -110,6 +110,7 @@
     <Compile Include="RootView.designer.cs">
       <DependentUpon>RootView.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenuSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
