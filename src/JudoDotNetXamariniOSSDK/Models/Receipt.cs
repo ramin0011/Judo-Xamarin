@@ -17,12 +17,12 @@ namespace JudoDotNetXamariniOSSDK
         public string message { get; set; }
         public string currency { get; set; }
         public string judoID { get; set; }
-        public string marchantName { get; set; }
+        public string merchantName { get; set; }
         public string appearsOnStatementsAs { get; set; }
         public string consumerRef { get; set; }
         public string paymentRef { get; set; }
         public DateTime createdAt { get; set; }
-        public Dictionary metaData;
+        public Dictionary<string, string> metaData{ get; set; }
         public double originalAmount { get; set; }
         public double refunds { get; set; }
         public double netAmount { get; set; }
@@ -47,10 +47,10 @@ namespace JudoDotNetXamariniOSSDK
 
         UIImage receiptStatusImage()
         { 
-            UIImage image = ThemeBundleReplacement.BundledOrReplacementImage("ic_successful", null);
-            if([transactionType.ToLower() == "refund") // need to grab @refund string from resource
+            UIImage image = ThemeBundleReplacement.BundledOrReplacementImage("ic_successful", BundledOrReplacementOptions.BundledOrReplacement);
+            if(transactionType.ToLower() == "refund") // need to grab @refund string from resource
             {
-                image = ThemeBundleReplacement.BundledOrReplacementImage("ic_refund", null);
+                image = ThemeBundleReplacement.BundledOrReplacementImage("ic_refund", BundledOrReplacementOptions.BundledOrReplacement);
             }
             return image;
         }

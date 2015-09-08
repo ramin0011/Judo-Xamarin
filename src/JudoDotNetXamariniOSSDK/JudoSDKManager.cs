@@ -7,16 +7,15 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public class JudoSDKManager
 	{
-		internal readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
+		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
 
-		Card currentCard {get; set;}
-		CLLocation location {get; set;}
 		Dictionary<string, string> clientDetails {get; set;}
 		public static bool LocationEnabled{ get; set; }
 		public static bool ThreeDSecureEnabled{ get; set; }
 		public static bool AVSEnabled { get; set; }
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
+		public static bool RiskSignals{ get; set; }
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -63,7 +62,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static Dictionary<string, string> GetClientDetails(string deviceId)
 		{
-			
+		    return null;
 		}
 
 		public static void SetUserAgent()
@@ -73,30 +72,68 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static bool ShouldCheckUserAgent()
 		{
-
+		    return false;
 		}
 
 		public static void HandleApplicationOpenURL(string url)
 		{
 			
 		}
+			
 
-		public static CreditCardController GetCreditCardController()
-		{
-
-		}
-
-		//TODO: correct the parameter for failureBlock action to be something meaningful instead of a string
 		public static void MakeAPaymentCustomUI(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, UIViewController viewController, 
 								 Card card, UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
 		{
 
 		}
 
-		public static void MakeAPayment(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-									UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
+		public static CreditCardView GetPaymentView()
 		{
 
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			CreditCardView ctrl = new CreditCardView(paymentService);
+
+			return ctrl;
+        }
+
+		public static PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
+		{
+			PaymentReceipt receiptView = new PaymentReceipt (receipt);
+			return receiptView;
+
+		}
+			
+
+		public static PreAuthorisationView GetPreAuthView ()
+		{
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			PreAuthorisationView ctrl = new PreAuthorisationView(paymentService);
+
+			return ctrl;
+		}
+
+		public static TokenPaymentView GetTokenPaymentView ()
+		{
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			TokenPaymentView ctrl = new TokenPaymentView(paymentService);
+
+			return ctrl;
+		}
+
+		public static TokenPreAuthorisationView GetTokenPreAuthView ()
+		{
+			ServiceFactory serviceFactory = new ServiceFactory();
+			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+
+			TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView(paymentService);
+
+			return ctrl;
 		}
 
 		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
@@ -136,6 +173,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 		}
+			
 	}
 }
 

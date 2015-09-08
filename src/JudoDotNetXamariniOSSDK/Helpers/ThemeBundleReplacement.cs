@@ -41,12 +41,12 @@ namespace JudoDotNetXamariniOSSDK
 			const int mask = 0xFF;
 			nfloat divisor = 255.0f;
 
-			int r = (hex >> 24) & mask;
-			int g = (hex >> 16) & mask;
-			int b = (hex >> 8) & mask;
-			int a = hex & mask;
+			nfloat r = (hex >> 24) & mask;
+            nfloat g = (hex >> 16) & mask;
+            nfloat b = (hex >> 8) & mask;
+            nfloat a = hex & mask;
 
-			return UIColor.FromRGB (r / divisor, g / divisor, b / divisor, a / divisor);
+            return UIColor.FromRGB(r/divisor, g / divisor, b / divisor);
 		}
 
 		private static UIColor getColor(string color)
@@ -80,13 +80,16 @@ namespace JudoDotNetXamariniOSSDK
 						return image;
 					}
 				}
+                    break;
 				case BundledOrReplacementOptions.Bundled:
 				{
-					return UIImage.FromBundle (getFrameworkBundle ().PathForResource (imageName, "png"));
+					return UIImage.FromBundle (getFrameworkBundle().PathForResource (imageName, "png"));
 				}
 
 				break;
 			}
+
+		    return null;
 		}
 
 		public static string BundledOrReplacementString(string stringName, BundledOrReplacementOptions bundledOrReplacement)
@@ -102,11 +105,14 @@ namespace JudoDotNetXamariniOSSDK
 						return replacedString;
 					}
 				}
+                    break;
 				case BundledOrReplacementOptions.Bundled:
 				{
 					return getFrameworkBundle().LocalizedString (stringName, stringName, "JudoTheme", null);
 				}
 			}
+
+		    return null;
 		}
 
 		public static UIColor BundledOrReplacementColor(string colourName, BundledOrReplacementOptions bundledOrReplacement)
@@ -122,6 +128,8 @@ namespace JudoDotNetXamariniOSSDK
 					return getColor(BundledOrReplacementString(colourName, BundledOrReplacementOptions.Bundled));
 				}
 			}
+
+		    return null;
 		}
 
 
