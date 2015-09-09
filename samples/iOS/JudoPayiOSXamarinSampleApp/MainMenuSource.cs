@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using UIKit;
 using Foundation;
+using System.Linq;
 
 namespace JudoPayiOSXamarinSampleApp
 {
 	public class MainMenuSource: UITableViewSource
 	{
 
-		Dictionary<string,Delegate> ButtonDictionary;
+		Dictionary<string,Action> ButtonDictionary;
+		KeyValuePair<string,Action>[] ButtonArray;
 		string CellIdentifier = "genericCell";
+		List<UITableViewCell> TableCells;
 
-		public MainMenuSource (Dictionary<string,Delegate> buttonDictionary)
+		public MainMenuSource (Dictionary<string,Action> buttonDictionary)
 		{
+			TableCells = new List<UITableViewCell> ();
 			ButtonDictionary = buttonDictionary;
+			ButtonArray = buttonDictionary.ToArray ();
+			foreach (var buttonProperty in ButtonArray) {
+				var cell = new UITableViewCell ();
+				cell.TextLabel.Text = buttonProperty.Key;
+				TableCells.Add (cell);
+			}
 		}
 
 		public override nint RowsInSection (UITableView tableview, nint section)
@@ -23,33 +33,40 @@ namespace JudoPayiOSXamarinSampleApp
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
+
 			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
-			receiptcell = TableItems [indexPath.Row];
-			UITableViewCell cell= new UITableViewCell (UITableViewCellStyle.Value1, CellIdentifier);
+			cell = TableCells[indexPath.Row];
 			cell.IndentationLevel = 0;
-			cell.TextLabel.Text = receiptcell.Label;
-			cell.DetailTextLabel.Text = receiptcell.Value;
+
 			if (cell != null) {
 				return cell;
-			} else
-				return  new UITableViewCell (UITableViewCellStyle.Value1, CellIdentifier);
+			} else {
+				cell = new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
+				cell.TextLabel.Text = ButtonArray [indexPath.Row].Key;
+				return cell;
+			}
 		}
 
 		public float GetTableHeight()
 		{
 			float height=0f;
-			foreach (ReceiptStringItemCell cell in TableItems) {
+			foreach (UITableViewCell cell in TableCells) {
 				height += (float)cell.Frame.Height;
 			}
 			return height;
 		}
 
-
+		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
+		{
+			ButtonArray [indexPath.Row].Value.Invoke ();
+			var cell = TableCells [indexPath.Row];
+			cell.SetSelected (false, false);
+		}
 
 		public override nfloat GetHeightForRow (UITableView tableView, NSIndexPath indexPath)
 		{
 
-			ReceiptStringItemCell cell = TableItems [indexPath.Row];
+			UITableViewCell cell = TableCells [indexPath.Row];
 			return cell.Bounds.Height;
 		}
 	}

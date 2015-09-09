@@ -350,7 +350,7 @@ namespace JudoDotNetXamariniOSSDK
 			return type == CreditCardType.AMEX ? @"%04.4u" : @"%03.3u";
 		}
 
-		public string promptStringForType (CreditCardType type, bool justNumber)
+		public string PromptStringForType (CreditCardType type, bool justNumber)
 		{
 			string number = "0000 0000 0000 0000";
 			string additions = @"";
@@ -376,6 +376,34 @@ namespace JudoDotNetXamariniOSSDK
 				break;
 			}
 			return number;
+		}
+
+
+		public string CVTwoPromptForType (CreditCardType type, bool justNumber)
+		{
+			string text = "CV2";
+
+
+			switch (type) {
+			case CreditCardType.Visa:
+			case CreditCardType.MasterCard:
+			case CreditCardType.Discover:		// { 4-4-4-4}
+			case CreditCardType.Maestro:
+
+				text = @"CV2";
+				break;
+			case CreditCardType.AMEX:			// {4-6-5}
+
+				text = @"CIDV";
+				break;
+			case CreditCardType.DinersClub:	// {4-6-4}
+				
+				text = @"CV2";
+				break;
+			default:
+				break;
+			}
+			return text;
 		}
 
 

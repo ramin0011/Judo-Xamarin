@@ -6,6 +6,7 @@ using UIKit;
 using JudoDotNetXamariniOSSDK;
 using System.Drawing;
 using System.Collections.Generic;
+using CoreGraphics;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -24,37 +25,28 @@ namespace JudoPayiOSXamarinSampleApp
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			SetUpTableView ();
+
+			UILabel label = new UILabel (new CGRect (0, 0, 120f, 30f));
+			label.TextAlignment = UITextAlignment.Center;
+			label.Font =UIFont.FromName("Courier", 17.0f);
+			label.BackgroundColor = UIColor.Clear;
 			
-			MakeAPaymentButton.TouchUpInside += (sender, ev) => {				
-				var creditCardView =JudoSDKManager.GetPaymentView();
-				this.NavigationController.PushViewController(creditCardView,true);
-			};
-
-			RegisterCardButton.TouchUpInside += (sender, ev) => {				
-				var registerCardView =JudoSDKManager.GetPreAuthView();
-				this.NavigationController.PushViewController(registerCardView,true);
-			};
-			TokenPaymentButton.TouchUpInside += (sender, ev) => {				
-				var tokenPaymentView =JudoSDKManager.GetTokenPaymentView();
-				this.NavigationController.PushViewController(tokenPaymentView,true);
-			};
-
-			TokenPreauthButton.TouchUpInside += (sender, ev) => {				
-				var tokenPreAuth =JudoSDKManager.GetTokenPreAuthView();
-				this.NavigationController.PushViewController(tokenPreAuth,true);
-			};
-
-
-
+			//[label setTextColor:[UIColor whiteColor]];
+			//[label setText:text];
+			label.Text = "Judo Sample App";
+			this.NavigationController.NavigationBar.TopItem.TitleView = label;
+			
 		}
 
 
 		void SetUpTableView ()
 		{
+			UITableViewCell cell = new UITableViewCell ();
 
-			Dictionary<string,Delegate> buttonDictionary = new Dictionary<string,Delegate> ();
+			Dictionary<string,Action> buttonDictionary = new Dictionary<string,Action> ();
 
-			buttonDictionary.Add ("Make a Payment", delegate {    	
+			buttonDictionary.Add ("Make a Payment", ()=> {    	
 				var creditCardView = JudoSDKManager.GetPaymentView ();
 				this.NavigationController.PushViewController (creditCardView, true);
 			});
@@ -75,11 +67,9 @@ namespace JudoPayiOSXamarinSampleApp
 			});
 
 
-
-
 			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
 			ButtonTable.Source = menuSource;
-//			TableView.SeparatorColor = UIColor.Clear;
+			TableHeightConstrant.Constant = menuSource.GetTableHeight ()+60f;
 
 		}
 

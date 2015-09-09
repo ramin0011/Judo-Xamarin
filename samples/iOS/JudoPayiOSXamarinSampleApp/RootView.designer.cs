@@ -16,42 +16,18 @@ namespace JudoPayiOSXamarinSampleApp
 		UIKit.UITableView ButtonTable { get; set; }
 
 		[Outlet]
-		UIKit.UIButton MakeAPaymentButton { get; set; }
-
-		[Outlet]
-		UIKit.UIButton RegisterCardButton { get; set; }
-
-		[Outlet]
-		UIKit.UIButton TokenPaymentButton { get; set; }
-
-		[Outlet]
-		UIKit.UIButton TokenPreauthButton { get; set; }
+		UIKit.NSLayoutConstraint TableHeightConstrant { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (TableHeightConstrant != null) {
+				TableHeightConstrant.Dispose ();
+				TableHeightConstrant = null;
+			}
+
 			if (ButtonTable != null) {
 				ButtonTable.Dispose ();
 				ButtonTable = null;
-			}
-
-			if (MakeAPaymentButton != null) {
-				MakeAPaymentButton.Dispose ();
-				MakeAPaymentButton = null;
-			}
-
-			if (RegisterCardButton != null) {
-				RegisterCardButton.Dispose ();
-				RegisterCardButton = null;
-			}
-
-			if (TokenPaymentButton != null) {
-				TokenPaymentButton.Dispose ();
-				TokenPaymentButton = null;
-			}
-
-			if (TokenPreauthButton != null) {
-				TokenPreauthButton.Dispose ();
-				TokenPreauthButton = null;
 			}
 		}
 	}

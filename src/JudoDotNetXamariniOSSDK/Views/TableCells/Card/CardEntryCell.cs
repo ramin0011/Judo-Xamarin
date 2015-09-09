@@ -25,7 +25,6 @@ namespace JudoDotNetXamariniOSSDK
 		CreditCard cardHelper = new CreditCard ();
 		public CreditCardType Type {get; set;}
 
-		//string formattedText;
 		bool flashForError = false;
 		bool updateText = false;
 		bool scrollForward = false;
@@ -299,7 +298,9 @@ namespace JudoDotNetXamariniOSSDK
 						}
 
 						if (len == Card.CC_LEN_FOR_TYPE) {
-							ccPlaceHolder.Text = cardHelper.promptStringForType (Type, true);
+							ccPlaceHolder.Text = cardHelper.PromptStringForType (Type, true);
+							cvTwoPlaceHolder.Text = cardHelper.CVTwoPromptForType (Type, true);
+							cvTwoPlaceHolder.SetShowTextOffSet (Math.Min (0, 0));
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
@@ -602,7 +603,7 @@ namespace JudoDotNetXamariniOSSDK
 			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
 
-			ccPlaceHolder.SetText (cardHelper.promptStringForType (Type, false));
+			ccPlaceHolder.SetText (cardHelper.PromptStringForType (Type, false));
 
 			textScroller.ScrollEnabled = true;
 			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
