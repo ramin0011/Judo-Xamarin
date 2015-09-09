@@ -82,7 +82,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="282" y="6" width="67" height="32"/>
+                                                <rect key="frame" x="274" y="6" width="67" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
                                                         <rect key="frame" x="0.0" y="0.0" width="67" height="32"/>
@@ -97,7 +97,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
-                                                <rect key="frame" x="329" y="12" width="20" height="20"/>
+                                                <rect key="frame" x="326" y="9" width="20" height="20"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" image="ic_info.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -111,11 +111,11 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="aa5-fr-OQD" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leadingMargin" constant="-8" id="BaB-20-TsP"/>
-                                            <constraint firstAttribute="trailing" secondItem="LvH-h0-2Rd" secondAttribute="trailing" constant="47" id="CKH-FG-nZY"/>
-                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" constant="8" id="Qje-z5-eU7"/>
-                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="-20" id="Rse-Wi-ulO"/>
+                                            <constraint firstAttribute="trailing" secondItem="LvH-h0-2Rd" secondAttribute="trailing" constant="50" id="CKH-FG-nZY"/>
+                                            <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" id="Qje-z5-eU7"/>
+                                            <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="-15" id="Rse-Wi-ulO"/>
                                             <constraint firstAttribute="width" constant="396" id="TCm-RB-HxT"/>
-                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" id="aqb-jT-9K6"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="LvH-h0-2Rd" secondAttribute="centerY" constant="3" id="aqb-jT-9K6"/>
                                             <constraint firstItem="RdY-kw-XYs" firstAttribute="top" secondItem="9sL-ek-4SN" secondAttribute="top" constant="6" id="bKT-2E-1z2"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="top" secondItem="aa5-fr-OQD" secondAttribute="top" id="ezH-i3-keh"/>
                                             <constraint firstAttribute="bottom" secondItem="S0N-Zt-sIi" secondAttribute="bottom" constant="6" id="hNc-Sp-IVV"/>
