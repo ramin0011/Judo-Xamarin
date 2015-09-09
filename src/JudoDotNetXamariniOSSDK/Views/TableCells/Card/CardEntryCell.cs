@@ -41,6 +41,8 @@ namespace JudoDotNetXamariniOSSDK
 		int year;
 		bool hasFullNumber = false;
 
+
+
 		bool hasFullDate = false;
 
 		bool hasFullCCV = false;
@@ -252,17 +254,22 @@ namespace JudoDotNetXamariniOSSDK
 					hasFullNumber = false;
 				}
 
+				if(textScroller.ContentOffset.X< 10f)
+				{
+					ccPlaceHolderWidthConstraint.Constant =198f;
+					ccPLaceHolderToScrollViewConstraint.Constant =-8f;
+				}
 				if (!hasFullNumber) 
 				{
+
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
 					int formattedLen = ccPlaceHolder.Text.Length;
 				
 					textScroller.ScrollEnabled = false;
 
-
-
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
+
 
 
 					StatusHelpLabel.Text = "Enter Card Details";
@@ -301,6 +308,8 @@ namespace JudoDotNetXamariniOSSDK
 							ccPlaceHolder.Text = cardHelper.PromptStringForType (Type, true);
 							cvTwoPlaceHolder.Text = cardHelper.CVTwoPromptForType (Type, true);
 							cvTwoPlaceHolder.SetShowTextOffSet (Math.Min (0, 0));
+
+
 						}
 
 						formattedText = cardHelper.FormatForViewing (newText); 
@@ -327,6 +336,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 					UpdateCCimageWithTransitionTime (0.25f); 
 				}
+					
 				return EndDelegate (ccPlaceHolder,ccText,formattedText);
 			};
 		}
@@ -541,12 +551,15 @@ namespace JudoDotNetXamariniOSSDK
 		public bool EndDelegate (PlaceHolderTextView placeView,UITextView textview,string formattedText)
 		{
 
+
+
+
 			if (scrollForward) {
 				ScrollForward (true);
 				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 					textScroller.FlashScrollIndicators ();
 				});
-			}
+			} 
 			if (updateText) {
 				int textViewLen = formattedText.Length;
 				int formattedLen = placeView.Text.Length;
@@ -594,6 +607,16 @@ namespace JudoDotNetXamariniOSSDK
 
 		void ScrollForward (bool animated)
 		{
+
+			if(Type== CreditCardType.AMEX)
+			{
+				ccPlaceHolderWidthConstraint.Constant=178f;
+
+			}
+			else
+			{
+				ccPlaceHolderWidthConstraint.Constant =198f;
+			}
 			expiryText.BecomeFirstResponder ();
 			if (creditCardImage != ccBackImage) {
 				StatusHelpLabel.Text = "Please enter Expire Date";
