@@ -20,14 +20,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SB4-0q-naP" userLabel="Credit Card Image">
                                 <rect key="frame" x="13" y="13" width="56" height="35"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="ic_card_large_unknown.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-4F-d2j" userLabel="creditCardImage">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="ic_card_large_unknown.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-4F-d2j" userLabel="creditCardImage">
                                         <rect key="frame" x="0.0" y="0.0" width="56" height="35"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="9Tv-4F-d2j" firstAttribute="leading" secondItem="SB4-0q-naP" secondAttribute="leading" id="9Fa-1c-bJh"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Tv-4F-d2j" secondAttribute="bottom" id="OVD-2g-b8W"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Tv-4F-d2j" secondAttribute="trailing" id="PT7-sB-w1u"/>
                                     <constraint firstAttribute="width" constant="56" id="Uvl-e6-wZ2"/>
                                     <constraint firstAttribute="height" constant="35" id="jrJ-5S-T7D"/>
+                                    <constraint firstItem="9Tv-4F-d2j" firstAttribute="top" secondItem="SB4-0q-naP" secondAttribute="top" id="zAw-B5-Sht"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFY-A7-hc3">

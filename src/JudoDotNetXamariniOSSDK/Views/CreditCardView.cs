@@ -165,7 +165,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{
 			bool enable = false;
-			enable = detailCell.CompletelyDone;
+			enable = detailCell.EntryComplete();
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
