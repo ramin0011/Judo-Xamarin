@@ -99,10 +99,10 @@ namespace JudoDotNetXamariniOSSDK
 			layer.BorderWidth = 0;
 
 			textScroller.SetContentOffset (new CGPoint (0, 0), true);
-
 			textScroller.ScrollEnabled = false;
 
 			SetupPlaceViews ();
+
 
 			Type = CreditCardType.InvalidCard;
 			SetUpMaskedInput ();
@@ -268,8 +268,10 @@ namespace JudoDotNetXamariniOSSDK
 					int formattedLen = ccPlaceHolder.Text.Length;
 				
 					//textScroller.ScrollEnabled = false;
-
+					if(textScroller.ContentOffset.X!=0)
+					{
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
+					}
 					UpdateCCimageWithTransitionTime (0,false,true); 
 
 					StatusHelpLabel.Text = "Enter Card Details";
@@ -336,8 +338,9 @@ namespace JudoDotNetXamariniOSSDK
 					}
 					UpdateCCimageWithTransitionTime (0.25f); 
 				}
-					
+
 				return EndDelegate (ccPlaceHolder,ccText,formattedText);
+
 			};
 		}
 
@@ -617,6 +620,13 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
+		void repositionScrollView(float offset,UIScrollView scrollView)
+		{
+			CGRect scrollBounds = scrollView.Bounds;
+			scrollBounds.X = offset;
+			scrollView.Bounds = scrollBounds;
+		}
+
 
 		void ScrollForward (bool animated)
 		{
@@ -645,6 +655,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
 
 				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
+
 			}
 
 			UpdateCCimageWithTransitionTime (0.25f,true,true); 
