@@ -175,6 +175,7 @@
     <Compile Include="Views\TokenPreAuthorisationView.designer.cs">
       <DependentUpon>TokenPreAuthorisationView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\FixedScrollView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

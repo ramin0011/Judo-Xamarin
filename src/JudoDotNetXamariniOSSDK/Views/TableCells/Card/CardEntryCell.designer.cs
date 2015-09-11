@@ -55,18 +55,18 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UILabel StatusHelpLabel { get; set; }
 
 		[Outlet]
-		UIKit.UIScrollView textScroller { get; set; }
+		JudoDotNetXamariniOSSDK.FixedScrollView textScroller { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ccPLaceHolderToScrollViewConstraint != null) {
-				ccPLaceHolderToScrollViewConstraint.Dispose ();
-				ccPLaceHolderToScrollViewConstraint = null;
-			}
-
 			if (ccPlaceHolder != null) {
 				ccPlaceHolder.Dispose ();
 				ccPlaceHolder = null;
+			}
+
+			if (ccPLaceHolderToScrollViewConstraint != null) {
+				ccPLaceHolderToScrollViewConstraint.Dispose ();
+				ccPLaceHolderToScrollViewConstraint = null;
 			}
 
 			if (ccPlaceHolderWidthConstraint != null) {

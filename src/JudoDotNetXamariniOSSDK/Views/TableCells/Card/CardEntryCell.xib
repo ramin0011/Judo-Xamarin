@@ -37,7 +37,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFY-A7-hc3">
                                 <rect key="frame" x="79" y="9" width="229" height="44"/>
                                 <subviews>
-                                    <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sL-ek-4SN">
+                                    <scrollView tag="56" contentMode="scaleToFill" bounces="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sL-ek-4SN" customClass="FixedScrollView">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa5-fr-OQD" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
