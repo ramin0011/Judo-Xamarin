@@ -11,7 +11,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		public FixedScrollView(IntPtr p) : base(p)
 		{
-			// Do initialization stuff here
 		}
 		public override void ScrollRectToVisible (CoreGraphics.CGRect rect, bool animated)
 		{

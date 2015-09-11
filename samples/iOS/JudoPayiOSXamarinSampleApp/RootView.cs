@@ -77,7 +77,7 @@ namespace JudoPayiOSXamarinSampleApp
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
-		 	menu = new SlideUpMenu (new RectangleF(0,(float)this.View.Frame.Bottom-40f,(float)this.View.Frame.Width,248f));
+		 	menu = new SlideUpMenu (new RectangleF(0,(float)this.View.Frame.Bottom-40f,(float)this.View.Frame.Width,448f));
 			menu.AwakeFromNib ();
 			menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
 			this.View.AddSubview (menu);
