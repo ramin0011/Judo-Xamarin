@@ -223,7 +223,7 @@ namespace JudoDotNetXamariniOSSDK
 				deletedSpace = false;
 				cardMonth = 0;
 
-				//CompletelyDone = false;
+
 				if (replace.Length == 0) {
 					updateText = true;
 					deleting = true;
@@ -267,7 +267,7 @@ namespace JudoDotNetXamariniOSSDK
 					int textViewLen = ccText.Text.Length; 
 					int formattedLen = ccPlaceHolder.Text.Length;
 				
-					//textScroller.ScrollEnabled = false;
+
 					if(textScroller.ContentOffset.X!=0)
 					{
 					textScroller.SetContentOffset (new CGPoint (0, 0), true);
@@ -515,7 +515,7 @@ namespace JudoDotNetXamariniOSSDK
 				int newTextLen = newTextOrig.Length;
 
 				if (newTextLen == cvTwoPlaceHolder.Text.Length) {
-					//CompletelyDone = true;
+
 					var cIndex = cvTwoPlaceHolder.Text.IndexOf ("C");
 					CSRange ccvRange = new CSRange (cIndex, cvTwoPlaceHolder.Text.Substring (cIndex).Length);
 					ccvRange.Length = Type == CreditCardType.AMEX ? 4 : 3;
