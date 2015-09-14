@@ -1,38 +1,4 @@
-﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- * This file is part of CreditCard -- an iOS project that provides a smooth and elegant 
- * means to enter or edit credit cards. It was inspired by  a similar form created from 
- * scratch by Square (https://squareup.com/). To see this form in action visit:
- * 
- *   http://functionsource.com/post/beautiful-forms)
- *
- * Copyright 2012 Lot18 Holdings, Inc. All Rights Reserved.
- *
- *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
- *
- *    1. Redistributions of source code must retain the above copyright notice, this list of
- *       conditions and the following disclaimer.
- *
- *    2. Redistributions in binary form must reproduce the above copyright notice, this list
- *       of conditions and the following disclaimer in the documentation and/or other materials
- *       provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY Lot18 Holdings ''AS IS'' AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL David Hoerl OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-using System;
+﻿using System;
 using Foundation;
 using UIKit;
 using System.Collections.Generic;
@@ -110,7 +76,7 @@ namespace JudoDotNetXamariniOSSDK
 				MakePayment ();
 			};
 			SubmitButton.Enabled = false;
-			SubmitButton.Hidden = true;
+			SubmitButton.Alpha = 0.25f;
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -165,7 +131,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{
 			bool enable = false;
-			enable = detailCell.CompletelyDone;
+			enable = detailCell.EntryComplete();
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
@@ -247,7 +213,7 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
 			SubmitButton.Enabled = enable;
-			SubmitButton.Hidden = !enable;
+			SubmitButton.Alpha = (enable == true ? 1f : 0.25f) ;
 
 		}
 
@@ -294,8 +260,8 @@ namespace JudoDotNetXamariniOSSDK
 				Card = cardViewModel,
 				Amount = "4.99",
 			};
-			SubmitButton.Hidden = true;
-
+			SubmitButton.Enabled = false;
+			SubmitButton.Alpha = 0.25f;
 			_paymentService.MakePayment (payment).ContinueWith (reponse => {
 				var result = reponse.Result;
 				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
@@ -313,7 +279,8 @@ namespace JudoDotNetXamariniOSSDK
 					JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						SubmitButton.Hidden = false;
+						SubmitButton.Alpha = 0.25f;
+						SubmitButton.Enabled = false;
 						CleanOutCardDetails ();
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
@@ -321,7 +288,8 @@ namespace JudoDotNetXamariniOSSDK
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						errorPresenter.DisplayError(result,"Payment has failed");	
-						SubmitButton.Hidden = false;
+						SubmitButton.Enabled = true;
+						SubmitButton.Alpha = 1f;
 					});
 				}
 			});

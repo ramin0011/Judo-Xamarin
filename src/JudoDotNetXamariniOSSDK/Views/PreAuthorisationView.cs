@@ -70,13 +70,13 @@ namespace JudoDotNetXamariniOSSDK
 
 			EncapsulatingView.AddGestureRecognizer (tapRecognizer);
 
-			RegisterButton.SetTitleColor (UIColor.Black, UIControlState.Application);
+			RegisterButton.SetTitleColor (UIColor.White, UIControlState.Application);
 
 			RegisterButton.TouchUpInside += (sender, ev) => {
 				PreAuthCard ();
 			};
 			RegisterButton.Enabled = false;
-			RegisterButton.Hidden = true;
+			RegisterButton.Alpha = 0.25f;
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -213,7 +213,7 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
 			RegisterButton.Enabled = enable;
-			RegisterButton.Hidden = !enable;
+			RegisterButton.Alpha = (enable == true ? 1f : 0.25f) ;
 
 		}
 
@@ -260,7 +260,8 @@ namespace JudoDotNetXamariniOSSDK
 				Card = cardViewModel,
 				Amount = "1.01",
 			};
-			RegisterButton.Hidden = true;
+			RegisterButton.Alpha = 0.25f;
+			RegisterButton.Enabled = false;
 
 			_paymentService.PreAuthoriseCard (authorisation).ContinueWith (reponse => {
 				var result = reponse.Result;
@@ -279,15 +280,17 @@ namespace JudoDotNetXamariniOSSDK
 					JudoConfiguration.Instance.LastFour = authorisation.Card.CardNumber.Substring(authorisation.Card.CardNumber.Length - Math.Min(4, authorisation.Card.CardNumber.Length));
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						RegisterButton.Hidden = false;
 						CleanOutCardDetails ();
+						RegisterButton.Alpha = 0.25f;
+						RegisterButton.Enabled = false;
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						errorPresenter.DisplayError(result,"Pre-Authorisation has failed");	
-						RegisterButton.Hidden = false;
+						RegisterButton.Alpha = 1f;
+						RegisterButton.Enabled = true;
 					});
 				}
 			});

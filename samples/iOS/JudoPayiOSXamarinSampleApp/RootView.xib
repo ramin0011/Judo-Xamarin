@@ -2,14 +2,13 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootView">
             <connections>
-                <outlet property="MakeAPaymentButton" destination="BV4-Bq-Bre" id="NLj-XK-meY"/>
-                <outlet property="RegisterCardButton" destination="vAG-bL-Ynx" id="cTq-yG-HuM"/>
-                <outlet property="TokenPaymentButton" destination="znr-lg-NRg" id="yVR-xL-meL"/>
-                <outlet property="TokenPreauthButton" destination="hvl-9b-1o6" id="Vbl-J0-GSd"/>
+                <outlet property="ButtonTable" destination="4VD-Bi-aTJ" id="vrd-5J-63Q"/>
+                <outlet property="TableHeightConstrant" destination="U45-i7-hko" id="2Vt-cG-QUi"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
             </connections>
         </placeholder>
@@ -18,46 +17,23 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BV4-Bq-Bre">
-                    <rect key="frame" x="82" y="90" width="156" height="34"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Make A Payment">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAG-bL-Ynx">
-                    <rect key="frame" x="84" y="150" width="156" height="34"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="PreAuthorise">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvl-9b-1o6">
-                    <rect key="frame" x="84" y="270" width="157" height="34"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Token PreAuthorise">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znr-lg-NRg">
-                    <rect key="frame" x="84" y="210" width="156" height="34"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Token Payment">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4VD-Bi-aTJ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="352"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="352" id="U45-i7-hko"/>
+                    </constraints>
+                    <color key="sectionIndexBackgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="BV4-Bq-Bre" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="Loh-bH-0Ns"/>
-                <constraint firstItem="BV4-Bq-Bre" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="82" id="YMT-F0-KhQ"/>
-                <constraint firstAttribute="trailing" secondItem="BV4-Bq-Bre" secondAttribute="trailing" constant="82" id="laz-ux-vAj"/>
+                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3zT-vw-Y85"/>
+                <constraint firstAttribute="trailing" secondItem="4VD-Bi-aTJ" secondAttribute="trailing" id="CCh-2H-iRB"/>
+                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XbQ-OB-cvq"/>
+                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="-8" id="bwL-VG-05t"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <nil key="simulatedTopBarMetrics"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

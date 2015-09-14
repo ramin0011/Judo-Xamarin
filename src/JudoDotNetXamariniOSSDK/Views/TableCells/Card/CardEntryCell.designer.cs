@@ -16,6 +16,12 @@ namespace JudoDotNetXamariniOSSDK
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView ccPlaceHolder { get; set; }
 
 		[Outlet]
+		UIKit.NSLayoutConstraint ccPLaceHolderToScrollViewConstraint { get; set; }
+
+		[Outlet]
+		UIKit.NSLayoutConstraint ccPlaceHolderWidthConstraint { get; set; }
+
+		[Outlet]
 		UIKit.UITextView ccText { get; set; }
 
 		[Outlet]
@@ -29,6 +35,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		[Outlet]
 		UIKit.UITextView cvTwoText { get; set; }
+
+		[Outlet]
+		UIKit.NSLayoutConstraint ExpiryGap { get; set; }
 
 		[Outlet]
 		UIKit.UIButton ExpiryInfoButton { get; set; }
@@ -46,13 +55,23 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UILabel StatusHelpLabel { get; set; }
 
 		[Outlet]
-		UIKit.UIScrollView textScroller { get; set; }
+		JudoDotNetXamariniOSSDK.FixedScrollView textScroller { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
 			if (ccPlaceHolder != null) {
 				ccPlaceHolder.Dispose ();
 				ccPlaceHolder = null;
+			}
+
+			if (ccPLaceHolderToScrollViewConstraint != null) {
+				ccPLaceHolderToScrollViewConstraint.Dispose ();
+				ccPLaceHolderToScrollViewConstraint = null;
+			}
+
+			if (ccPlaceHolderWidthConstraint != null) {
+				ccPlaceHolderWidthConstraint.Dispose ();
+				ccPlaceHolderWidthConstraint = null;
 			}
 
 			if (ccText != null) {
@@ -78,6 +97,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (cvTwoText != null) {
 				cvTwoText.Dispose ();
 				cvTwoText = null;
+			}
+
+			if (ExpiryGap != null) {
+				ExpiryGap.Dispose ();
+				ExpiryGap = null;
 			}
 
 			if (ExpiryInfoButton != null) {
