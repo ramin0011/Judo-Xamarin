@@ -25,7 +25,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<CardCell> CellsToShow { get; set; }
 
-
+        public SuccessCallback successCallback { get; set; }
+        public FailureCallback failureCallback { get; set; }
 
 		public override void ViewDidLoad ()
 		{
@@ -141,8 +142,8 @@ namespace JudoDotNetXamariniOSSDK
 						PaymentButton.Alpha = 0.25f;
 						PaymentButton.Enabled = false;
 						tokenCell.CleanUp ();
-						var view = JudoSDKManager.GetReceiptView (receipt);
-						this.NavigationController.PushViewController (view, true);	
+						//var view = ViewLocator.GetReceiptView (receipt);
+						//this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						

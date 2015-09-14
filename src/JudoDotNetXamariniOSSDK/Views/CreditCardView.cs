@@ -29,7 +29,10 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
-		IErrorPresenter errorPresenter;
+        public SuccessCallback successCallback { private get; set; }
+        public FailureCallback failureCallback { private get; set; }
+
+	    IErrorPresenter errorPresenter;
 
 
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
@@ -149,7 +152,7 @@ namespace JudoDotNetXamariniOSSDK
 						insertedCells.Add (maestroCell);
 					}
 
-					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
+					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
 						enable = false;
 					}
 
@@ -275,22 +278,33 @@ namespace JudoDotNetXamariniOSSDK
 					};
 					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
 					JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-					JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
+					//JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
 					JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 						SubmitButton.Alpha = 0.25f;
 						SubmitButton.Enabled = false;
 						CleanOutCardDetails ();
-						var view = JudoSDKManager.GetReceiptView (receipt);
-						this.NavigationController.PushViewController (view, true);	
+						//var view = ViewLocator.GetReceiptView (receipt);
+						//this.NavigationController.PushViewController (view, true);	
 					});
+
+                    // call success callback
+                    if (successCallback != null) successCallback(receipt);
+
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						errorPresenter.DisplayError(result,"Payment has failed");	
 						SubmitButton.Enabled = true;
 						SubmitButton.Alpha = 1f;
 					});
+
+                    // Failure callback
+				    if (failureCallback != null)
+				    {
+				        var judoError = new JudoError {ApiError = result.Error};
+				        failureCallback(judoError);
+				    }
 				}
 			});
 

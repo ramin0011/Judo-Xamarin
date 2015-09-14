@@ -18,7 +18,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public  string ApiSecret { get; set; }
 
-		public  string JudoID { get; set; }
+		public  string JudoId { get; set; }
 
 		public  string PaymentReference { get; set; }
 

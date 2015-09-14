@@ -31,6 +31,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		IErrorPresenter errorPresenter;
 
+        public SuccessCallback successCallback { get; set; }
+        public FailureCallback failureCallback { get; set; }
 
 		public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
 		{
@@ -283,8 +285,8 @@ namespace JudoDotNetXamariniOSSDK
 						CleanOutCardDetails ();
 						RegisterButton.Alpha = 0.25f;
 						RegisterButton.Enabled = false;
-						var view = JudoSDKManager.GetReceiptView (receipt);
-						this.NavigationController.PushViewController (view, true);	
+						//var view = ViewLocator.GetReceiptView (receipt);
+						//this.NavigationController.PushViewController (view, true);	
 					});
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						

@@ -21,7 +21,7 @@ namespace JudoDotNetXamariniOSSDK
             {
                 CardPaymentModel payment = new CardPaymentModel
                 {
-				    JudoId = JudoConfiguration.Instance.JudoID,
+				    JudoId = JudoConfiguration.Instance.JudoId,
 				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
 				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
 				    Amount = decimal.Parse(paymentViewModel.Amount),
@@ -50,7 +50,7 @@ namespace JudoDotNetXamariniOSSDK
             {
                 CardPaymentModel payment = new CardPaymentModel
                 {
-				    JudoId = JudoConfiguration.Instance.JudoID,
+				    JudoId = JudoConfiguration.Instance.JudoId,
 				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
 				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
 				    Amount = decimal.Parse(authorisation.Amount),
@@ -78,7 +78,7 @@ namespace JudoDotNetXamariniOSSDK
             {
                 TokenPaymentModel payment = new TokenPaymentModel
                 {
-				    JudoId = JudoConfiguration.Instance.JudoID,
+				    JudoId = JudoConfiguration.Instance.JudoId,
 				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
 				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
 				    Amount = decimal.Parse(tokenPayment.Amount),
@@ -99,7 +99,7 @@ namespace JudoDotNetXamariniOSSDK
 		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenOperationViewModel tokenPayment)
 		{
 			TokenPaymentModel payment = new TokenPaymentModel {
-				JudoId = JudoConfiguration.Instance.JudoID,
+				JudoId = JudoConfiguration.Instance.JudoId,
 				YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
 				YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
 				Amount = decimal.Parse(tokenPayment.Amount),
