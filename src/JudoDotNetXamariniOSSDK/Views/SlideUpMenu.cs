@@ -44,6 +44,11 @@ namespace JudoDotNetXamariniOSSDK
 			SetUpToggle (AmexSwitch, JudoSDKManager.AmExAccepted, () => {
 				JudoSDKManager.AmExAccepted = !JudoSDKManager.AmExAccepted;
 			});
+			SetUpToggle (NoneUISwitch, !JudoSDKManager.UIMode, () => {
+				UIAlertView nonUIWarning = new UIAlertView("Non UI Mode" ,"You are about to use non UI Mode so please look at the source code to understand the usage of Non-UI APIs." ,null ,"OK" , null);
+				nonUIWarning.Show();
+				JudoSDKManager.UIMode = !JudoSDKManager.UIMode;
+			});
 				
 			AttachTouchEvents ();
 			ArrowIcon.Transform = CGAffineTransform.MakeRotation ((nfloat)(180.0f * Math.PI) / 180.0f);
@@ -62,6 +67,8 @@ namespace JudoDotNetXamariniOSSDK
 			MaestroSwitch.ValueChanged -= delegate {
 			};
 			AmexSwitch.ValueChanged -= delegate {
+			};
+			NoneUISwitch.ValueChanged -= delegate {
 			};
 
 		}
