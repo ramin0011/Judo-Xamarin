@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4VD-Bi-aTJ">
-                    <rect key="frame" x="0.0" y="8" width="320" height="352"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="352"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="352" id="U45-i7-hko"/>
@@ -30,8 +30,8 @@
             <constraints>
                 <constraint firstItem="4VD-Bi-aTJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3zT-vw-Y85"/>
                 <constraint firstAttribute="trailing" secondItem="4VD-Bi-aTJ" secondAttribute="trailing" id="CCh-2H-iRB"/>
-                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="XbQ-OB-cvq"/>
-                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="bwL-VG-05t"/>
+                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="XbQ-OB-cvq"/>
+                <constraint firstItem="4VD-Bi-aTJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="-8" id="bwL-VG-05t"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
         </view>
