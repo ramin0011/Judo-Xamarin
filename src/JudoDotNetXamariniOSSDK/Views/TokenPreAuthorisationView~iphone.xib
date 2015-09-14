@@ -2,13 +2,12 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenPreAuthorisationView">
             <connections>
                 <outlet property="EncapsulatingView" destination="ccd-ES-uL9" id="GIn-yN-F6M"/>
-                <outlet property="PaymentButton" destination="pII-Ia-5ha" id="5zc-3w-oTp"/>
+                <outlet property="PaymentButton" destination="1eY-Wj-wOO" id="Vkb-hb-WAn"/>
                 <outlet property="TableView" destination="I1j-RM-lik" id="h6w-60-3aX"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
             </connections>
@@ -21,10 +20,10 @@
                 <userLayoutGuide location="66" affinity="minY"/>
             </userGuides>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token PreAuthorisation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URA-3E-iqt">
-                    <rect key="frame" x="71" y="76" width="178" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token Pre-Authorisation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URA-3E-iqt">
+                    <rect key="frame" x="68" y="76" width="184" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccd-ES-uL9">
@@ -40,12 +39,12 @@
                         <constraint firstAttribute="height" constant="225" id="eeg-Id-UOA"/>
                     </constraints>
                 </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pII-Ia-5ha">
-                    <rect key="frame" x="271" y="531" width="31" height="29"/>
-                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Pay">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eY-Wj-wOO">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <color key="backgroundColor" red="0.1176470588" green="0.47058823529999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Pre-Authorise">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -54,12 +53,8 @@
             <constraints>
                 <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="URA-3E-iqt" secondAttribute="bottom" constant="8" symbolic="YES" id="0HP-cM-Axf"/>
                 <constraint firstItem="ccd-ES-uL9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gew-MI-BE4"/>
-                <constraint firstAttribute="trailing" secondItem="pII-Ia-5ha" secondAttribute="trailing" constant="18" id="I2O-Z7-wP2"/>
                 <constraint firstAttribute="trailing" secondItem="ccd-ES-uL9" secondAttribute="trailing" id="X9l-li-nZK"/>
                 <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="105" id="byG-Ci-tdP"/>
-                <constraint firstAttribute="bottom" secondItem="pII-Ia-5ha" secondAttribute="bottom" constant="8" id="e4N-gy-9Oo"/>
-                <constraint firstItem="pII-Ia-5ha" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" constant="-10" id="hzd-83-mmR"/>
-                <constraint firstItem="pII-Ia-5ha" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottomMargin" id="sSL-Xy-tcX"/>
                 <constraint firstItem="ccd-ES-uL9" firstAttribute="centerX" secondItem="URA-3E-iqt" secondAttribute="centerX" id="wfj-Hb-Vxd"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

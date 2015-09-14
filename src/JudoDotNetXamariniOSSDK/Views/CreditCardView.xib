@@ -21,13 +21,15 @@
             </userGuides>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTW-bL-0hz">
-                    <rect key="frame" x="220" y="531" width="92" height="29"/>
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <color key="backgroundColor" red="0.11764705882352941" green="0.47058823529411764" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="92" id="f3H-jt-ePR"/>
+                        <constraint firstAttribute="height" constant="44" id="7Km-DE-3cd"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Pay">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -56,12 +58,13 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" id="1mQ-kY-czg"/>
                 <constraint firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" id="6nW-tL-Vvi"/>
-                <constraint firstAttribute="trailing" secondItem="sTW-bL-0hz" secondAttribute="trailing" constant="8" id="7Bx-Tc-cBc"/>
-                <constraint firstAttribute="bottom" secondItem="sTW-bL-0hz" secondAttribute="bottom" constant="8" id="baK-7w-AeB"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" id="751-PK-K9v"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" id="DZy-rk-uQi"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="1" id="OAy-xK-zTJ"/>
                 <constraint firstItem="Ep6-Ue-jWz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="dUx-xQ-v4j"/>
                 <constraint firstItem="Ep6-Ue-jWz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hEF-SY-Sd3"/>
+                <constraint firstAttribute="bottom" secondItem="sTW-bL-0hz" secondAttribute="bottom" id="lHw-Xz-6HQ"/>
                 <constraint firstItem="Ep6-Ue-jWz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pUX-jL-IYy"/>
-                <constraint firstItem="sTW-bL-0hz" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" priority="250" constant="8" id="tKY-52-5i8"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>

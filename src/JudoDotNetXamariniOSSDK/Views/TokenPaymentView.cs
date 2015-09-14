@@ -44,7 +44,8 @@ namespace JudoDotNetXamariniOSSDK
 					_error.Show ();
 
 					_error.Clicked += (sender, args) => {
-						PaymentButton.Hidden = true;
+						PaymentButton.Alpha = 0.25f;
+						PaymentButton.Enabled = false;
 						this.NavigationController.PopToRootViewController (true);
 					};
 
@@ -65,8 +66,9 @@ namespace JudoDotNetXamariniOSSDK
 				tapRecognizer.NumberOfTouchesRequired = 1;
 
 				EncapsulatingView.AddGestureRecognizer (tapRecognizer);
+				PaymentButton.Alpha = 0.25f;
+				PaymentButton.Enabled = false;
 
-				PaymentButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 
 				PaymentButton.TouchUpInside += (sender, ev) => {
 					MakeTokenPayment ();
@@ -104,7 +106,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{	
 			PaymentButton.Enabled = tokenCell.Complete;
-			PaymentButton.Hidden = !tokenCell.Complete;
+			PaymentButton.Alpha = (tokenCell.Complete == true ? 1f : 0.25f) ;
 			if (tokenCell.Complete) {
 				DismissKeyboardAction ();
 			}
@@ -119,7 +121,8 @@ namespace JudoDotNetXamariniOSSDK
 				Token = instance.CardToken,
 				Amount = "6.66",
 			};
-			PaymentButton.Hidden = true;
+			PaymentButton.Alpha = 0.25f;
+			PaymentButton.Enabled = false;
 
 			_paymentService.MakeTokenPayment (tokenPayment).ContinueWith (reponse => {
 				var result = reponse.Result;
@@ -134,7 +137,9 @@ namespace JudoDotNetXamariniOSSDK
 					};
 
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						PaymentButton.Hidden = false;
+						PaymentButton.Alpha = 0.25f;
+						PaymentButton.Enabled = false;
+
 						tokenCell.CleanUp ();
 						var view = JudoSDKManager.GetReceiptView (receipt);
 						this.NavigationController.PushViewController (view, true);	
@@ -142,7 +147,8 @@ namespace JudoDotNetXamariniOSSDK
 				} else {
 					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 						errorPresenter.DisplayError(result,"Token Payment has failed");	
-						PaymentButton.Hidden = false;
+						PaymentButton.Alpha = 1f;
+						PaymentButton.Enabled = true;
 					});
 				}
 			});

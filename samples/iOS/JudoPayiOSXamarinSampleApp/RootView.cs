@@ -31,9 +31,7 @@ namespace JudoPayiOSXamarinSampleApp
 			label.TextAlignment = UITextAlignment.Center;
 			label.Font =UIFont.FromName("Courier", 17.0f);
 			label.BackgroundColor = UIColor.Clear;
-			
-			//[label setTextColor:[UIColor whiteColor]];
-			//[label setText:text];
+
 			label.Text = "Judo Sample App";
 			this.NavigationController.NavigationBar.TopItem.TitleView = label;
 			
