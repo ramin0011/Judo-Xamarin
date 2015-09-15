@@ -25,16 +25,25 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<CardCell> CellsToShow { get; set; }
 
+		public override void ViewWillLayoutSubviews ()
+		{
+			base.ViewWillLayoutSubviews ();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+			}
 
+		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			TableView.SeparatorColor = UIColor.Clear;
 
-			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+				defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+			}
 
 			if (JudoConfiguration.Instance.CardToken == null) {
 
@@ -46,7 +55,13 @@ namespace JudoDotNetXamariniOSSDK
 					_error.Clicked += (sender, args) => {
 						PaymentButton.Alpha = 0.25f;
 						PaymentButton.Enabled = false;
+						if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+							this.DismissViewController(true,null);
+						}
+						else
+						{
 						this.NavigationController.PopToRootViewController (true);
+						}
 					};
 
 				});
@@ -73,6 +88,12 @@ namespace JudoDotNetXamariniOSSDK
 				PaymentButton.TouchUpInside += (sender, ev) => {
 					MakeTokenPayment ();
 				};
+
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					FormClose.TouchUpInside += (sender, ev) => {
+						this.DismissViewController(true,null);
+					};
+				}
 			}
 		}
 

@@ -1,20 +1,82 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4447" systemVersion="13A451" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
-	<dependencies>
-		<plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742" />
-	</dependencies>
-	<objects>
-		<placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenPaymentView">
-			<connections>
-				<outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq" />
-			</connections>
-		</placeholder>
-		<placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder" />
-		<view contentMode="scaleToFill" id="iN0-l3-epB">
-			<rect key="frame" x="0.0" y="0.0" width="768" height="1024" />
-			<autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" />
-			<color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite" />
-			<simulatedStatusBarMetrics key="simulatedStatusBarMetrics" />
-		</view>
-	</objects>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenPaymentView">
+            <connections>
+                <outlet property="EncapsulatingView" destination="ccd-ES-uL9" id="GIn-yN-F6M"/>
+                <outlet property="FormClose" destination="fi0-Jn-a0e" id="m0F-QK-Bgd"/>
+                <outlet property="PaymentButton" destination="RQ4-gh-Tcz" id="6Hd-8Q-yio"/>
+                <outlet property="TableView" destination="I1j-RM-lik" id="h6w-60-3aX"/>
+                <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <userGuides>
+                <userLayoutGuide location="66" affinity="minY"/>
+            </userGuides>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URA-3E-iqt">
+                    <rect key="frame" x="101" y="8" width="118" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccd-ES-uL9">
+                    <rect key="frame" x="0.0" y="37" width="320" height="225"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="I1j-RM-lik">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="225"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="225" id="eeg-Id-UOA"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQ4-gh-Tcz">
+                    <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                    <color key="backgroundColor" red="0.1176470588" green="0.47058823529999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="29d-wt-4IZ"/>
+                    </constraints>
+                    <state key="normal" title="Pay">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fi0-Jn-a0e">
+                    <rect key="frame" x="290" y="4" width="30" height="30"/>
+                    <state key="normal" title="X">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="URA-3E-iqt" secondAttribute="bottom" constant="8" symbolic="YES" id="0HP-cM-Axf"/>
+                <constraint firstAttribute="bottom" secondItem="RQ4-gh-Tcz" secondAttribute="bottom" id="1JK-jf-OJi"/>
+                <constraint firstItem="RQ4-gh-Tcz" firstAttribute="trailing" secondItem="ccd-ES-uL9" secondAttribute="trailing" id="4PP-SE-NTG"/>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gew-MI-BE4"/>
+                <constraint firstAttribute="trailing" secondItem="ccd-ES-uL9" secondAttribute="trailing" id="X9l-li-nZK"/>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="37" id="byG-Ci-tdP"/>
+                <constraint firstItem="RQ4-gh-Tcz" firstAttribute="leading" secondItem="ccd-ES-uL9" secondAttribute="leading" id="fdH-y8-15b"/>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="centerX" secondItem="URA-3E-iqt" secondAttribute="centerX" id="wfj-Hb-Vxd"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
