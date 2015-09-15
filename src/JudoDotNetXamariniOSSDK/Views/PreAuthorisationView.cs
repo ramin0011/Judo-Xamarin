@@ -96,7 +96,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
 				activeview = avsCell.PostcodeTextFieldOutlet;
-			if (activeview != null) {
+			if (activeview != null && !detailCell.HasFocus()) {
 				moveViewUp = true;
 				ScrollTheView (moveViewUp);
 
@@ -137,41 +137,45 @@ namespace JudoDotNetXamariniOSSDK
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
 			List<CardCell> cellsBeforeUpdate = CellsToShow.ToList ();
-			TableView.BeginUpdates ();
-
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
+				int row = CellsToShow.IndexOf (detailCell) + 1;
 
+				if (JudoSDKManager.AVSEnabled) {
+					if (!CellsToShow.Contains (avsCell)) {
+						TableView.BeginUpdates ();
+						//int row = CellsToShow.IndexOf (reassuringCell);
+						CellsToShow.Insert (row, avsCell);
+						row++;// icrementing the row incase an avs cell is also needed;
+						insertedCells.Add (avsCell);
+						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+
+
+						TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (avsCell), 0) }, UITableViewRowAnimation.Fade);
+						TableView.EndUpdates ();
+					}
+
+				}
 				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
-						int row = CellsToShow.IndexOf (detailCell) + 1;
+						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
 
 						insertedCells.Add (maestroCell);
 						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
 						ccIsFirstResponder = false;
+						TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (maestroCell), 0) }, UITableViewRowAnimation.Fade);
+						TableView.EndUpdates ();
 					}
 
 					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
 						enable = false;
 					}
 
-
-
-
 				}
 
-				if (JudoSDKManager.AVSEnabled) {
-					if (!CellsToShow.Contains (avsCell)) {
-						int row = CellsToShow.IndexOf (reassuringCell);
-						CellsToShow.Insert (row, avsCell);
 
-						insertedCells.Add (avsCell);
-						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
-						
-				}
 
 				if (ccIsFirstResponder) {
 					DismissKeyboardAction ();
@@ -179,6 +183,7 @@ namespace JudoDotNetXamariniOSSDK
 					ccIsFirstResponder = false;
 				}
 			} else {
+				TableView.BeginUpdates ();
 				if (JudoSDKManager.MaestroAccepted) {
 					if (CellsToShow.Contains (maestroCell)) {
 						cellsToRemove.Add (maestroCell);
@@ -190,28 +195,22 @@ namespace JudoDotNetXamariniOSSDK
 						cellsToRemove.Add (avsCell);
 					}
 				}
-			}
-			List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
+				List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
 
-			foreach (CardCell cell in cellsToRemove) {
-				indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
-			}
+				foreach (CardCell cell in cellsToRemove) {
+					indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
+				}
 
-			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
+				TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
 
-			foreach (CardCell cell in cellsToRemove) {
-				CellsToShow.Remove (cell);
-			}
+				foreach (CardCell cell in cellsToRemove) {
+					CellsToShow.Remove (cell);
+				}
 
-
-			List<NSIndexPath> indexPathsToAdd = new List<NSIndexPath> ();
-
-			foreach (CardCell cell in insertedCells) {
-				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
+				TableView.EndUpdates ();
 			}
 
-			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
-			TableView.EndUpdates ();
+
 			RegisterButton.Enabled = enable;
 			RegisterButton.Alpha = (enable == true ? 1f : 0.25f) ;
 

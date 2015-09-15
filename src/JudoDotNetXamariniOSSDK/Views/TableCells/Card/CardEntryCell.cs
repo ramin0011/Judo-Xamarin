@@ -730,6 +730,10 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 			
+		public bool HasFocus ()
+		{
+			return (ccText.IsFirstResponder||expiryText.IsFirstResponder||cvTwoText.IsFirstResponder);
+		}
 	}
 }
 

@@ -55,6 +55,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			return height;
 		}
+			
 	}
 }
 
