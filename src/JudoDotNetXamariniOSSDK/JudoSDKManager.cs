@@ -1,21 +1,29 @@
 ﻿using System;
 using CoreLocation;
 using System.Collections.Generic;
+using CoreGraphics;
+using JudoDotNetXamariniOSSDK.Clients;
+using JudoPayDotNet.Models;
 using UIKit;
+using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class JudoSDKManager
+    public delegate void SuccessCallback(PaymentReceiptModel receipt);
+    public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
+
+    public class JudoSDKManager
 	{
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName("Courier", 17.0f);
 
 		Dictionary<string, string> clientDetails {get; set;}
-		public static bool LocationEnabled{ get; set; }
+		public static bool LocationEnabled { get; set; }
 		public static bool ThreeDSecureEnabled{ get; set; }
 		public static bool AVSEnabled { get; set; }
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
 		public static bool RiskSignals{ get; set; }
+        private static UIView appView = UIApplication.SharedApplication.Windows[0].RootViewController.View;
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -23,42 +31,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			get { return _singleton.Value; }
 		}
-
-		public static void SetSandboxMode()
-		{
-			
-		}
-
-		public static void SetProductionMode()
-		{
-
-		}
-
-		public static void SetToken(string key, string secret)
-		{
-
-		}
-
-		public static void SetOAuthToken(string oAuthToken)
-		{
-
-		}
-
-		public static void EnableNavBar(bool navEnabled)
-		{
-
-		}
-
-		public static void SetCurrency(string currency)
-		{
-
-		}
-
-		public static void EnableFraudSignals(string deviceIdentifier)
-		{
-
-		}
-
 
 		public static Dictionary<string, string> GetClientDetails(string deviceId)
 		{
@@ -79,101 +51,108 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			
 		}
-			
 
-		public static void MakeAPaymentCustomUI(decimal amount, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, UIViewController viewController, 
-								 Card card, UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
+        private static IJudoSDKApi _judoSdkApi;
+        private static readonly ServiceFactory ServiceFactory = new ServiceFactory();
+        private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService();
+        private static LoadingOverlay _loadPop;
 
-		}
+        private static bool _uiMode { get; set; }
+        
+        public static bool UIMode 
+        {
+            get { return _uiMode; }
+            set
+            {
+                if (value)
+                    _judoSdkApi = new UIMethods(new ViewLocator(PaymentService));
+                else
+                    _judoSdkApi = new NonUIMethods(PaymentService);
 
-		public static CreditCardView GetPaymentView()
-		{
-
-			ServiceFactory serviceFactory = new ServiceFactory();
-			IPaymentService paymentService = serviceFactory.GetPaymentService ();
-
-			CreditCardView ctrl = new CreditCardView(paymentService);
-
-			return ctrl;
+                _uiMode = value;
+            }
         }
 
-		public static PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
-		{
-			PaymentReceipt receiptView = new PaymentReceipt (receipt);
-			return receiptView;
+        internal static void ShowLoading()
+        {
 
-		}
-			
+            if(_loadPop == null)
+                _loadPop = new LoadingOverlay();
 
-		public static PreAuthorisationView GetPreAuthView ()
-		{
-			ServiceFactory serviceFactory = new ServiceFactory();
-			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+            appView.Add(_loadPop);
+        }
 
-			PreAuthorisationView ctrl = new PreAuthorisationView(paymentService);
+        internal static void HideLoading()
+        {
+            if (_loadPop != null)
+                _loadPop.Hide(appView);
+        }
 
-			return ctrl;
-		}
+        public static void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        {
+            if (UIMode && navigationController == null)
+            {
+                var error = new JudoError { Exception = new Exception("Navigation controller cannot be null with UIMode enabled.") };
+                failure(error);
+            }
+            else
+            {
+                _judoSdkApi.Payment(payment, success, failure, navigationController);
+            }
+        }
 
-		public static TokenPaymentView GetTokenPaymentView ()
-		{
-			ServiceFactory serviceFactory = new ServiceFactory();
-			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+        public static void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        {
+            if (UIMode && navigationController == null)
+            {
+                var error = new JudoError { Exception = new Exception("Navigation controller cannot be null with UIMode enabled.") };
+                failure(error);
+            }
+            else
+            {
+                _judoSdkApi.PreAuth(preAuthorisation, success, failure, navigationController);
+            }
+        }
 
-			TokenPaymentView ctrl = new TokenPaymentView(paymentService);
 
-			return ctrl;
-		}
+        public static void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        {
+            if (UIMode && navigationController == null)
+            {
+                var error = new JudoError { Exception = new Exception("Navigation controller cannot be null with UIMode enabled.") };
+                failure(error);
+            }
+            else
+            {
+                _judoSdkApi.TokenPayment(payment, success, failure, navigationController);
+            }
+        }
 
-		public static TokenPreAuthorisationView GetTokenPreAuthView ()
-		{
-			ServiceFactory serviceFactory = new ServiceFactory();
-			IPaymentService paymentService = serviceFactory.GetPaymentService ();
+        public static void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        {
+            if (UIMode && navigationController == null)
+            {
+                var error = new JudoError { Exception = new Exception("Navigation controller cannot be null with UIMode enabled.") };
+                failure(error);
+            }
+            else
+            {
+                _judoSdkApi.TokenPreAuth(payment, success, failure, navigationController);
+            }
+        }
 
-			TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView(paymentService);
-
-			return ctrl;
-		}
-
-		public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
-
-		public static void MakeAPreAuth(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, UIViewController parentViewController, 
-									Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public static void MakeATokenPreAuth(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public static void RegisterCard(Card card, string consumerReference, string deviceID, UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public void GetPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public void PostPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
-
-		public void PutPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
-			
+        public static void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        {
+            if (UIMode && navigationController == null)
+            {
+                var error = new JudoError { Exception = new Exception("Navigation controller cannot be null with UIMode enabled.") };
+                failure(error);
+            }
+            else
+            {
+                _judoSdkApi.RegisterCard(payment, success, failure, navigationController);
+            }
+        }
 	}
 }
 

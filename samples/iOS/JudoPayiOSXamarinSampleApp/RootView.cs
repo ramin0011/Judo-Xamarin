@@ -6,141 +6,141 @@ using UIKit;
 using JudoDotNetXamariniOSSDK;
 using System.Drawing;
 using System.Collections.Generic;
+using CoreFoundation;
 using CoreGraphics;
+using JudoPayDotNet.Models;
 
 namespace JudoPayiOSXamarinSampleApp
 {
-	public partial class RootView : UIViewController
-	{
-		SlideUpMenu menu;
-		public RootView () : base ("RootView", null)
-		{
-			
-		}
-		public override void DidReceiveMemoryWarning ()
-		{
-			base.DidReceiveMemoryWarning ();
-		}
+    public partial class RootView : UIViewController
+    {
+        SlideUpMenu menu;
+        public RootView()
+            : base("RootView", null)
+        {
 
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
-			SetUpTableView ();
+        }
+        public override void DidReceiveMemoryWarning()
+        {
+            base.DidReceiveMemoryWarning();
+        }
 
-			UILabel label = new UILabel (new CGRect (0, 0, 120f, 30f));
-			label.TextAlignment = UITextAlignment.Center;
-			label.Font =UIFont.FromName("Courier", 17.0f);
-			label.BackgroundColor = UIColor.Clear;
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            SetUpTableView();
 
-			label.Text = "Judo Sample App";
-			this.NavigationController.NavigationBar.TopItem.TitleView = label;
-			
-		}
+            UILabel label = new UILabel(new CGRect(0, 0, 120f, 30f));
+            label.TextAlignment = UITextAlignment.Center;
+            label.Font = UIFont.FromName("Courier", 17.0f);
+            label.BackgroundColor = UIColor.Clear;
 
+            label.Text = "Judo Sample App";
+            this.NavigationController.NavigationBar.TopItem.TitleView = label;
 
-		void SetUpTableView ()
-		{
-			UITableViewCell cell = new UITableViewCell ();
+        }
 
-			Dictionary<string,Action> buttonDictionary = new Dictionary<string,Action> ();
+        private void ShowMessage(string title, string message, string btnText = "OK")
+        {
+            UIAlertView msgbox = new UIAlertView (title, message, null, btnText, null);
+            msgbox.Show ();
+        }
 
-			buttonDictionary.Add ("Make a Payment", ()=> {    	
-				var creditCardView = JudoSDKManager.GetPaymentView ();
+        private void SuccessPayment(PaymentReceiptModel receipt)
+        {
+            DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+            {
+                // move back to home screen
+                NavigationController.PopToRootViewController(true);
+                // show receipt
+                ShowMessage("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
 
-				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-				{
-						
-					creditCardView.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-					creditCardView.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+                // store token to further use
+            });
+        }
 
-					this.PresentViewController(creditCardView, true, null);
-		
-				}
-				else
-				{
-					this.NavigationController.PushViewController (creditCardView, true);
-				}
-			});
+        private void FailurePayment(JudoError error, PaymentReceiptModel receipt)
+        {
+            DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+            {
+                // move back to home screen
+                NavigationController.PopToRootViewController(true);
+                // show receipt
+                string message = "";
+                if (error != null && error.ApiError != null)
+                    message += error.ApiError.ErrorMessage + Environment.NewLine;
 
-			buttonDictionary.Add ("PreAuthorise", delegate  {				
-				var preAuthoriseView =JudoSDKManager.GetPreAuthView();
-				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-				{
+                if (error != null && error.Exception != null)
+                    message += error.Exception.Message + Environment.NewLine;
 
-					preAuthoriseView.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-					preAuthoriseView.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+                if (receipt != null)
+                {
+                    message += "Transaction : " + receipt.Result + Environment.NewLine;
+                    message += "Receipt ID - " + receipt.ReceiptId;
+                }
 
-					this.PresentViewController(preAuthoriseView, true, null);
+                ShowMessage("Transaction Failed: ", message);
+                // store token to further use
+            });
+        }
 
-				}
-				else
-				{
-					this.NavigationController.PushViewController (preAuthoriseView, true);
-				}
-			});
+        void SetUpTableView()
+        {
+            UITableViewCell cell = new UITableViewCell();
 
-			buttonDictionary.Add ("Token Payment", delegate {				
-				var tokenPaymentView =JudoSDKManager.GetTokenPaymentView();
-				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-				{
+            Dictionary<string, Action> buttonDictionary = new Dictionary<string, Action>();
+            SuccessCallback successCallback = SuccessPayment;
+            FailureCallback failureCallback = FailurePayment;
 
-					tokenPaymentView.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-					tokenPaymentView.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+            var cardPayment = new PaymentViewModel { Amount = "1.1" };
+            var tokenPayment = new TokenPaymentViewModel { Amount = "1.1" };
 
-					this.PresentViewController(tokenPaymentView, true, null);
+            buttonDictionary.Add("Make a Payment", () =>
+            {
+                JudoSDKManager.Payment(cardPayment, successCallback, failureCallback, this.NavigationController);
+            });
 
-				}
-				else
-				{
-					this.NavigationController.PushViewController (tokenPaymentView, true);
-				}
-			});
+            buttonDictionary.Add("PreAuthorise", delegate
+            {
+                JudoSDKManager.PreAuth(cardPayment, successCallback, failureCallback, this.NavigationController);
+            });
 
-			buttonDictionary.Add ("Token PreAuthorise", delegate {				
-				var tokenPreAuth =JudoSDKManager.GetTokenPreAuthView();
-				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-				{
+            buttonDictionary.Add("Token Payment", delegate
+            {
+                JudoSDKManager.TokenPayment(tokenPayment, successCallback, failureCallback, this.NavigationController);
+            });
 
-					tokenPreAuth.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-					tokenPreAuth.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+            buttonDictionary.Add("Token PreAuthorise", delegate
+            {
+                JudoSDKManager.TokenPreAuth(tokenPayment, successCallback, failureCallback, this.NavigationController);
+            });
 
-					this.PresentViewController(tokenPreAuth, true, null);
-
-				}
-				else
-				{
-					this.NavigationController.PushViewController (tokenPreAuth, true);
-				}
-			});
-
-
-			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
-			ButtonTable.Source = menuSource;
-			TableHeightConstrant.Constant = menuSource.GetTableHeight ()+60f;
-
-		}
+            MainMenuSource menuSource = new MainMenuSource(buttonDictionary);
+            ButtonTable.Source = menuSource;
+            TableHeightConstrant.Constant = menuSource.GetTableHeight() + 60f;
+        }
 
 
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
-		 	menu = new SlideUpMenu (new RectangleF(0,(float)this.View.Frame.Bottom-40f,(float)this.View.Frame.Width,448f));
-			menu.AwakeFromNib ();
-			menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
-			this.View.AddSubview (menu);
-		}
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            menu = new SlideUpMenu(new RectangleF(0, (float)this.View.Frame.Bottom - 40f, (float)this.View.Frame.Width, 448f));
+            menu.AwakeFromNib();
+            menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+            this.View.AddSubview(menu);
+        }
 
-		public override void ViewWillDisappear (bool animated)
-		{
-			menu.RemoveFromSuperview ();
-			base.ViewWillDisappear (animated);
-		}
+        public override void ViewWillDisappear(bool animated)
+        {
+            menu.RemoveFromSuperview();
+            base.ViewWillDisappear(animated);
+        }
 
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			base.DidRotate (fromInterfaceOrientation);
-			menu.ResetMenu ();
-		}
-	}
+        public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
+        {
+            base.DidRotate(fromInterfaceOrientation);
+            menu.ResetMenu();
+        }
+    }
 }
 

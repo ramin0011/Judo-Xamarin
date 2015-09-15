@@ -24,6 +24,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UISwitch MaestroSwitch { get; set; }
 
 		[Outlet]
+		UIKit.UISwitch NoneUISwitch { get; set; }
+
+		[Outlet]
 		UIKit.UISwitch RiskSwitch { get; set; }
 
 		[Outlet]
@@ -34,14 +37,19 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ArrowIcon != null) {
-				ArrowIcon.Dispose ();
-				ArrowIcon = null;
+			if (NoneUISwitch != null) {
+				NoneUISwitch.Dispose ();
+				NoneUISwitch = null;
 			}
 
 			if (AmexSwitch != null) {
 				AmexSwitch.Dispose ();
 				AmexSwitch = null;
+			}
+
+			if (ArrowIcon != null) {
+				ArrowIcon.Dispose ();
+				ArrowIcon = null;
 			}
 
 			if (AVSSwitch != null) {
