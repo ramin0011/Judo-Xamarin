@@ -99,7 +99,6 @@
     <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
     <Compile Include="Utils\CardBase.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
-    <Compile Include="TableSources\AddPaymentTableSource.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="Controllers\CreditCard.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.designer.cs">

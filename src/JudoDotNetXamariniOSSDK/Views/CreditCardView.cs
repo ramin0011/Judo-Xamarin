@@ -77,6 +77,7 @@ namespace JudoDotNetXamariniOSSDK
 			};
 			SubmitButton.Enabled = false;
 			SubmitButton.Alpha = 0.25f;
+			detailCell.ccTextOutlet.BecomeFirstResponder ();
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -140,38 +141,36 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
+				int row = CellsToShow.IndexOf (detailCell) + 1;
 
+				if (JudoSDKManager.AVSEnabled) {
+					if (!CellsToShow.Contains (avsCell)) {
+						//int row = CellsToShow.IndexOf (reassuringCell);
+						CellsToShow.Insert (row, avsCell);
+						row++;// icrementing the row incase an avs cell is also needed;
+						insertedCells.Add (avsCell);
+						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+					}
+
+				}
 				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
-						int row = CellsToShow.IndexOf (detailCell) + 1;
+						
 						CellsToShow.Insert (row, maestroCell);
 
 						insertedCells.Add (maestroCell);
+						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
 					}
 
 					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
 						enable = false;
 					}
-
-					if (ccIsFirstResponder) {
-						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
+						
 				}
 
-				if (JudoSDKManager.AVSEnabled) {
-					if (!CellsToShow.Contains (avsCell)) {
-						int row = CellsToShow.IndexOf (reassuringCell);
-						CellsToShow.Insert (row, avsCell);
 
-						insertedCells.Add (avsCell);
-					}
-
-					if (ccIsFirstResponder) {
-						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
-				}
 
 				if (ccIsFirstResponder) {
 					DismissKeyboardAction ();

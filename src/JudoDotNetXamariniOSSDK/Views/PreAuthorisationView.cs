@@ -77,6 +77,7 @@ namespace JudoDotNetXamariniOSSDK
 			};
 			RegisterButton.Enabled = false;
 			RegisterButton.Alpha = 0.25f;
+
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -118,7 +119,7 @@ namespace JudoDotNetXamariniOSSDK
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
-
+			detailCell.ccTextOutlet.BecomeFirstResponder ();
 		}
 
 		void DismissKeyboardAction ()
@@ -147,16 +148,17 @@ namespace JudoDotNetXamariniOSSDK
 						CellsToShow.Insert (row, maestroCell);
 
 						insertedCells.Add (maestroCell);
+						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
 					}
 
 					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
 						enable = false;
 					}
 
-					if (ccIsFirstResponder) {
-						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
+
+
+
 				}
 
 				if (JudoSDKManager.AVSEnabled) {
@@ -165,12 +167,10 @@ namespace JudoDotNetXamariniOSSDK
 						CellsToShow.Insert (row, avsCell);
 
 						insertedCells.Add (avsCell);
-					}
-
-					if (ccIsFirstResponder) {
 						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
 						ccIsFirstResponder = false;
 					}
+						
 				}
 
 				if (ccIsFirstResponder) {
