@@ -27,6 +27,7 @@ namespace JudoDotNetXamariniOSSDK
 
         public SuccessCallback successCallback { get; set; }
         public FailureCallback failureCallback { get; set; }
+        public TokenPaymentViewModel tokenPayment { get; set; }
 
 		public override void ViewDidLoad ()
 		{
@@ -116,43 +117,73 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void MakeTokenPayment ()
 		{
-			var instance = JudoConfiguration.Instance;
-			TokenOperationViewModel tokenPayment = new TokenOperationViewModel () {
-				ConsumerToken = instance.ConsumerToken,
-				CV2 = tokenCell.CCV,
-				Token = instance.CardToken,
-				Amount = "4.50",
-			};
-			PaymentButton.Alpha = 0.25f;
-			PaymentButton.Enabled = false;
+		    try
+		    {
+                var instance = JudoConfiguration.Instance;
+		        
+		        tokenPayment.ConsumerToken = instance.ConsumerToken;
+                tokenPayment.CV2 = tokenCell.CCV;
+                tokenPayment.Token = instance.CardToken;
 
-			_paymentService.MakeTokenPreAuthorisation (tokenPayment).ContinueWith (reponse => {
-				var result = reponse.Result;
-				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
-					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
-						CreatedAt = paymentreceipt.CreatedAt.DateTime,
-						Currency = paymentreceipt.Currency,
-						OriginalAmount = paymentreceipt.Amount,
-						ReceiptId = paymentreceipt.ReceiptId,
-						Message = "Pre Authorisation Success"
-					};
+                PaymentButton.Alpha = 0.25f;
+                PaymentButton.Enabled = false;
 
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						PaymentButton.Alpha = 0.25f;
-						PaymentButton.Enabled = false;
-						tokenCell.CleanUp ();
-						//var view = ViewLocator.GetReceiptView (receipt);
-						//this.NavigationController.PushViewController (view, true);	
-					});
-				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						errorPresenter.DisplayError(result,"Token Pre Authorisation has failed");	
-						PaymentButton.Alpha = 1f;
-						PaymentButton.Enabled = true;
-					});
-				}
-			});
+                PaymentButton.Alpha = 0.25f;
+                PaymentButton.Enabled = false;
+
+                _paymentService.MakeTokenPreAuthorisation(tokenPayment).ContinueWith(reponse =>
+                {
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+                        {
+                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
+                            Currency = paymentreceipt.Currency,
+                            OriginalAmount = paymentreceipt.Amount,
+                            ReceiptId = paymentreceipt.ReceiptId,
+                            Message = "Pre Authorisation Success"
+                        };
+
+                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+                        {
+                            PaymentButton.Alpha = 0.25f;
+                            PaymentButton.Enabled = false;
+                            tokenCell.CleanUp();
+                            //var view = ViewLocator.GetReceiptView (receipt);
+                            //this.NavigationController.PushViewController (view, true);	
+                        });
+                    }
+                    else
+                    {
+                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+                        {
+                            errorPresenter.DisplayError(result, "Token Pre Authorisation has failed");
+                            PaymentButton.Alpha = 1f;
+                            PaymentButton.Enabled = true;
+                        });
+
+                        // Failure callback
+                        if (failureCallback != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failureCallback(judoError);
+                        }
+
+                    }
+                });
+		    }
+            catch (Exception ex)
+            {
+                // Failure callback
+                if (failureCallback != null)
+                {
+                    var judoError = new JudoError { Exception = ex };
+                    failureCallback(judoError);
+                }
+            }
+
 
 		}
 

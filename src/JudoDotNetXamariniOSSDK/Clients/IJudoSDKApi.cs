@@ -9,9 +9,9 @@ namespace JudoDotNetXamariniOSSDK.Clients
     public interface IJudoSDKApi
     {
         void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void PreAuth(PreAuthorisationViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void TokenPayment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void TokenPreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+        void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+        void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+        void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
     }
 }

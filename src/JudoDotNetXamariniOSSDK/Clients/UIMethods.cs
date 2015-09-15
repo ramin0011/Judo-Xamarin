@@ -18,40 +18,45 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var view = _viewLocator.GetPaymentView();
             view.successCallback = success;
             view.failureCallback = failure;
+            view.cardPayment = payment;
             navigationController.PushViewController(view, true);
         }
 
 
-        public void PreAuth(PreAuthorisationViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetPreAuthView();
             view.successCallback = success;
             view.failureCallback = failure;
+            view.authorisationModel = preAuthorisation;
             navigationController.PushViewController(view, true);
         }
 
-        public void TokenPayment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetTokenPaymentView();
             view.successCallback = success;
             view.failureCallback = failure;
+            view.tokenPayment = payment;
             navigationController.PushViewController(view, true);
         }
 
-        public void TokenPreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetTokenPreAuthView();
             view.successCallback = success;
             view.failureCallback = failure;
+            view.tokenPayment = payment;
             navigationController.PushViewController(view, true);
         }
 
         public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            //var view = _viewLocator.GetPaymentView();
-            //view.successCallback = success;
-            //view.failureCallback = failure;
-            //navigationController.PushViewController(view, true);
+            var view = _viewLocator.GetPreAuthView();
+            view.successCallback = success;
+            view.failureCallback = failure;
+            view.authorisationModel = payment;
+            navigationController.PushViewController(view, true);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
         public void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController = null)
         {
-            _paymentService.MakePayment(payment).ContinueWith(reponse =>
+            try
             {
-                var result = reponse.Result;
-                if (result != null && !result.HasError && result.Response.Result != "Declined")
+                _paymentService.MakePayment(payment).ContinueWith(reponse =>
                 {
-                    try
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
                         PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
@@ -38,31 +38,37 @@ namespace JudoDotNetXamariniOSSDK.Clients
                         JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
                         success(receipt);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        var judoError = new JudoError { Exception = ex };
-                        failure(judoError);
+                        // Failure
+                        if (failure != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failure(judoError);
+                        }
                     }
-
-                }
-                else
+                });
+            }
+            catch (Exception ex)
+            {
+                // Failure
+                if (failure != null)
                 {
-                    // Failure
-                    var judoError = new JudoError { ApiError = result != null ? result.Error : null};
+                    var judoError = new JudoError { Exception = ex };
                     failure(judoError);
                 }
-            });
+            }
         }
 
 
-        public void PreAuth(PreAuthorisationViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void PreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            _paymentService.PreAuthoriseCard(preAuthorisation).ContinueWith(reponse =>
+            try
             {
-                var result = reponse.Result;
-                if (result != null && !result.HasError && result.Response.Result != "Declined")
+                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse =>
                 {
-                    try
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
                         PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
@@ -75,40 +81,165 @@ namespace JudoDotNetXamariniOSSDK.Clients
                             Message = "Payment Success"
                         };
                         JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = preAuthorisation.Card.CardType;
+                        JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
                         JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour = preAuthorisation.Card.CardNumber.Substring(preAuthorisation.Card.CardNumber.Length - Math.Min(4, preAuthorisation.Card.CardNumber.Length));
+                        JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
                         success(receipt);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        var judoError = new JudoError { Exception = ex };
-                        failure(judoError);
+                        // Failure
+                        if (failure != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failure(judoError);
+                        }
                     }
-
-                }
-                else
+                });
+            }
+            catch (Exception ex)
+            {
+                // Failure
+                if (failure != null)
                 {
-                    // Failure
-                    var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                    var judoError = new JudoError { Exception = ex};
                     failure(judoError);
                 }
-            });
+            }
         }
 
-        public void TokenPayment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse =>
+                {
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+                        {
+                            // need to fix it
+                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
+                            Currency = paymentreceipt.Currency,
+                            OriginalAmount = paymentreceipt.Amount,
+                            ReceiptId = paymentreceipt.ReceiptId,
+                            Message = "Payment Success"
+                        };
+                        success(receipt);
+                    }
+                    else
+                    {
+                        // Failure
+                        if (failure != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failure(judoError);
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Failure
+                if (failure != null)
+                {
+                    var judoError = new JudoError { Exception = ex};
+                    failure(judoError);
+                }
+            }
         }
 
-        public void TokenPreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse =>
+                {
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+                        {
+                            // need to fix it
+                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
+                            Currency = paymentreceipt.Currency,
+                            OriginalAmount = paymentreceipt.Amount,
+                            ReceiptId = paymentreceipt.ReceiptId,
+                            Message = "Payment Success"
+                        };
+                        success(receipt);
+                    }
+                    else
+                    {
+                        // Failure
+                        if (failure != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failure(judoError);
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Failure
+                if (failure != null)
+                {
+                    var judoError = new JudoError { Exception = ex };
+                    failure(judoError);
+                }
+            }
         }
 
         public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse =>
+                {
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+                        {
+                            // need to fix it
+                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
+                            Currency = paymentreceipt.Currency,
+                            OriginalAmount = paymentreceipt.Amount,
+                            ReceiptId = paymentreceipt.ReceiptId,
+                            Message = "Payment Success"
+                        };
+                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+                        JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
+                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+                        JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
+
+                        success(receipt);
+                    }
+                    else
+                    {
+                        // Failure
+                        if (failure != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            failure(judoError);
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                // Failure
+                if (failure != null)
+                {
+                    var judoError = new JudoError { Exception = ex };
+                    failure(judoError);
+                }
+            }
         }
     }
 }

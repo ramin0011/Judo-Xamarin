@@ -44,7 +44,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 			
-		public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PreAuthorisationViewModel authorisation)
+		public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation)
 		{
             try
             {
@@ -72,7 +72,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenOperationViewModel tokenPayment)
+		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenPaymentViewModel tokenPayment)
 		{
             try
             {
@@ -96,7 +96,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenOperationViewModel tokenPayment)
+		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenPaymentViewModel tokenPayment)
 		{
 			TokenPaymentModel payment = new TokenPaymentModel {
 				JudoId = JudoConfiguration.Instance.JudoId,

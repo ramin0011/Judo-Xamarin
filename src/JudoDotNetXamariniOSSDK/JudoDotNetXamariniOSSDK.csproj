@@ -112,6 +112,7 @@
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="ViewLocator.cs" />
+    <Compile Include="ViewModels\CardRegistrationViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
@@ -141,7 +142,6 @@
     <Compile Include="JudoConfiguration.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\TokenService.cs" />
-    <Compile Include="ViewModels\CardRegistrationViewModel.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.designer.cs">
       <DependentUpon>CardEntryCell.cs</DependentUpon>
@@ -164,7 +164,6 @@
     <Compile Include="Views\PreAuthorisationView.designer.cs">
       <DependentUpon>PreAuthorisationView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\PreAuthorisationViewModel.cs" />
     <Compile Include="Views\TableCells\Card\TokenPaymentCell.cs" />
     <Compile Include="Views\TableCells\Card\TokenPaymentCell.designer.cs">
       <DependentUpon>TokenPaymentCell.cs</DependentUpon>

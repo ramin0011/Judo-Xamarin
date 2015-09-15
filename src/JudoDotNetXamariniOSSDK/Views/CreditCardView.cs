@@ -13,11 +13,10 @@ namespace JudoDotNetXamariniOSSDK
 	public partial class CreditCardView : UIViewController
 	{
 
-		private UIView activeview;
-		private bool moveViewUp = false;
-
-		IPaymentService _paymentService;
-		bool KeyboardVisible = false;
+		private UIView _activeview;
+		private bool _moveViewUp;
+	    private readonly IPaymentService _paymentService;
+		private bool _keyboardVisible;
 
 		private List<CardCell> CellsToShow { get; set; }
 
@@ -31,8 +30,9 @@ namespace JudoDotNetXamariniOSSDK
 
         public SuccessCallback successCallback { private get; set; }
         public FailureCallback failureCallback { private get; set; }
+	    public PaymentViewModel cardPayment { get; set; }
 
-	    IErrorPresenter errorPresenter;
+	    readonly IErrorPresenter errorPresenter;
 
 
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
@@ -63,7 +63,7 @@ namespace JudoDotNetXamariniOSSDK
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
 			tapRecognizer.AddTarget (() => { 
-				if (KeyboardVisible) {
+				if (_keyboardVisible) {
 					DismissKeyboardAction ();
 				}
 			});
@@ -84,10 +84,10 @@ namespace JudoDotNetXamariniOSSDK
 
 		private void OnKeyboardNotification (NSNotification notification)
 		{
-			KeyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
+			_keyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
 
-			if (!KeyboardVisible) {
-				if(moveViewUp){ScrollTheView(false);}
+			if (!_keyboardVisible) {
+				if(_moveViewUp){ScrollTheView(false);}
 			}
 		}
 
@@ -97,10 +97,10 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect r = UIKeyboard.BoundsFromNotification (notification);
 
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
-				activeview = avsCell.PostcodeTextFieldOutlet;
-			if (activeview != null) {
-				moveViewUp = true;
-				ScrollTheView (moveViewUp);
+				_activeview = avsCell.PostcodeTextFieldOutlet;
+			if (_activeview != null) {
+				_moveViewUp = true;
+				ScrollTheView (_moveViewUp);
 
 			}
 		}
@@ -256,57 +256,72 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public void MakePayment ()
+		private void MakePayment ()
 		{
-			CardViewModel cardViewModel = GatherCardDetails ();
-			PaymentViewModel payment = new PaymentViewModel () {
-				Card = cardViewModel,
-				Amount = "4.99",
-			};
-			SubmitButton.Enabled = false;
-			SubmitButton.Alpha = 0.25f;
-			_paymentService.MakePayment (payment).ContinueWith (reponse => {
-				var result = reponse.Result;
-				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
-					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
-						CreatedAt = paymentreceipt.CreatedAt.DateTime,
-						Currency = paymentreceipt.Currency,
-						OriginalAmount = paymentreceipt.Amount,
-						ReceiptId = paymentreceipt.ReceiptId,
-						Message = "Payment Success"
-					};
-					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-					JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-					//JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
-					JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
+		    try
+		    {
+                cardPayment.Card = GatherCardDetails();
 
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						SubmitButton.Alpha = 0.25f;
-						SubmitButton.Enabled = false;
-						CleanOutCardDetails ();
-						//var view = ViewLocator.GetReceiptView (receipt);
-						//this.NavigationController.PushViewController (view, true);	
-					});
+                SubmitButton.Enabled = false;
+                SubmitButton.Alpha = 0.25f;
+                _paymentService.MakePayment(cardPayment).ContinueWith(reponse =>
+                {
+                    var result = reponse.Result;
+                    if (result != null && !result.HasError && result.Response.Result != "Declined")
+                    {
+                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
+                        {
+                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
+                            Currency = paymentreceipt.Currency,
+                            OriginalAmount = paymentreceipt.Amount,
+                            ReceiptId = paymentreceipt.ReceiptId,
+                            Message = "Payment Success"
+                        };
+                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+                        JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
+                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+                        JudoConfiguration.Instance.LastFour = cardPayment.Card.CardNumber.Substring(cardPayment.Card.CardNumber.Length - Math.Min(4, cardPayment.Card.CardNumber.Length));
 
-                    // call success callback
-                    if (successCallback != null) successCallback(receipt);
+                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+                        {
+                            SubmitButton.Alpha = 0.25f;
+                            SubmitButton.Enabled = false;
+                            CleanOutCardDetails();
+                        });
 
-				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						errorPresenter.DisplayError(result,"Payment has failed");	
-						SubmitButton.Enabled = true;
-						SubmitButton.Alpha = 1f;
-					});
+                        // call success callback
+                        if (successCallback != null) successCallback(receipt);
 
-                    // Failure callback
-				    if (failureCallback != null)
-				    {
-				        var judoError = new JudoError {ApiError = result.Error};
-				        failureCallback(judoError);
-				    }
-				}
-			});
+                    }
+                    else
+                    {
+                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+                        {
+                            errorPresenter.DisplayError(result, "Payment has failed");
+                            SubmitButton.Enabled = true;
+                            SubmitButton.Alpha = 1f;
+                        });
+
+                        // Failure callback
+                        if (failureCallback != null)
+                        {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error: null };
+                            failureCallback(judoError);
+                        }
+                    }
+                });
+		    }
+		    catch (Exception ex)
+		    {
+                // Failure callback
+                if (failureCallback != null)
+                {
+                    var judoError = new JudoError { Exception = ex};
+                    failureCallback(judoError);
+                }
+            }
+
 
 		}
 

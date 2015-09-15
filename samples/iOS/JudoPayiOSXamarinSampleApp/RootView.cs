@@ -38,16 +38,18 @@ namespace JudoPayiOSXamarinSampleApp
 
         }
 
-        private void successPayment(PaymentReceiptViewModel receipt)
+        private void SuccessPayment(PaymentReceiptViewModel receipt)
         {
             // move back to home screen
+            NavigationController.PopToRootViewController(true);
             // show receipt
             // store token to further use
         }
 
-        private void failurePayment(JudoError error)
+        private void FailurePayment(JudoError error)
         {
             // move back to home screen
+            NavigationController.PopToRootViewController(true);
             // show failure receipt
             // show exceptions and API error
         }
@@ -57,10 +59,11 @@ namespace JudoPayiOSXamarinSampleApp
             UITableViewCell cell = new UITableViewCell();
 
             Dictionary<string, Action> buttonDictionary = new Dictionary<string, Action>();
-            SuccessCallback successCallback = successPayment;
-            FailureCallback failureCallback = failurePayment;
+            SuccessCallback successCallback = SuccessPayment;
+            FailureCallback failureCallback = FailurePayment;
 
             var cardPayment = new PaymentViewModel { Amount = "1.1" };
+            var tokenPayment = new TokenPaymentViewModel { Amount = "1.1" };
 
             buttonDictionary.Add("Make a Payment", () =>
             {
@@ -69,18 +72,17 @@ namespace JudoPayiOSXamarinSampleApp
 
             buttonDictionary.Add("PreAuthorise", delegate
             {
-                 var preAuthorisation = new PreAuthorisationViewModel { Amount = "1.1" };
-                JudoSDKManager.PreAuth(preAuthorisation, successCallback, failureCallback, this.NavigationController);
+                JudoSDKManager.PreAuth(cardPayment, successCallback, failureCallback, this.NavigationController);
             });
 
             buttonDictionary.Add("Token Payment", delegate
             {
-                JudoSDKManager.TokenPayment(cardPayment, successCallback, failureCallback, this.NavigationController);
+                JudoSDKManager.TokenPayment(tokenPayment, successCallback, failureCallback, this.NavigationController);
             });
 
             buttonDictionary.Add("Token PreAuthorise", delegate
             {
-                JudoSDKManager.TokenPreAuth(cardPayment, successCallback, failureCallback, this.NavigationController);
+                JudoSDKManager.TokenPreAuth(tokenPayment, successCallback, failureCallback, this.NavigationController);
             });
 
             MainMenuSource menuSource = new MainMenuSource(buttonDictionary);

@@ -117,7 +117,7 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-        public static void PreAuth(PreAuthorisationViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public static void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             if (UIMode && navigationController == null)
             {
@@ -131,7 +131,7 @@ namespace JudoDotNetXamariniOSSDK
         }
 
 
-        public static void TokenPayment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public static void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             if (UIMode && navigationController == null)
             {
@@ -144,7 +144,7 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-        public static void TokenPreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+        public static void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
             if (UIMode && navigationController == null)
             {
@@ -169,44 +169,6 @@ namespace JudoDotNetXamariniOSSDK
                 _judoSdkApi.RegisterCard(payment, success, failure, navigationController);
             }
         }
-
-        public static void MakeATokenPayment(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
-
-		public static void MakeAPreAuth(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, UIViewController parentViewController, 
-									Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public static void MakeATokenPreAuth(decimal amount, Dictionary<string, string> cardDetails, string judoId, string paymentReference, string consumerReference, Dictionary<string, string> metaData, 
-										UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public static void RegisterCard(Card card, string consumerReference, string deviceID, UIViewController parentViewController, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public void GetPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-			
-		}
-
-		public void PostPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
-
-		public void PutPath(string path, Dictionary<string, string> parameters, Action<string> successBlock, Action<string> failureBlock)
-		{
-
-		}
 	}
 }
 

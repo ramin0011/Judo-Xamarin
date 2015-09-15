@@ -2,13 +2,13 @@
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class TokenOperationViewModel
+	public class TokenPaymentViewModel
 	{
 		public string Token { get; set; }
 		public string CV2 { get; set; }
 		public string ConsumerToken { get; set; }
 		public string Amount { get; set; }
-		int JudoID	{ get; set;}
+		int JudoId	{ get; set;}
 		string PaymentReference{ get; set; }
 		string ConsumerReference{ get; set; }
 	}
