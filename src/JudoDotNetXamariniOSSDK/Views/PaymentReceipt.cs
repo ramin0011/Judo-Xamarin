@@ -13,7 +13,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<ReceiptStringItemCell> CellsToShow { get; set; }
 
-		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt~iphone", null)
+		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
 		{
 			_receipt = receipt;
 		}

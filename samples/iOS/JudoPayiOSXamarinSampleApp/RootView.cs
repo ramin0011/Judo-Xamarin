@@ -46,7 +46,20 @@ namespace JudoPayiOSXamarinSampleApp
 
 			buttonDictionary.Add ("Make a Payment", ()=> {    	
 				var creditCardView = JudoSDKManager.GetPaymentView ();
-				this.NavigationController.PushViewController (creditCardView, true);
+
+				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+				{
+						
+					creditCardView.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+					creditCardView.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+
+					this.PresentViewController(creditCardView, true, null);
+		
+				}
+				else
+				{
+					this.NavigationController.PushViewController (creditCardView, true);
+				}
 			});
 
 			buttonDictionary.Add ("PreAuthorise", delegate  {				

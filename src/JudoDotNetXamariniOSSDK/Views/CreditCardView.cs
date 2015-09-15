@@ -12,7 +12,6 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public partial class CreditCardView : UIViewController
 	{
-
 		private UIView activeview;
 		private bool moveViewUp = false;
 
@@ -42,6 +41,16 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidAppear (animated);
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
+
+		}
+
+		public override void ViewWillLayoutSubviews ()
+		{
+			base.ViewWillLayoutSubviews ();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+			}
+
 		}
 
 		public override void ViewDidLoad ()
@@ -51,11 +60,12 @@ namespace JudoDotNetXamariniOSSDK
 
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 
-
-			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+				defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			}
 
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
@@ -75,6 +85,12 @@ namespace JudoDotNetXamariniOSSDK
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
 			};
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					FormClose.TouchUpInside += (sender, ev) => {
+					this.DismissViewController(true,null);
+				};
+			}
 			SubmitButton.Enabled = false;
 			SubmitButton.Alpha = 0.25f;
 			detailCell.ccTextOutlet.BecomeFirstResponder ();
@@ -211,10 +227,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				TableView.EndUpdates ();
 			}
-
-
-
-
+				
 			SubmitButton.Enabled = enable;
 			SubmitButton.Alpha = (enable == true ? 1f : 0.25f) ;
 
@@ -330,8 +343,10 @@ namespace JudoDotNetXamariniOSSDK
 
 			return cardViewModel;
 		}
-
+			
 
 	}
+
+
 }
 

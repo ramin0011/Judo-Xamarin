@@ -51,11 +51,12 @@ namespace JudoDotNetXamariniOSSDK
 
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 
-
-			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+				defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			}
 
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
