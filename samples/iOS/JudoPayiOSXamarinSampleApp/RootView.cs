@@ -64,7 +64,19 @@ namespace JudoPayiOSXamarinSampleApp
 
 			buttonDictionary.Add ("PreAuthorise", delegate  {				
 				var preAuthoriseView =JudoSDKManager.GetPreAuthView();
-				this.NavigationController.PushViewController(preAuthoriseView,true);
+				if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+				{
+
+					preAuthoriseView.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+					preAuthoriseView.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+
+					this.PresentViewController(preAuthoriseView, true, null);
+
+				}
+				else
+				{
+					this.NavigationController.PushViewController (preAuthoriseView, true);
+				}
 			});
 
 			buttonDictionary.Add ("Token Payment", delegate {				

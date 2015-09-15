@@ -47,7 +47,7 @@ namespace JudoDotNetXamariniOSSDK
 		public override void ViewWillLayoutSubviews ()
 		{
 			base.ViewWillLayoutSubviews ();
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
 				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
 			}
 

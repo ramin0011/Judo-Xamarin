@@ -44,6 +44,15 @@ namespace JudoDotNetXamariniOSSDK
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 		}
 
+		public override void ViewWillLayoutSubviews ()
+		{
+			base.ViewWillLayoutSubviews ();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+			}
+
+		}
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
@@ -76,6 +85,12 @@ namespace JudoDotNetXamariniOSSDK
 			RegisterButton.TouchUpInside += (sender, ev) => {
 				PreAuthCard ();
 			};
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				FormClose.TouchUpInside += (sender, ev) => {
+					this.DismissViewController(true,null);
+				};
+			}
 			RegisterButton.Enabled = false;
 			RegisterButton.Alpha = 0.25f;
 
