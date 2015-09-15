@@ -12,7 +12,7 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public partial class CreditCardView : UIViewController
 	{
-
+	    private LoadingOverlay loadingOverlay;
 		private UIView _activeview;
 		private bool _moveViewUp;
 	    private readonly IPaymentService _paymentService;
@@ -32,13 +32,9 @@ namespace JudoDotNetXamariniOSSDK
         public FailureCallback failureCallback { private get; set; }
 	    public PaymentViewModel cardPayment { get; set; }
 
-	    readonly IErrorPresenter errorPresenter;
-
-
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
 			_paymentService = paymentService;
-			errorPresenter = new ResponseErrorPresenter ();
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -260,68 +256,70 @@ namespace JudoDotNetXamariniOSSDK
 		{
 		    try
 		    {
+                JudoSDKManager.ShowLoading();
                 cardPayment.Card = GatherCardDetails();
 
-                SubmitButton.Enabled = false;
-                SubmitButton.Alpha = 0.25f;
-                _paymentService.MakePayment(cardPayment).ContinueWith(reponse =>
-                {
+		        SubmitButton.Enabled = false;
+		        SubmitButton.Alpha = 0.25f;
+
+		        _paymentService.MakePayment(cardPayment).ContinueWith(reponse =>
+		        {
                     var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
-                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
-                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour = cardPayment.Card.CardNumber.Substring(cardPayment.Card.CardNumber.Length - Math.Min(4, cardPayment.Card.CardNumber.Length));
+		            if (result != null && !result.HasError && result.Response.Result != "Declined")
+		            {
+		                var paymentreceipt = result.Response as PaymentReceiptModel;
 
-                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
-                        {
-                            SubmitButton.Alpha = 0.25f;
-                            SubmitButton.Enabled = false;
-                            CleanOutCardDetails();
-                        });
+		                if (paymentreceipt != null)
+		                {
+		                    JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+		                    JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
+		                    JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+		                    JudoConfiguration.Instance.LastFour =
+		                        cardPayment.Card.CardNumber.Substring(cardPayment.Card.CardNumber.Length -
+		                                                              Math.Min(4, cardPayment.Card.CardNumber.Length));
 
-                        // call success callback
-                        if (successCallback != null) successCallback(receipt);
-
-                    }
-                    else
-                    {
-                        DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+		                    // call success callback
+		                    if (successCallback != null) successCallback(paymentreceipt);
+		                }
+                        else
                         {
-                            errorPresenter.DisplayError(result, "Payment has failed");
-                            SubmitButton.Enabled = true;
-                            SubmitButton.Alpha = 1f;
-                        });
-
-                        // Failure callback
-                        if (failureCallback != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error: null };
-                            failureCallback(judoError);
+                            throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
                         }
-                    }
-                });
+
+		            }
+		            else
+		            {
+		                // Failure callback
+		                if (failureCallback != null)
+		                {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+		                    if (paymentreceipt != null)
+		                    {
+                                // send receipt even we got card declined
+                                failureCallback(judoError, paymentreceipt);
+                            }
+		                    else
+		                    {
+                                failureCallback(judoError);
+		                    }
+		                }
+		            }
+
+		            JudoSDKManager.HideLoading();
+		        });
 		    }
 		    catch (Exception ex)
 		    {
+                JudoSDKManager.HideLoading();
                 // Failure callback
-                if (failureCallback != null)
-                {
-                    var judoError = new JudoError { Exception = ex};
-                    failureCallback(judoError);
-                }
-            }
-
+		        if (failureCallback != null)
+		        {
+		            var judoError = new JudoError {Exception = ex};
+		            failureCallback(judoError);
+		        }
+		    }
 
 		}
 

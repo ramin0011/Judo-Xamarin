@@ -89,6 +89,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
+    <Compile Include="Helpers\LoadingOverlay.cs" />
     <Compile Include="Models\JudoError.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\PaymentService.cs" />
     <Compile Include="ViewLocator.cs" />
-    <Compile Include="ViewModels\CardRegistrationViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
@@ -140,8 +140,6 @@
     </Compile>
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="JudoConfiguration.cs" />
-    <Compile Include="Services\ITokenService.cs" />
-    <Compile Include="Services\TokenService.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.designer.cs">
       <DependentUpon>CardEntryCell.cs</DependentUpon>
@@ -173,8 +171,6 @@
       <DependentUpon>TokenPaymentView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TokenPaymentViewModel.cs" />
-    <Compile Include="Helpers\ResonseErrorPresenter.cs" />
-    <Compile Include="Helpers\IErrorPresenter.cs" />
     <Compile Include="Views\TokenPreAuthorisationView.cs" />
     <Compile Include="Views\TokenPreAuthorisationView.designer.cs">
       <DependentUpon>TokenPreAuthorisationView.cs</DependentUpon>

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
-using System.Drawing;
+using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -56,6 +54,10 @@ namespace JudoPayiOSXamarinSampleApp
 		{
 			//Configure JudoPay app here
 			var configInstance = JudoConfiguration.Instance;
+
+            //setting for Sandnox
+            configInstance.Environment = Environment.Sandbox;
+
 			configInstance.ApiToken  = "5tZfrXDngpvu8iGS";
 			configInstance.ApiSecret = "da36e4c8f5805173060c934b12dcc14bb05761af310ea364cd787710b1da346b";
 			configInstance.JudoId = "100515592";//100515-592

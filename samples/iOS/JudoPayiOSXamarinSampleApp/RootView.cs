@@ -6,7 +6,9 @@ using UIKit;
 using JudoDotNetXamariniOSSDK;
 using System.Drawing;
 using System.Collections.Generic;
+using CoreFoundation;
 using CoreGraphics;
+using JudoPayDotNet.Models;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -38,20 +40,48 @@ namespace JudoPayiOSXamarinSampleApp
 
         }
 
-        private void SuccessPayment(PaymentReceiptViewModel receipt)
+        private void ShowMessage(string title, string message, string btnText = "OK")
         {
-            // move back to home screen
-            NavigationController.PopToRootViewController(true);
-            // show receipt
-            // store token to further use
+            UIAlertView msgbox = new UIAlertView (title, message, null, btnText, null);
+            msgbox.Show ();
         }
 
-        private void FailurePayment(JudoError error)
+        private void SuccessPayment(PaymentReceiptModel receipt)
         {
-            // move back to home screen
-            NavigationController.PopToRootViewController(true);
-            // show failure receipt
-            // show exceptions and API error
+            DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+            {
+                // move back to home screen
+                NavigationController.PopToRootViewController(true);
+                // show receipt
+                ShowMessage("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
+
+                // store token to further use
+            });
+        }
+
+        private void FailurePayment(JudoError error, PaymentReceiptModel receipt)
+        {
+            DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
+            {
+                // move back to home screen
+                NavigationController.PopToRootViewController(true);
+                // show receipt
+                string message = "";
+                if (error != null && error.ApiError != null)
+                    message += error.ApiError.ErrorMessage + Environment.NewLine;
+
+                if (error != null && error.Exception != null)
+                    message += error.Exception.Message + Environment.NewLine;
+
+                if (receipt != null)
+                {
+                    message += "Transaction : " + receipt.Result + Environment.NewLine;
+                    message += "Receipt ID - " + receipt.ReceiptId;
+                }
+
+                ShowMessage("Transaction Failed: ", message);
+                // store token to further use
+            });
         }
 
         void SetUpTableView()

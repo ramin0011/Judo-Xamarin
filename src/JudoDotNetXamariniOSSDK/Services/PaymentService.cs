@@ -30,7 +30,8 @@ namespace JudoDotNetXamariniOSSDK
 				    ExpiryDate = paymentViewModel.Card.ExpireDate,
 				    CardAddress = new CardAddressModel() { PostCode = paymentViewModel.Card.PostCode, CountryCode = Convert.ToInt32(paymentViewModel.Card.CountryCode) },
 				    StartDate = paymentViewModel.Card.StartDate,
-                    IssueNumber = paymentViewModel.Card.IssueNumber
+                    IssueNumber = paymentViewModel.Card.IssueNumber,
+                    YourPaymentMetaData = paymentViewModel.YourPaymentMetaData
                 };
 
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
@@ -59,7 +60,8 @@ namespace JudoDotNetXamariniOSSDK
 				    ExpiryDate = authorisation.Card.ExpireDate,
                     CardAddress = new CardAddressModel() { PostCode = authorisation.Card.PostCode, CountryCode = Convert.ToInt32(authorisation.Card.CountryCode) },
                     StartDate = authorisation.Card.StartDate,
-                    IssueNumber = authorisation.Card.IssueNumber
+                    IssueNumber = authorisation.Card.IssueNumber,
+                    YourPaymentMetaData = authorisation.YourPaymentMetaData
                 };
 
 				Task<IResult<ITransactionResult>> task =  _judoAPI.PreAuths.Create(payment);
@@ -84,7 +86,8 @@ namespace JudoDotNetXamariniOSSDK
 				    Amount = decimal.Parse(tokenPayment.Amount),
 				    CardToken = tokenPayment.Token,
 				    CV2 = tokenPayment.CV2,
-				    ConsumerToken=tokenPayment.ConsumerToken
+                    ConsumerToken = tokenPayment.ConsumerToken,
+                    YourPaymentMetaData = tokenPayment.YourPaymentMetaData
 			    };
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
@@ -105,7 +108,8 @@ namespace JudoDotNetXamariniOSSDK
 				Amount = decimal.Parse(tokenPayment.Amount),
 				CardToken = tokenPayment.Token,
 				CV2 = tokenPayment.CV2,
-				ConsumerToken=tokenPayment.ConsumerToken
+                ConsumerToken = tokenPayment.ConsumerToken,
+                YourPaymentMetaData = tokenPayment.YourPaymentMetaData
 			};
 			try
 			{

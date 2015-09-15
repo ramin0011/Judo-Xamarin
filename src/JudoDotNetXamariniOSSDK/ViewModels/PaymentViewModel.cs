@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -9,6 +10,7 @@ namespace JudoDotNetXamariniOSSDK
 		int JudoId { get; set;}
 		string PaymentReference{ get; set; }
 		string ConsumerReference{ get; set; }
+        public IDictionary<string, string> YourPaymentMetaData { get; set; }
 	}
 }
 

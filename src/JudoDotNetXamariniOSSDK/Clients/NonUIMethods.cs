@@ -23,20 +23,13 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            // need to fix it
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
+                        
                         JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
                         JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
                         JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
                         JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
-                        success(receipt);
+
+                        if (success != null) success(paymentreceipt);
                     }
                     else
                     {
@@ -71,20 +64,13 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            // need to fix it
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
+
                         JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
                         JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
                         JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
                         JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
-                        success(receipt);
+
+                        if (success != null) success(paymentreceipt);
                     }
                     else
                     {
@@ -118,16 +104,8 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            // need to fix it
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
-                        success(receipt);
+
+                        if (success != null) success(paymentreceipt);
                     }
                     else
                     {
@@ -161,16 +139,8 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            // need to fix it
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
-                        success(receipt);
+
+                        if (success != null) success(paymentreceipt);
                     }
                     else
                     {
@@ -204,21 +174,13 @@ namespace JudoDotNetXamariniOSSDK.Clients
                     if (result != null && !result.HasError && result.Response.Result != "Declined")
                     {
                         PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        PaymentReceiptViewModel receipt = new PaymentReceiptViewModel()
-                        {
-                            // need to fix it
-                            CreatedAt = paymentreceipt.CreatedAt.DateTime,
-                            Currency = paymentreceipt.Currency,
-                            OriginalAmount = paymentreceipt.Amount,
-                            ReceiptId = paymentreceipt.ReceiptId,
-                            Message = "Payment Success"
-                        };
+
                         JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
                         JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
                         JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
                         JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
 
-                        success(receipt);
+                        if (success != null) success(paymentreceipt);
                     }
                     else
                     {
