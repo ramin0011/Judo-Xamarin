@@ -94,6 +94,7 @@ namespace JudoPayiOSXamarinSampleApp
                 if (receipt != null)
                 {
                     message += "Transaction : " + receipt.Result + Environment.NewLine;
+                    message += receipt.Message + Environment.NewLine;
                     message += "Receipt ID - " + receipt.ReceiptId;
                 }
 
@@ -110,8 +111,8 @@ namespace JudoPayiOSXamarinSampleApp
             SuccessCallback successCallback = SuccessPayment;
             FailureCallback failureCallback = FailurePayment;
 
-            var cardPayment = new PaymentViewModel { Amount = "1.1" };
-            var tokenPayment = new TokenPaymentViewModel { Amount = "1.1" };
+            var cardPayment = new PaymentViewModel { Amount = "4.5" };
+            var tokenPayment = new TokenPaymentViewModel { Amount = "3.4" };
 
             buttonDictionary.Add("Make a Payment", () =>
             {
@@ -131,6 +132,11 @@ namespace JudoPayiOSXamarinSampleApp
             buttonDictionary.Add("Token PreAuthorise", delegate
             {
                 JudoSDKManager.TokenPreAuth(tokenPayment, successCallback, failureCallback, this.NavigationController);
+            });
+
+            buttonDictionary.Add("Register a Card", delegate
+            {
+                JudoSDKManager.RegisterCard(cardPayment, successCallback, failureCallback, this.NavigationController);
             });
 
             MainMenuSource menuSource = new MainMenuSource(buttonDictionary);

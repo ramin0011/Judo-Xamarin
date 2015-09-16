@@ -9,13 +9,13 @@ namespace JudoDotNetXamariniOSSDK
 {
 	internal partial class PaymentReceipt : UIViewController
 	{
-		private PaymentReceiptViewModel _receipt;
+		
 
 		private List<ReceiptStringItemCell> CellsToShow { get; set; }
 
-		private PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
+		private PaymentReceipt () : base ("PaymentReceipt", null)
 		{
-			_receipt = receipt;
+			
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -29,7 +29,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidLoad ();
 			SetUpTableView ();
-			ViewHeader.Text = _receipt.Message;
+			//ViewHeader.Text = _receipt.Message;
 			this.View.BackgroundColor = new UIColor (245f, 245f, 245f, 1f);
 			HomeButton.TouchUpInside += (sender, ev) => {
 				this.NavigationController.PopToRootViewController (true);
@@ -41,11 +41,11 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			ReceiptStringItemCell dateCell = new ReceiptStringItemCell ();
 			dateCell.Label = "Date";
-			dateCell.Value = _receipt.CreatedAt.ToLongDateString () + ", " + DateTime.Now.Hour + ":" + DateTime.Now.Minute;
+		//	dateCell.Value = _receipt.CreatedAt.ToLongDateString () + ", " + DateTime.Now.Hour + ":" + DateTime.Now.Minute;
 
 			ReceiptStringItemCell amountCell = new ReceiptStringItemCell (); 
 			amountCell.Label = "Amount";
-			amountCell.Value = _receipt.OriginalAmount + " " + _receipt.Currency;
+		//	amountCell.Value = _receipt.OriginalAmount + " " + _receipt.Currency;
 
 			CellsToShow = new List<ReceiptStringItemCell> (){ dateCell, amountCell };
 

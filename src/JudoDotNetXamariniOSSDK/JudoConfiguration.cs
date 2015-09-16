@@ -1,4 +1,5 @@
 ﻿using System;
+using JudoPayDotNet.Models;
 using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamariniOSSDK
@@ -29,7 +30,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public string CardToken { get; set; }
 
-		public CreditCardType TokenCardType { get; set; }
+		public CardType TokenCardType { get; set; }
 
 		public string LastFour { get; set; }
 

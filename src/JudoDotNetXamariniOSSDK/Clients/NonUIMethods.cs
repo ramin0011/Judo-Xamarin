@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JudoPayDotNet.Models;
 using UIKit;
 
@@ -17,30 +18,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakePayment(payment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        
-                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
-
-                        if (success != null) success(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure
-                        if (failure != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            failure(judoError);
-                        }
-                    }
-                });
+                _paymentService.MakePayment(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -58,30 +36,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-
-                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
-
-                        if (success != null) success(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure
-                        if (failure != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            failure(judoError);
-                        }
-                    }
-                });
+                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -98,25 +53,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-
-                        if (success != null) success(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure
-                        if (failure != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            failure(judoError);
-                        }
-                    }
-                });
+                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse => HandResponse(false, success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -133,25 +70,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-
-                        if (success != null) success(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure
-                        if (failure != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            failure(judoError);
-                        }
-                    }
-                });
+                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse => HandResponse(false, success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -168,30 +87,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-
-                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
-
-                        if (success != null) success(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure
-                        if (failure != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            failure(judoError);
-                        }
-                    }
-                });
+                _paymentService.RegisterCard(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -200,6 +96,45 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 {
                     var judoError = new JudoError { Exception = ex };
                     failure(judoError);
+                }
+            }
+        }
+
+        private static void HandResponse(bool savetoken, SuccessCallback success, FailureCallback failure, Task<IResult<ITransactionResult>> reponse)
+        {
+            var result = reponse.Result;
+            if (result != null && !result.HasError && result.Response.Result != "Declined")
+            {
+                var paymentreceipt = result.Response as PaymentReceiptModel;
+
+                if (savetoken && paymentreceipt != null && paymentreceipt.CardDetails != null)
+                {
+                    JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+                    JudoConfiguration.Instance.TokenCardType = paymentreceipt.CardDetails.CardType;
+                    JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+                    JudoConfiguration.Instance.LastFour = paymentreceipt.CardDetails.CardLastfour;
+                }
+
+                if (success != null)
+                {
+                    success(paymentreceipt);
+                }
+                else
+                {
+                    throw new Exception("SuccessCallback is not set.");
+                }
+            }
+            else
+            {
+                // Failure
+                if (failure != null)
+                {
+                    var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                    failure(judoError);
+                }
+                else
+                {
+                    throw new Exception("FailureCallback is not set.");
                 }
             }
         }

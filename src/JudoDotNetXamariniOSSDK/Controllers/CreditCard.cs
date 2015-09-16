@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using JudoPayDotNet.Models;
 using UIKit;
 
 namespace JudoDotNetXamariniOSSDK
@@ -62,24 +63,24 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public int LengthOfFormattedStringTilLastGroupForType (CreditCardType type)
+		public int LengthOfFormattedStringTilLastGroupForType (CardType type)
 		{
 			int idx = 0;
 
 			switch (type) {
-			case CreditCardType.Visa:
+			case CardType.VISA:
 				
-			case CreditCardType.MasterCard:
+			case CardType.MASTERCARD:
 				
-			case CreditCardType.Discover:
+			case CardType.DISCOVER:
 						// { 4-4-4-4}
-			case CreditCardType.Maestro:
+			case CardType.MAESTRO:
 				idx = 16 + 3 - 4;
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 				idx = 15 + 2 - 5;
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				idx = 14 + 2 - 4;
 				break;
 			default:
@@ -90,25 +91,27 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 		// http://www.regular-expressions.info/creditcard.html
-		public CreditCardType GetCCType (string proposedNumber)
+		public CardType GetCCType (string proposedNumber)
 		{
 			Regex reg = new Regex ("");
 
 			if (proposedNumber.Length < Card.CC_LEN_FOR_TYPE)
-				return CreditCardType.InvalidCard;
+				return CardType.UNKNOWN;
 
-			for (int idx = 0; idx < (int)CreditCardType.InvalidCard; ++idx) {
+            CardType lastcardtype = Enum.GetValues(typeof(CardType)).Cast<CardType>().Last();
+            for (int idx = 0; idx < (int)lastcardtype; ++idx)
+            {
 				switch (idx) {
-				case  (int)CreditCardType.Visa:
+				case  (int)CardType.VISA:
 					reg = visaTypeReg;
 					break;
-				case  (int)CreditCardType.MasterCard:
+				case  (int)CardType.MASTERCARD:
 					reg = mcTypeReg;
 					break;
-				case  (int)CreditCardType.AMEX:
+				case  (int)CardType.AMEX:
 					reg = amexTypeReg;
 					break;
-				case (int)CreditCardType.Maestro:
+				case (int)CardType.MAESTRO:
 					reg = maestroTypeReg;
 					break;
 				}
@@ -120,12 +123,12 @@ namespace JudoDotNetXamariniOSSDK
 				var matches = reg.Matches (proposedNumber.Substring (range.Location, range.Length));
 				if (matches != null) {
 					if (matches.Count == 1) {
-						return (CreditCardType)idx;
+						return (CardType)idx;
 					}
 				}
 
 			}
-			return CreditCardType.InvalidCard;
+			return CardType.UNKNOWN;
 		}
 
 		string CleanNumber (string str)
@@ -152,19 +155,19 @@ namespace JudoDotNetXamariniOSSDK
 			int[] segmentLengths = new int[3] { 0, 0, 0 };
 
 			switch (GetCCType (enteredNumber)) {
-			case CreditCardType.Visa:
-			case CreditCardType.MasterCard:
-			case CreditCardType.Discover:		// { 4-4-4-4}
-			case CreditCardType.Maestro:
+			case CardType.VISA:
+			case CardType.MASTERCARD:
+			case CardType.DISCOVER:		// { 4-4-4-4}
+			case CardType.MAESTRO:
 				segmentLengths [0] = 4;
 				segmentLengths [1] = 4;
 				segmentLengths [2] = 4;
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 				segmentLengths [0] = 6;
 				segmentLengths [1] = 5;
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				segmentLengths [0] = 6;
 				segmentLengths [1] = 4;
 				break;
@@ -208,21 +211,21 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public int LengthOfStringForType (CreditCardType type)
+		public int LengthOfStringForType (CardType type)
 		{
 			int idx = 0;
 
 			switch (type) {
-			case CreditCardType.Visa:
-			case CreditCardType.MasterCard:
-			case CreditCardType.Discover:		// { 4-4-4-4}
-			case CreditCardType.Maestro:
+			case CardType.VISA:
+			case CardType.MASTERCARD:
+			case CardType.DISCOVER:		// { 4-4-4-4}
+			case CardType.MAESTRO:
 				idx = 16;
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 				idx = 15;
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				idx = 14;
 				break;
 			default:
@@ -232,21 +235,21 @@ namespace JudoDotNetXamariniOSSDK
 			return idx;
 		}
 
-		public int LengthOfFormattedStringForType (CreditCardType type)
+		public int LengthOfFormattedStringForType (CardType type)
 		{
 			int idx = 16;
 
 			switch (type) {
-			case CreditCardType.Visa:
-			case CreditCardType.MasterCard:
-			case CreditCardType.Discover:		// { 4-4-4-4}
-			case CreditCardType.Maestro:
+			case CardType.VISA:
+			case CardType.MASTERCARD:
+			case CardType.DISCOVER:		// { 4-4-4-4}
+			case CardType.MAESTRO:
 				idx = 16 + 3;
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 				idx = 15 + 2;
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				idx = 14 + 2;
 				break;
 			default:
@@ -272,16 +275,16 @@ namespace JudoDotNetXamariniOSSDK
 			bool ret = false;
 
 			switch (GetCCType (number)) {
-			case CreditCardType.Visa:
+			case CardType.VISA:
 				reg = visaReg;
 				break;
-			case CreditCardType.MasterCard:
+			case CardType.MASTERCARD:
 				reg = mcReg;
 				break;
-			case CreditCardType.AMEX:
+			case CardType.AMEX:
 				reg = amexReg;
 				break;
-			case CreditCardType.Maestro:
+			case CardType.MAESTRO:
 				reg = maestroReg;
 				break;
 
@@ -345,30 +348,30 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public string ccvFormat (CreditCardType type)
+		public string ccvFormat (CardType type)
 		{
-			return type == CreditCardType.AMEX ? @"%04.4u" : @"%03.3u";
+			return type == CardType.AMEX ? @"%04.4u" : @"%03.3u";
 		}
 
-		public string PromptStringForType (CreditCardType type, bool justNumber)
+		public string PromptStringForType (CardType type, bool justNumber)
 		{
 			string number = "0000 0000 0000 0000";
 			string additions = @"";
 
 			switch (type) {
-			case CreditCardType.Visa:
-			case CreditCardType.MasterCard:
-			case CreditCardType.Discover:		// { 4-4-4-4}
-			case CreditCardType.Maestro:
+			case CardType.VISA:
+			case CardType.MASTERCARD:
+			case CardType.DISCOVER:		// { 4-4-4-4}
+			case CardType.MAESTRO:
 				
 				number = @"0000 0000 0000 0000";
 				additions = @" MM/YY CV2";
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 				number = @"0000 000000 00000";
 				additions = @" MM/YY CIDV";
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				number = @"XXXX XXXXXX XXXX";
 				additions = @" MM/YY CV2";
 				break;
@@ -379,24 +382,24 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public string CVTwoPromptForType (CreditCardType type, bool justNumber)
+		public string CVTwoPromptForType (CardType type, bool justNumber)
 		{
 			string text = "CV2";
 
 
 			switch (type) {
-			case CreditCardType.Visa:
-			case CreditCardType.MasterCard:
-			case CreditCardType.Discover:		// { 4-4-4-4}
-			case CreditCardType.Maestro:
+                case CardType.VISA:
+                case CardType.MASTERCARD:
+                case CardType.DISCOVER:		// { 4-4-4-4}
+                case CardType.MAESTRO:
 
 				text = @"CV2";
 				break;
-			case CreditCardType.AMEX:			// {4-6-5}
+			case CardType.AMEX:			// {4-6-5}
 
 				text = @"CIDV";
 				break;
-			case CreditCardType.DinersClub:	// {4-6-4}
+			case CardType.DINERS_CLUB:	// {4-6-4}
 				
 				text = @"CV2";
 				break;
@@ -407,30 +410,24 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public UIImage CreditCardImage (CreditCardType type)
+		public UIImage CreditCardImage (CardType type)
 		{
 			string name;
 
 			switch (type) {
-			case CreditCardType.Visa:
+                case CardType.VISA:
 				name = @"ic_card_large_visa";
 				break;
-			case CreditCardType.MasterCard:
+                case CardType.MASTERCARD:
 				name = @"ic_card_large_mastercard";
 				break;
-			case CreditCardType.Maestro:
+                case CardType.MAESTRO:
 				name = @"ic_card_large_maestro";
 				break;
-			case CreditCardType.AMEX:
+                case CardType.AMEX:
 				name = @"ic_card_large_amex";
 				break;
-			case CreditCardType.Discover:
-				name = @"ic_card_large_unknown";
-				break;
-			case CreditCardType.DinersClub:
-				name = @"ic_card_large_unknown";
-				break;
-			default:
+                default:
 				name = @"ic_card_large_unknown";
 				break;
 			}
@@ -438,12 +435,12 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public UIImage CreditCardBackImage (CreditCardType type)
+		public UIImage CreditCardBackImage (CardType type)
 		{
 			string backName;
 
 			switch (type) {
-			case CreditCardType.AMEX:
+			case CardType.AMEX:
 				backName = @"ic_card_large_cv2_amex";
 				break;
 			default:

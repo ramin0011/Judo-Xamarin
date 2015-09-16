@@ -104,15 +104,15 @@ namespace JudoDotNetXamariniOSSDK
 
 			switch (selectedCountry) {
 			case BillingCountryOptions.BillingCountryOptionUK:
-				cardViewModel.CountryCode = @"826";
+                    cardViewModel.CountryCode = ISO3166CountryCodes.UK;
 				break;
 			case BillingCountryOptions.BillingCountryOptionUSA:
-				cardViewModel.CountryCode = @"840";
+                cardViewModel.CountryCode = ISO3166CountryCodes.USA;
 				break;
-			case BillingCountryOptions.BillingCountryOptionCanada:
-				cardViewModel.CountryCode = @"124";
-				break;
-			default:					
+            case BillingCountryOptions.BillingCountryOptionCanada:
+                cardViewModel.CountryCode = ISO3166CountryCodes.Canada;
+                break;
+            default:					
 				break;
 			}
 		}

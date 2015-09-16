@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using CoreAnimation;
 using System.Text;
 using CoreFoundation;
-
+using JudoPayDotNet.Models;
 
 
 namespace JudoDotNetXamariniOSSDK
@@ -23,8 +23,7 @@ namespace JudoDotNetXamariniOSSDK
 		int currentYear;
 
 		CreditCard cardHelper = new CreditCard ();
-
-		public CreditCardType Type { get; set; }
+		public CardType Type {get; set;}
 
 		bool flashForError = false;
 		bool updateText = false;
@@ -71,7 +70,7 @@ namespace JudoDotNetXamariniOSSDK
 		public override void SetUpCell ()
 		{
 
-			creditCardImage.Tag = (int)CreditCardType.InvalidCard;
+			creditCardImage.Tag = (int)CardType.UNKNOWN;
 
 			creditCardImage.Layer.CornerRadius = 4.0f;
 			creditCardImage.Layer.MasksToBounds = true;
@@ -98,7 +97,7 @@ namespace JudoDotNetXamariniOSSDK
 			SetupPlaceViews ();
 
 
-			Type = CreditCardType.InvalidCard;
+            Type = CardType.UNKNOWN;
 			SetUpMaskedInput ();
 
 
@@ -279,22 +278,22 @@ namespace JudoDotNetXamariniOSSDK
 						updateText = true;
 						formattedText = newTextOrig;
 
-						Type = CreditCardType.InvalidCard;
+						Type = CardType.UNKNOWN;
 					} else {
 						Type = cardHelper.GetCCType (newText);
 						switch (Type) {
 
-						case CreditCardType.InvalidCard:
+						case CardType.UNKNOWN:
 							flashForError = true;
 							break;
-						case CreditCardType.Maestro:
+						case CardType.MAESTRO:
 							if (!JudoSDKManager.MaestroAccepted) {
 
 								flashForError = true;
 								return EndDelegate (ccPlaceHolder, ccText, formattedText);
 							}
 							break;
-						case CreditCardType.AMEX:
+						case CardType.AMEX:
 							if (!JudoSDKManager.AmExAccepted) {
 
 								flashForError = true; 
@@ -452,7 +451,7 @@ namespace JudoDotNetXamariniOSSDK
 							}
 						}
 						if (creditCardImage != ccBackImage) {
-							UIViewAnimationOptions transType = (Type == CreditCardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
+							UIViewAnimationOptions transType = (Type == CardType.AMEX) ? UIViewAnimationOptions.TransitionCrossDissolve : UIViewAnimationOptions.TransitionFlipFromBottom;
 
 							UIImageView.Animate (
 								duration: 0.25f, 
@@ -499,7 +498,8 @@ namespace JudoDotNetXamariniOSSDK
 
 				}
 
-				if (cvTwoText.Text.Length == (Type == CreditCardType.AMEX ? 4 : 3) && replace.Length != 0) {
+				if (cvTwoText.Text.Length== (Type == CardType.AMEX ? 4 : 3)&& replace.Length != 0) 
+                {
 					return false;
 				}
 
@@ -516,12 +516,12 @@ namespace JudoDotNetXamariniOSSDK
 
 					var cIndex = cvTwoPlaceHolder.Text.IndexOf ("C");
 					CSRange ccvRange = new CSRange (cIndex, cvTwoPlaceHolder.Text.Substring (cIndex).Length);
-					ccvRange.Length = Type == CreditCardType.AMEX ? 4 : 3;
+					ccvRange.Length = Type == CardType.AMEX ? 4 : 3;
 					ccv = newTextOrig.Substring (ccvRange.Location, ccvRange.Length);
 				}
 
 				updateText = true;
-				if (newTextOrig.Length == (Type == CreditCardType.AMEX ? 4 : 3)) {
+				if (newTextOrig.Length== (Type == CardType.AMEX ? 4 : 3)) {
 					//hasFullCCV = true;
 					DismissKeyboardAction ();
 				} 
@@ -592,7 +592,8 @@ namespace JudoDotNetXamariniOSSDK
 				FlashMessage ("Please recheck number");
 			}
 
-			if (ccText.Text.Length == cardHelper.LengthOfFormattedStringForType (Type) && expiryText.Text.Length == 5 && cvTwoText.Text.Length == (Type == CreditCardType.AMEX ? 4 : 3)) {
+			if(ccText.Text.Length == cardHelper.LengthOfFormattedStringForType(Type)&&expiryText.Text.Length==5&&cvTwoText.Text.Length==(Type == CardType.AMEX ? 4 : 3))
+            {
 				CompletelyDone = true;
 			} else {
 				CompletelyDone = false;
@@ -615,18 +616,11 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		void repositionScrollView (float offset, UIScrollView scrollView)
-		{
-			CGRect scrollBounds = scrollView.Bounds;
-			scrollBounds.X = offset;
-			scrollView.Bounds = scrollBounds;
-		}
-
-
 		void ScrollForward (bool animated)
 		{
 
-			if (Type == CreditCardType.AMEX) {
+			if(Type== CardType.AMEX)
+            {
 				ccPlaceHolderWidthConstraint.Constant = 178f;
 
 			} else {
@@ -704,7 +698,7 @@ namespace JudoDotNetXamariniOSSDK
 			SetUpCell ();
 	
 			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-				UIImage defaultImage = cardHelper.CreditCardImage (CreditCardType.InvalidCard);
+				UIImage defaultImage = cardHelper.CreditCardImage (CardType.UNKNOWN);
 				creditCardImage.Image = defaultImage;
 
 			});
@@ -712,7 +706,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		public bool EntryComplete ()
 		{
-			if (ccText.Text.Length == cardHelper.LengthOfFormattedStringForType (Type) && expiryText.Text.Length == 5 && cvTwoText.Text.Length == (Type == CreditCardType.AMEX ? 4 : 3)) {
+			if(ccText.Text.Length == cardHelper.LengthOfFormattedStringForType(Type)&&expiryText.Text.Length==5&&cvTwoText.Text.Length==(Type == CardType.AMEX ? 4 : 3))
+            {
 				return true;
 			} else {
 				return false;

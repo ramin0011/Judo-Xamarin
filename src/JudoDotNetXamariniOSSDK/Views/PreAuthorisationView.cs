@@ -4,6 +4,7 @@ using UIKit;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using CoreFoundation;
 using JudoPayDotNet.Models;
 using CoreGraphics;
@@ -34,6 +35,7 @@ namespace JudoDotNetXamariniOSSDK
 		public FailureCallback failureCallback { get; set; }
 
 		public PaymentViewModel authorisationModel { get; set; }
+	    public bool RegisterCardOnly { get; set; }
 
 		public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
 		{
@@ -177,7 +179,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
@@ -287,44 +289,82 @@ namespace JudoDotNetXamariniOSSDK
 				RegisterButton.Alpha = 0.25f;
 				RegisterButton.Enabled = false;
 
-				_paymentService.PreAuthoriseCard (authorisationModel).ContinueWith (reponse => {
-					var result = reponse.Result;
-					if (result != null && !result.HasError && result.Response.Result != "Declined") {
-						PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+		        if (RegisterCardOnly)
+		        {
+                    _paymentService.RegisterCard(authorisationModel).ContinueWith(HandleResponse);
+                }
+		        else
+		        {
+                    _paymentService.PreAuthoriseCard(authorisationModel).ContinueWith(HandleResponse);
+                }
+		    }
+            catch (Exception ex)
+            {
+                JudoSDKManager.HideLoading();
+                // Failure callback
+                if (failureCallback != null)
+                {
+                    var judoError = new JudoError { Exception = ex };
+                    failureCallback(judoError);
+                }
+            }
 
-						if (paymentreceipt != null) {
-							JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-							JudoConfiguration.Instance.TokenCardType = authorisationModel.Card.CardType;
-							JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-							JudoConfiguration.Instance.LastFour = 
-                                authorisationModel.Card.CardNumber.Substring (authorisationModel.Card.CardNumber.Length -
-							Math.Min (4, authorisationModel.Card.CardNumber.Length));
 
-							// call success callback
-							if (successCallback != null)
-								successCallback (paymentreceipt);
-						} else {
-							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-						}
+		}
 
-					} else {
-						// Failure callback
-						if (failureCallback != null) {
-							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+        private void HandleResponse(Task<IResult<ITransactionResult>> reponse)
+	    {
+            try
+            {
 
-							if (paymentreceipt != null) {
-								// send receipt even we got card declined
-								failureCallback (judoError, paymentreceipt);
-							} else {
-								failureCallback (judoError);
-							}
-						}
 
-					}
-					JudoSDKManager.HideLoading ();
-				});
-			} catch (Exception ex) {
+                var result = reponse.Result;
+                if (result != null && !result.HasError && result.Response.Result != "Declined")
+                {
+                    PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+
+                    if (paymentreceipt != null)
+                    {
+                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+                        JudoConfiguration.Instance.TokenCardType = authorisationModel.Card.CardType;
+                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+                        JudoConfiguration.Instance.LastFour =
+                            authorisationModel.Card.CardNumber.Substring(authorisationModel.Card.CardNumber.Length -
+                                                                         Math.Min(4,
+                                                                             authorisationModel.Card.CardNumber.Length));
+
+                        // call success callback
+                        if (successCallback != null) successCallback(paymentreceipt);
+                    }
+                    else
+                    {
+                        throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
+                    }
+
+                }
+                else
+                {
+                    // Failure callback
+                    if (failureCallback != null)
+                    {
+                        var judoError = new JudoError {ApiError = result != null ? result.Error : null};
+                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+                        if (paymentreceipt != null)
+                        {
+                            // send receipt even we got card declined
+                            failureCallback(judoError, paymentreceipt);
+                        }
+                        else
+                        {
+                            failureCallback(judoError);
+                        }
+                    }
+
+                }
+                JudoSDKManager.HideLoading();
+            }
+			 catch (Exception ex) {
 				JudoSDKManager.HideLoading ();
 				// Failure callback
 				if (failureCallback != null) {
@@ -332,11 +372,9 @@ namespace JudoDotNetXamariniOSSDK
 					failureCallback (judoError);
 				}
 			}
+	    }
 
-
-		}
-
-		void CleanOutCardDetails ()
+	    void CleanOutCardDetails ()
 		{
 			detailCell.CleanUp ();
 
@@ -360,7 +398,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			if (detailCell.Type == CreditCardType.Maestro) {
+			if (detailCell.Type == CardType.MAESTRO) {
 				maestroCell.GatherCardDetails (cardViewModel);
 
 			}

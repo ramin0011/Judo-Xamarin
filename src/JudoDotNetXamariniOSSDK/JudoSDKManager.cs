@@ -1,9 +1,12 @@
 ﻿using System;
 using CoreLocation;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Contexts;
 using CoreGraphics;
 using JudoDotNetXamariniOSSDK.Clients;
+using JudoDotNetXamariniOSSDK.Utils;
 using JudoPayDotNet.Models;
+using Newtonsoft.Json.Linq;
 using UIKit;
 using Environment = JudoPayDotNet.Enums.Environment;
 
@@ -29,7 +32,8 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool MaestroAccepted { get; set; }
 
 		public static bool RiskSignals{ get; set; }
-
+		
+        	public static bool SSLPinningEnabled { get; set; }
 
 		private static UIView appView = UIApplication.SharedApplication.Windows [0].RootViewController.View;
 
@@ -39,10 +43,14 @@ namespace JudoDotNetXamariniOSSDK
 			get { return _singleton.Value; }
 		}
 
-		public static Dictionary<string, string> GetClientDetails (string deviceId)
-		{
-			return null;
-		}
+
+        internal static JObject GetClientDetails()
+        {
+            if(RiskSignals)
+                return JObject.FromObject(ClientDetailsProvider.GetClientDetails());
+
+            return null;
+        }
 
 		public static void SetUserAgent ()
 		{
@@ -89,14 +97,16 @@ namespace JudoDotNetXamariniOSSDK
 			} else {
 				_loadPop = new LoadingOverlay ();
 			}
-
 			view.Add (_loadPop);
 		}
 
 		internal static void HideLoading ()
 		{
 			if (_loadPop != null)
+            {
 				_loadPop.Hide (appView);
+                _loadPop.Dispose();
+            }
 		}
 
 		public static void Payment (PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -149,6 +159,7 @@ namespace JudoDotNetXamariniOSSDK
 				_judoSdkApi.RegisterCard (payment, success, failure, navigationController);
 			}
 		}
-	}
+
+    }
 }
 

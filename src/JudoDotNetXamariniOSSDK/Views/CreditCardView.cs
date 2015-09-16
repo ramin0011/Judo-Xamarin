@@ -177,7 +177,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
@@ -357,7 +357,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			if (detailCell.Type == CreditCardType.Maestro) {
+			if (detailCell.Type == CardType.MAESTRO) {
 				maestroCell.GatherCardDetails (cardViewModel);
 
 			}
