@@ -12,7 +12,6 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public partial class CreditCardView : UIViewController
 	{
-	    private LoadingOverlay loadingOverlay;
 		private UIView _activeview;
 		private bool _moveViewUp;
 	    private readonly IPaymentService _paymentService;
