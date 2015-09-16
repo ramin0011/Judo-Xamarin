@@ -23,7 +23,9 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool AmExAccepted { get; set; }
 		public static bool MaestroAccepted { get; set; }
 		public static bool RiskSignals{ get; set; }
-        private static UIView appView = UIApplication.SharedApplication.Windows[0].RootViewController.View;
+
+
+		private static UIView appView = UIApplication.SharedApplication.Windows[0].RootViewController.View;
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager>(() => new JudoSDKManager());
 
@@ -73,15 +75,20 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-        internal static void ShowLoading()
+		internal static void ShowLoading(UIView view=null)
         {
+			if (view == null) {
+				view = UIApplication.SharedApplication.Windows [0].RootViewController.View;
+			}
 
-            if(_loadPop == null)
-                _loadPop = new LoadingOverlay();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				_loadPop = new LoadingOverlay (new CGRect ((view.Frame.Width / 2) - 75f, (view.Frame.Height / 2) - 75f, 150f, 150f),true);
+			} else {
+				_loadPop = new LoadingOverlay ();
+			}
 
-            appView.Add(_loadPop);
+			view.Add(_loadPop);
         }
-
         internal static void HideLoading()
         {
             if (_loadPop != null)

@@ -19,7 +19,20 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.cardPayment = payment;
-            navigationController.PushViewController(view, true);
+
+
+
+			if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController(view, true, null);
+			}
+			else
+			{
+				navigationController.PushViewController(view, true);
+			}
+           
         }
 
 
@@ -29,7 +42,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.authorisationModel = preAuthorisation;
-            navigationController.PushViewController(view, true);
+			if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController(view, true, null);
+			}
+			else
+			{
+				navigationController.PushViewController(view, true);
+			}
         }
 
         public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -38,7 +60,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.tokenPayment = payment;
-            navigationController.PushViewController(view, true);
+			if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController(view, true, null);
+			}
+			else
+			{
+				navigationController.PushViewController(view, true);
+			}
         }
 
         public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -47,7 +78,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.tokenPayment = payment;
-            navigationController.PushViewController(view, true);
+			if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController(view, true, null);
+			}
+			else
+			{
+				navigationController.PushViewController(view, true);
+			}
         }
 
         public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -56,7 +96,16 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.authorisationModel = payment;
-            navigationController.PushViewController(view, true);
+			if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+			{
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController(view, true, null);
+			}
+			else
+			{
+				navigationController.PushViewController(view, true);
+			}
         }
     }
 }

@@ -16,7 +16,7 @@ namespace JudoDotNetXamariniOSSDK
             
         }
 
-        public LoadingOverlay(CGRect frame)
+		public LoadingOverlay(CGRect frame, bool rounded = false)
             : base(frame)
         {
             // configurable bits
@@ -39,6 +39,10 @@ namespace JudoDotNetXamariniOSSDK
                 activitySpinner.Frame.Width,
                 activitySpinner.Frame.Height);
             activitySpinner.AutoresizingMask = UIViewAutoresizing.All;
+			if (rounded) {
+				this.Layer.CornerRadius = 5f;
+				this.Layer.MasksToBounds = true;
+			}
             AddSubview(activitySpinner);
             activitySpinner.StartAnimating();
 

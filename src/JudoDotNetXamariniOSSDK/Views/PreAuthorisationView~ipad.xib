@@ -62,7 +62,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTW-bL-0hz">
-                    <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="416" width="325" height="44"/>
                     <color key="backgroundColor" red="0.1176470588" green="0.47058823529999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -75,7 +75,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="sTW-bL-0hz" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" id="1MK-eT-wsl"/>
-                <constraint firstItem="sTW-bL-0hz" firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" id="6bv-Yt-QdP"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" constant="5" id="6bv-Yt-QdP"/>
                 <constraint firstItem="Ep6-Ue-jWz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Jl2-hC-75O"/>
                 <constraint firstAttribute="bottom" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="45" id="huS-VU-aae"/>
                 <constraint firstItem="sTW-bL-0hz" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="1" id="muk-X8-u3f"/>

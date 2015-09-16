@@ -41,7 +41,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewDidAppear (animated);
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
-
 		}
 
 		public override void ViewWillLayoutSubviews ()
@@ -112,7 +111,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
 				_activeview = avsCell.PostcodeTextFieldOutlet;
-			if (activeview != null && !detailCell.HasFocus()) {
+			if (_activeview != null && !detailCell.HasFocus()) {
 				_moveViewUp = true;
 				ScrollTheView (_moveViewUp);
 
@@ -273,7 +272,14 @@ namespace JudoDotNetXamariniOSSDK
 		{
 		    try
 		    {
-                JudoSDKManager.ShowLoading();
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					JudoSDKManager.ShowLoading(this.View);
+				}
+				else
+				{
+					JudoSDKManager.ShowLoading();
+				}
+             
                 cardPayment.Card = GatherCardDetails();
 
 		        SubmitButton.Enabled = false;

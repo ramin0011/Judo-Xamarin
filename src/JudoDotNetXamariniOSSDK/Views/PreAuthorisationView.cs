@@ -272,7 +272,14 @@ namespace JudoDotNetXamariniOSSDK
 		{
 		    try
 		    {
-                JudoSDKManager.ShowLoading();
+
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					JudoSDKManager.ShowLoading(this.View);
+				}
+				else
+				{
+					JudoSDKManager.ShowLoading();
+				}
 
                 authorisationModel.Card = GatherCardDetails();
 

@@ -51,7 +51,17 @@ namespace JudoPayiOSXamarinSampleApp
             DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
             {
                 // move back to home screen
-                NavigationController.PopToRootViewController(true);
+
+					if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+					{
+						
+						NavigationController.DismissViewController(true,null);
+					}
+					else
+					{
+						NavigationController.PopToRootViewController(true);
+					}
+						
                 // show receipt
                 ShowMessage("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
 
@@ -64,7 +74,15 @@ namespace JudoPayiOSXamarinSampleApp
             DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
             {
                 // move back to home screen
-                NavigationController.PopToRootViewController(true);
+					if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
+					{
+
+						NavigationController.DismissViewController(true,null);
+					}
+					else
+					{
+						NavigationController.PopToRootViewController(true);
+					}
                 // show receipt
                 string message = "";
                 if (error != null && error.ApiError != null)
