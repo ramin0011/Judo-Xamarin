@@ -140,7 +140,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
 
-				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						int row = CellsToShow.IndexOf (detailCell) + 1;
 						CellsToShow.Insert (row, maestroCell);
@@ -347,7 +347,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			if (detailCell.Type == CreditCardType.Maestro) {
+			if (detailCell.Type == CardType.MAESTRO) {
 				maestroCell.GatherCardDetails (cardViewModel);
 
 			}

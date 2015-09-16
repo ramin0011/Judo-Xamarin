@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -23,10 +24,10 @@ namespace JudoDotNetXamariniOSSDK
 
 		public string CountryCode { get; set; }
 
-		public CreditCardType CardType { get; set; }
+		public CardType CardType { get; set; }
 
 		public Card (string cardNumber = null, string expiryDate = null, string cv2 = null, string startDate = null, string issueNumber = null, 
-		            string cardToken = null, string lastFour = null, CreditCardType? cardType = null, string postCode = null, string countryCode = null)
+		            string cardToken = null, string lastFour = null, CardType? cardType = null, string postCode = null, string countryCode = null)
 		{
 			CardNumber = cardNumber;
 			ExpiryDate = expiryDate;
@@ -55,7 +56,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			int cardType;
 			if (int.TryParse (type, out cardType)) {
-				CardType = (CreditCardType)cardType;
+				CardType = (CardType)cardType;
 			}
 
 			StartDate = details ["startDate"] as string;

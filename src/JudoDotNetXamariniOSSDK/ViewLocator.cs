@@ -15,11 +15,11 @@
             return ctrl;
         }
 
-        public PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
-        {
-            PaymentReceipt receiptView = new PaymentReceipt(receipt);
-            return receiptView;
-        }
+        //public PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
+        //{
+        //    PaymentReceipt receiptView = new PaymentReceipt(receipt);
+        //    return receiptView;
+        //}
 
         public PreAuthorisationView GetPreAuthView()
         {

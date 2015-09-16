@@ -28,21 +28,12 @@ namespace JudoDotNetXamariniOSSDK
 				    CardNumber = paymentViewModel.Card.CardNumber,
 				    CV2 = paymentViewModel.Card.CV2,
 				    ExpiryDate = paymentViewModel.Card.ExpireDate,
-				    CardAddress = new CardAddressModel() { PostCode = paymentViewModel.Card.PostCode },
+				    CardAddress = new CardAddressModel() { PostCode = paymentViewModel.Card.PostCode, CountryCode = (int)paymentViewModel.Card.CountryCode },
 				    StartDate = paymentViewModel.Card.StartDate,
                     IssueNumber = paymentViewModel.Card.IssueNumber,
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails()
                 };
-
-                // check the country code is matching with ISO3166 country code list
-                if (paymentViewModel.Card != null && paymentViewModel.Card.CountryCode != null)
-                {
-                    payment.CardAddress.CountryCode = Enum.IsDefined(typeof (ISO3166CountryCodes),
-                        Convert.ToInt32(paymentViewModel.Card.CountryCode))
-                        ? Convert.ToInt32(paymentViewModel.Card.CountryCode)
-                        : 0; // Others
-                }
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 
@@ -68,21 +59,12 @@ namespace JudoDotNetXamariniOSSDK
 				    CardNumber = authorisation.Card.CardNumber,
 				    CV2 = authorisation.Card.CV2,
 				    ExpiryDate = authorisation.Card.ExpireDate,
-                    CardAddress = new CardAddressModel() { PostCode = authorisation.Card.PostCode },
+                    CardAddress = new CardAddressModel() { PostCode = authorisation.Card.PostCode, CountryCode = (int)authorisation.Card.CountryCode },
                     StartDate = authorisation.Card.StartDate,
                     IssueNumber = authorisation.Card.IssueNumber,
                     YourPaymentMetaData = authorisation.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails()
                 };
-
-                // check the country code is matching with ISO3166 country code list
-                if (authorisation.Card != null && authorisation.Card.CountryCode != null)
-                {
-                    payment.CardAddress.CountryCode = Enum.IsDefined(typeof(ISO3166CountryCodes),
-                        Convert.ToInt32(authorisation.Card.CountryCode))
-                        ? Convert.ToInt32(authorisation.Card.CountryCode)
-                        : 0; // Others
-                }
 
 				Task<IResult<ITransactionResult>> task =  _judoAPI.PreAuths.Create(payment);
 				return await task;
@@ -143,5 +125,33 @@ namespace JudoDotNetXamariniOSSDK
 				return null;
 			}
 		}
+
+        public async Task<IResult<ITransactionResult>> RegisterCard(PaymentViewModel payment)
+        {
+            var registerCard = new RegisterCardModel()
+            {
+                CardAddress = new CardAddressModel()
+                {
+                    PostCode = payment.Card.PostCode
+                },
+                CardNumber = payment.Card.CardNumber,
+                CV2 = payment.Card.CV2,
+                ExpiryDate = payment.Card.ExpireDate,
+                StartDate = payment.Card.StartDate,
+                IssueNumber = payment.Card.IssueNumber,
+                YourConsumerReference = JudoConfiguration.Instance.ConsumerRef
+            };
+            try
+            {
+                Task<IResult<ITransactionResult>> task = _judoAPI.RegisterCards.Create(registerCard);
+                return await task;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.ToString());
+                return null;
+            }
+        }
+
 	}
 }
