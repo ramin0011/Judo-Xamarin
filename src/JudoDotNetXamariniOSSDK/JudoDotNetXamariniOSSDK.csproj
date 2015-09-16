@@ -89,6 +89,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
+    <Compile Include="Enum\ISO3166CountryCodes.cs" />
     <Compile Include="Helpers\LoadingOverlay.cs" />
     <Compile Include="Models\JudoError.cs" />
     <Compile Include="Models\Receipt.cs" />
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="Utils\ClientDetailsProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewLocator.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />

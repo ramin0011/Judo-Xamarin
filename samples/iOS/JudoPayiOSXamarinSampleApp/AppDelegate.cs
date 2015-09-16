@@ -65,6 +65,7 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.ConsumerRef = "consumer1010102";
 
             JudoSDKManager.UIMode = true;
+            JudoSDKManager.RiskSignals = true;
 		    JudoSDKManager.MaestroAccepted = true;
 		}
     }

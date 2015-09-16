@@ -76,6 +76,7 @@ namespace JudoPayiOSXamarinSampleApp
                 if (receipt != null)
                 {
                     message += "Transaction : " + receipt.Result + Environment.NewLine;
+                    message += receipt.Message + Environment.NewLine;
                     message += "Receipt ID - " + receipt.ReceiptId;
                 }
 
