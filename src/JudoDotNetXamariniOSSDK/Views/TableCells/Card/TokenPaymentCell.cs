@@ -6,6 +6,7 @@ using UIKit;
 using System.Text;
 using CoreFoundation;
 using CoreAnimation;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -52,7 +53,7 @@ namespace JudoDotNetXamariniOSSDK
 			cardImage.Image = frontImage;
 
 			PreviousCardNumber.Text = "xxxx " + JudoConfiguration.Instance.LastFour;
-			LengthForType = JudoConfiguration.Instance.TokenCardType == CreditCardType.AMEX ? 4 : 3;
+			LengthForType = JudoConfiguration.Instance.TokenCardType == CardType.AMEX ? 4 : 3;
 
 			entryField.ShouldChangeCharacters = (UITextField textView, NSRange NSRange, string replace) => {
 				

@@ -1,38 +1,4 @@
-﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- * This file is part of CreditCard -- an iOS project that provides a smooth and elegant 
- * means to enter or edit credit cards. It was inspired by  a similar form created from 
- * scratch by Square (https://squareup.com/). To see this form in action visit:
- * 
- *   http://functionsource.com/post/beautiful-forms)
- *
- * Copyright 2012 Lot18 Holdings, Inc. All Rights Reserved.
- *
- *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
- *
- *    1. Redistributions of source code must retain the above copyright notice, this list of
- *       conditions and the following disclaimer.
- *
- *    2. Redistributions in binary form must reproduce the above copyright notice, this list
- *       of conditions and the following disclaimer in the documentation and/or other materials
- *       provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY Lot18 Holdings ''AS IS'' AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL David Hoerl OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-using System;
+﻿using System;
 using Foundation;
 using UIKit;
 using System.Collections.Generic;
@@ -46,12 +12,11 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public partial class CreditCardView : UIViewController
 	{
-
-		private UIView activeview;
-		private bool moveViewUp = false;
-
-		IPaymentService _paymentService;
-		bool KeyboardVisible = false;
+	    private LoadingOverlay loadingOverlay;
+		private UIView _activeview;
+		private bool _moveViewUp;
+	    private readonly IPaymentService _paymentService;
+		private bool _keyboardVisible;
 
 		private List<CardCell> CellsToShow { get; set; }
 
@@ -63,13 +28,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
-		IErrorPresenter errorPresenter;
-
+        public SuccessCallback successCallback { private get; set; }
+        public FailureCallback failureCallback { private get; set; }
+	    public PaymentViewModel cardPayment { get; set; }
 
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
 			_paymentService = paymentService;
-			errorPresenter = new ResponseErrorPresenter ();
 		}
 
 		public override void ViewDidAppear (bool animated)
@@ -94,7 +59,7 @@ namespace JudoDotNetXamariniOSSDK
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
 			tapRecognizer.AddTarget (() => { 
-				if (KeyboardVisible) {
+				if (_keyboardVisible) {
 					DismissKeyboardAction ();
 				}
 			});
@@ -110,15 +75,15 @@ namespace JudoDotNetXamariniOSSDK
 				MakePayment ();
 			};
 			SubmitButton.Enabled = false;
-			SubmitButton.Hidden = true;
+			SubmitButton.Alpha = 0.25f;
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
 		{
-			KeyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
+			_keyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
 
-			if (!KeyboardVisible) {
-				if(moveViewUp){ScrollTheView(false);}
+			if (!_keyboardVisible) {
+				if(_moveViewUp){ScrollTheView(false);}
 			}
 		}
 
@@ -128,10 +93,10 @@ namespace JudoDotNetXamariniOSSDK
 			CGRect r = UIKeyboard.BoundsFromNotification (notification);
 
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
-				activeview = avsCell.PostcodeTextFieldOutlet;
-			if (activeview != null) {
-				moveViewUp = true;
-				ScrollTheView (moveViewUp);
+				_activeview = avsCell.PostcodeTextFieldOutlet;
+			if (_activeview != null) {
+				_moveViewUp = true;
+				ScrollTheView (_moveViewUp);
 
 			}
 		}
@@ -165,7 +130,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{
 			bool enable = false;
-			enable = detailCell.CompletelyDone;
+			enable = detailCell.EntryComplete();
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
@@ -175,7 +140,7 @@ namespace JudoDotNetXamariniOSSDK
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
 
-				if (detailCell.Type == CreditCardType.Maestro && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						int row = CellsToShow.IndexOf (detailCell) + 1;
 						CellsToShow.Insert (row, maestroCell);
@@ -183,7 +148,7 @@ namespace JudoDotNetXamariniOSSDK
 						insertedCells.Add (maestroCell);
 					}
 
-					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
+					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
 						enable = false;
 					}
 
@@ -247,7 +212,7 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
 			TableView.EndUpdates ();
 			SubmitButton.Enabled = enable;
-			SubmitButton.Hidden = !enable;
+			SubmitButton.Alpha = (enable == true ? 1f : 0.25f) ;
 
 		}
 
@@ -287,44 +252,74 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public void MakePayment ()
+		private void MakePayment ()
 		{
-			CardViewModel cardViewModel = GatherCardDetails ();
-			PaymentViewModel payment = new PaymentViewModel () {
-				Card = cardViewModel,
-				Amount = "4.99",
-			};
-			SubmitButton.Hidden = true;
+		    try
+		    {
+                JudoSDKManager.ShowLoading();
+                cardPayment.Card = GatherCardDetails();
 
-			_paymentService.MakePayment (payment).ContinueWith (reponse => {
-				var result = reponse.Result;
-				if (result!=null&&!result.HasError&&result.Response.Result!="Declined") {
-					PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-					PaymentReceiptViewModel receipt = new PaymentReceiptViewModel () {
-						CreatedAt = paymentreceipt.CreatedAt.DateTime,
-						Currency = paymentreceipt.Currency,
-						OriginalAmount = paymentreceipt.Amount,
-						ReceiptId = paymentreceipt.ReceiptId,
-						Message = "Payment Success"
-					};
-					JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-					JudoConfiguration.Instance.TokenCardType = payment.Card.CardType;
-					JudoConfiguration.Instance.ConsumerToken= paymentreceipt.Consumer.ConsumerToken;
-					JudoConfiguration.Instance.LastFour = payment.Card.CardNumber.Substring(payment.Card.CardNumber.Length - Math.Min(4, payment.Card.CardNumber.Length));
+		        SubmitButton.Enabled = false;
+		        SubmitButton.Alpha = 0.25f;
 
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-						SubmitButton.Hidden = false;
-						CleanOutCardDetails ();
-						var view = JudoSDKManager.GetReceiptView (receipt);
-						this.NavigationController.PushViewController (view, true);	
-					});
-				} else {
-					DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
-						errorPresenter.DisplayError(result,"Payment has failed");	
-						SubmitButton.Hidden = false;
-					});
-				}
-			});
+		        _paymentService.MakePayment(cardPayment).ContinueWith(reponse =>
+		        {
+                    var result = reponse.Result;
+		            if (result != null && !result.HasError && result.Response.Result != "Declined")
+		            {
+		                var paymentreceipt = result.Response as PaymentReceiptModel;
+
+		                if (paymentreceipt != null)
+		                {
+		                    JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+		                    JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
+		                    JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+		                    JudoConfiguration.Instance.LastFour =
+		                        cardPayment.Card.CardNumber.Substring(cardPayment.Card.CardNumber.Length -
+		                                                              Math.Min(4, cardPayment.Card.CardNumber.Length));
+
+		                    // call success callback
+		                    if (successCallback != null) successCallback(paymentreceipt);
+		                }
+                        else
+                        {
+                            throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
+                        }
+
+		            }
+		            else
+		            {
+		                // Failure callback
+		                if (failureCallback != null)
+		                {
+                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                            var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+		                    if (paymentreceipt != null)
+		                    {
+                                // send receipt even we got card declined
+                                failureCallback(judoError, paymentreceipt);
+                            }
+		                    else
+		                    {
+                                failureCallback(judoError);
+		                    }
+		                }
+		            }
+
+		            JudoSDKManager.HideLoading();
+		        });
+		    }
+		    catch (Exception ex)
+		    {
+                JudoSDKManager.HideLoading();
+                // Failure callback
+		        if (failureCallback != null)
+		        {
+		            var judoError = new JudoError {Exception = ex};
+		            failureCallback(judoError);
+		        }
+		    }
 
 		}
 
@@ -352,7 +347,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			if (detailCell.Type == CreditCardType.Maestro) {
+			if (detailCell.Type == CardType.MAESTRO) {
 				maestroCell.GatherCardDetails (cardViewModel);
 
 			}

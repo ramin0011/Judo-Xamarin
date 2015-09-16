@@ -29,13 +29,14 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="FluentValidation">
-      <HintPath>..\..\samples\iOS\packages\FluentValidation.5.5.0.0\lib\portable-win+net40+sl50+wp80+wpa81\FluentValidation.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\samples\iOS\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -79,24 +80,26 @@
     <InterfaceDefinition Include="Views\TokenPreAuthorisationView~iphone.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clients\IJudoSDKApi.cs" />
+    <Compile Include="Clients\NonUIMethods.cs" />
+    <Compile Include="Clients\UIMethods.cs" />
     <Compile Include="Controllers\ExpiryInfoVC.cs" />
     <Compile Include="Controllers\LocationManager.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
-    <Compile Include="Models\Consumer.cs" />
+    <Compile Include="Enum\ISO3166CountryCodes.cs" />
+    <Compile Include="Helpers\LoadingOverlay.cs" />
+    <Compile Include="Models\JudoError.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\Card.cs" />
-    <Compile Include="Enum\CreditCardType.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
-    <Compile Include="Enum\BSKeyboardControl.cs" />
-    <Compile Include="Enum\BSKeyboardControlsDirection.cs" />
     <Compile Include="Utils\CardBase.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="TableSources\AddPaymentTableSource.cs" />
@@ -107,6 +110,10 @@
     </Compile>
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="Utils\ClientDetailsProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewLocator.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
@@ -114,7 +121,6 @@
     <Compile Include="Views\PaymentReceipt.designer.cs">
       <DependentUpon>PaymentReceipt.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\PaymentReceiptViewModel.cs" />
     <Compile Include="Views\TableCells\ReceiptStringItemCell.cs" />
     <Compile Include="Views\TableCells\ReceiptStringItemCell.designer.cs">
       <DependentUpon>ReceiptStringItemCell.cs</DependentUpon>
@@ -134,9 +140,6 @@
     </Compile>
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="JudoConfiguration.cs" />
-    <Compile Include="Services\ITokenService.cs" />
-    <Compile Include="Services\TokenService.cs" />
-    <Compile Include="ViewModels\CardRegistrationViewModel.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.cs" />
     <Compile Include="Views\TableCells\Card\CardEntryCell.designer.cs">
       <DependentUpon>CardEntryCell.cs</DependentUpon>
@@ -159,7 +162,6 @@
     <Compile Include="Views\PreAuthorisationView.designer.cs">
       <DependentUpon>PreAuthorisationView.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\PreAuthorisationViewModel.cs" />
     <Compile Include="Views\TableCells\Card\TokenPaymentCell.cs" />
     <Compile Include="Views\TableCells\Card\TokenPaymentCell.designer.cs">
       <DependentUpon>TokenPaymentCell.cs</DependentUpon>
@@ -169,12 +171,11 @@
       <DependentUpon>TokenPaymentView.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TokenPaymentViewModel.cs" />
-    <Compile Include="Helpers\ResonseErrorPresenter.cs" />
-    <Compile Include="Helpers\IErrorPresenter.cs" />
     <Compile Include="Views\TokenPreAuthorisationView.cs" />
     <Compile Include="Views\TokenPreAuthorisationView.designer.cs">
       <DependentUpon>TokenPreAuthorisationView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\FixedScrollView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -183,7 +184,7 @@
     <BundleResource Include="Resources\ic_3ds_logos%403x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\ic_actionbar_bg_shadow_light.png" />
@@ -231,7 +232,7 @@
     <BundleResource Include="Resources\ic_lock%403x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_navbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\ic_navbar_bg_shadow_light.png" />
@@ -242,7 +243,7 @@
     <BundleResource Include="Resources\ic_selector_country_%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone5%402x.png" />
-    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6.png" />
     <BundleResource Include="Resources\ic_statusbar_bg_light_iPhone6%402x.png" />
     <BundleResource Include="Resources\btn_cancel_light_%403x.png" />
@@ -250,10 +251,10 @@
     <BundleResource Include="Resources\btn_cancel_light%402x.png" />
     <BundleResource Include="Resources\btn_pay_inactive_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_inactive_iPhone6%402x.png" />
-    <BundleResource Include="Resources\btn_pay_inactive_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\btn_pay_inactive_iPhone6plus%403x.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6%402x.png" />
-    <BundleResource Include="Resources\btn_pay_normal_iPhone6+%403x.png" />
+    <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
     <BundleResource Include="JudoTheme.strings" />
   </ItemGroup>
   <ItemGroup>
@@ -267,14 +268,7 @@
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TableSources\" />
-    <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Factories\" />
-    <Folder Include="Views\TableCells\" />
-    <Folder Include="Views\TableCells\Card\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

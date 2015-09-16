@@ -178,7 +178,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void GatherCardDetails (CardViewModel cardViewModel)
 		{
-			cardViewModel.StartDate = StartDateTextField.Text.Replace (@"/", @"");
+		    cardViewModel.StartDate = StartDateTextField.Text;
 			cardViewModel.IssueNumber = IssueNumberTextField.Text;
 		}
 

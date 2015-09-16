@@ -110,12 +110,26 @@
     <Compile Include="RootView.designer.cs">
       <DependentUpon>RootView.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenuSource.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <InterfaceDefinition Include="RootView.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JudoPayDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\JudoPay.PCL.1.0.4\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\JudoPayDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\src\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
