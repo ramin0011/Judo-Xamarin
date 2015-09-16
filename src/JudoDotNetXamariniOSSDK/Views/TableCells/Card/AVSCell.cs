@@ -94,18 +94,9 @@ namespace JudoDotNetXamariniOSSDK
 
 			cardViewModel.PostCode = PostcodeTextField.Text;
 
-			switch (selectedCountry) {
-			case BillingCountryOptions.BillingCountryOptionUK:
-				cardViewModel.CountryCode = @"826";
-				break;
-			case BillingCountryOptions.BillingCountryOptionUSA:
-				cardViewModel.CountryCode = @"840";
-				break;
-			case BillingCountryOptions.BillingCountryOptionCanada:
-				cardViewModel.CountryCode = @"124";
-				break;
-			default:					
-				break;
+			if (selectedCountry != BillingCountryOptions.BillingCountryOptionOther) {
+				var code =((int)selectedCountry).ToString();
+				cardViewModel.CountryCode = code;
 			}
 		}
 		public void CleanUp ()

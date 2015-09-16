@@ -25,15 +25,15 @@ namespace JudoDotNetXamariniOSSDK
 
 		public  string ConsumerRef { get; set; }
 
-		public string ConsumerToken {get;set;}
+		public string ConsumerToken { get; set; }
 
 		public string CardToken { get; set; }
 
 		public CreditCardType TokenCardType { get; set; }
 
-        public string LastFour { get; set; }
+		public string LastFour { get; set; }
 
-        public Environment Environment { get; set; }
-    }
+		public Environment Environment { get; set; }
+	}
 }
 

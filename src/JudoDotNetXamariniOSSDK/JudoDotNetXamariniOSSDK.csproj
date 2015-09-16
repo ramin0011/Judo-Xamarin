@@ -56,7 +56,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~iphone.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
@@ -254,15 +253,9 @@
     <BundleResource Include="Resources\btn_pay_normal_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6%402x.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
-    <BundleResource Include="JudoTheme.strings" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Views\CV2EntryViewController.xib">
-      <DependentUpon>ExpiryInfoVC.xib</DependentUpon>
-    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />
