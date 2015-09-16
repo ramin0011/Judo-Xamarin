@@ -47,6 +47,10 @@ namespace JudoDotNetXamariniOSSDK
 		public override void SetUpCell ()
 		{
 			StartDateTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				if(replacementString!=""&&!Char.IsDigit(replacementString.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();
@@ -159,6 +163,10 @@ namespace JudoDotNetXamariniOSSDK
 
 
 			IssueNumberTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				if(replacementString!=""&&!Char.IsDigit(replacementString.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();

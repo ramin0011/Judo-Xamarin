@@ -6,11 +6,11 @@ namespace JudoDotNetXamariniOSSDK
 	public enum BillingCountryOptions
 	{
 		[Description("UK")]
-		BillingCountryOptionUK=826,
+		BillingCountryOptionUK,
 		[Description("USA")]
-		BillingCountryOptionUSA=840,
+		BillingCountryOptionUSA,
 		[Description("Can")]
-		BillingCountryOptionCanada=124,
+		BillingCountryOptionCanada,
 		[Description("Other")]
 		BillingCountryOptionOther
 	}

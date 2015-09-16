@@ -67,8 +67,14 @@ namespace JudoDotNetXamariniOSSDK
 			foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
 				countrySheet.AddButton (option.ToDescriptionString ());
 			}
-			CountryButton.TouchUpInside += (sender, ev) => {
-				countrySheet.ShowInView (UIApplication.SharedApplication.KeyWindow);
+				CountryButton.TouchUpInside += (sender, ev) => {
+					if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+						countrySheet.ShowInView(this.Superview);
+					}
+					else
+					{
+						countrySheet.ShowInView (UIApplication.SharedApplication.KeyWindow);
+					}
 			};
 			PostcodeTextField.Text = "";	
 			PostcodeTextField.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;;
@@ -77,7 +83,6 @@ namespace JudoDotNetXamariniOSSDK
 			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
-				//	UpdateUI ();
 				});
 				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
 				if (textLengthAfter > 10) {
@@ -90,21 +95,26 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void GatherCardDetails (CardViewModel cardViewModel)
 		{
-			
-
 			cardViewModel.PostCode = PostcodeTextField.Text;
 
-			if (selectedCountry != BillingCountryOptions.BillingCountryOptionOther) {
-				var code =((int)selectedCountry).ToString();
-				cardViewModel.CountryCode = code;
+			switch (selectedCountry) {
+			case BillingCountryOptions.BillingCountryOptionUK:
+				cardViewModel.CountryCode = @"826";
+				break;
+			case BillingCountryOptions.BillingCountryOptionUSA:
+				cardViewModel.CountryCode = @"840";
+				break;
+			case BillingCountryOptions.BillingCountryOptionCanada:
+				cardViewModel.CountryCode = @"124";
+				break;
+			default:					
+				break;
 			}
 		}
 		public void CleanUp ()
 		{
 			SetUpCell ();
 		}
-
-	
 
 		public override void DismissKeyboardAction ()
 		{
