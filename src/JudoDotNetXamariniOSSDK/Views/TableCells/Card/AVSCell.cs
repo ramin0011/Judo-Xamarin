@@ -38,6 +38,11 @@ namespace JudoDotNetXamariniOSSDK
 			countrySheet = new UIActionSheet ("Select Country");
 			countrySheet.TintColor = UIColor.Black;
 			selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
+
+
+			HomeButton.TouchUpInside += (sender, ev) => {
+				DismissKeyboardAction();
+			};
 			countrySheet.Clicked += delegate(object sender, UIButtonEventArgs button) {
 				switch (button.ButtonIndex) {
 				case (int) BillingCountryOptions.BillingCountryOptionUK:

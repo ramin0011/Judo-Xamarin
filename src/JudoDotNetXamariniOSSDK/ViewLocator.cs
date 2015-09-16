@@ -14,13 +14,7 @@
             CreditCardView ctrl = new CreditCardView(_paymentService);
             return ctrl;
         }
-
-        public PaymentReceipt GetReceiptView(PaymentReceiptViewModel receipt)
-        {
-            PaymentReceipt receiptView = new PaymentReceipt(receipt);
-            return receiptView;
-        }
-
+			
         public PreAuthorisationView GetPreAuthView()
         {
             PreAuthorisationView ctrl = new PreAuthorisationView(_paymentService);

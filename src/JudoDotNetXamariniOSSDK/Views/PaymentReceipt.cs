@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class PaymentReceipt : UIViewController
+	internal partial class PaymentReceipt : UIViewController
 	{
 		private PaymentReceiptViewModel _receipt;
 
 		private List<ReceiptStringItemCell> CellsToShow { get; set; }
 
-		public PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
+		private PaymentReceipt (PaymentReceiptViewModel receipt) : base ("PaymentReceipt", null)
 		{
 			_receipt = receipt;
 		}
