@@ -2,7 +2,7 @@
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class CSRange
+	internal class CSRange
 	{
 		public int Location{ get; set; }
 		public int Length{ get; set; }

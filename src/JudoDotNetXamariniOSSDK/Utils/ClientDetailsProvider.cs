@@ -5,7 +5,7 @@ using UIKit;
 
 namespace JudoDotNetXamariniOSSDK.Utils
 {
-    public static class ClientDetailsProvider
+    internal static class ClientDetailsProvider
     {
         public static ClientDetails GetClientDetails()
         {

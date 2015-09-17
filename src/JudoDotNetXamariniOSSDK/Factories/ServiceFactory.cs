@@ -4,7 +4,7 @@ using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class ServiceFactory
+	internal class ServiceFactory
 	{
 
 		public	IPaymentService	GetPaymentService()

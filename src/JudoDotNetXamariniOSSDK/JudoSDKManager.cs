@@ -1,7 +1,5 @@
 ﻿using System;
-using CoreLocation;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
 using CoreGraphics;
 using JudoDotNetXamariniOSSDK.Clients;
 using JudoDotNetXamariniOSSDK.Utils;
@@ -18,10 +16,6 @@ namespace JudoDotNetXamariniOSSDK
 	public class JudoSDKManager
 	{
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName ("Courier", 17.0f);
-
-		Dictionary<string, string> clientDetails { get; set; }
-
-		public static bool LocationEnabled { get; set; }
 
 		public static bool ThreeDSecureEnabled{ get; set; }
 

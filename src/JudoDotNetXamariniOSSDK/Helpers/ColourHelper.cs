@@ -4,7 +4,7 @@ using Foundation;
 using System.Threading;
 namespace JudoDotNetXamariniOSSDK
 {
-	public static class ColourHelper
+	internal static class ColourHelper
 	{
 		public static UIColor GetColour (int hex)
 		{
