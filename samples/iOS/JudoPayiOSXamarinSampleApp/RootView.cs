@@ -52,15 +52,7 @@ namespace JudoPayiOSXamarinSampleApp
             {
                 // move back to home screen
 
-					if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-					{
-						
-						NavigationController.DismissViewController(true,null);
-					}
-					else
-					{
-						NavigationController.PopToRootViewController(true);
-					}
+				CloseView ();
 						
                 // show receipt
                 ShowMessage("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
@@ -74,15 +66,7 @@ namespace JudoPayiOSXamarinSampleApp
             DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
             {
                 // move back to home screen
-					if(UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-					{
-
-						NavigationController.DismissViewController(true,null);
-					}
-					else
-					{
-						NavigationController.PopToRootViewController(true);
-					}
+				CloseView();
                 // show receipt
                 string message = "";
                 if (error != null && error.ApiError != null)
@@ -165,6 +149,16 @@ namespace JudoPayiOSXamarinSampleApp
             base.DidRotate(fromInterfaceOrientation);
             menu.ResetMenu();
         }
+
+		void CloseView ()
+		{
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				NavigationController.DismissViewController (true, null);
+			}
+			else {
+				NavigationController.PopToRootViewController (true);
+			}
+		}
     }
 }
 

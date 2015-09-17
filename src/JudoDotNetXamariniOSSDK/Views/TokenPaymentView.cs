@@ -57,8 +57,7 @@ namespace JudoDotNetXamariniOSSDK
 					_error.Show ();
 
 					_error.Clicked += (sender, args) => {
-						PaymentButton.Alpha = 0.25f;
-						PaymentButton.Enabled = false;
+						PaymentButton.Disable();
 						if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
 							this.DismissViewController (true, null);
 						} else {
@@ -149,8 +148,7 @@ namespace JudoDotNetXamariniOSSDK
 				tokenPayment.CV2 = tokenCell.CCV;
 				tokenPayment.Token = instance.CardToken;
 
-				PaymentButton.Alpha = 0.25f;
-				PaymentButton.Enabled = false;
+				PaymentButton.Disable();
 
 				_paymentService.MakeTokenPayment (tokenPayment).ContinueWith (reponse => {
 					var result = reponse.Result;

@@ -95,8 +95,7 @@ namespace JudoDotNetXamariniOSSDK
 					this.DismissViewController (true, null);
 				};
 			}
-			RegisterButton.Enabled = false;
-			RegisterButton.Alpha = 0.25f;
+			RegisterButton.Disable();
 
 		}
 
@@ -166,9 +165,8 @@ namespace JudoDotNetXamariniOSSDK
 				if (JudoSDKManager.AVSEnabled) {
 					if (!CellsToShow.Contains (avsCell)) {
 						TableView.BeginUpdates ();
-						//int row = CellsToShow.IndexOf (reassuringCell);
 						CellsToShow.Insert (row, avsCell);
-						row++;// icrementing the row incase an avs cell is also needed;
+						row++;// incrementing the row incase an avs cell is also needed;
 						insertedCells.Add (avsCell);
 						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
 						ccIsFirstResponder = false;
@@ -196,8 +194,6 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-
-
 
 				if (ccIsFirstResponder) {
 					DismissKeyboardAction ();
@@ -286,8 +282,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				authorisationModel.Card = GatherCardDetails ();
 
-				RegisterButton.Alpha = 0.25f;
-				RegisterButton.Enabled = false;
+				RegisterButton.Disable();
 
 		        if (RegisterCardOnly)
 		        {

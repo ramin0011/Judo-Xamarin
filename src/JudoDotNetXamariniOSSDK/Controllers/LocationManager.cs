@@ -37,7 +37,6 @@ namespace JudoDotNetXamariniOSSDK
 
                 locationManager.StopUpdatingLocation();
                 stopped = false;
-		        //Console.WriteLine(loc);
             };
         }
 

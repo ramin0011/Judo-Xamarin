@@ -205,8 +205,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetupCC ()
 		{
-
-		
 			ccText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
 				if(replace!=""&&!Char.IsDigit(replace.ToCharArray()[0]))
 				{
@@ -222,7 +220,6 @@ namespace JudoDotNetXamariniOSSDK
 				deletedSpace = false;
 				cardMonth = 0;
 
-
 				if (replace.Length == 0) {
 					updateText = true;
 					deleting = true;
@@ -236,15 +233,11 @@ namespace JudoDotNetXamariniOSSDK
 						}
 					} else {
 						return false;
-
-
 					}
 
 				}
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+
+				string newTextOrig =ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -384,10 +377,7 @@ namespace JudoDotNetXamariniOSSDK
 				var formattedText = "";
 				scrollForward = false;
 
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+				string newTextOrig =ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -410,10 +400,9 @@ namespace JudoDotNetXamariniOSSDK
 					if (newTextOrig.Substring (monthRange.Location, 1).ToCharArray () [0] > '1') {
 						// support short cut - we prepend a '0' for them
 
-						var aStringBuilder2 = new StringBuilder (textView.Text);
-						aStringBuilder2.Remove (range.Location, range.Length);
-						aStringBuilder2.Insert (range.Location, "0" + replace);
-						formattedText = aStringBuilder2.ToString ();
+
+						 formattedText =ReplaceInPlace(range.Location, range.Length,textView.Text,"0"+replace);
+
 						newTextLen = newTextOrig.Length;
 					}
 					if (newTextLen >= (monthRange.Location + monthRange.Length)) {
@@ -468,12 +457,19 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				updateText = true;
 				if (formattedText.Length == 5) {
-					//hasFullDate = true;
 					cvTwoText.BecomeFirstResponder ();
 				} 
 				return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 			};
 
+		}
+
+		private string ReplaceInPlace(int location,int length,string originalText,string replace)
+		{
+			var aStringBuilder = new StringBuilder (originalText);
+			aStringBuilder.Remove (location, length);
+			aStringBuilder.Insert (location, replace);
+			return aStringBuilder.ToString ();
 		}
 
 		void SetupCVTwo ()
@@ -505,10 +501,8 @@ namespace JudoDotNetXamariniOSSDK
 
 
 				scrollForward = false;
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+
+				string newTextOrig = ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -522,7 +516,6 @@ namespace JudoDotNetXamariniOSSDK
 
 				updateText = true;
 				if (newTextOrig.Length== (Type == CardType.AMEX ? 4 : 3)) {
-					//hasFullCCV = true;
 					DismissKeyboardAction ();
 				} 
 				return EndDelegate (cvTwoPlaceHolder, cvTwoText, newTextOrig);

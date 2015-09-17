@@ -91,8 +91,7 @@ namespace JudoDotNetXamariniOSSDK
 					this.DismissViewController (true, null);
 				};
 			}
-			SubmitButton.Enabled = false;
-			SubmitButton.Alpha = 0.25f;
+			SubmitButton.Disable();
 			detailCell.ccTextOutlet.BecomeFirstResponder ();
 		}
 
@@ -194,9 +193,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 						
 				}
-
-
-
+					
 				if (ccIsFirstResponder) {
 					DismissKeyboardAction ();
 
@@ -282,8 +279,7 @@ namespace JudoDotNetXamariniOSSDK
              
 				cardPayment.Card = GatherCardDetails ();
 
-				SubmitButton.Enabled = false;
-				SubmitButton.Alpha = 0.25f;
+				SubmitButton.Disable();
 
 				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
