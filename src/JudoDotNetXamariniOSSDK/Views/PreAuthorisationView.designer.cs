@@ -16,6 +16,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIView EncapsulatingView { get; set; }
 
 		[Outlet]
+		UIKit.UIButton FormClose { get; set; }
+
+		[Outlet]
 		UIKit.UIButton RegisterButton { get; set; }
 
 		[Outlet]
@@ -23,14 +26,19 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (RegisterButton != null) {
-				RegisterButton.Dispose ();
-				RegisterButton = null;
+			if (FormClose != null) {
+				FormClose.Dispose ();
+				FormClose = null;
 			}
 
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
+			}
+
+			if (RegisterButton != null) {
+				RegisterButton.Dispose ();
+				RegisterButton = null;
 			}
 
 			if (TableView != null) {

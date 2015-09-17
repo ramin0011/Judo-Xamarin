@@ -47,6 +47,10 @@ namespace JudoDotNetXamariniOSSDK
 		public override void SetUpCell ()
 		{
 			StartDateTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				if(replacementString!=""&&!Char.IsDigit(replacementString.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();
@@ -132,7 +136,8 @@ namespace JudoDotNetXamariniOSSDK
 						if (!cardHelper.IsStartDateValid (textAfter)) {
 							FlashCheckDateLabel ();
 							return false;
-						}							
+						}
+
 
 						var bStringBuilder = new StringBuilder (textField.Text);
 						bStringBuilder.Remove (range.Location, range.Length);
@@ -140,7 +145,9 @@ namespace JudoDotNetXamariniOSSDK
 
 
 						textField.Text =  bStringBuilder.ToString ();
+						DispatchQueue.MainQueue.DispatchAsync (() => {
 						IssueNumberTextField.BecomeFirstResponder ();
+						});
 						changeText = false;
 					}
 				}
@@ -156,6 +163,10 @@ namespace JudoDotNetXamariniOSSDK
 
 
 			IssueNumberTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
+				if(replacementString!=""&&!Char.IsDigit(replacementString.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
 					UpdateUI ();
@@ -171,6 +182,15 @@ namespace JudoDotNetXamariniOSSDK
 				}
 				if (textField.Text.Length + replacementString.Length - range.Length > 3) {
 					return false;
+				}
+				if (textField.Text.Length + replacementString.Length==3&&replacementString!="")
+				{
+					var aStringBuilder = new StringBuilder (textField.Text);
+					aStringBuilder.Remove (range.Location, range.Length);
+					aStringBuilder.Insert (range.Location, replacementString);
+					textField.Text = aStringBuilder.ToString ();
+					DismissKeyboardAction();
+					return true;
 				}
 				return true;
 			};

@@ -16,21 +16,29 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIView EncapsulatingView { get; set; }
 
 		[Outlet]
+		UIKit.UIButton FormClose { get; set; }
+
+		[Outlet]
 		UIKit.UIButton SubmitButton { get; set; }
 
 		[Outlet]
 		UIKit.UITableView TableView { get; set; }
-
+		
 		void ReleaseDesignerOutlets ()
 		{
-			if (SubmitButton != null) {
-				SubmitButton.Dispose ();
-				SubmitButton = null;
+			if (FormClose != null) {
+				FormClose.Dispose ();
+				FormClose = null;
 			}
 
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
+			}
+
+			if (SubmitButton != null) {
+				SubmitButton.Dispose ();
+				SubmitButton = null;
 			}
 
 			if (TableView != null) {

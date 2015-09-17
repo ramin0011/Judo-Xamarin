@@ -16,6 +16,9 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIView EncapsulatingView { get; set; }
 
 		[Outlet]
+		UIKit.UIButton FormClose { get; set; }
+
+		[Outlet]
 		UIKit.UIButton PaymentButton { get; set; }
 
 		[Outlet]
@@ -23,6 +26,11 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (FormClose != null) {
+				FormClose.Dispose ();
+				FormClose = null;
+			}
+
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;

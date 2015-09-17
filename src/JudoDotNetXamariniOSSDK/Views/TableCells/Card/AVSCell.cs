@@ -38,6 +38,11 @@ namespace JudoDotNetXamariniOSSDK
 			countrySheet = new UIActionSheet ("Select Country");
 			countrySheet.TintColor = UIColor.Black;
 			selectedCountry = BillingCountryOptions.BillingCountryOptionUK;
+
+
+			HomeButton.TouchUpInside += (sender, ev) => {
+				DismissKeyboardAction();
+			};
 			countrySheet.Clicked += delegate(object sender, UIButtonEventArgs button) {
 				switch (button.ButtonIndex) {
 				case (int) BillingCountryOptions.BillingCountryOptionUK:
@@ -67,8 +72,14 @@ namespace JudoDotNetXamariniOSSDK
 			foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
 				countrySheet.AddButton (option.ToDescriptionString ());
 			}
-			CountryButton.TouchUpInside += (sender, ev) => {
-				countrySheet.ShowInView (UIApplication.SharedApplication.KeyWindow);
+				CountryButton.TouchUpInside += (sender, ev) => {
+					if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+						countrySheet.ShowInView(this.Superview);
+					}
+					else
+					{
+						countrySheet.ShowInView (UIApplication.SharedApplication.KeyWindow);
+					}
 			};
 			PostcodeTextField.Text = "";	
 			PostcodeTextField.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;;
@@ -77,7 +88,6 @@ namespace JudoDotNetXamariniOSSDK
 			PostcodeTextField.ShouldChangeCharacters = (UITextField textField, NSRange nsRange, string replacementString) => {
 				CSRange range = new CSRange ((int)nsRange.Location, (int)nsRange.Length);
 				DispatchQueue.MainQueue.DispatchAsync (() => {
-				//	UpdateUI ();
 				});
 				int textLengthAfter = textField.Text.Length + replacementString.Length - range.Length;
 				if (textLengthAfter > 10) {
@@ -90,8 +100,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void GatherCardDetails (CardViewModel cardViewModel)
 		{
-			
-
 			cardViewModel.PostCode = PostcodeTextField.Text;
 
 			switch (selectedCountry) {
@@ -112,8 +120,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			SetUpCell ();
 		}
-
-	
 
 		public override void DismissKeyboardAction ()
 		{

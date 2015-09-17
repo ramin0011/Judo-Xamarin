@@ -19,7 +19,9 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.cardPayment = payment;
-            navigationController.PushViewController(view, true);
+
+			PresentView (navigationController, view);
+           
         }
 
 
@@ -32,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.authorisationModel = preAuthorisation;
-            navigationController.PushViewController(view, true);
+			PresentView (navigationController, view);
         }
 
         public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -41,7 +43,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.tokenPayment = payment;
-            navigationController.PushViewController(view, true);
+			PresentView (navigationController, view);
         }
 
         public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -50,7 +52,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.tokenPayment = payment;
-            navigationController.PushViewController(view, true);
+			PresentView (navigationController, view);
         }
 
         public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
@@ -61,7 +63,19 @@ namespace JudoDotNetXamariniOSSDK.Clients
             view.successCallback = success;
             view.failureCallback = failure;
             view.authorisationModel = payment;
-            navigationController.PushViewController(view, true);
+			PresentView (navigationController, view);
         }
+
+		private void PresentView (UINavigationController navigationController, UIViewController view)
+		{
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				navigationController.PresentViewController (view, true, null);
+			}
+			else {
+				navigationController.PushViewController (view, true);
+			}
+		}
     }
 }

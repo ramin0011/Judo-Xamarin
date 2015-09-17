@@ -23,14 +23,19 @@ namespace JudoDotNetXamariniOSSDK.Clients
             catch (Exception ex)
             {
                 // Failure
-                if (failure != null)
-                {
-                    var judoError = new JudoError { Exception = ex };
-                    failure(judoError);
-                }
+				HandleFailure (failure,ex);
             }
         }
 
+		private void HandleFailure (FailureCallback failure,Exception ex)
+		{
+			if (failure != null) {
+				var judoError = new JudoError {
+					Exception = ex
+				};
+				failure (judoError);
+			}
+		}
 
         public void PreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
@@ -41,11 +46,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             catch (Exception ex)
             {
                 // Failure
-                if (failure != null)
-                {
-                    var judoError = new JudoError { Exception = ex};
-                    failure(judoError);
-                }
+				HandleFailure (failure,ex);
             }
         }
 
@@ -58,11 +59,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             catch (Exception ex)
             {
                 // Failure
-                if (failure != null)
-                {
-                    var judoError = new JudoError { Exception = ex};
-                    failure(judoError);
-                }
+				HandleFailure (failure,ex);
             }
         }
 
@@ -75,11 +72,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             catch (Exception ex)
             {
                 // Failure
-                if (failure != null)
-                {
-                    var judoError = new JudoError { Exception = ex };
-                    failure(judoError);
-                }
+				HandleFailure (failure,ex);
             }
         }
 
@@ -92,11 +85,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             catch (Exception ex)
             {
                 // Failure
-                if (failure != null)
-                {
-                    var judoError = new JudoError { Exception = ex };
-                    failure(judoError);
-                }
+				HandleFailure (failure,ex);
             }
         }
 

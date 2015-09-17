@@ -29,10 +29,6 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -55,9 +51,11 @@
     <Reference Include="JudoPayDotNet">
       <HintPath>..\..\samples\iOS\packages\JudoPay.PCL.1.0.4\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\JudoPayDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\ExpiryInfoVC.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~iphone.xib" />
     <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
@@ -65,7 +63,6 @@
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
-    <InterfaceDefinition Include="Views\CreditCardView.xib" />
     <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
@@ -78,12 +75,13 @@
     <InterfaceDefinition Include="Views\TokenPaymentView~ipad.xib" />
     <InterfaceDefinition Include="Views\TokenPreAuthorisationView~ipad.xib" />
     <InterfaceDefinition Include="Views\TokenPreAuthorisationView~iphone.xib" />
+    <InterfaceDefinition Include="Views\CreditCardView~ipad.xib" />
+    <InterfaceDefinition Include="Views\CreditCardView~iphone.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\IJudoSDKApi.cs" />
     <Compile Include="Clients\NonUIMethods.cs" />
     <Compile Include="Clients\UIMethods.cs" />
-    <Compile Include="Controllers\ExpiryInfoVC.cs" />
     <Compile Include="Controllers\LocationManager.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.cs">
       <SubType>Code</SubType>
@@ -102,7 +100,6 @@
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
     <Compile Include="Utils\CardBase.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
-    <Compile Include="TableSources\AddPaymentTableSource.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="Controllers\CreditCard.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.designer.cs">
@@ -176,6 +173,7 @@
       <DependentUpon>TokenPreAuthorisationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\FixedScrollView.cs" />
+    <Compile Include="Helpers\UIExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -255,15 +253,9 @@
     <BundleResource Include="Resources\btn_pay_normal_iPhone6.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6%402x.png" />
     <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
-    <BundleResource Include="JudoTheme.strings" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Views\CV2EntryViewController.xib">
-      <DependentUpon>ExpiryInfoVC.xib</DependentUpon>
-    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />

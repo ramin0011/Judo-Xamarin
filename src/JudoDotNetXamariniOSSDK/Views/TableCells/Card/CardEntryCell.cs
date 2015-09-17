@@ -42,11 +42,6 @@ namespace JudoDotNetXamariniOSSDK
 		bool hasFullNumber = false;
 
 
-
-		bool hasFullDate = false;
-
-		bool hasFullCCV = false;
-
 		int cardMonth;
 
 		public bool CompletelyDone {
@@ -60,8 +55,6 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			Key = "CardEntryCell";
 		}
-
-
 
 		public override CardCell Create ()
 		{
@@ -114,7 +107,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		void SetupPlaceViews()
+		void SetupPlaceViews ()
 		{
   
 			ccText.Text = "11112222333344445555";
@@ -131,7 +124,7 @@ namespace JudoDotNetXamariniOSSDK
 
 
 			CGRect frame = ccPlaceHolder.Frame;
-			ccPlaceHolder.Font =  JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+			ccPlaceHolder.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			ccPlaceHolder.Text = "0000 0000 0000 0000";
 
 			ccPlaceHolder.SetShowTextOffSet (0);
@@ -210,9 +203,13 @@ namespace JudoDotNetXamariniOSSDK
 			SetupCVTwo ();
 		}
 
-		void SetupCC()
+		void SetupCC ()
 		{
 			ccText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
+				if(replace!=""&&!Char.IsDigit(replace.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
 				var formattedText = "";
 				flashForError = false;
@@ -222,7 +219,6 @@ namespace JudoDotNetXamariniOSSDK
 				ret = false;
 				deletedSpace = false;
 				cardMonth = 0;
-
 
 				if (replace.Length == 0) {
 					updateText = true;
@@ -237,15 +233,11 @@ namespace JudoDotNetXamariniOSSDK
 						}
 					} else {
 						return false;
-
-
 					}
 
 				}
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+
+				string newTextOrig =ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -254,25 +246,22 @@ namespace JudoDotNetXamariniOSSDK
 					hasFullNumber = false;
 				}
 
-				if(textScroller.ContentOffset.X< 10f)
-				{
-					ccPlaceHolderWidthConstraint.Constant =198f;
-					ccPLaceHolderToScrollViewConstraint.Constant =-8f;
+				if (textScroller.ContentOffset.X < 10f) {
+					ccPlaceHolderWidthConstraint.Constant = 198f;
+					ccPLaceHolderToScrollViewConstraint.Constant = -8f;
 
 				}
-				if (!hasFullNumber) 
-				{
+				if (!hasFullNumber) {
 
 					// scrolls backward
 					int textViewLen = ccText.Text.Length; 
 					int formattedLen = ccPlaceHolder.Text.Length;
 				
 
-					if(textScroller.ContentOffset.X!=0)
-					{
-					textScroller.SetContentOffset (new CGPoint (0, 0), true);
+					if (textScroller.ContentOffset.X != 0) {
+						textScroller.SetContentOffset (new CGPoint (0, 0), true);
 					}
-					UpdateCCimageWithTransitionTime (0,false,true); 
+					UpdateCCimageWithTransitionTime (0, false, true); 
 
 					StatusHelpLabel.Text = "Enter Card Details";
 
@@ -294,14 +283,14 @@ namespace JudoDotNetXamariniOSSDK
 							if (!JudoSDKManager.MaestroAccepted) {
 
 								flashForError = true;
-								return EndDelegate (ccPlaceHolder,ccText,formattedText);
+								return EndDelegate (ccPlaceHolder, ccText, formattedText);
 							}
 							break;
 						case CardType.AMEX:
 							if (!JudoSDKManager.AmExAccepted) {
 
 								flashForError = true; 
-								return EndDelegate (ccPlaceHolder,ccText,formattedText);
+								return EndDelegate (ccPlaceHolder, ccText, formattedText);
 							}
 							break;
 						}
@@ -339,7 +328,7 @@ namespace JudoDotNetXamariniOSSDK
 					UpdateCCimageWithTransitionTime (0.25f); 
 				}
 
-				return EndDelegate (ccPlaceHolder,ccText,formattedText);
+				return EndDelegate (ccPlaceHolder, ccText, formattedText);
 
 			};
 		}
@@ -348,6 +337,10 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 			expiryText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
+				if(replace!=""&&!Char.IsDigit(replace.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
 				flashForError = false;
 				updateText = false;
@@ -361,8 +354,7 @@ namespace JudoDotNetXamariniOSSDK
 					deleting = true;
 
 
-					if (textView.Text.Length != 0 && ( range.Length != 0)) 
-					{	// handle case of delete when there are no characters left to delete
+					if (textView.Text.Length != 0 && (range.Length != 0)) {	// handle case of delete when there are no characters left to delete
 
 						char c = textView.Text.Substring (range.Location, 1).ToCharArray () [0];
 						if (range.Location != 0 && range.Length == 1 && (c == ' ' || c == '/')) {
@@ -370,27 +362,22 @@ namespace JudoDotNetXamariniOSSDK
 							range.Length++;
 							deletedSpace = true;
 						}
-					} 
-					else {
-						ccText.BecomeFirstResponder();
+					} else {
+						ccText.BecomeFirstResponder ();
 
-						if(ccText.Text.Length ==(cardHelper.LengthOfFormattedStringForType(Type)))
-						{
-							ccText.Text = ccText.Text.Remove(ccText.Text.Length - 1);
+						if (ccText.Text.Length == (cardHelper.LengthOfFormattedStringForType (Type))) {
+							ccText.Text = ccText.Text.Remove (ccText.Text.Length - 1);
 						}
 
 
-						return EndDelegate(ccPlaceHolder,ccText,ccText.Text);
+						return EndDelegate (ccPlaceHolder, ccText, ccText.Text);
 					}
 				}
 
 				var formattedText = "";
-				scrollForward=false;
+				scrollForward = false;
 
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+				string newTextOrig =ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -398,12 +385,12 @@ namespace JudoDotNetXamariniOSSDK
 				if (deleting) {
 					formattedText = newTextOrig.Substring (0, range.Location);
 					updateText = true;
-					return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+					return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 				}
 
 				if (newTextLen > expiryPlaceHolder.Text.Length) {
 					flashForError = true;
-					return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+					return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 				}
 
 				formattedText = newTextOrig;
@@ -413,17 +400,16 @@ namespace JudoDotNetXamariniOSSDK
 					if (newTextOrig.Substring (monthRange.Location, 1).ToCharArray () [0] > '1') {
 						// support short cut - we prepend a '0' for them
 
-						var aStringBuilder2 = new StringBuilder (textView.Text);
-						aStringBuilder2.Remove (range.Location, range.Length);
-						aStringBuilder2.Insert (range.Location, "0" + replace);
-						formattedText = aStringBuilder2.ToString ();
+
+						 formattedText =ReplaceInPlace(range.Location, range.Length,textView.Text,"0"+replace);
+
 						newTextLen = newTextOrig.Length;
 					}
 					if (newTextLen >= (monthRange.Location + monthRange.Length)) {
 						cardMonth = Int32.Parse (newTextOrig.Substring (monthRange.Location, monthRange.Length));
 						if (cardMonth < 1 || cardMonth > 12) {
 							flashRecheckExpiryDateMessage ();
-							return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+							return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 						}
 					}
 				}
@@ -434,14 +420,14 @@ namespace JudoDotNetXamariniOSSDK
 					int yearDecade = currentYear - (currentYear % 10);
 					if (proposedDecade < yearDecade) {
 						flashRecheckExpiryDateMessage ();
-						return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+						return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 					}
 					if (newTextLen >= (yearRange.Location + yearRange.Length)) {
 						year = Int32.Parse (newTextOrig.Substring (yearRange.Location, yearRange.Length)); 
 						int diff = year - currentYear;
 						if (diff < 0 || diff > 10) {	
 							flashRecheckExpiryDateMessage ();
-							return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+							return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 						}
 						if (diff == 0) { 
 
@@ -450,7 +436,7 @@ namespace JudoDotNetXamariniOSSDK
 
 							if (cardMonth < currentMonth) {
 								flashRecheckExpiryDateMessage ();
-								return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+								return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 							}
 						}
 						if (creditCardImage != ccBackImage) {
@@ -470,47 +456,53 @@ namespace JudoDotNetXamariniOSSDK
 					}
 				}
 				updateText = true;
-				if (formattedText.Length==5) {
-					hasFullDate=true;
-					cvTwoText.BecomeFirstResponder();
+				if (formattedText.Length == 5) {
+					cvTwoText.BecomeFirstResponder ();
 				} 
-				return EndDelegate (expiryPlaceHolder,expiryText,formattedText);
+				return EndDelegate (expiryPlaceHolder, expiryText, formattedText);
 			};
 
+		}
+
+		private string ReplaceInPlace(int location,int length,string originalText,string replace)
+		{
+			var aStringBuilder = new StringBuilder (originalText);
+			aStringBuilder.Remove (location, length);
+			aStringBuilder.Insert (location, replace);
+			return aStringBuilder.ToString ();
 		}
 
 		void SetupCVTwo ()
 		{
 			cvTwoText.ShouldChangeText = (UITextView textView, NSRange NSRange, string replace) => {
+
+				if(replace!=""&&!Char.IsDigit(replace.ToCharArray()[0]))
+				{
+					return false;
+				}
 				CSRange range = new CSRange ((int)NSRange.Location, (int)NSRange.Length);
-
-
-
 				if (replace.Length == 0) {
 
-				if (textView.Text.Length == 0||range.Location==0) {	// handle case of delete when there are no characters left to delete
-						expiryText.BecomeFirstResponder();
+					if (textView.Text.Length == 0 || range.Location == 0) {	// handle case of delete when there are no characters left to delete
+						expiryText.BecomeFirstResponder ();
 
-						if(expiryText.Text.Length ==5)
-						{
-							expiryText.Text = expiryText.Text.Remove(expiryText.Text.Length - 1);
+						if (expiryText.Text.Length == 5) {
+							expiryText.Text = expiryText.Text.Remove (expiryText.Text.Length - 1);
 						}
 				
-				}
+					}
 
 				}
 
 				if (cvTwoText.Text.Length== (Type == CardType.AMEX ? 4 : 3)&& replace.Length != 0) 
-					{
-						return false;
-					}
+                {
+					return false;
+				}
 
 
-				scrollForward=false;
-				var aStringBuilder = new StringBuilder (textView.Text);
-				aStringBuilder.Remove (range.Location, range.Length);
-				aStringBuilder.Insert (range.Location, replace);
-				string newTextOrig = aStringBuilder.ToString ();
+				scrollForward = false;
+
+				string newTextOrig = ReplaceInPlace(range.Location, range.Length,textView.Text,replace);
 
 				int newTextLen = newTextOrig.Length;
 
@@ -524,16 +516,15 @@ namespace JudoDotNetXamariniOSSDK
 
 				updateText = true;
 				if (newTextOrig.Length== (Type == CardType.AMEX ? 4 : 3)) {
-					hasFullCCV=true;
 					DismissKeyboardAction ();
 				} 
-				return EndDelegate (cvTwoPlaceHolder,cvTwoText,newTextOrig);
+				return EndDelegate (cvTwoPlaceHolder, cvTwoText, newTextOrig);
 			};
 		}
 
-		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false,bool force = false)
+		void UpdateCCimageWithTransitionTime (float transittionTime, bool isBack = false, bool force = false)
 		{
-			if (creditCardImage.Tag != (int)Type||force==true) {
+			if (creditCardImage.Tag != (int)Type || force == true) {
 
 				UIImage frontImage = cardHelper.CreditCardImage (Type);
 				ccImage = new UIImageView (frontImage);
@@ -557,10 +548,10 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public bool EndDelegate (PlaceHolderTextView placeView,UITextView textview,string formattedText)
+		public bool EndDelegate (PlaceHolderTextView placeView, UITextView textview, string formattedText)
 		{
 
-			if (scrollForward && textScroller.ContentOffset.X<50f) {
+			if (scrollForward && textScroller.ContentOffset.X < 50f) {
 				ScrollForward (true);
 				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 					textScroller.FlashScrollIndicators ();
@@ -595,11 +586,9 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			if(ccText.Text.Length == cardHelper.LengthOfFormattedStringForType(Type)&&expiryText.Text.Length==5&&cvTwoText.Text.Length==(Type == CardType.AMEX ? 4 : 3))
-			{
-				CompletelyDone= true;
-			}
-			else
-			{
+            {
+				CompletelyDone = true;
+			} else {
 				CompletelyDone = false;
 			}
 			DispatchQueue.MainQueue.DispatchAsync (() => {
@@ -620,25 +609,15 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		void repositionScrollView(float offset,UIScrollView scrollView)
-		{
-			CGRect scrollBounds = scrollView.Bounds;
-			scrollBounds.X = offset;
-			scrollView.Bounds = scrollBounds;
-		}
-
-
 		void ScrollForward (bool animated)
 		{
 
 			if(Type== CardType.AMEX)
-			{
-				ccPlaceHolderWidthConstraint.Constant=178f;
+            {
+				ccPlaceHolderWidthConstraint.Constant = 178f;
 
-			}
-			else
-			{
-				ccPlaceHolderWidthConstraint.Constant =198f;
+			} else {
+				ccPlaceHolderWidthConstraint.Constant = 198f;
 			}
 			expiryText.BecomeFirstResponder ();
 			if (creditCardImage != ccBackImage) {
@@ -658,7 +637,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			}
 
-			UpdateCCimageWithTransitionTime (0.25f,true,true); 
+			UpdateCCimageWithTransitionTime (0.25f, true, true); 
 		}
 
 
@@ -709,7 +688,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void CleanUp ()
 		{
-		SetUpCell ();
+			SetUpCell ();
 	
 			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 				UIImage defaultImage = cardHelper.CreditCardImage (CardType.UNKNOWN);
@@ -718,18 +697,20 @@ namespace JudoDotNetXamariniOSSDK
 			});
 		}
 
-		public bool EntryComplete()
+		public bool EntryComplete ()
 		{
 			if(ccText.Text.Length == cardHelper.LengthOfFormattedStringForType(Type)&&expiryText.Text.Length==5&&cvTwoText.Text.Length==(Type == CardType.AMEX ? 4 : 3))
-			{
+            {
 				return true;
-			}
-			else
-			{
+			} else {
 				return false;
 			}
 		}
-			
+
+		public bool HasFocus ()
+		{
+			return (ccText.IsFirstResponder || expiryText.IsFirstResponder || cvTwoText.IsFirstResponder);
+		}
 	}
 }
 

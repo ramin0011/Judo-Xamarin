@@ -35,7 +35,7 @@ namespace JudoPayiOSXamarinSampleApp
 		{
 
 			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
-			cell = TableCells[indexPath.Row];
+			cell = TableCells [indexPath.Row];
 			cell.IndentationLevel = 0;
 
 			if (cell != null) {
@@ -47,9 +47,9 @@ namespace JudoPayiOSXamarinSampleApp
 			}
 		}
 
-		public float GetTableHeight()
+		public float GetTableHeight ()
 		{
-			float height=0f;
+			float height = 0f;
 			foreach (UITableViewCell cell in TableCells) {
 				height += (float)cell.Frame.Height;
 			}

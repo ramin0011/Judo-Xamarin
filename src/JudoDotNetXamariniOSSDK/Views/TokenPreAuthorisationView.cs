@@ -14,6 +14,7 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;
+
 		public TokenPreAuthorisationView (IPaymentService paymentService) : base ("TokenPreAuthorisationView", null)
 		{
 			_paymentService = paymentService;
@@ -23,18 +24,30 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<CardCell> CellsToShow { get; set; }
 
-        public SuccessCallback successCallback { get; set; }
-        public FailureCallback failureCallback { get; set; }
-        public TokenPaymentViewModel tokenPayment { get; set; }
+		public SuccessCallback successCallback { get; set; }
+
+		public FailureCallback failureCallback { get; set; }
+
+		public TokenPaymentViewModel tokenPayment { get; set; }
+
+		public override void ViewWillLayoutSubviews ()
+		{
+			base.ViewWillLayoutSubviews ();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+			}
+		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			TableView.SeparatorColor = UIColor.Clear;
 
-			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+				defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+			}
 
 			if (JudoConfiguration.Instance.CardToken == null) {
 
@@ -44,9 +57,12 @@ namespace JudoDotNetXamariniOSSDK
 					_error.Show ();
 
 					_error.Clicked += (sender, args) => {
-						PaymentButton.Alpha = 0.25f;
-						PaymentButton.Enabled = false;
-						this.NavigationController.PopToRootViewController (true);
+						PaymentButton.Disable();
+						if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+							this.DismissViewController (true, null);
+						} else {
+							this.NavigationController.PopToRootViewController (true);
+						}
 					};
 
 				});
@@ -66,14 +82,19 @@ namespace JudoDotNetXamariniOSSDK
 				tapRecognizer.NumberOfTouchesRequired = 1;
 
 				EncapsulatingView.AddGestureRecognizer (tapRecognizer);
-				PaymentButton.Alpha = 0.25f;
-				PaymentButton.Enabled = false;
+				PaymentButton.Disable();
 
 				PaymentButton.SetTitleColor (UIColor.Black, UIControlState.Application);
 
 				PaymentButton.TouchUpInside += (sender, ev) => {
 					MakeTokenPayment ();
 				};
+
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					FormClose.TouchUpInside += (sender, ev) => {
+						this.DismissViewController (true, null);
+					};
+				}
 			}
 		}
 
@@ -107,7 +128,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void UpdateUI ()
 		{	
 			PaymentButton.Enabled = tokenCell.Complete;
-			PaymentButton.Alpha = (tokenCell.Complete == true ? 1f : 0.25f) ;
+			PaymentButton.Alpha = (tokenCell.Complete == true ? 1f : 0.25f);
 			if (tokenCell.Complete) {
 				DismissKeyboardAction ();
 			}
@@ -115,64 +136,54 @@ namespace JudoDotNetXamariniOSSDK
 
 		public void MakeTokenPayment ()
 		{
-		    try
-		    {
-                JudoSDKManager.ShowLoading();
-                var instance = JudoConfiguration.Instance;
+			try {
+
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					JudoSDKManager.ShowLoading (this.View);
+				} else {
+					JudoSDKManager.ShowLoading ();
+				}
+				var instance = JudoConfiguration.Instance;
 		        
-		        tokenPayment.ConsumerToken = instance.ConsumerToken;
-                tokenPayment.CV2 = tokenCell.CCV;
-                tokenPayment.Token = instance.CardToken;
+				tokenPayment.ConsumerToken = instance.ConsumerToken;
+				tokenPayment.CV2 = tokenCell.CCV;
+				tokenPayment.Token = instance.CardToken;
 
-                PaymentButton.Alpha = 0.25f;
-                PaymentButton.Enabled = false;
+				PaymentButton.Disable();
 
-                PaymentButton.Alpha = 0.25f;
-                PaymentButton.Enabled = false;
+				_paymentService.MakeTokenPreAuthorisation (tokenPayment).ContinueWith (reponse => {
+					var result = reponse.Result;
+					if (result != null && !result.HasError && result.Response.Result != "Declined") {
+						PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+						// call success callback
+						if (successCallback != null)
+							successCallback (paymentreceipt);
+					} else {
+						// Failure callback
+						if (failureCallback != null) {
+							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
-                _paymentService.MakeTokenPreAuthorisation(tokenPayment).ContinueWith(reponse =>
-                {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                        // call success callback
-                        if (successCallback != null) successCallback(paymentreceipt);
-                    }
-                    else
-                    {
-                        // Failure callback
-                        if (failureCallback != null)
-                        {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
-
-                            if (paymentreceipt != null)
-                            {
-                                // send receipt even we got card declined
-                                failureCallback(judoError, paymentreceipt);
-                            }
-                            else
-                            {
-                                failureCallback(judoError);
-                            }
-                        }
+							if (paymentreceipt != null) {
+								// send receipt even we got card declined
+								failureCallback (judoError, paymentreceipt);
+							} else {
+								failureCallback (judoError);
+							}
+						}
 
 
-                    }
-                    JudoSDKManager.HideLoading();
-                });
-		    }
-            catch (Exception ex)
-            {
-                JudoSDKManager.HideLoading();
-                // Failure callback
-                if (failureCallback != null)
-                {
-                    var judoError = new JudoError { Exception = ex };
-                    failureCallback(judoError);
-                }
-            }
+					}
+					JudoSDKManager.HideLoading ();
+				});
+			} catch (Exception ex) {
+				JudoSDKManager.HideLoading ();
+				// Failure callback
+				if (failureCallback != null) {
+					var judoError = new JudoError { Exception = ex };
+					failureCallback (judoError);
+				}
+			}
 
 
 		}

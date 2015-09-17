@@ -12,10 +12,9 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public partial class CreditCardView : UIViewController
 	{
-	    private LoadingOverlay loadingOverlay;
 		private UIView _activeview;
 		private bool _moveViewUp;
-	    private readonly IPaymentService _paymentService;
+		private readonly IPaymentService _paymentService;
 		private bool _keyboardVisible;
 
 		private List<CardCell> CellsToShow { get; set; }
@@ -28,9 +27,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
-        public SuccessCallback successCallback { private get; set; }
-        public FailureCallback failureCallback { private get; set; }
-	    public PaymentViewModel cardPayment { get; set; }
+		public SuccessCallback successCallback { private get; set; }
+
+		public FailureCallback failureCallback { private get; set; }
+
+		public PaymentViewModel cardPayment { get; set; }
 
 		public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
 		{
@@ -43,6 +44,15 @@ namespace JudoDotNetXamariniOSSDK
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 		}
 
+		public override void ViewWillLayoutSubviews ()
+		{
+			base.ViewWillLayoutSubviews ();
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+			}
+
+		}
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
@@ -50,11 +60,12 @@ namespace JudoDotNetXamariniOSSDK
 
 			this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
 
-
-			NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
-			defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
-			defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom != UIUserInterfaceIdiom.Pad) {
+				NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+				defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+				defaultCenter.AddObserver (UIKeyboard.DidShowNotification, KeyBoardUpNotification);
+			}
 
 			UITapGestureRecognizer tapRecognizer = new UITapGestureRecognizer ();
 
@@ -74,8 +85,14 @@ namespace JudoDotNetXamariniOSSDK
 			SubmitButton.TouchUpInside += (sender, ev) => {
 				MakePayment ();
 			};
-			SubmitButton.Enabled = false;
-			SubmitButton.Alpha = 0.25f;
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				FormClose.TouchUpInside += (sender, ev) => {
+					this.DismissViewController (true, null);
+				};
+			}
+			SubmitButton.Disable();
+			detailCell.ccTextOutlet.BecomeFirstResponder ();
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -83,18 +100,20 @@ namespace JudoDotNetXamariniOSSDK
 			_keyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
 
 			if (!_keyboardVisible) {
-				if(_moveViewUp){ScrollTheView(false);}
+				if (_moveViewUp) {
+					ScrollTheView (false);
+				}
 			}
 		}
 
-		private void KeyBoardUpNotification(NSNotification notification)
+		private void KeyBoardUpNotification (NSNotification notification)
 		{
 
 			CGRect r = UIKeyboard.BoundsFromNotification (notification);
 
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
 				_activeview = avsCell.PostcodeTextFieldOutlet;
-			if (_activeview != null) {
+			if (_activeview != null && !detailCell.HasFocus ()) {
 				_moveViewUp = true;
 				ScrollTheView (_moveViewUp);
 
@@ -122,62 +141,66 @@ namespace JudoDotNetXamariniOSSDK
 
 		void DismissKeyboardAction ()
 		{
-			detailCell.DismissKeyboardAction();
-			avsCell.DismissKeyboardAction();
-			maestroCell.DismissKeyboardAction();
+			detailCell.DismissKeyboardAction ();
+			avsCell.DismissKeyboardAction ();
+			maestroCell.DismissKeyboardAction ();
 		}
 
 		private void UpdateUI ()
 		{
 			bool enable = false;
-			enable = detailCell.EntryComplete();
+			enable = detailCell.EntryComplete ();
 
 			List<CardCell> cellsToRemove = new List<CardCell> ();
 			List<CardCell> insertedCells = new List<CardCell> ();
 			List<CardCell> cellsBeforeUpdate = CellsToShow.ToList ();
-			TableView.BeginUpdates ();
+
 
 			if (enable) {
 				bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
+				int row = CellsToShow.IndexOf (detailCell) + 1;
 
-				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
+				if (JudoSDKManager.AVSEnabled) {
+					if (!CellsToShow.Contains (avsCell)) {
+						TableView.BeginUpdates ();
+						//int row = CellsToShow.IndexOf (reassuringCell);
+						CellsToShow.Insert (row, avsCell);
+						row++;// icrementing the row incase an avs cell is also needed;
+						insertedCells.Add (avsCell);
+						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+
+	
+						TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (avsCell), 0) }, UITableViewRowAnimation.Fade);
+						TableView.EndUpdates ();
+					}
+
+				}
+					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
-						int row = CellsToShow.IndexOf (detailCell) + 1;
+						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
 
 						insertedCells.Add (maestroCell);
+						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
+						ccIsFirstResponder = false;
+						TableView.InsertRows (new NSIndexPath[]{ NSIndexPath.FromRowSection (CellsToShow.IndexOf (maestroCell), 0) }, UITableViewRowAnimation.Fade);
+						TableView.EndUpdates ();
 					}
 
 					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
 						enable = false;
 					}
-
-					if (ccIsFirstResponder) {
-						maestroCell.StartDateTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
+						
 				}
-
-				if (JudoSDKManager.AVSEnabled) {
-					if (!CellsToShow.Contains (avsCell)) {
-						int row = CellsToShow.IndexOf (reassuringCell);
-						CellsToShow.Insert (row, avsCell);
-
-						insertedCells.Add (avsCell);
-					}
-
-					if (ccIsFirstResponder) {
-						avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
-						ccIsFirstResponder = false;
-					}
-				}
-
+					
 				if (ccIsFirstResponder) {
 					DismissKeyboardAction ();
 
 					ccIsFirstResponder = false;
 				}
 			} else {
+				TableView.BeginUpdates ();
 				if (JudoSDKManager.MaestroAccepted) {
 					if (CellsToShow.Contains (maestroCell)) {
 						cellsToRemove.Add (maestroCell);
@@ -189,30 +212,23 @@ namespace JudoDotNetXamariniOSSDK
 						cellsToRemove.Add (avsCell);
 					}
 				}
+				List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
+
+				foreach (CardCell cell in cellsToRemove) {
+					indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
+				}
+
+				TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
+
+				foreach (CardCell cell in cellsToRemove) {
+					CellsToShow.Remove (cell);
+				}
+
+				TableView.EndUpdates ();
 			}
-			List<NSIndexPath> indexPathsToRemove = new List<NSIndexPath> ();
-
-			foreach (CardCell cell in cellsToRemove) {
-				indexPathsToRemove.Add (NSIndexPath.FromRowSection (cellsBeforeUpdate.IndexOf (cell), 0));
-			}
-
-			TableView.DeleteRows (indexPathsToRemove.ToArray (), UITableViewRowAnimation.Fade);
-
-			foreach (CardCell cell in cellsToRemove) {
-				CellsToShow.Remove (cell);
-			}
-
-
-			List<NSIndexPath> indexPathsToAdd = new List<NSIndexPath> ();
-
-			foreach (CardCell cell in insertedCells) {
-				indexPathsToAdd.Add (NSIndexPath.FromRowSection (CellsToShow.IndexOf (cell), 0));
-			}
-
-			TableView.InsertRows (indexPathsToAdd.ToArray (), UITableViewRowAnimation.Fade);
-			TableView.EndUpdates ();
+				
 			SubmitButton.Enabled = enable;
-			SubmitButton.Alpha = (enable == true ? 1f : 0.25f) ;
+			SubmitButton.Alpha = (enable == true ? 1f : 0.25f);
 
 		}
 
@@ -254,72 +270,62 @@ namespace JudoDotNetXamariniOSSDK
 
 		private void MakePayment ()
 		{
-		    try
-		    {
-                JudoSDKManager.ShowLoading();
-                cardPayment.Card = GatherCardDetails();
+			try {
+				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+					JudoSDKManager.ShowLoading (this.View);
+				} else {
+					JudoSDKManager.ShowLoading ();
+				}
+             
+				cardPayment.Card = GatherCardDetails ();
 
-		        SubmitButton.Enabled = false;
-		        SubmitButton.Alpha = 0.25f;
+				SubmitButton.Disable();
 
-		        _paymentService.MakePayment(cardPayment).ContinueWith(reponse =>
-		        {
-                    var result = reponse.Result;
-		            if (result != null && !result.HasError && result.Response.Result != "Declined")
-		            {
-		                var paymentreceipt = result.Response as PaymentReceiptModel;
+				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
+					var result = reponse.Result;
+					if (result != null && !result.HasError && result.Response.Result != "Declined") {
+						var paymentreceipt = result.Response as PaymentReceiptModel;
 
-		                if (paymentreceipt != null)
-		                {
-		                    JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-		                    JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
-		                    JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-		                    JudoConfiguration.Instance.LastFour =
-		                        cardPayment.Card.CardNumber.Substring(cardPayment.Card.CardNumber.Length -
-		                                                              Math.Min(4, cardPayment.Card.CardNumber.Length));
+						if (paymentreceipt != null) {
+							JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
+							JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
+							JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
+							JudoConfiguration.Instance.LastFour =
+		                        cardPayment.Card.CardNumber.Substring (cardPayment.Card.CardNumber.Length -
+							Math.Min (4, cardPayment.Card.CardNumber.Length));
 
-		                    // call success callback
-		                    if (successCallback != null) successCallback(paymentreceipt);
-		                }
-                        else
-                        {
-                            throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
-                        }
+							// call success callback
+							if (successCallback != null)
+								successCallback (paymentreceipt);
+						} else {
+							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+						}
 
-		            }
-		            else
-		            {
-		                // Failure callback
-		                if (failureCallback != null)
-		                {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+					} else {
+						// Failure callback
+						if (failureCallback != null) {
+							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
-		                    if (paymentreceipt != null)
-		                    {
-                                // send receipt even we got card declined
-                                failureCallback(judoError, paymentreceipt);
-                            }
-		                    else
-		                    {
-                                failureCallback(judoError);
-		                    }
-		                }
-		            }
+							if (paymentreceipt != null) {
+								// send receipt even we got card declined
+								failureCallback (judoError, paymentreceipt);
+							} else {
+								failureCallback (judoError);
+							}
+						}
+					}
 
-		            JudoSDKManager.HideLoading();
-		        });
-		    }
-		    catch (Exception ex)
-		    {
-                JudoSDKManager.HideLoading();
-                // Failure callback
-		        if (failureCallback != null)
-		        {
-		            var judoError = new JudoError {Exception = ex};
-		            failureCallback(judoError);
-		        }
-		    }
+					JudoSDKManager.HideLoading ();
+				});
+			} catch (Exception ex) {
+				JudoSDKManager.HideLoading ();
+				// Failure callback
+				if (failureCallback != null) {
+					var judoError = new JudoError { Exception = ex };
+					failureCallback (judoError);
+				}
+			}
 
 		}
 
@@ -354,8 +360,10 @@ namespace JudoDotNetXamariniOSSDK
 
 			return cardViewModel;
 		}
-
+			
 
 	}
+
+
 }
 
