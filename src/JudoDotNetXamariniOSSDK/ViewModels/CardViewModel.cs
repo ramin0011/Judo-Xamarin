@@ -5,21 +5,45 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public class CardViewModel
 	{
+        /// <summary>
+        /// Card Number 
+        /// </summary>
 		public string CardNumber { get; set; }
 
-		public string ExpireDate { get; set; }
+        /// <summary>
+        /// Card expiry date 
+        /// </summary>
+        public string ExpireDate { get; set; }
 
-		public string CV2 { get; set; }
+        /// <summary>
+        /// Card CV2 number
+        /// </summary>
+        public string CV2 { get; set; }
 
-		public CardType CardType { get; set; }
+        /// <summary>
+        /// Card Type
+        /// </summary>
+        internal CardType CardType { get; set; }
 
-		public string PostCode { get; set; }
+        /// <summary>
+        /// Postcode
+        /// </summary>
+        public string PostCode { get; set; }
 
+        /// <summary>
+        /// ISO standard CountryCode
+        /// </summary>
         public ISO3166CountryCodes CountryCode { get; set; }
 
-		public string StartDate {get;set;}
+        /// <summary>
+        /// card start date 
+        /// </summary>
+        public string StartDate { get; set; }
 
-		public string IssueNumber {get;set;}
+        /// <summary>
+        /// Issue Number for Mestro card
+        /// </summary>
+        public string IssueNumber { get; set; }
 	}
 }
 

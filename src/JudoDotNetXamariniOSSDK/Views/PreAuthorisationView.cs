@@ -274,12 +274,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			try {
 
-				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-					JudoSDKManager.ShowLoading (this.View);
-				} else {
-					JudoSDKManager.ShowLoading ();
-				}
-
+				JudoSDKManager.ShowLoading (this.View);
 				authorisationModel.Card = GatherCardDetails ();
 
 				RegisterButton.Disable();
@@ -311,23 +306,13 @@ namespace JudoDotNetXamariniOSSDK
 	    {
             try
             {
-
-
                 var result = reponse.Result;
                 if (result != null && !result.HasError && result.Response.Result != "Declined")
                 {
-                    PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                    var paymentreceipt = result.Response as PaymentReceiptModel;
 
                     if (paymentreceipt != null)
                     {
-                        JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                        JudoConfiguration.Instance.TokenCardType = authorisationModel.Card.CardType;
-                        JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                        JudoConfiguration.Instance.LastFour =
-                            authorisationModel.Card.CardNumber.Substring(authorisationModel.Card.CardNumber.Length -
-                                                                         Math.Min(4,
-                                                                             authorisationModel.Card.CardNumber.Length));
-
                         // call success callback
                         if (successCallback != null) successCallback(paymentreceipt);
                     }

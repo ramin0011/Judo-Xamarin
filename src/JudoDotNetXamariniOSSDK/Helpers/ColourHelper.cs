@@ -1,7 +1,6 @@
-﻿using System;using System;
+﻿using System;
 using UIKit;
-using Foundation;
-using System.Threading;
+
 namespace JudoDotNetXamariniOSSDK
 {
 	internal static class ColourHelper
@@ -21,13 +20,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static UIColor GetColour(string color)
 		{
-			int hex;
-			hex =Convert.ToInt32 (color, 16);
-			if (hex!=null) {
-				return GetColour(hex);
-			}
-
-			return null;
+		    var hex = Convert.ToInt32 (color, 16);
+		    return hex != 0 ? GetColour(hex) : null;
 		}
 	}
 }

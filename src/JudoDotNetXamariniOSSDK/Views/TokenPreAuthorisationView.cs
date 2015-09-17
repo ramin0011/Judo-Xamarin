@@ -49,7 +49,8 @@ namespace JudoDotNetXamariniOSSDK
 				defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
 			}
 
-			if (JudoConfiguration.Instance.CardToken == null) {
+            if (String.IsNullOrEmpty(tokenPayment.Token))
+            {
 
 				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {						
 
@@ -110,10 +111,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetUpTableView ()
 		{
-			tokenCell = new TokenPaymentCell (new IntPtr ());
+            tokenCell = new TokenPaymentCell(new IntPtr());
 
 			tokenCell = (TokenPaymentCell)tokenCell.Create ();
-
+            tokenCell.CardType = tokenPayment.CardType;
+            tokenCell.LastFour = tokenPayment.LastFour;
 
 			tokenCell.UpdateUI = () => {
 				UpdateUI ();
@@ -138,16 +140,9 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			try {
 
-				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-					JudoSDKManager.ShowLoading (this.View);
-				} else {
-					JudoSDKManager.ShowLoading ();
-				}
+				JudoSDKManager.ShowLoading (this.View);
 				var instance = JudoConfiguration.Instance;
-		        
-				tokenPayment.ConsumerToken = instance.ConsumerToken;
 				tokenPayment.CV2 = tokenCell.CCV;
-				tokenPayment.Token = instance.CardToken;
 
 				PaymentButton.Disable();
 
