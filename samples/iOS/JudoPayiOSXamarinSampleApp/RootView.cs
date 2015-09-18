@@ -170,7 +170,10 @@ namespace JudoPayiOSXamarinSampleApp
             TableHeightConstrant.Constant = menuSource.GetTableHeight() + 60f;
         }
 
-
+        /// <summary>
+        /// just for sample app, you can set all settings while configuring SDK
+        /// </summary>
+        /// <param name="animated"></param>
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
