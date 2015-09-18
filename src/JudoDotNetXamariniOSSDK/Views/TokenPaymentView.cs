@@ -111,6 +111,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		void SetUpTableView ()
 		{
+            tokenCell = new TokenPaymentCell(new IntPtr());
+
 			tokenCell = (TokenPaymentCell)tokenCell.Create ();
             tokenCell.CardType = tokenPayment.CardType;
             tokenCell.LastFour = tokenPayment.LastFour;
