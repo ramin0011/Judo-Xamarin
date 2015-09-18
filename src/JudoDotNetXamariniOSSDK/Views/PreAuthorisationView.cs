@@ -189,7 +189,7 @@ namespace JudoDotNetXamariniOSSDK
 						TableView.EndUpdates ();
 					}
 
-					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || !(maestroCell.StartDateTextFieldOutlet.Text.Length == 5)) {
+					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 && maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
 						enable = false;
 					}
 

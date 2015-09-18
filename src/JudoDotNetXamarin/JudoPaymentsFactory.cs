@@ -28,7 +28,7 @@ namespace JudoDotNetXamarin
                     baseUrl = LIVE_URL;
                     break;
                 case Environment.Sandbox:
-                    baseUrl = DEV_LIVE_URL; //SANDBOX_URL;
+                    baseUrl = SANDBOX_URL;
                     break;
             }
 

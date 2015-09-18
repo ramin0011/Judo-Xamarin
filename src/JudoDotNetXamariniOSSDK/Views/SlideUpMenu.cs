@@ -107,9 +107,9 @@ namespace JudoDotNetXamariniOSSDK
 		{
 
 			UIView piece = gesture.View;
-			nfloat yComponent = piece.Superview.Center.Y;
+			nfloat yComponent = piece.Superview.Center.Y - 40f;
 			if (!ComponentExpanded || piece.Frame.Top < piece.Superview.Center.Y) {
-				yComponent = piece.Superview.Center.Y;
+				//yComponent = piece.Superview.Center.Y;
 				ComponentExpanded = true;
 
 			} else {
