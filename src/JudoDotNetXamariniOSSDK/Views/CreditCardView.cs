@@ -7,6 +7,8 @@ using System.Linq;
 using CoreFoundation;
 using JudoPayDotNet.Models;
 using CoreGraphics;
+using System.IO;
+using System.Text;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -267,6 +269,59 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.SeparatorColor = UIColor.Clear;
 
 		}
+		private static readonly Encoding encoding = Encoding.UTF8;
+		private static byte[] GetMultipartFormData(Dictionary<string, string> postParameters, string boundary)
+		{
+			Stream formDataStream = new System.IO.MemoryStream();
+			bool needsCLRF = false;
+
+			foreach (var param in postParameters)
+			{
+				// Thanks to feedback from commenters, add a CRLF to allow multiple parameters to be added.
+				// Skip it on the first parameter, add it to subsequent parameters.
+				if (needsCLRF)
+					formDataStream.Write(encoding.GetBytes("\r\n"), 0, encoding.GetByteCount("\r\n"));
+
+				needsCLRF = true;
+
+//				if (param.Value is FileParameter)
+//				{
+//					FileParameter fileToUpload = (FileParameter)param.Value;
+//
+//					// Add just the first part of this param, since we will write the file data directly to the Stream
+//					string header = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\nContent-Type: {3}\r\n\r\n",
+//						boundary,
+//						param.Key,
+//						fileToUpload.FileName ?? param.Key,
+//						fileToUpload.ContentType ?? "application/octet-stream");
+//
+//					formDataStream.Write(encoding.GetBytes(header), 0, encoding.GetByteCount(header));
+//
+//					// Write the file data directly to the Stream, rather than serializing it to a string.
+//					formDataStream.Write(fileToUpload.File, 0, fileToUpload.File.Length);
+//				}
+//				else
+//				{
+					string postData = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}",
+						boundary,
+						param.Key,
+						param.Value);
+					formDataStream.Write(encoding.GetBytes(postData), 0, encoding.GetByteCount(postData));
+//				}
+
+				string footer = "\r\n--" + boundary + "--\r\n";
+				formDataStream.Write(encoding.GetBytes(footer), 0, encoding.GetByteCount(footer));
+
+				// Dump the Stream into a byte[]
+
+			}
+			formDataStream.Position = 0;
+			byte[] formData = new byte[formDataStream.Length];
+			formDataStream.Read(formData, 0, formData.Length);
+			formDataStream.Close();
+
+			return formData;
+		}
 
 		private void MakePayment ()
 		{
@@ -281,8 +336,77 @@ namespace JudoDotNetXamariniOSSDK
 
 				SubmitButton.Disable();
 
+
+
 				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
+					if(JudoSDKManager.ThreeDSecureEnabled && result.Response.GetType() == typeof(PaymentRequiresThreeDSecureModel))
+					{
+						var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+
+						var req = new NSMutableUrlRequest (new NSUrl (threedDSecureReceipt.AcsUrl));
+						req.HttpMethod = "POST";
+
+
+
+						NSDictionary bodyParams = new NSDictionary();
+
+						Dictionary<string,string> dict = new Dictionary<string,string>();
+
+						dict.Add("PaReq", threedDSecureReceipt.PaReq);
+						dict.Add("Md", threedDSecureReceipt.Md);
+						dict.Add("TermUrl", @"http://www.davidbowieisverydisappointedinyou.com");
+						NSData httpBody =  //[self createBodyWithBoundary:boundary parameters:params paths:@[path] fieldName:fieldName];
+
+						req.Body = NSData.FromArray(GetMultipartFormData(dict,"&"));
+						//req.Body = NSData.FromString(String.Format("PaReq={0}&Md={1}&TermUrl={2}", threedDSecureReceipt.PaReq,threedDSecureReceipt.Md,"http://www.davidbowieisverydisappointedinyou.com"));
+						req["Content-Length"] = req.Body.Length.ToString();
+
+						req["Content-Type"] = "multipart/form-data";
+						req["boundary"] = "&";
+						try
+						{
+							DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+								SecureWebView.LoadRequest(req);
+								JudoSDKManager.HideLoading ();
+								SecureWebView.Hidden =false;
+							});
+
+						}
+
+//						NSUrl url = new NSUrl (threedDSecureReceipt.AcsUrl);
+//
+//						NSMutableUrlRequest req = new NSMutableUrlRequest (url);
+//
+//						NSObject postObj = FromObject (String.Format("PaReq={0}&TermUrl={1}&MD={2}", threedDSecureReceipt.PaReq,"http://www.davidbowieisverydisappointedinyou.com",threedDSecureReceipt.Md));
+//
+//						NSString postString = (NSString)postObj;
+//
+//						req.HttpMethod = "POST";
+//						req.
+//
+//						NSData postData = postString.Encode(NSStringEncoding.UTF8);
+//
+//						req.Body = postData;
+//						try
+//						{
+//							DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+//								SecureWebView.LoadRequest(req);
+//								JudoSDKManager.HideLoading ();
+//								SecureWebView.Hidden =false;
+//							});
+//						}
+
+
+						catch (Exception ex) {
+
+						}
+			
+
+					}
+					else
+					{
+					}
 					if (result != null && !result.HasError && result.Response.Result != "Declined") {
 						var paymentreceipt = result.Response as PaymentReceiptModel;
 

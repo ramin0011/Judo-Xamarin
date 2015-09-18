@@ -33,6 +33,8 @@ namespace JudoDotNetXamariniOSSDK
                     IssueNumber = paymentViewModel.Card.IssueNumber,
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails()
+					
+					
                 };
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
