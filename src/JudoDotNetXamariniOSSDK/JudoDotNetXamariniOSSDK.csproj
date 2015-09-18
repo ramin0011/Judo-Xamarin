@@ -95,10 +95,8 @@
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
-    <Compile Include="Utils\CardBase.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="Controllers\CreditCard.cs" />

@@ -271,11 +271,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void MakePayment ()
 		{
 			try {
-				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-					JudoSDKManager.ShowLoading (this.View);
-				} else {
-					JudoSDKManager.ShowLoading ();
-				}
+				JudoSDKManager.ShowLoading (this.View);
              
 				cardPayment.Card = GatherCardDetails ();
 
@@ -287,13 +283,6 @@ namespace JudoDotNetXamariniOSSDK
 						var paymentreceipt = result.Response as PaymentReceiptModel;
 
 						if (paymentreceipt != null) {
-							JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-							JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
-							JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-							JudoConfiguration.Instance.LastFour =
-		                        cardPayment.Card.CardNumber.Substring (cardPayment.Card.CardNumber.Length -
-							Math.Min (4, cardPayment.Card.CardNumber.Length));
-
 							// call success callback
 							if (successCallback != null)
 								successCallback (paymentreceipt);

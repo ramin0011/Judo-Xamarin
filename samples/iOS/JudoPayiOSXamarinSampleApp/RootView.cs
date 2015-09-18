@@ -14,7 +14,22 @@ namespace JudoPayiOSXamarinSampleApp
 {
     public partial class RootView : UIViewController
     {
-        SlideUpMenu menu;
+        SlideUpMenu _menu;
+
+        //keep this detail from last transaction
+        private string cardToken;
+        private string consumerToken;
+        private string lastFour;
+        private CardType cardType;
+
+        private string paymentReference = "payment101010102";
+        private string consumerRef = "consumer1010102";
+        private string cardNumber = "4976000000003436";
+        private string addressPostCode = "TR14 8PA";
+        private string startDate = "";
+        private string expiryDate = "12/15";
+        private string cv2 = "452";
+
         public RootView()
             : base("RootView", null)
         {
@@ -51,8 +66,12 @@ namespace JudoPayiOSXamarinSampleApp
             DispatchQueue.MainQueue.DispatchAfter(DispatchTime.Now, () =>
             {
                 // move back to home screen
-
 				CloseView ();
+
+                cardToken = receipt.CardDetails.CardToken;
+                consumerToken = receipt.Consumer.ConsumerToken;
+                lastFour = receipt.CardDetails.CardLastfour;
+                cardType = receipt.CardDetails.CardType;
 						
                 // show receipt
                 ShowMessage("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
@@ -95,8 +114,21 @@ namespace JudoPayiOSXamarinSampleApp
             SuccessCallback successCallback = SuccessPayment;
             FailureCallback failureCallback = FailurePayment;
 
-            var cardPayment = new PaymentViewModel { Amount = "4.5" };
-            var tokenPayment = new TokenPaymentViewModel { Amount = "3.4" };
+            var cardPayment = new PaymentViewModel
+            {
+                Amount = 4.5m, 
+                ConsumerReference = consumerRef,
+                PaymentReference = paymentReference,
+                Currency = "GBP",
+                // Non-UI API needs to pass card detail
+                Card = new CardViewModel { CardNumber = cardNumber, CV2 = cv2, ExpireDate = expiryDate, PostCode = addressPostCode, CountryCode = ISO3166CountryCodes.UK}
+            };
+            var tokenPayment = new TokenPaymentViewModel
+            {
+                Amount = 3.5m,
+                ConsumerReference = consumerRef,
+                PaymentReference = paymentReference,
+            };
 
             buttonDictionary.Add("Make a Payment", () =>
             {
@@ -110,11 +142,21 @@ namespace JudoPayiOSXamarinSampleApp
 
             buttonDictionary.Add("Token Payment", delegate
             {
+                tokenPayment.Token = cardToken;
+                tokenPayment.ConsumerToken = consumerToken;
+                tokenPayment.LastFour = lastFour;
+                tokenPayment.CardType = cardType;
+
                 JudoSDKManager.TokenPayment(tokenPayment, successCallback, failureCallback, this.NavigationController);
             });
 
             buttonDictionary.Add("Token PreAuthorise", delegate
             {
+                tokenPayment.Token = cardToken;
+                tokenPayment.ConsumerToken = consumerToken;
+                tokenPayment.LastFour = lastFour;
+                tokenPayment.CardType = cardType;
+
                 JudoSDKManager.TokenPreAuth(tokenPayment, successCallback, failureCallback, this.NavigationController);
             });
 
@@ -132,22 +174,22 @@ namespace JudoPayiOSXamarinSampleApp
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-            menu = new SlideUpMenu(new RectangleF(0, (float)this.View.Frame.Bottom - 40f, (float)this.View.Frame.Width, 448f));
-            menu.AwakeFromNib();
-            menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
-            this.View.AddSubview(menu);
+            _menu = new SlideUpMenu(new RectangleF(0, (float)this.View.Frame.Bottom - 40f, (float)this.View.Frame.Width, 448f));
+            _menu.AwakeFromNib();
+            _menu.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
+            this.View.AddSubview(_menu);
         }
 
         public override void ViewWillDisappear(bool animated)
         {
-            menu.RemoveFromSuperview();
+            _menu.RemoveFromSuperview();
             base.ViewWillDisappear(animated);
         }
 
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
         {
             base.DidRotate(fromInterfaceOrientation);
-            menu.ResetMenu();
+            _menu.ResetMenu();
         }
 
 		void CloseView ()

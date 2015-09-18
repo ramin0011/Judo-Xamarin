@@ -8,9 +8,7 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public class CardCellSource : UITableViewSource
 	{
-
-		public List<CardCell> TableItems;
-		string CellIdentifier = "CellID";
+	    private List<CardCell> TableItems;
 
 		public CardCellSource (List<CardCell> items)
 		{

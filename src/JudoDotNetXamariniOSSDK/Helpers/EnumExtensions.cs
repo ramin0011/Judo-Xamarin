@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public static class EnumExtensions
+	internal static class EnumExtensions
 	{
 		public static string ToDescriptionString(this Enum val)
 		{
