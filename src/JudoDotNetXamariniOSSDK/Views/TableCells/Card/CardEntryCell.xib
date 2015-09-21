@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="102"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cxk-wN-pdQ" id="YTl-1W-gDM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dB8-gG-3Ae" userLabel="Credit Card Enclosing View">
@@ -41,7 +41,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa5-fr-OQD" userLabel="ccPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="0.0" y="6" width="198" height="32"/>
+                                                <rect key="frame" x="8" y="6" width="198" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" text="0000 0000 0000 0000" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-0P-eKk" userLabel="ccText">
                                                         <rect key="frame" x="0.0" y="0.0" width="198" height="32"/>
@@ -63,7 +63,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0N-Zt-sIi" userLabel="expiryPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="209" y="6" width="65" height="32"/>
+                                                <rect key="frame" x="226" y="6" width="65" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="mm/yy" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-np-awO" userLabel="ExpiryText">
                                                         <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
@@ -86,7 +86,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdY-kw-XYs" userLabel="cvTwoPlaceHolder" customClass="PlaceHolderTextView">
-                                                <rect key="frame" x="274" y="6" width="67" height="32"/>
+                                                <rect key="frame" x="291" y="6" width="67" height="32"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="cv2" translatesAutoresizingMaskIntoConstraints="NO" id="spX-8v-QDY" userLabel="cvTwoText">
                                                         <rect key="frame" x="0.0" y="0.0" width="67" height="32"/>
@@ -101,7 +101,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-h0-2Rd" userLabel="Info Button">
-                                                <rect key="frame" x="326" y="9" width="20" height="20"/>
+                                                <rect key="frame" x="343" y="9" width="20" height="20"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" image="ic_info.png">
                                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -114,8 +114,8 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="aa5-fr-OQD" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leadingMargin" constant="-8" id="BaB-20-TsP"/>
-                                            <constraint firstAttribute="trailing" secondItem="LvH-h0-2Rd" secondAttribute="trailing" constant="50" id="CKH-FG-nZY"/>
+                                            <constraint firstItem="aa5-fr-OQD" firstAttribute="leading" secondItem="9sL-ek-4SN" secondAttribute="leadingMargin" id="BaB-20-TsP"/>
+                                            <constraint firstAttribute="trailing" secondItem="LvH-h0-2Rd" secondAttribute="trailing" constant="33" id="CKH-FG-nZY"/>
                                             <constraint firstItem="RdY-kw-XYs" firstAttribute="leading" secondItem="S0N-Zt-sIi" secondAttribute="trailing" id="Qje-z5-eU7"/>
                                             <constraint firstItem="LvH-h0-2Rd" firstAttribute="leading" secondItem="RdY-kw-XYs" secondAttribute="trailing" constant="-15" id="Rse-Wi-ulO"/>
                                             <constraint firstAttribute="width" constant="396" id="TCm-RB-HxT"/>
@@ -124,7 +124,7 @@
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="top" secondItem="aa5-fr-OQD" secondAttribute="top" id="ezH-i3-keh"/>
                                             <constraint firstAttribute="bottom" secondItem="S0N-Zt-sIi" secondAttribute="bottom" constant="6" id="hNc-Sp-IVV"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="bottom" secondItem="aa5-fr-OQD" secondAttribute="bottom" id="ifb-vU-lwL"/>
-                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="leading" secondItem="aa5-fr-OQD" secondAttribute="trailing" constant="11" id="qK9-Aw-fh9"/>
+                                            <constraint firstItem="S0N-Zt-sIi" firstAttribute="leading" secondItem="aa5-fr-OQD" secondAttribute="trailing" constant="20" id="qK9-Aw-fh9"/>
                                             <constraint firstAttribute="bottom" secondItem="RdY-kw-XYs" secondAttribute="bottom" constant="6" id="uZ5-iO-HM5"/>
                                             <constraint firstItem="S0N-Zt-sIi" firstAttribute="centerY" secondItem="9sL-ek-4SN" secondAttribute="centerY" id="ysA-Fj-vFT"/>
                                         </constraints>
@@ -204,9 +204,4 @@
         <image name="ic_card_large_unknown.png" width="54" height="35"/>
         <image name="ic_info.png" width="20" height="20"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
