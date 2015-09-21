@@ -52,7 +52,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewWillLayoutSubviews ();
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+				this.View.Superview.RepositionFormSheetForiPad ();
 			}
 
 		}
@@ -384,6 +384,13 @@ namespace JudoDotNetXamariniOSSDK
 			}
 
 			return cardViewModel;
+		}
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			this.View.Hidden=true;
+
 		}
 
 
