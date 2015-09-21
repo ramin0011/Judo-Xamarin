@@ -48,8 +48,10 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewWillLayoutSubviews ();
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+				this.View.Superview.RepositionFormSheetForiPad ();
 			}
+
+
 
 		}
 
@@ -268,6 +270,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			this.View.Hidden=true;
+
+		}
+
 		private void MakePayment ()
 		{
 			try {
@@ -285,6 +294,7 @@ namespace JudoDotNetXamariniOSSDK
 						if (paymentreceipt != null) {
 							// call success callback
 							if (successCallback != null)
+
 								successCallback (paymentreceipt);
 						} else {
 							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
@@ -298,8 +308,10 @@ namespace JudoDotNetXamariniOSSDK
 
 							if (paymentreceipt != null) {
 								// send receipt even we got card declined
+
 								failureCallback (judoError, paymentreceipt);
 							} else {
+
 								failureCallback (judoError);
 							}
 						}
