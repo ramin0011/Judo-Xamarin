@@ -128,6 +128,7 @@ namespace JudoPayiOSXamarinSampleApp
                 Amount = 3.5m,
                 ConsumerReference = consumerRef,
                 PaymentReference = paymentReference,
+				CV2 = cv2
             };
 
             buttonDictionary.Add("Make a Payment", () =>
