@@ -1,0 +1,1 @@
+xamarin-component package component
