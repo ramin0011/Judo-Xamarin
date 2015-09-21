@@ -21,6 +21,12 @@
             return ctrl;
         }
 
+		public RegisterCardView GetRegisterCardView()
+		{
+			RegisterCardView ctrl = new RegisterCardView(_paymentService);
+			return ctrl;
+		}
+
         public TokenPaymentView GetTokenPaymentView()
         {
             TokenPaymentView ctrl = new TokenPaymentView(_paymentService);
@@ -32,5 +38,6 @@
             TokenPreAuthorisationView ctrl = new TokenPreAuthorisationView(_paymentService);
             return ctrl;
         }
+
     }
 }

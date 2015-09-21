@@ -30,7 +30,6 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var view = _viewLocator.GetPreAuthView();
 
             // register card and pre Auth sharing same view so we need to set this property to false
-            view.RegisterCardOnly = false;
             view.successCallback = success;
             view.failureCallback = failure;
             view.authorisationModel = preAuthorisation;
@@ -57,12 +56,10 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
         public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
         {
-            var view = _viewLocator.GetPreAuthView();
-            // register card and pre Auth sharing same view so we need to set this property to true
-            view.RegisterCardOnly = true;
+            var view = _viewLocator.GetRegisterCardView();
             view.successCallback = success;
             view.failureCallback = failure;
-            view.authorisationModel = payment;
+            view.registerCardModel = payment;
 			PresentView (navigationController, view);
         }
 

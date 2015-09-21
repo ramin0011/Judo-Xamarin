@@ -62,6 +62,11 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
 			configInstance.JudoId = "100915867";
 
+			//tns
+//			configInstance.ApiToken = "bqqAHqFsrqbyPVtr";
+//			configInstance.ApiSecret = "146f554a0fb11f44e6e38ad1cb4681907c138bb31d5d15dab0ba46036ab5c3f9";
+//			configInstance.JudoId = "100224351";
+//		
             /*
             // setting up 3d secure, AVS, Amex and mestro card support
 		    JudoSDKManager.AVSEnabled = true;

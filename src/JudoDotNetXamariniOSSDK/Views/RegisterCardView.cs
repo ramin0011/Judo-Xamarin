@@ -11,7 +11,7 @@ using CoreGraphics;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class PreAuthorisationView : UIViewController
+	public partial class RegisterCardView : UIViewController
 	{
 
 		private UIView activeview;
@@ -34,9 +34,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		public FailureCallback failureCallback { get; set; }
 
-		public PaymentViewModel authorisationModel { get; set; }
+		public PaymentViewModel registerCardModel { get; set; }
 
-		public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
+		public RegisterCardView (IPaymentService paymentService) : base ("RegisterCardView", null)
 		{
 			_paymentService = paymentService;
 		}
@@ -86,7 +86,7 @@ namespace JudoDotNetXamariniOSSDK
 			RegisterButton.SetTitleColor (UIColor.White, UIControlState.Application);
 
 			RegisterButton.TouchUpInside += (sender, ev) => {
-				PreAuthCard ();
+				RegisterCard ();
 			};
 
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
@@ -176,7 +176,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
@@ -269,75 +269,75 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		private void PreAuthCard ()
+		private void RegisterCard ()
 		{
 			try {
 
 				JudoSDKManager.ShowLoading (this.View);
-				authorisationModel.Card = GatherCardDetails ();
+				registerCardModel.Card = GatherCardDetails ();
 
 				RegisterButton.Disable();
 
-                _paymentService.PreAuthoriseCard(authorisationModel).ContinueWith(HandleResponse);
-                
-		    }
-            catch (Exception ex)
-            {
-                JudoSDKManager.HideLoading();
-                // Failure callback
-                if (failureCallback != null)
-                {
-                    var judoError = new JudoError { Exception = ex };
-                    failureCallback(judoError);
-                }
-            }
+				_paymentService.RegisterCard(registerCardModel).ContinueWith(HandleResponse);
+
+			}
+			catch (Exception ex)
+			{
+				JudoSDKManager.HideLoading();
+				// Failure callback
+				if (failureCallback != null)
+				{
+					var judoError = new JudoError { Exception = ex };
+					failureCallback(judoError);
+				}
+			}
 
 
 		}
 
-        private void HandleResponse(Task<IResult<ITransactionResult>> reponse)
-	    {
-            try
-            {
-                var result = reponse.Result;
-                if (result != null && !result.HasError && result.Response.Result != "Declined")
-                {
-                    var paymentreceipt = result.Response as PaymentReceiptModel;
+		private void HandleResponse(Task<IResult<ITransactionResult>> reponse)
+		{
+			try
+			{
+				var result = reponse.Result;
+				if (result != null && !result.HasError && result.Response.Result != "Declined")
+				{
+					var paymentreceipt = result.Response as PaymentReceiptModel;
 
-                    if (paymentreceipt != null)
-                    {
-                        // call success callback
-                        if (successCallback != null) successCallback(paymentreceipt);
-                    }
-                    else
-                    {
-                        throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
-                    }
+					if (paymentreceipt != null)
+					{
+						// call success callback
+						if (successCallback != null) successCallback(paymentreceipt);
+					}
+					else
+					{
+						throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
+					}
 
-                }
-                else
-                {
-                    // Failure callback
-                    if (failureCallback != null)
-                    {
-                        var judoError = new JudoError {ApiError = result != null ? result.Error : null};
-                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+				}
+				else
+				{
+					// Failure callback
+					if (failureCallback != null)
+					{
+						var judoError = new JudoError {ApiError = result != null ? result.Error : null};
+						var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
-                        if (paymentreceipt != null)
-                        {
-                            // send receipt even we got card declined
-                            failureCallback(judoError, paymentreceipt);
-                        }
-                        else
-                        {
-                            failureCallback(judoError);
-                        }
-                    }
+						if (paymentreceipt != null)
+						{
+							// send receipt even we got card declined
+							failureCallback(judoError, paymentreceipt);
+						}
+						else
+						{
+							failureCallback(judoError);
+						}
+					}
 
-                }
-                JudoSDKManager.HideLoading();
-            }
-			 catch (Exception ex) {
+				}
+				JudoSDKManager.HideLoading();
+			}
+			catch (Exception ex) {
 				JudoSDKManager.HideLoading ();
 				// Failure callback
 				if (failureCallback != null) {
@@ -345,9 +345,9 @@ namespace JudoDotNetXamariniOSSDK
 					failureCallback (judoError);
 				}
 			}
-	    }
+		}
 
-	    void CleanOutCardDetails ()
+		void CleanOutCardDetails ()
 		{
 			detailCell.CleanUp ();
 
