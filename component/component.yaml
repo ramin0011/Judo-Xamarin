@@ -17,8 +17,19 @@ libraries:
   android:
     - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
     - ..\src\JudoDotNetXamarinAndroidSDK\bin\Release\JudoDotNetXamarinSDK.dll
+  ios:
+    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
+    - ..\src\JudoDotNetXamariniOSSDK\bin\Release\JudoDotNetXamariniOSSDK.dll
+    - ..\lib\JudoPayDotNet.dll
 samples: 
-  Android Sample: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+samples:
+  - name: "iOS Sample"
+    path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
+    configuration: "Release|iPhone"
+    nobuild: true
+  - name: "Android Sample"
+	path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+    nobuild: true
 packages:
   mobile:
     - FluentValidation, version=5.5.0.0
@@ -30,4 +41,4 @@ packages:
     - Newtonsoft.Json, version=6.0.3
     - Serilog, version=1.4.118
 publisher-url: https://www.judopay.com
-version: "1.0"
+version: "2.0"
