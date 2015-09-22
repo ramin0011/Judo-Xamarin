@@ -30,26 +30,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JudoPayDotNet">
-      <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
+      <HintPath>..\..\lib\ios\JudoPayDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\samples\iOS\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\samples\iOS\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
@@ -63,7 +51,7 @@
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
     <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
-    <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
+    <EmbeddedResource Include="Views\SlideUpMenu.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\AVSCell.xib" />
@@ -259,7 +247,7 @@
     <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
+    <EmbeddedResource Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />
