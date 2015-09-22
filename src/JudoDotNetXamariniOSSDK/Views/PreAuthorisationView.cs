@@ -379,13 +379,14 @@ namespace JudoDotNetXamariniOSSDK
 			return cardViewModel;
 		}
 
-		public override void ViewWillDisappear (bool animated)
+		public override void ViewDidDisappear (bool animated)
 		{
 			base.ViewWillDisappear (animated);
-			this.View.Hidden=true;
 
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Hidden=true;
+			}
 		}
-
 
 	}
 }

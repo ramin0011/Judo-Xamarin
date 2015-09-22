@@ -67,7 +67,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 		{
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
 				view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
-				view.ModalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+				view.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
 				navigationController.PresentViewController (view, true, null);
 			}
 			else {
