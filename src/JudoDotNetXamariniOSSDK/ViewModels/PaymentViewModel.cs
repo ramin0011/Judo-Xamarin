@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class PaymentViewModel
+	public class PaymentViewModel 
 	{
         /// <summary>
         /// Card Detail
@@ -34,6 +34,19 @@ namespace JudoDotNetXamariniOSSDK
         /// your meta data 
         /// </summary>
         public IDictionary<string, string> YourPaymentMetaData { get; set; }
+
+		public PaymentViewModel Clone()
+		{
+			return new PaymentViewModel
+			{
+				Card = this.Card.Clone(),
+				Amount = this.Amount,
+				Currency = this.Currency,
+				PaymentReference = this.PaymentReference,
+				ConsumerReference = this.ConsumerReference,
+				YourPaymentMetaData = this.YourPaymentMetaData
+			}; 
+		}
 	}
 }
 

@@ -44,6 +44,23 @@ namespace JudoDotNetXamariniOSSDK
         /// Issue Number for Mestro card
         /// </summary>
         public string IssueNumber { get; set; }
+
+		public CardViewModel Clone()
+		{
+			return new CardViewModel
+			{
+				CardNumber = this.CardNumber,
+				ExpireDate = this.ExpireDate,
+				CV2 = this.CV2,
+				CardType = this.CardType,
+				PostCode = this.PostCode,
+				CountryCode = this.CountryCode,
+				StartDate = this.StartDate,
+				IssueNumber = this.IssueNumber,
+			}; 
+		}
 	}
+
+
 }
 

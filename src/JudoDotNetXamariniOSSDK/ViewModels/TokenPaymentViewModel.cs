@@ -4,7 +4,7 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class TokenPaymentViewModel
+	public class TokenPaymentViewModel 
 	{
         /// <summary>
         /// Card Token
@@ -55,6 +55,23 @@ namespace JudoDotNetXamariniOSSDK
         /// must pass the card token type to dispay card image 
         /// </summary>
         public CardType CardType { get; set; }
+
+		public TokenPaymentViewModel Clone()
+		{
+			return new TokenPaymentViewModel
+			{
+				Token = this.Token,
+				CV2 = this.CV2,
+				CardType = this.CardType,
+				ConsumerToken = this.ConsumerToken,
+				Amount = this.Amount,
+				PaymentReference = this.PaymentReference,
+				Currency = this.Currency,
+				LastFour = this.LastFour,
+				ConsumerReference = this.ConsumerReference,
+				YourPaymentMetaData = this.YourPaymentMetaData,
+			}; 
+		}
     }
 }
 

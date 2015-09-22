@@ -150,11 +150,13 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public static void Payment (PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
+			var innerModel = payment.Clone ();
 			if (UIMode && navigationController == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.Payment (payment, success, failure, navigationController);
+				
+				_judoSdkApi.Payment (innerModel, success, failure, navigationController);
 			}
 		}
 
@@ -167,11 +169,12 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public static void PreAuth (PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
+			var innerModel = preAuthorisation.Clone ();
 			if (UIMode && navigationController == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.PreAuth (preAuthorisation, success, failure, navigationController);
+				_judoSdkApi.PreAuth (innerModel, success, failure, navigationController);
 			}
 		}
 
@@ -184,11 +187,12 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public static void TokenPayment (TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
+			var innerModel = payment.Clone ();
 			if (UIMode && navigationController == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.TokenPayment (payment, success, failure, navigationController);
+				_judoSdkApi.TokenPayment (innerModel, success, failure, navigationController);
 			}
 		}
 
@@ -201,11 +205,12 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public static void TokenPreAuth (TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
+			var innerModel = payment.Clone ();
 			if (UIMode && navigationController == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.TokenPreAuth (payment, success, failure, navigationController);
+				_judoSdkApi.TokenPreAuth (innerModel, success, failure, navigationController);
 			}
 		}
 
@@ -218,11 +223,12 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public static void RegisterCard (PaymentViewModel registerCard, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
+			var innerModel = registerCard.Clone ();
 			if (UIMode && navigationController == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-                _judoSdkApi.RegisterCard(registerCard, success, failure, navigationController);
+                _judoSdkApi.RegisterCard(innerModel, success, failure, navigationController);
 			}
 		}
 
