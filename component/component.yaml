@@ -20,8 +20,8 @@ libraries:
     - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
     - ..\src\JudoDotNetXamarinAndroidSDK\bin\Release\JudoDotNetXamarinSDK.dll
   ios:
-    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
-    - ..\src\JudoDotNetXamariniOSSDK\bin\Release\JudoDotNetXamariniOSSDK.dll
+    - ..\lib\ios\JudoDotNetXamarin.dll
+    - ..\lib\ios\JudoDotNetXamariniOSSDK.dll
     - ..\lib\ios\JudoPayDotNet.dll
 samples: 
   - name: "iOS Sample"
