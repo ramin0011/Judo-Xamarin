@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
@@ -21,10 +21,10 @@ namespace JudoDotNetXamariniOSSDK
             {
                 CardPaymentModel payment = new CardPaymentModel
                 {
-				    JudoId = JudoConfiguration.Instance.JudoId,
-				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
-				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
-				    Amount = decimal.Parse(paymentViewModel.Amount),
+                    JudoId = JudoConfiguration.Instance.JudoId,
+                    YourPaymentReference = paymentViewModel.PaymentReference,
+                    YourConsumerReference = paymentViewModel.ConsumerReference,
+				    Amount = paymentViewModel.Amount,
 				    CardNumber = paymentViewModel.Card.CardNumber,
 				    CV2 = paymentViewModel.Card.CV2,
 				    ExpiryDate = paymentViewModel.Card.ExpireDate,
@@ -32,9 +32,8 @@ namespace JudoDotNetXamariniOSSDK
 				    StartDate = paymentViewModel.Card.StartDate,
                     IssueNumber = paymentViewModel.Card.IssueNumber,
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails()
-					
-					
+                    ClientDetails = JudoSDKManager.GetClientDetails(),
+                    Currency = paymentViewModel.Currency
                 };
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
@@ -55,9 +54,9 @@ namespace JudoDotNetXamariniOSSDK
                 CardPaymentModel payment = new CardPaymentModel
                 {
 				    JudoId = JudoConfiguration.Instance.JudoId,
-				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
-				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
-				    Amount = decimal.Parse(authorisation.Amount),
+                    YourPaymentReference = authorisation.PaymentReference,
+                    YourConsumerReference = authorisation.ConsumerReference,
+				    Amount = authorisation.Amount,
 				    CardNumber = authorisation.Card.CardNumber,
 				    CV2 = authorisation.Card.CV2,
 				    ExpiryDate = authorisation.Card.ExpireDate,
@@ -65,7 +64,8 @@ namespace JudoDotNetXamariniOSSDK
                     StartDate = authorisation.Card.StartDate,
                     IssueNumber = authorisation.Card.IssueNumber,
                     YourPaymentMetaData = authorisation.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails()
+                    ClientDetails = JudoSDKManager.GetClientDetails(),
+                    Currency = authorisation.Currency
                 };
 
 				Task<IResult<ITransactionResult>> task =  _judoAPI.PreAuths.Create(payment);
@@ -85,9 +85,9 @@ namespace JudoDotNetXamariniOSSDK
                 TokenPaymentModel payment = new TokenPaymentModel
                 {
 				    JudoId = JudoConfiguration.Instance.JudoId,
-				    YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
-				    YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
-				    Amount = decimal.Parse(tokenPayment.Amount),
+                    YourPaymentReference = tokenPayment.PaymentReference,
+                    YourConsumerReference = tokenPayment.ConsumerReference,
+				    Amount = tokenPayment.Amount,
 				    CardToken = tokenPayment.Token,
 				    CV2 = tokenPayment.CV2,
                     ConsumerToken = tokenPayment.ConsumerToken,
@@ -108,9 +108,9 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			TokenPaymentModel payment = new TokenPaymentModel {
 				JudoId = JudoConfiguration.Instance.JudoId,
-				YourPaymentReference = JudoConfiguration.Instance.PaymentReference,
-				YourConsumerReference = JudoConfiguration.Instance.ConsumerRef,
-				Amount = decimal.Parse(tokenPayment.Amount),
+                YourPaymentReference = tokenPayment.PaymentReference,
+                YourConsumerReference = tokenPayment.ConsumerReference,
+				Amount = tokenPayment.Amount,
 				CardToken = tokenPayment.Token,
 				CV2 = tokenPayment.CV2,
                 ConsumerToken = tokenPayment.ConsumerToken,
@@ -141,7 +141,7 @@ namespace JudoDotNetXamariniOSSDK
                 ExpiryDate = payment.Card.ExpireDate,
                 StartDate = payment.Card.StartDate,
                 IssueNumber = payment.Card.IssueNumber,
-                YourConsumerReference = JudoConfiguration.Instance.ConsumerRef
+                YourConsumerReference = payment.ConsumerReference
             };
             try
             {

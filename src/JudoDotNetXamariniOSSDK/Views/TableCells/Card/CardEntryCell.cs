@@ -248,7 +248,6 @@ namespace JudoDotNetXamariniOSSDK
 
 				if (textScroller.ContentOffset.X < 10f) {
 					ccPlaceHolderWidthConstraint.Constant = 198f;
-					ccPLaceHolderToScrollViewConstraint.Constant = -8f;
 
 				}
 				if (!hasFullNumber) {
@@ -261,6 +260,7 @@ namespace JudoDotNetXamariniOSSDK
 					if (textScroller.ContentOffset.X != 0) {
 						textScroller.SetContentOffset (new CGPoint (0, 0), true);
 					}
+
 					UpdateCCimageWithTransitionTime (0, false, true); 
 
 					StatusHelpLabel.Text = "Enter Card Details";
@@ -541,10 +541,13 @@ namespace JudoDotNetXamariniOSSDK
 				} else {
 					finalImage = ccImage;
 				}
+			
+				if (!creditCardImage.Image.AsPNG().IsEqual( finalImage.Image.AsPNG())) {
 
-				UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
+					UIView.Transition (creditCardImage, finalImage, transittionTime, UIViewAnimationOptions.TransitionFlipFromLeft, null);
 
-				creditCardImage = finalImage;
+					creditCardImage = finalImage;
+				}
 			}
 		}
 

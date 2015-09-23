@@ -6,7 +6,7 @@ using UIKit;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    public interface IJudoSDKApi
+    internal interface IJudoSDKApi
     {
         void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);

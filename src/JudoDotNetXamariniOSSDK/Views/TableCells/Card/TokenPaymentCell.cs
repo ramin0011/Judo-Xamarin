@@ -18,18 +18,22 @@ namespace JudoDotNetXamariniOSSDK
 
 		public string CCV{ get; set; }
 
+	    public CardType CardType { get; set; }
+	    public string LastFour { get; set; }
+
 		public bool Complete { get; set; }
 
 		int LengthForType;
 
 		public UITextField CCVEntryOutlet { get { return entryField; } }
 
-		public TokenPaymentCell (IntPtr handle) : base (handle)
-		{
-			Key = "TokenPaymentCell";
-		}
+        public TokenPaymentCell(IntPtr handle)
+            : base(handle)
+        {
+            Key = "TokenPaymentCell";
+        }
 
-		public override CardCell Create ()
+        public override CardCell Create()
 		{
 			return (TokenPaymentCell)Nib.Instantiate (null, null) [0];
 		}
@@ -42,7 +46,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public override void SetUpCell ()
 		{
-			UIImage frontImage = cardHelper.CreditCardImage (JudoConfiguration.Instance.TokenCardType);
+			UIImage frontImage = cardHelper.CreditCardImage (CardType);
 
 			CALayer layer = EntryEnclosingView.Layer;
 			layer.CornerRadius = 4.0f;
@@ -52,8 +56,8 @@ namespace JudoDotNetXamariniOSSDK
 
 			cardImage.Image = frontImage;
 
-			PreviousCardNumber.Text = "xxxx " + JudoConfiguration.Instance.LastFour;
-			LengthForType = JudoConfiguration.Instance.TokenCardType == CardType.AMEX ? 4 : 3;
+			PreviousCardNumber.Text = "xxxx " + LastFour;
+			LengthForType = CardType == CardType.AMEX ? 4 : 3;
 
 			entryField.ShouldChangeCharacters = (UITextField textView, NSRange NSRange, string replace) => {
 				

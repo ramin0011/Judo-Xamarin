@@ -26,3 +26,4 @@ UpgradeLog.*
 # dotCover
 *.dotCover
 samples/iOS/packages/
+src/packages/

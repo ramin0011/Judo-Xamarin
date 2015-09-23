@@ -29,6 +29,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JudoPayDotNet">
+      <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -47,9 +50,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\samples\iOS\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="JudoPayDotNet">
-      <HintPath>..\..\samples\iOS\packages\JudoPay.PCL.1.0.4\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\JudoPayDotNet.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
@@ -77,6 +77,8 @@
     <InterfaceDefinition Include="Views\TokenPreAuthorisationView~iphone.xib" />
     <InterfaceDefinition Include="Views\CreditCardView~ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardView~iphone.xib" />
+    <InterfaceDefinition Include="Views\RegisterCardView~iphone.xib" />
+    <InterfaceDefinition Include="Views\RegisterCardView~ipad.xib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clients\IJudoSDKApi.cs" />
@@ -95,10 +97,8 @@
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Enum\CreditCardControllerType.cs" />
     <Compile Include="Enum\BillingCountryOptions.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
-    <Compile Include="Utils\CardBase.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="Controllers\CreditCard.cs" />
@@ -174,6 +174,10 @@
     </Compile>
     <Compile Include="Controllers\FixedScrollView.cs" />
     <Compile Include="Helpers\UIExtensions.cs" />
+    <Compile Include="Views\RegisterCardView.cs" />
+    <Compile Include="Views\RegisterCardView.designer.cs">
+      <DependentUpon>RegisterCardView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

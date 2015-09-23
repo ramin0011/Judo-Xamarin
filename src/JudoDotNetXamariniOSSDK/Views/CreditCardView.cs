@@ -50,8 +50,10 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			base.ViewWillLayoutSubviews ();
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				this.View.Superview.Bounds = new CGRect (0, 0, 320f, 460f);
+				this.View.Superview.RepositionFormSheetForiPad ();
 			}
+
+
 
 		}
 
@@ -190,7 +192,7 @@ namespace JudoDotNetXamariniOSSDK
 						TableView.EndUpdates ();
 					}
 
-					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 || maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
+					if (maestroCell.IssueNumberTextFieldOutlet.Text.Length == 0 && maestroCell.StartDateTextFieldOutlet.Text.Length != 5) {
 						enable = false;
 					}
 						
@@ -323,14 +325,21 @@ namespace JudoDotNetXamariniOSSDK
 			return formData;
 		}
 
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+
+			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+				this.View.Hidden=true;
+			}
+		}
+
+
+
 		private void MakePayment ()
 		{
 			try {
-				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-					JudoSDKManager.ShowLoading (this.View);
-				} else {
-					JudoSDKManager.ShowLoading ();
-				}
+				JudoSDKManager.ShowLoading (this.View);
              
 				cardPayment.Card = GatherCardDetails ();
 
@@ -411,15 +420,9 @@ namespace JudoDotNetXamariniOSSDK
 						var paymentreceipt = result.Response as PaymentReceiptModel;
 
 						if (paymentreceipt != null) {
-							JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-							JudoConfiguration.Instance.TokenCardType = cardPayment.Card.CardType;
-							JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-							JudoConfiguration.Instance.LastFour =
-		                        cardPayment.Card.CardNumber.Substring (cardPayment.Card.CardNumber.Length -
-							Math.Min (4, cardPayment.Card.CardNumber.Length));
-
 							// call success callback
 							if (successCallback != null)
+
 								successCallback (paymentreceipt);
 						} else {
 							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
@@ -433,8 +436,10 @@ namespace JudoDotNetXamariniOSSDK
 
 							if (paymentreceipt != null) {
 								// send receipt even we got card declined
+
 								failureCallback (judoError, paymentreceipt);
 							} else {
+
 								failureCallback (judoError);
 							}
 						}

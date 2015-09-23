@@ -18,7 +18,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakePayment(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
+                _paymentService.MakePayment(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
+                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse => HandResponse(false, success, failure, reponse));
+                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse => HandResponse(false, success, failure, reponse));
+                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.RegisterCard(payment).ContinueWith(reponse => HandResponse(true, success, failure, reponse));
+                _paymentService.RegisterCard(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -89,20 +89,12 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        private static void HandResponse(bool savetoken, SuccessCallback success, FailureCallback failure, Task<IResult<ITransactionResult>> reponse)
+        private static void HandResponse(SuccessCallback success, FailureCallback failure, Task<IResult<ITransactionResult>> reponse)
         {
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined")
             {
                 var paymentreceipt = result.Response as PaymentReceiptModel;
-
-                if (savetoken && paymentreceipt != null && paymentreceipt.CardDetails != null)
-                {
-                    JudoConfiguration.Instance.CardToken = paymentreceipt.CardDetails.CardToken;
-                    JudoConfiguration.Instance.TokenCardType = paymentreceipt.CardDetails.CardType;
-                    JudoConfiguration.Instance.ConsumerToken = paymentreceipt.Consumer.ConsumerToken;
-                    JudoConfiguration.Instance.LastFour = paymentreceipt.CardDetails.CardLastfour;
-                }
 
                 if (success != null)
                 {
@@ -119,7 +111,17 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 if (failure != null)
                 {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                    failure(judoError);
+                    var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+                    if (paymentreceipt != null)
+                    {
+                        // send receipt even we got card declined
+                        failure(judoError, paymentreceipt);
+                    }
+                    else
+                    {
+                        failure(judoError);
+                    }
                 }
                 else
                 {

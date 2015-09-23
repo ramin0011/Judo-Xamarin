@@ -5,7 +5,7 @@ using UIKit;
 
 namespace JudoDotNetXamariniOSSDK
 {
-    public class LoadingOverlay : UIView
+    internal class LoadingOverlay : UIView
     {
         // control declarations
         UIActivityIndicatorView activitySpinner;
@@ -55,7 +55,7 @@ namespace JudoDotNetXamariniOSSDK
                 ));
             loadingLabel.BackgroundColor = UIColor.Clear;
             loadingLabel.TextColor = UIColor.White;
-            loadingLabel.Text = "Processing...";
+		    loadingLabel.Text = "";//"Processing...";
             loadingLabel.TextAlignment = UITextAlignment.Center;
             loadingLabel.AutoresizingMask = UIViewAutoresizing.All;
             AddSubview(loadingLabel);
