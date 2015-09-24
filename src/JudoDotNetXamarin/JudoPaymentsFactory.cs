@@ -25,10 +25,10 @@ namespace JudoDotNetXamarin
             switch (environment)
             {
                 case Environment.Live:
-                    baseUrl = LIVE_URL;
+				baseUrl = DEV_LIVE_URL;
                     break;
                 case Environment.Sandbox:
-                    baseUrl = SANDBOX_URL;
+				baseUrl = DEV_LIVE_URL;
                     break;
             }
 

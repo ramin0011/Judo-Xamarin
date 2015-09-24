@@ -19,7 +19,7 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIButton FormClose { get; set; }
 
 		[Outlet]
-		UIKit.UIWebView SecureWebView { get; set; }
+		JudoDotNetXamariniOSSDK.SecureWebView SecureWebView { get; set; }
 
 		[Outlet]
 		UIKit.UIButton SubmitButton { get; set; }
@@ -29,11 +29,6 @@ namespace JudoDotNetXamariniOSSDK
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (SecureWebView != null) {
-				SecureWebView.Dispose ();
-				SecureWebView = null;
-			}
-
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
@@ -42,6 +37,11 @@ namespace JudoDotNetXamariniOSSDK
 			if (FormClose != null) {
 				FormClose.Dispose ();
 				FormClose = null;
+			}
+
+			if (SecureWebView != null) {
+				SecureWebView.Dispose ();
+				SecureWebView = null;
 			}
 
 			if (SubmitButton != null) {

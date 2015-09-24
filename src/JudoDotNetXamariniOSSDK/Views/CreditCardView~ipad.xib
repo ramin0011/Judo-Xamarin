@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="EncapsulatingView" destination="Ep6-Ue-jWz" id="poC-cD-y7o"/>
                 <outlet property="FormClose" destination="EbT-pM-FCo" id="GCo-Tn-w7i"/>
-                <outlet property="SecureWebView" destination="sHl-nc-g4M" id="atk-gK-Ycf"/>
+                <outlet property="SecureWebView" destination="NYe-l0-Si4" id="6hL-WQ-xxe"/>
                 <outlet property="SubmitButton" destination="sTW-bL-0hz" id="1oU-1v-EMD"/>
                 <outlet property="TableView" destination="6gv-PI-yc6" id="clf-43-X3v"/>
                 <outlet property="view" destination="iN0-l3-epB" id="kCW-yf-GMq"/>
@@ -54,8 +54,8 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Make Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXR-7d-FZQ">
-                            <rect key="frame" x="103" y="16" width="115" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXR-7d-FZQ">
+                            <rect key="frame" x="105" y="16" width="113" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -72,10 +72,9 @@
                         <constraint firstAttribute="height" constant="408" id="uZa-DQ-FLV"/>
                     </constraints>
                 </view>
-                <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sHl-nc-g4M">
+                <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYe-l0-Si4" customClass="SecureWebView">
                     <rect key="frame" x="0.0" y="47" width="320" height="413"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
                 </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

@@ -33,7 +33,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public FailureCallback failureCallback { private get; set; }
 
-		private string ReceiptID;
+		//private string ReceiptID;
 
 		public PaymentViewModel cardPayment { get; set; }
 
@@ -97,8 +97,11 @@ namespace JudoDotNetXamariniOSSDK
 					this.DismissViewController (true, null);
 				};
 			}
-			SubmitButton.Disable();
+			SubmitButton.Disable ();
 			detailCell.ccTextOutlet.BecomeFirstResponder ();
+
+
+			SecureWebView.SetupWebView (_paymentService, successCallback, failureCallback);
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -182,7 +185,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
@@ -272,44 +275,44 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 
-			SecureWebView.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
-				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
-				{
-				//	var uri = new Uri(request.Body.ToString());
-					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
+//			SecureWebView.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
+//				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
+//				{
+//				//	var uri = new Uri(request.Body.ToString());
+//					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
+//
+//					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
+//
+//					foreach (string keyValuePair in TrackTraceDataArray)
+//					{
+//						var pairComponents = keyValuePair.Split (new char[] { '=' });
+//						string key =pairComponents.First();//  [[pairComponents firstObject] stringByRemovingPercentEncoding];
+//						string value =pairComponents.Last();
+//						//NSString value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
+//						queryStringDictionary.Add(key,value);
+//					}
+//
+//				
+//					//var dictionary =  NSJsonSerialization.Deserialize (request.Body,0,out error);//[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//					//var PaRes =NSUrlProtocol.GetProperty("PaRes",request);
+//					//var md = request.Body[@"MD"];
+//					_paymentService.CompleteDSecure (ReceiptID,queryStringDictionary["PaRes"],queryStringDictionary["MD"]).ContinueWith (reponse => {
+//						var result = reponse.Result;
+//						//var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+//					});
+//				}
+//
+//				return true;
+//			};
+		}
 
-					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
-
-					foreach (string keyValuePair in TrackTraceDataArray)
-					{
-						var pairComponents = keyValuePair.Split (new char[] { '=' });
-						string key =pairComponents.First();//  [[pairComponents firstObject] stringByRemovingPercentEncoding];
-						string value =pairComponents.Last();
-						//NSString value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
-						queryStringDictionary.Add(key,value);
-					}
-
-				
-					//var dictionary =  NSJsonSerialization.Deserialize (request.Body,0,out error);//[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-					//var PaRes =NSUrlProtocol.GetProperty("PaRes",request);
-					//var md = request.Body[@"MD"];
-					_paymentService.CompleteDSecure (ReceiptID,queryStringDictionary["PaRes"],queryStringDictionary["MD"]).ContinueWith (reponse => {
-						var result = reponse.Result;
-						//var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
-					});
-				}
-
-				return true;
-			};
-		}	
-	
 
 		public override void ViewDidDisappear (bool animated)
 		{
 			base.ViewWillDisappear (animated);
 
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				this.View.Hidden=true;
+				this.View.Hidden = true;
 			}
 		}
 
@@ -322,91 +325,50 @@ namespace JudoDotNetXamariniOSSDK
              
 				cardPayment.Card = GatherCardDetails ();
 
-				SubmitButton.Disable();
+				SubmitButton.Disable ();
 
 
 
-				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => 
-				{
+				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
-					if(JudoSDKManager.ThreeDSecureEnabled && result.Response.GetType() == typeof(PaymentRequiresThreeDSecureModel))
-					{
+					if (JudoSDKManager.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
+
 						var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
-						ReceiptID=	threedDSecureReceipt.ReceiptId;
-						NSCharacterSet allowedCharecterSet =NSCharacterSet.FromString( @":/=,!$&'()*+;[]@#?").InvertedSet;
-						NSString paReq = new NSString(threedDSecureReceipt.PaReq);
-						var encodedPaReq = paReq.CreateStringByAddingPercentEncoding(allowedCharecterSet);
-
-						NSString termUrl = new NSString("judo1234567890://threedsecurecallback"); //"judo1234567890://threedsecurecallback".stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet)
-						var encodedTermUrl = termUrl.CreateStringByAddingPercentEncoding(allowedCharecterSet);
 
 
-						NSUrl url = new NSUrl (threedDSecureReceipt.AcsUrl);
-
-						NSMutableUrlRequest req = new NSMutableUrlRequest (url);
-
-						//var postData = String.Format("PaReq={0}&TermUrl={1}&MD={2}", encodedPaReq,encodedTermUrl,threedDSecureReceipt.Md).
-					
-						NSString postString = new NSString("MD="+threedDSecureReceipt.Md+"&PaReq="+encodedPaReq+"&TermUrl="+encodedTermUrl+"");
-						NSData postData = postString.Encode(NSStringEncoding.UTF8);
-						//NSString postString = (NSString)postObj;
-
-
-						req.HttpMethod = "POST";
-						req.Body = postData;
-						req["Content-Length"] = req.Body.Length.ToString();
-						//req["Content-Type"] = "application/x-www-form-urlencoded charset=utf-8";
-
-						try
-						{
-							DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-								SecureWebView.LoadRequest(req);
-
-								JudoSDKManager.HideLoading ();
-								SecureWebView.Hidden =false;
-							});
-						}
-						catch(Exception e)
-						{
-						}
-
-
-			
-
-					}
-					else
-					{
-					if (result != null && !result.HasError && result.Response.Result != "Declined") {
-						var paymentreceipt = result.Response as PaymentReceiptModel;
-
-						if (paymentreceipt != null) {
-							// call success callback
-							if (successCallback != null)
-
-								successCallback (paymentreceipt);
-						} else {
-							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-						}
+						JudoSDKManager.SummonThreeDSecure(threedDSecureReceipt,SecureWebView);
 
 					} else {
-						// Failure callback
-						if (failureCallback != null) {
-							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+						if (result != null && !result.HasError && result.Response.Result != "Declined") {
+							var paymentreceipt = result.Response as PaymentReceiptModel;
 
 							if (paymentreceipt != null) {
-								// send receipt even we got card declined
-
-								failureCallback (judoError, paymentreceipt);
+								// call success callback
+								if (successCallback != null)
+									successCallback (paymentreceipt);
 							} else {
+								throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+							}
 
-								failureCallback (judoError);
+						} else {
+							// Failure callback
+							if (failureCallback != null) {
+								var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+								var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+								if (paymentreceipt != null) {
+									// send receipt even we got card declined
+
+									failureCallback (judoError, paymentreceipt);
+								} else {
+
+									failureCallback (judoError);
+								}
 							}
 						}
-					}
 
-					JudoSDKManager.HideLoading ();
-				}
+						JudoSDKManager.HideLoading ();
+					}
 				});
 
 			} catch (Exception ex) {
@@ -417,8 +379,7 @@ namespace JudoDotNetXamariniOSSDK
 					failureCallback (judoError);
 				}
 			}
-		
-
+	
 		}
 
 		void CleanOutCardDetails ()
