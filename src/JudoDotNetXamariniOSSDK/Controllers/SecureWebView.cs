@@ -13,7 +13,7 @@ using System.Text;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register("SecureWebView")]
-	public class SecureWebView :UIWebView
+	public partial class SecureWebView :UIWebView
 	{
 		public SecureWebView(IntPtr p) : base(p)
 		{

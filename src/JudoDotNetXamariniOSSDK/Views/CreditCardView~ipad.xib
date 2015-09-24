@@ -72,8 +72,8 @@
                         <constraint firstAttribute="height" constant="408" id="uZa-DQ-FLV"/>
                     </constraints>
                 </view>
-                <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYe-l0-Si4" customClass="SecureWebView">
-                    <rect key="frame" x="0.0" y="47" width="320" height="413"/>
+                <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYe-l0-Si4" customClass="SecureWebView">
+                    <rect key="frame" x="0.0" y="47" width="740" height="1106"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
             </subviews>
