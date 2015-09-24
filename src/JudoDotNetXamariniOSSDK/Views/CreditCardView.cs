@@ -275,35 +275,6 @@ namespace JudoDotNetXamariniOSSDK
 			TableView.Source = tableSource;
 			TableView.SeparatorColor = UIColor.Clear;
 
-//			SecureWebView.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
-//				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
-//				{
-//				//	var uri = new Uri(request.Body.ToString());
-//					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
-//
-//					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
-//
-//					foreach (string keyValuePair in TrackTraceDataArray)
-//					{
-//						var pairComponents = keyValuePair.Split (new char[] { '=' });
-//						string key =pairComponents.First();//  [[pairComponents firstObject] stringByRemovingPercentEncoding];
-//						string value =pairComponents.Last();
-//						//NSString value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
-//						queryStringDictionary.Add(key,value);
-//					}
-//
-//				
-//					//var dictionary =  NSJsonSerialization.Deserialize (request.Body,0,out error);//[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//					//var PaRes =NSUrlProtocol.GetProperty("PaRes",request);
-//					//var md = request.Body[@"MD"];
-//					_paymentService.CompleteDSecure (ReceiptID,queryStringDictionary["PaRes"],queryStringDictionary["MD"]).ContinueWith (reponse => {
-//						var result = reponse.Result;
-//						//var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
-//					});
-//				}
-//
-//				return true;
-//			};
 		}
 
 

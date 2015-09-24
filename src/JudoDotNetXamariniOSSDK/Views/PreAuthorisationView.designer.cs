@@ -22,18 +22,26 @@ namespace JudoDotNetXamariniOSSDK
 		UIKit.UIButton RegisterButton { get; set; }
 
 		[Outlet]
+		JudoDotNetXamariniOSSDK.SecureWebView SWebView { get; set; }
+
+		[Outlet]
 		UIKit.UITableView TableView { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (FormClose != null) {
-				FormClose.Dispose ();
-				FormClose = null;
+			if (SWebView != null) {
+				SWebView.Dispose ();
+				SWebView = null;
 			}
 
 			if (EncapsulatingView != null) {
 				EncapsulatingView.Dispose ();
 				EncapsulatingView = null;
+			}
+
+			if (FormClose != null) {
+				FormClose.Dispose ();
+				FormClose = null;
 			}
 
 			if (RegisterButton != null) {

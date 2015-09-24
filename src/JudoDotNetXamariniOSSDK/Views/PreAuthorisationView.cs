@@ -96,6 +96,8 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			RegisterButton.Disable();
 
+			SWebView.SetupWebView (_paymentService, successCallback, failureCallback);
+
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -297,52 +299,49 @@ namespace JudoDotNetXamariniOSSDK
 
         private void HandleResponse(Task<IResult<ITransactionResult>> reponse)
 	    {
-            try
-            {
-                var result = reponse.Result;
-                if (result != null && !result.HasError && result.Response.Result != "Declined")
-                {
-                    var paymentreceipt = result.Response as PaymentReceiptModel;
+			var result = reponse.Result;
+			if (JudoSDKManager.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
-                    if (paymentreceipt != null)
-                    {
-                        // call success callback
-                        if (successCallback != null) successCallback(paymentreceipt);
-                    }
-                    else
-                    {
-                        throw new Exception("JudoXamarinSDK: unable to find the receipt in response.");
-                    }
+				var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-                }
-                else
-                {
-                    // Failure callback
-                    if (failureCallback != null)
-                    {
-                        var judoError = new JudoError {ApiError = result != null ? result.Error : null};
-                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+				JudoSDKManager.SummonThreeDSecure (threedDSecureReceipt, SWebView);
 
-                        if (paymentreceipt != null)
-                        {
-                            // send receipt even we got card declined
-                            failureCallback(judoError, paymentreceipt);
-                        }
-                        else
-                        {
-                            failureCallback(judoError);
-                        }
-                    }
+			} else {
+				try {
+					if (result != null && !result.HasError && result.Response.Result != "Declined") {
+						var paymentreceipt = result.Response as PaymentReceiptModel;
 
-                }
-                JudoSDKManager.HideLoading();
-            }
-			 catch (Exception ex) {
-				JudoSDKManager.HideLoading ();
-				// Failure callback
-				if (failureCallback != null) {
-					var judoError = new JudoError { Exception = ex };
-					failureCallback (judoError);
+						if (paymentreceipt != null) {
+							// call success callback
+							if (successCallback != null)
+								successCallback (paymentreceipt);
+						} else {
+							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+						}
+
+					} else {
+						// Failure callback
+						if (failureCallback != null) {
+							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+							if (paymentreceipt != null) {
+								// send receipt even we got card declined
+								failureCallback (judoError, paymentreceipt);
+							} else {
+								failureCallback (judoError);
+							}
+						}
+
+					}
+					JudoSDKManager.HideLoading ();
+				} catch (Exception ex) {
+					JudoSDKManager.HideLoading ();
+					// Failure callback
+					if (failureCallback != null) {
+						var judoError = new JudoError { Exception = ex };
+						failureCallback (judoError);
+					}
 				}
 			}
 	    }
