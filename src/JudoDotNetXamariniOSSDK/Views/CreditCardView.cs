@@ -374,7 +374,8 @@ namespace JudoDotNetXamariniOSSDK
 			
 
 					}
-
+					else
+					{
 					if (result != null && !result.HasError && result.Response.Result != "Declined") {
 						var paymentreceipt = result.Response as PaymentReceiptModel;
 
@@ -405,7 +406,9 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 					JudoSDKManager.HideLoading ();
+				}
 				});
+
 			} catch (Exception ex) {
 				JudoSDKManager.HideLoading ();
 				// Failure callback
@@ -414,6 +417,7 @@ namespace JudoDotNetXamariniOSSDK
 					failureCallback (judoError);
 				}
 			}
+		
 
 		}
 

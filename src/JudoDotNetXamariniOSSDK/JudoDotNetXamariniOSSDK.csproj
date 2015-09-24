@@ -178,6 +178,7 @@
     <Compile Include="Views\RegisterCardView.designer.cs">
       <DependentUpon>RegisterCardView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\SecureWebView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
