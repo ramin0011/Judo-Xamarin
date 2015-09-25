@@ -27,3 +27,5 @@ UpgradeLog.*
 *.dotCover
 samples/iOS/packages/
 src/packages/
+samples/Android/packages/
+samples/Android/packages/

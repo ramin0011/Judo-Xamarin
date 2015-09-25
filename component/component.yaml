@@ -4,6 +4,8 @@ summary: A Xamarin SDK for JudoPay service
 getting-started: GettingStarted.md
 details: Details.md
 screenshots: 
+  - judo_Xamarin_iOS.gif
+  - judo_Xamarin_Android.gif
 license: License.md
 icons: 
   - judopay-xamarin-sdk_128x128.png
@@ -18,27 +20,25 @@ libraries:
     - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
     - ..\src\JudoDotNetXamarinAndroidSDK\bin\Release\JudoDotNetXamarinSDK.dll
   ios:
-    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
-    - ..\src\JudoDotNetXamariniOSSDK\bin\Release\JudoDotNetXamariniOSSDK.dll
-    - ..\lib\JudoPayDotNet.dll
+    - ..\lib\ios\JudoDotNetXamarin.dll
+    - ..\lib\ios\JudoDotNetXamariniOSSDK.dll
+    - ..\lib\ios\JudoPayDotNet.dll
 samples: 
-samples:
   - name: "iOS Sample"
     path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
-    configuration: "Release|iPhone"
-    nobuild: true
   - name: "Android Sample"
-	path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
-    nobuild: true
+    path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+    
 packages:
-  mobile:
-    - FluentValidation, version=5.5.0.0
+  android:
     - JudoPay.PCL, version=1.0.4
     - Microsoft.Bcl, version=1.1.9
     - Microsoft.Bcl.Async, version=1.0.168
     - Microsoft.Bcl.Build, version=1.0.14
     - Microsoft.Net.Http, version=2.2.22
-    - Newtonsoft.Json, version=6.0.3
-    - Serilog, version=1.4.118
+  mobile:
+    - FluentValidation, version=5.6.2.0
+    - Newtonsoft.Json, version=7.0.1
+    - Serilog, version=1.5.11
 publisher-url: https://www.judopay.com
 version: "2.0"
