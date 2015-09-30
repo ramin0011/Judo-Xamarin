@@ -180,8 +180,7 @@ namespace JudoDotNetXamariniOSSDK
 			int totalLen = Card.CC_LEN_FOR_TYPE;
 			for (int idx = 0; idx < 3; ++idx) {
 				int segLen = segmentLengths [idx];
-				if (segLen == null)
-					break;
+			
 
 				r [idx].Location = totalLen;
 				r [idx].Length = len >= segLen ? segLen : len;
@@ -356,7 +355,7 @@ namespace JudoDotNetXamariniOSSDK
 		public string PromptStringForType (CardType type, bool justNumber)
 		{
 			string number = "0000 0000 0000 0000";
-			string additions = @"";
+
 
 			switch (type) {
 			case CardType.VISA:
@@ -365,15 +364,12 @@ namespace JudoDotNetXamariniOSSDK
 			case CardType.MAESTRO:
 				
 				number = @"0000 0000 0000 0000";
-				additions = @" MM/YY CV2";
 				break;
 			case CardType.AMEX:			// {4-6-5}
 				number = @"0000 000000 00000";
-				additions = @" MM/YY CIDV";
 				break;
 			case CardType.DINERS_CLUB:	// {4-6-4}
 				number = @"XXXX XXXXXX XXXX";
-				additions = @" MM/YY CV2";
 				break;
 			default:
 				break;
