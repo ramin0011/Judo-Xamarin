@@ -41,12 +41,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\PaymentReceipt~iphone.xib" />
-    <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
     <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
     <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
@@ -99,19 +93,6 @@
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
-    <Compile Include="Views\PaymentReceipt.cs" />
-    <Compile Include="Views\PaymentReceipt.designer.cs">
-      <DependentUpon>PaymentReceipt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TableCells\ReceiptStringItemCell.cs" />
-    <Compile Include="Views\TableCells\ReceiptStringItemCell.designer.cs">
-      <DependentUpon>ReceiptStringItemCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TableCells\ReceiptNoteCell.cs" />
-    <Compile Include="Views\TableCells\ReceiptNoteCell.designer.cs">
-      <DependentUpon>ReceiptNoteCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TableSources\ReceiptTableViewSource.cs" />
     <Compile Include="Views\CreditCardView.cs" />
     <Compile Include="Views\CreditCardView.designer.cs">
       <DependentUpon>CreditCardView.cs</DependentUpon>
