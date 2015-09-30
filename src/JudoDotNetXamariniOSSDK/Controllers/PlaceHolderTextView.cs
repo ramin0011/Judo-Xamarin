@@ -36,10 +36,27 @@
 #define LED_FONT
 
 using System;
-using UIKit;
-using CoreGraphics;
-using Foundation;
 using System.Drawing;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreGraphics;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -51,7 +68,7 @@ namespace JudoDotNetXamariniOSSDK
 		public  UIFont Font { get; set;}
 		private int _showTextOffset;
 		public int ShowTextOffset { get{return _showTextOffset;} }
-		public CGRect Offset { get; set;}
+		public RectangleF Offset { get; set;}
 
 
 		public PlaceHolderTextView(IntPtr p) : base(p)
@@ -87,9 +104,9 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public override void Draw (CGRect rect)
+		public override void Draw (RectangleF rect)
 		{
-			CGRect r = Offset;
+			RectangleF r = Offset;
 
 			string clearText = Text.Substring (0, ShowTextOffset);
 			string grayText = Text.Substring (ShowTextOffset, Text.Length - ShowTextOffset);
@@ -103,7 +120,7 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (clearText.Length !=0) 
 			{
-				r.Location = new CGPoint(r.Location.X+ clearText.DrawString (Offset.Location, Font).Width,r.Location.Y);
+				r.Location = new PointF(r.Location.X+ clearText.DrawString (Offset.Location, Font).Width,r.Location.Y);
 			}
 
 			CSRange charsToDraw = new CSRange(0, grayText.Length);
@@ -121,12 +138,12 @@ namespace JudoDotNetXamariniOSSDK
 				{
 					char character = chars[i];
 					if (character == ' ') {
-						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
+						r.Location= new PointF(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
 					if (character == 'X') {
 						#if LED_FONT
-						CGRect box = rect.Inset(2, 1);
+						RectangleF box = rect.Inset(2, 1);
 						#else
 						CGRect box = rect.Inset (3, 3);
 						#endif
@@ -136,7 +153,7 @@ namespace JudoDotNetXamariniOSSDK
 						var mask = "0";
 						UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 						mask.DrawString(box, drawFont);
-						r.Location= new CGPoint(r.Location.X+  Offset.Size.Width, r.Location.Y);
+						r.Location= new PointF(r.Location.X+  Offset.Size.Width, r.Location.Y);
 						continue;
 					}
 					break;

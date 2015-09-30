@@ -1,7 +1,26 @@
 ﻿using System;
+using System.Drawing;
+
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
 using CoreFoundation;
 using CoreGraphics;
-using UIKit;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -16,7 +35,7 @@ namespace JudoDotNetXamariniOSSDK
             
         }
 
-		public LoadingOverlay(CGRect frame, bool rounded = false)
+		public LoadingOverlay(RectangleF frame, bool rounded = false)
             : base(frame)
         {
             // configurable bits
@@ -33,7 +52,7 @@ namespace JudoDotNetXamariniOSSDK
 
             // create the activity spinner, center it horizontall and put it 5 points above center x
             activitySpinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge);
-            activitySpinner.Frame = new CGRect(
+			activitySpinner.Frame = new RectangleF(
                 centerX - (activitySpinner.Frame.Width / 2),
                 centerY - activitySpinner.Frame.Height - 20,
                 activitySpinner.Frame.Width,
@@ -47,7 +66,7 @@ namespace JudoDotNetXamariniOSSDK
             activitySpinner.StartAnimating();
 
             // create and configure the "Loading Data" label
-            loadingLabel = new UILabel(new CGRect(
+            loadingLabel = new UILabel(new RectangleF(
                 centerX - (labelWidth / 2),
                 centerY + 20,
                 labelWidth,
@@ -80,14 +99,14 @@ namespace JudoDotNetXamariniOSSDK
         /// <summary>
         /// setting fullsize screen
         /// </summary>
-        private static CGRect SetFullSize()
+		private static RectangleF SetFullSize()
         {
             // Determine the correct size to start the overlay (depending on device orientation)
             var bounds = UIScreen.MainScreen.Bounds; // portrait bounds
             if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft ||
                 UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeRight)
             {
-                bounds.Size = new CGSize(bounds.Size.Height, bounds.Size.Width);
+                bounds.Size = new SizeF(bounds.Size.Height, bounds.Size.Width);
             }
 
             return bounds;

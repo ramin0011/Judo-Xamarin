@@ -1,15 +1,32 @@
 ﻿using System;
-using UIKit;
-using Foundation;
-
-using CoreGraphics;
-using ObjCRuntime;
 using System.Drawing;
 using System.Collections.Generic;
-using CoreAnimation;
 using System.Text;
-using CoreFoundation;
 using JudoPayDotNet.Models;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 
 namespace JudoDotNetXamariniOSSDK
@@ -91,7 +108,7 @@ namespace JudoDotNetXamariniOSSDK
 			layer.MasksToBounds = true;
 			layer.BorderWidth = 0;
 
-			textScroller.SetContentOffset (new CGPoint (0, 0), true);
+			textScroller.SetContentOffset (new PointF (0, 0), true);
 			textScroller.ScrollEnabled = false;
 
 			SetupPlaceViews ();
@@ -115,15 +132,15 @@ namespace JudoDotNetXamariniOSSDK
 			UITextPosition start = ccText.BeginningOfDocument;
 			UITextPosition end = ccText.GetPosition (start, 20);
 			UITextRange range = ccText.GetTextRange (start, end);
-			CGRect r = ccText.GetFirstRectForRange (range);
-			CGSize frameRect = r.Size;
+			RectangleF r = ccText.GetFirstRectForRange (range);
+			SizeF frameRect = r.Size;
 			frameRect.Width = (r.Size.Width / 24.0f);
 			ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			r.Size = frameRect;
 			ccText.Text = "";
 
 
-			CGRect frame = ccPlaceHolder.Frame;
+			RectangleF frame = ccPlaceHolder.Frame;
 			ccPlaceHolder.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			ccPlaceHolder.Text = "0000 0000 0000 0000";
 
@@ -140,8 +157,8 @@ namespace JudoDotNetXamariniOSSDK
 			UITextPosition exStart = expiryText.BeginningOfDocument;
 			UITextPosition exEnd = expiryText.GetPosition (exStart, 5);
 			UITextRange exRange = expiryText.GetTextRange (exStart, exEnd);
-			CGRect exR = expiryText.GetFirstRectForRange (exRange);
-			CGSize exFrameRect = exR.Size;
+			RectangleF exR = expiryText.GetFirstRectForRange (exRange);
+			SizeF exFrameRect = exR.Size;
 			exFrameRect.Width = (exR.Size.Width / 24.0f);
 			expiryText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			exR.Size = exFrameRect;
@@ -149,7 +166,7 @@ namespace JudoDotNetXamariniOSSDK
 
 
 	
-			CGRect expiryFrame = expiryPlaceHolder.Frame;
+			RectangleF expiryFrame = expiryPlaceHolder.Frame;
 			expiryPlaceHolder.Font = expiryText.Font;
 			expiryPlaceHolder.Text = "MM/YY";
 
@@ -166,14 +183,14 @@ namespace JudoDotNetXamariniOSSDK
 			UITextPosition cvStart = cvTwoText.BeginningOfDocument;
 			UITextPosition cvEnd = cvTwoText.GetPosition (cvStart, 3);
 			UITextRange cvRange = cvTwoText.GetTextRange (cvStart, cvEnd);
-			CGRect cvR = cvTwoText.GetFirstRectForRange (cvRange);
-			CGSize cvFrameRect = cvR.Size;
+			RectangleF cvR = cvTwoText.GetFirstRectForRange (cvRange);
+			SizeF cvFrameRect = cvR.Size;
 			cvFrameRect.Width = (cvR.Size.Width / 24.0f);
 			cvTwoText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
 			cvR.Size = cvFrameRect;
 			cvTwoText.Text = "";
 
-			CGRect cvTwoFrame = cvTwoPlaceHolder.Frame;
+			RectangleF cvTwoFrame = cvTwoPlaceHolder.Frame;
 			cvTwoPlaceHolder.Font = cvTwoText.Font;
 			cvTwoPlaceHolder.Text = "CV2";
 
@@ -258,7 +275,7 @@ namespace JudoDotNetXamariniOSSDK
 				
 
 					if (textScroller.ContentOffset.X != 0) {
-						textScroller.SetContentOffset (new CGPoint (0, 0), true);
+						textScroller.SetContentOffset (new PointF (0, 0), true);
 					}
 
 					UpdateCCimageWithTransitionTime (0, false, true); 
@@ -627,16 +644,16 @@ namespace JudoDotNetXamariniOSSDK
 				StatusHelpLabel.Text = "Please enter Expire Date";
 			}
 			float width = widthToLastGroup;
-			CGRect frame = new CGRect (ccText.Frame.Location, new CGSize ((width) + textScroller.Frame.Size.Width, ccText.Frame.Size.Height));
-			textScroller.ContentSize = new CGSize (frame.Size.Width, textScroller.ContentSize.Height);
+			RectangleF frame = new RectangleF (ccText.Frame.Location, new SizeF ((width) + textScroller.Frame.Size.Width, ccText.Frame.Size.Height));
+			textScroller.ContentSize = new SizeF (frame.Size.Width, textScroller.ContentSize.Height);
 			ccText.Frame = frame;
 
 			ccPlaceHolder.SetText (cardHelper.PromptStringForType (Type, false));
 
 			textScroller.ScrollEnabled = true;
-			if (textScroller.ContentOffset != new CGPoint (width, 0)) {
+			if (textScroller.ContentOffset != new PointF (width, 0)) {
 
-				textScroller.SetContentOffset (new CGPoint (width, 0), animated);
+				textScroller.SetContentOffset (new PointF (width, 0), animated);
 
 			}
 

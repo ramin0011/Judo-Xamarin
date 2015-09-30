@@ -1,9 +1,30 @@
 using System;
 using System.Drawing;
+using System.Text;
 
-using CoreFoundation;
-using UIKit;
+#if__UNIFIED__
 using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreGraphics;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+using NSUrlRequest = global:: Foundation.NSURLRequest
+
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+
+#endif
+
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -54,19 +75,20 @@ namespace JudoDotNetXamariniOSSDK
 
             // Perform any additional setup after loading the view
         }
-
-        public bool shouldStartLoadWithRequest(NSURLRequest request, UIWebViewNavigationType navigationType)
+										
+		public bool shouldStartLoadWithRequest(NSUrlRequest request, UIWebViewNavigationType navigationType)
         { 
-            string urlString = request.URL.absoluteString;
+            string urlString = request.Url.AbsoluteString;
     
             if (urlString.Contains(@"threedsecurecallback")) {
-                NSData body = request.HTTPBody;
-                string bodyString body.EncodeTo(NSUTF8StringEncoding);
+                NSData body = request.HttpMethod;
+			
+                string bodyString= body.EncodeTo(NSUTF8StringEncoding);
         
                 NSMutableDictionary results = NSMutableDictionary.FromDictionary(dictionary);
                 Array pairs = bodyString.Split("&");
         
-                for (string pair in pairs) {
+                foreach (string pair in pairs) {
                     if (pair.Contains("=")) {
                         Array components = pair.Split("=");
                         string value = components[1];//[components objectAtIndex:1]; 
@@ -76,10 +98,9 @@ namespace JudoDotNetXamariniOSSDK
                     }
                 }
                 
-                Console.WriteLine("results :{0}", results)
-                //DDLogVerbose("results: ", results);
+				Console.WriteLine ("results :{0}", results);
         
-                if (this.successBlock) {
+                if(this.successBlock) {
                     this.successBlock(200, results);
                 }
         

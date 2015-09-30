@@ -1,13 +1,34 @@
 ﻿using System;
-using Foundation;
-using UIKit;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
 using CoreFoundation;
-using JudoPayDotNet.Models;
+using CoreAnimation;
 using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
+
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -126,10 +147,10 @@ namespace JudoDotNetXamariniOSSDK
 		private void ScrollTheView (bool move)
 		{
 			if (move) {
-				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 100f), true);
+				TableView.SetContentOffset (new PointF (0, 100f), true);
 				TableView.ScrollEnabled = false;
 			} else {
-				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 0), true);
+				TableView.SetContentOffset (new PointF (0, 0), true);
 
 			}
 

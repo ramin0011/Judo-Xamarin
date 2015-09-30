@@ -4,7 +4,29 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
+#if__UNIFIED__
 using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 using System.CodeDom.Compiler;
 
 namespace JudoDotNetXamariniOSSDK
@@ -13,19 +35,19 @@ namespace JudoDotNetXamariniOSSDK
 	partial class AVSCell
 	{
 		[Outlet]
-		UIKit.UIButton CountryButton { get; set; }
+		UIButton CountryButton { get; set; }
 
 		[Outlet]
-		UIKit.UILabel CountryLabel { get; set; }
+		UILabel CountryLabel { get; set; }
 
 		[Outlet]
-		UIKit.UIButton HomeButton { get; set; }
+		UIButton HomeButton { get; set; }
 
 		[Outlet]
-		UIKit.UIView PostCodeCountainerView { get; set; }
+		UIView PostCodeCountainerView { get; set; }
 
 		[Outlet]
-		UIKit.UITextField PostcodeTextField { get; set; }
+		UITextField PostcodeTextField { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
