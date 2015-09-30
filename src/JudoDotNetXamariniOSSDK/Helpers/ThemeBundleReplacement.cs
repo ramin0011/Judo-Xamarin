@@ -80,13 +80,12 @@ namespace JudoDotNetXamariniOSSDK
 						return image;
 					}
 				}
-                    break;
+                break;
 				case BundledOrReplacementOptions.Bundled:
 				{
 					return UIImage.FromBundle (getFrameworkBundle().PathForResource (imageName, "png"));
 				}
-
-				break;
+					
 			}
 
 		    return null;

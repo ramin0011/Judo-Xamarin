@@ -113,8 +113,6 @@ namespace JudoDotNetXamariniOSSDK
 		private void KeyBoardUpNotification (NSNotification notification)
 		{
 
-			CGRect r = UIKeyboard.BoundsFromNotification (notification);
-
 			if (avsCell.PostcodeTextFieldOutlet.IsFirstResponder)
 				activeview = avsCell.PostcodeTextFieldOutlet;
 			if (activeview != null && !detailCell.HasFocus ()) {

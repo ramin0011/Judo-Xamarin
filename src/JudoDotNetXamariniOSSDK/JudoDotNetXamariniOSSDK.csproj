@@ -36,33 +36,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\..\samples\iOS\packages\Microsoft.Net.Http.2.2.22\lib\portable-net45+win8\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\samples\iOS\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\samples\iOS\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\PaymentReceipt~iphone.xib" />
-    <InterfaceDefinition Include="Views\PaymentReceipt~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~iphone.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptStringItemCell~ipad.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_iphone.xib" />
-    <InterfaceDefinition Include="Views\TableCells\ReceiptNoteCell_ipad.xib" />
-    <InterfaceDefinition Include="Views\CreditCardViewLegacy.xib" />
     <InterfaceDefinition Include="Views\SlideUpMenu.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\CardEntryCell.xib" />
     <InterfaceDefinition Include="Views\TableCells\Card\ReassuringTextCell.xib" />
@@ -88,7 +66,6 @@
     <Compile Include="Controllers\PlaceHolderTextView.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\ThreeDSecurePlaceHolderViewController.cs" />
     <Compile Include="Enum\ISO3166CountryCodes.cs" />
     <Compile Include="Helpers\LoadingOverlay.cs" />
     <Compile Include="Models\JudoError.cs" />
@@ -114,19 +91,6 @@
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
-    <Compile Include="Views\PaymentReceipt.cs" />
-    <Compile Include="Views\PaymentReceipt.designer.cs">
-      <DependentUpon>PaymentReceipt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TableCells\ReceiptStringItemCell.cs" />
-    <Compile Include="Views\TableCells\ReceiptStringItemCell.designer.cs">
-      <DependentUpon>ReceiptStringItemCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TableCells\ReceiptNoteCell.cs" />
-    <Compile Include="Views\TableCells\ReceiptNoteCell.designer.cs">
-      <DependentUpon>ReceiptNoteCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TableSources\ReceiptTableViewSource.cs" />
     <Compile Include="Views\CreditCardView.cs" />
     <Compile Include="Views\CreditCardView.designer.cs">
       <DependentUpon>CreditCardView.cs</DependentUpon>
@@ -260,13 +224,10 @@
     <BundleResource Include="Resources\btn_pay_normal_iPhone6plus%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Views\ThreeDSecurePlaceHolderViewController.xib" />
-  </ItemGroup>
-  <ItemGroup>
     <InterfaceDefinition Include="Views\WebViewController.xib" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

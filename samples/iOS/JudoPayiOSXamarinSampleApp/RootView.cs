@@ -105,8 +105,6 @@ namespace JudoPayiOSXamarinSampleApp
 
 		void SetUpTableView ()
 		{
-			UITableViewCell cell = new UITableViewCell ();
-
 			Dictionary<string, Action> buttonDictionary = new Dictionary<string, Action> ();
 			SuccessCallback successCallback = SuccessPayment;
 			FailureCallback failureCallback = FailurePayment;
