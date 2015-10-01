@@ -47,13 +47,6 @@ namespace JudoDotNetXamariniOSSDK
 	public partial class PlaceHolderTextView : UIView
 	{
 		
-
-		#if LED_FONT
-		readonly UIColor TEXT_COLOR = UIColor.DarkGray;
-		#else
-		readonly UIColor TEXT_COLOR = UIColor.LightGray;
-		#endif
-		
 		public  string Text { get; set;}
 		public  UIFont Font { get; set;}
 		private int _showTextOffset;
