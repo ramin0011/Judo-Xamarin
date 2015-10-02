@@ -39,6 +39,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="JudoDotNetXamarin">
+      <HintPath>..\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -225,12 +231,6 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
-      <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
-      <Name>JudoDotNetXamarin</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

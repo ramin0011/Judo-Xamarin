@@ -15,21 +15,28 @@ build:
   - src/JudoXamarin.sln
 libraries:
   android:
-    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
-    - ..\src\JudoDotNetXamarinAndroidSDK\bin\Release\JudoDotNetXamarinSDK.dll
-    - ..\lib\JudoPayDotNet.dll
+    - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
+    - ../src/JudoDotNetXamarinAndroidSDK/bin/Release/JudoDotNetXamarinSDK.dll
+    - ../lib/JudoPayDotNet.dll
   ios:
-    - ..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll
-    - ..\src\JudoDotNetXamariniOSSDK\bin\Release\JudoDotNetXamariniOSSDK.dll
-    - ..\lib\JudoPayDotNet.dll
-samples: 
+    - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
+    - ../src/JudoDotNetXamariniOSSDK32/bin/Release/JudoDotNetXamariniOSSDK32.dll
+    - ../lib/JudoPayDotNet.dll
+  ios-unified:
+    - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
+    - ../src/JudoDotNetXamariniOSSDK/bin/Release/JudoDotNetXamariniOSSDK.dll
+    - ../lib/JudoPayDotNet.dll
 samples:
-  - name: "iOS Sample"
+  - name: "iOS Unified Sample"
     path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
     configuration: "Release|iPhone"
     nobuild: true
   - name: "Android Sample"
-	path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+    path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
+    nobuild: true
+  - name: "iOS Classic Sample"
+    path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
+    configuration: "Release|iPhone"
     nobuild: true
 packages:
   mobile:

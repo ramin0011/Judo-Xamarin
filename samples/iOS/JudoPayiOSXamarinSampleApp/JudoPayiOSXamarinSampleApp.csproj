@@ -116,6 +116,7 @@
       <DependentUpon>RootView.cs</DependentUpon>
     </Compile>
     <Compile Include="MainMenuSource.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -142,11 +143,14 @@
     <Reference Include="JudoPayDotNet">
       <HintPath>..\..\..\lib\JudoPayDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\src\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="FluentValidation">
-      <HintPath>..\..\..\src\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog">
+      <HintPath>..\packages\Serilog.1.5.11\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

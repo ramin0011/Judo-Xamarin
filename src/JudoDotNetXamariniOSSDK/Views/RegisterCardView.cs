@@ -336,7 +336,15 @@ namespace JudoDotNetXamariniOSSDK
 							if (successCallback != null)
 								successCallback (paymentreceipt);
 						} else {
-							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+							var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+							if(threedDSecureReceipt!=null)
+							{
+								failureCallback (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Account requires 3D Secure but application is not configured to accept it", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
+							}
+							else
+							{
+								throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+							}
 						}
 
 					} else {
