@@ -32,14 +32,16 @@ namespace JudoDotNetXamariniOSSDK
 	[Register("SecureWebView")]
 	public partial class SecureWebView :UIWebView
 	{
-		private NSUrlRequest _caughtRequest;
+		
 		public SecureWebView(IntPtr p) : base(p)
 		{
-
+			this.LoadFinished+= delegate {
+				this.ScrollView.SetZoomScale(2.0f,true);
+			};
 			this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
+				
 				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
 				{
-
 					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
 
 					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
@@ -88,9 +90,14 @@ namespace JudoDotNetXamariniOSSDK
 					});
 
 				}
+
 				return true;
 		};
 		}
+
+
+
+
 
 		private IPaymentService _paymentService;
 		public string ReceiptID;

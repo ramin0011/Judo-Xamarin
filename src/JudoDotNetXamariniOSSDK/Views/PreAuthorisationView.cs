@@ -117,7 +117,7 @@ namespace JudoDotNetXamariniOSSDK
 				};
 			}
 			RegisterButton.Disable();
-
+			SWebView.ScrollView.MinimumZoomScale = 2.0f;
 			SWebView.SetupWebView (_paymentService, successCallback, failureCallback);
 
 		}

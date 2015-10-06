@@ -259,6 +259,7 @@ namespace JudoDotNetXamariniOSSDK
 		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
 		{
 			secureWebView.ReceiptID =	threedDSecureReceipt.ReceiptId;
+
 			NSCharacterSet allowedCharecterSet = NSCharacterSet.FromString (@":/=,!$&'()*+;[]@#?").InvertedSet;
 			NSString paReq = new NSString (threedDSecureReceipt.PaReq);
 			var encodedPaReq = paReq.CreateStringByAddingPercentEncoding (allowedCharecterSet);

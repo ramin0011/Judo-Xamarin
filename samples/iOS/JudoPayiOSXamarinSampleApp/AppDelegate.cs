@@ -62,7 +62,7 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.ApiToken = "QQunjeZ7zOgNu082";
 			configInstance.ApiSecret = "41c07ce924a8d4b85564dc4bb17f38c84dec35067a2174df59d1b38e5d83a843";
 			configInstance.JudoId = "100686906";
-
+//
 
 //			//Salatha
 //			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
