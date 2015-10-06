@@ -276,7 +276,6 @@ namespace JudoDotNetXamariniOSSDK
 
 			req.HttpMethod = "POST";
 			req.Body = postData;
-			req ["Content-Length"] = req.Body.Length.ToString ();
 
 			try {
 				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {

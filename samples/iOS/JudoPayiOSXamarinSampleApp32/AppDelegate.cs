@@ -75,31 +75,32 @@ namespace JudoPayiOSXamarinSampleApp
 			//setting for Sandnox
 			configInstance.Environment = Environment.Live;
 
-//			configInstance.ApiToken = "5tZfrXDngpvu8iGS";
-//			configInstance.ApiSecret = "da36e4c8f5805173060c934b12dcc14bb05761af310ea364cd787710b1da346b";
-//			configInstance.JudoId = "100515592";
-
-			//sailatha
-//			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-//			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-//			configInstance.JudoId = "100915867";
-
 			//praneeth
 			configInstance.ApiToken = "QQunjeZ7zOgNu082";
 			configInstance.ApiSecret = "41c07ce924a8d4b85564dc4bb17f38c84dec35067a2174df59d1b38e5d83a843";
 			configInstance.JudoId = "100686906";
 
+//			//Salatha
+//			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+//			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+//			configInstance.JudoId = "100915867";
+
+			/*
+			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
+			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
+			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
+			*/
 
 
-            /*
-            // setting up 3d secure, AVS, Amex and mestro card support
-		    JudoSDKManager.AVSEnabled = true;
-		    JudoSDKManager.AmExAccepted = true;
-		    JudoSDKManager.MaestroAccepted = true;
-            
-            // this will turn off UI mode and you can use same judo APIs to link with your own UI
-		    //JudoSDKManager.UIMode = false;
-            */
+			/*
+			// setting up 3d secure, AVS, Amex and mestro card support
+			JudoSDKManager.AVSEnabled = true;
+			JudoSDKManager.AmExAccepted = true;
+			JudoSDKManager.MaestroAccepted = true;
+
+			// this will turn off UI mode and you can use same judo APIs to link with your own UI
+			//JudoSDKManager.UIMode = false;
+			*/
 		}
 	}
 

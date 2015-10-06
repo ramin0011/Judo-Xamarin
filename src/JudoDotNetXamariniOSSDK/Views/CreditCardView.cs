@@ -316,8 +316,6 @@ namespace JudoDotNetXamariniOSSDK
 
 				SubmitButton.Disable ();
 
-
-
 				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
 					if (JudoSDKManager.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
@@ -335,7 +333,9 @@ namespace JudoDotNetXamariniOSSDK
 								// call success callback
 								if (successCallback != null)
 									successCallback (paymentreceipt);
-							} else {
+								} 
+								else 
+								{
 								var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 								if(threedDSecureReceipt!=null)
 								{

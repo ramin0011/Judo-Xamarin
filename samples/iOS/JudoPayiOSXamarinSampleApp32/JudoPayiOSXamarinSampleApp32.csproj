@@ -123,4 +123,10 @@
   <ItemGroup>
     <InterfaceDefinition Include="RootView.xib" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
+      <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
+      <Name>JudoDotNetXamarin</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@ using System.Linq;
 using JudoPayDotNet.Models;
 using System.IO;
 using System.Text;
+using HomeKit;
 
 #if__UNIFIED__
 using Foundation;
@@ -31,11 +32,14 @@ namespace JudoDotNetXamariniOSSDK
 	[Register("SecureWebView")]
 	public partial class SecureWebView :UIWebView
 	{
+		private NSUrlRequest _caughtRequest;
 		public SecureWebView(IntPtr p) : base(p)
 		{
+
 			this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
 				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
 				{
+
 					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
 
 					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
@@ -100,6 +104,14 @@ namespace JudoDotNetXamariniOSSDK
 			_successCallback = successCallback;
 			_failureCallback = failureCallback;
 		}
+
+		public override void LoadRequest (NSUrlRequest r)
+		{
+			base.LoadRequest (r);
+		}
+
+
+	
 
 	}
 }
