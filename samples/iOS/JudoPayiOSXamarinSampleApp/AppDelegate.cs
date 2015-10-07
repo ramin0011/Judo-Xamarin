@@ -68,8 +68,7 @@ namespace JudoPayiOSXamarinSampleApp
 			if (configInstance.ApiToken == null) {
 				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
 			}
-
-
+				
             /*
             // setting up 3d secure, AVS, Amex and mestro card support
 		    JudoSDKManager.AVSEnabled = true;

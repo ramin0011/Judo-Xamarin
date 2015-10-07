@@ -108,7 +108,8 @@ var cardPayment = new PaymentViewModel
       Amount = 4.5m, 
       ConsumerReference = consumerRef,
       PaymentReference = paymentReference,
-      Currency = "GBP"
+      Currency = "GBP",
+      Card = new CardViewModel()
      };
 
 //Let Judo do the rest
@@ -253,3 +254,6 @@ Our sandbox environment allows you to process test transactions while developing
 
 ### Production
 Once you're ready to go live, you can switch to our production environment. Please  note you'll need to change your API token and API secret for a Live token and secret. Only real payment cards will work in this environment.
+
+### Issues
+For a list of known issues in the current Xamarin Framework that could affect this component please see Github [Github](https://github.com/JudoPay/Judo-Xamarin)

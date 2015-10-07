@@ -18,10 +18,6 @@ libraries:
     - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
     - ../src/JudoDotNetXamarinAndroidSDK/bin/Release/JudoDotNetXamarinSDK.dll
     - ../lib/JudoPayDotNet.dll
-  ios:
-    - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
-    - ../src/JudoDotNetXamariniOSSDK32/bin/Release/JudoDotNetXamariniOSSDK32.dll
-    - ../lib/JudoPayDotNet.dll
   ios-unified:
     - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
     - ../src/JudoDotNetXamariniOSSDK/bin/Release/JudoDotNetXamariniOSSDK.dll
@@ -33,10 +29,6 @@ samples:
     nobuild: true
   - name: "Android Sample"
     path: ../samples/Android/JudoPayAndroidXamarinSampleApp.sln
-    nobuild: true
-  - name: "iOS Classic Sample"
-    path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
-    configuration: "Release|iPhone"
     nobuild: true
 packages:
   mobile:
