@@ -58,22 +58,16 @@ namespace JudoPayiOSXamarinSampleApp
 			//setting for Sandnox
 			configInstance.Environment = Environment.Live;
 
-			//praneeth live
-			configInstance.ApiToken = "QQunjeZ7zOgNu082";
-			configInstance.ApiSecret = "41c07ce924a8d4b85564dc4bb17f38c84dec35067a2174df59d1b38e5d83a843";
-			configInstance.JudoId = "100686906";
-//
-
-//			//Salatha
-//			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-//			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-//			configInstance.JudoId = "100915867";
 
 			/*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
+
+			if (configInstance.ApiToken == null) {
+				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+			}
 
 
             /*
