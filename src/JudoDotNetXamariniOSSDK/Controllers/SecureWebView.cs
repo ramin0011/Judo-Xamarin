@@ -40,7 +40,7 @@ namespace JudoDotNetXamariniOSSDK
 			};
 			this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
 				
-				if(request.Url.ToString().Equals("judo1234567890://threedsecurecallback") && ReceiptID !=null)
+				if(request.Url.ToString().Contains("threedsecurecallback") && ReceiptID !=null)
 				{
 					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
 
