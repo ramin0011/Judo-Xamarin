@@ -112,11 +112,17 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined")
             {
-                var paymentreceipt = result.Response as PaymentReceiptModel;
+				var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+				if (secureReceipt != null) {
+					var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+					failure (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Account requires 3D Secure but non UI Mode does not support this", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
+				}
+
+				var paymentReceipt = result.Response as PaymentReceiptModel;
 
                 if (success != null)
                 {
-                    success(paymentreceipt);
+                    success(paymentReceipt);
                 }
                 else
                 {
