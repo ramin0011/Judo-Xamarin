@@ -80,7 +80,7 @@
                     </state>
                 </button>
                 <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qHS-Dw-agW" customClass="SecureWebView">
-                    <rect key="frame" x="0.0" y="0.0" width="319" height="460"/>
+                    <rect key="frame" x="0.0" y="39" width="319" height="421"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
             </subviews>

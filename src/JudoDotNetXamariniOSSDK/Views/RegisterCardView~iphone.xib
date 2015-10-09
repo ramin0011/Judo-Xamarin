@@ -30,32 +30,24 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6gv-PI-yc6">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" canCancelContentTouches="NO" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6gv-PI-yc6">
                             <rect key="frame" x="0.0" y="49" width="319" height="424"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="6gv-PI-yc6" firstAttribute="top" secondItem="eXR-7d-FZQ" secondAttribute="bottom" constant="8" id="56L-b4-MJz"/>
-                        <constraint firstAttribute="trailing" secondItem="6gv-PI-yc6" secondAttribute="trailing" id="9Z6-Hz-fAC"/>
-                        <constraint firstItem="6gv-PI-yc6" firstAttribute="top" secondItem="eXR-7d-FZQ" secondAttribute="bottom" constant="8" id="AXL-gj-FLn"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="centerX" secondItem="6gv-PI-yc6" secondAttribute="centerX" id="Jz8-1y-Rsz"/>
-                        <constraint firstAttribute="bottom" secondItem="6gv-PI-yc6" secondAttribute="bottom" id="KCA-tz-9gO"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" constant="107" id="NnZ-JJ-fch"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="top" constant="20" id="T7D-Uf-hwy"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="top" constant="20" id="VqR-3w-Eo0"/>
-                        <constraint firstItem="6gv-PI-yc6" firstAttribute="top" secondItem="eXR-7d-FZQ" secondAttribute="bottom" constant="8" symbolic="YES" id="jKc-Qp-ReW"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="centerX" secondItem="Ep6-Ue-jWz" secondAttribute="centerX" id="wEC-BX-VyV"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="top" constant="20" id="wYZ-Cu-mJQ"/>
-                        <constraint firstItem="6gv-PI-yc6" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" id="xF5-fb-Pzp"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" constant="107" id="yPX-rk-bfP"/>
-                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="top" constant="20" id="zBC-5W-v8l"/>
+                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="centerX" secondItem="Ep6-Ue-jWz" secondAttribute="centerX" id="P5q-7O-u8o"/>
+                        <constraint firstAttribute="width" constant="319" id="PQ4-k2-Dj0"/>
+                        <constraint firstItem="eXR-7d-FZQ" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="top" constant="20" id="nR0-Rf-g6u"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTW-bL-0hz">
-                    <rect key="frame" x="0.0" y="524" width="319" height="44"/>
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <color key="backgroundColor" red="0.1176470588" green="0.47058823529999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="IfW-EW-TOe"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Register">
@@ -63,20 +55,23 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <webView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lw7-gX-g7H" customClass="SecureWebView">
-                    <rect key="frame" x="0.0" y="95" width="319" height="473"/>
+                <webView hidden="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lw7-gX-g7H" customClass="SecureWebView">
+                    <rect key="frame" x="0.0" y="98" width="319" height="470"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="sTW-bL-0hz" firstAttribute="leading" secondItem="Ep6-Ue-jWz" secondAttribute="leading" id="1MK-eT-wsl"/>
-                <constraint firstItem="sTW-bL-0hz" firstAttribute="trailing" secondItem="Ep6-Ue-jWz" secondAttribute="trailing" id="6bv-Yt-QdP"/>
-                <constraint firstItem="Ep6-Ue-jWz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="Jl2-hC-75O"/>
-                <constraint firstAttribute="bottom" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="45" id="huS-VU-aae"/>
-                <constraint firstItem="sTW-bL-0hz" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="1" id="muk-X8-u3f"/>
-                <constraint firstAttribute="bottom" secondItem="sTW-bL-0hz" secondAttribute="bottom" id="nJO-9U-1gG"/>
-                <constraint firstItem="Ep6-Ue-jWz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xfL-de-RWz"/>
+                <constraint firstItem="lw7-gX-g7H" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="98" id="1F8-Xl-1ha"/>
+                <constraint firstAttribute="bottom" secondItem="sTW-bL-0hz" secondAttribute="bottom" id="NEr-5a-uRO"/>
+                <constraint firstAttribute="bottom" secondItem="lw7-gX-g7H" secondAttribute="bottom" id="VTp-a2-QY2"/>
+                <constraint firstAttribute="trailing" secondItem="lw7-gX-g7H" secondAttribute="trailing" constant="1" id="f5F-gS-5Ye"/>
+                <constraint firstItem="Ep6-Ue-jWz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="hws-E9-HXh"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="iFA-3m-gs3"/>
+                <constraint firstItem="lw7-gX-g7H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mE7-sA-aP6"/>
+                <constraint firstAttribute="trailing" secondItem="sTW-bL-0hz" secondAttribute="trailing" id="mRP-NP-NYa"/>
+                <constraint firstItem="sTW-bL-0hz" firstAttribute="top" secondItem="Ep6-Ue-jWz" secondAttribute="bottom" constant="1" id="z6E-so-K2q"/>
+                <constraint firstItem="Ep6-Ue-jWz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zdI-K9-DIv"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>

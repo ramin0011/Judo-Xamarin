@@ -41,7 +41,7 @@ namespace JudoDotNetXamariniOSSDK
             // configurable bits
             BackgroundColor = UIColor.Gray;
             Alpha = 0.75f;
-            AutoresizingMask = UIViewAutoresizing.All;
+			AutoresizingMask = UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin;
 
             nfloat labelHeight = 22;
             nfloat labelWidth = Frame.Width - 20;

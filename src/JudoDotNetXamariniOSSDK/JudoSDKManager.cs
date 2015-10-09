@@ -149,6 +149,7 @@ namespace JudoDotNetXamariniOSSDK
 			} else {
                 view = UIApplication.SharedApplication.Windows[0].RootViewController.View;
                 _loadPop = new LoadingOverlay();
+				_loadPop.Frame = view.Frame;
 			}
 			view.Add (_loadPop);
 		}

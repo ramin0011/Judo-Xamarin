@@ -113,6 +113,7 @@ namespace JudoDotNetXamariniOSSDK
 			var arr = NSBundle.MainBundle.LoadNib ("SlideUpMenu", this, null);
 			var v = Runtime.GetNSObject (arr.ValueAt (0)) as UIView;
 			v.Frame = new RectangleF (0, 0, Frame.Width, Frame.Height);
+			v.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
 			AddSubview (v);
 		}
 
@@ -128,7 +129,6 @@ namespace JudoDotNetXamariniOSSDK
 			UIView piece = gesture.View;
 			nfloat yComponent = piece.Superview.Center.Y - 40f;
 			if (!ComponentExpanded || piece.Frame.Top < piece.Superview.Center.Y) {
-				//yComponent = piece.Superview.Center.Y;
 				ComponentExpanded = true;
 
 			} else {
