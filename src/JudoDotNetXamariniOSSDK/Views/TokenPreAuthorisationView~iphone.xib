@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenPreAuthorisationView">
@@ -21,7 +21,7 @@
             </userGuides>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token Pre-Authorisation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URA-3E-iqt">
-                    <rect key="frame" x="68" y="76" width="184" height="21"/>
+                    <rect key="frame" x="68" y="76" width="185" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -36,12 +36,15 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="225" id="eeg-Id-UOA"/>
+                        <constraint firstAttribute="width" constant="320" id="NkR-GG-dhV"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eY-Wj-wOO">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eY-Wj-wOO">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <color key="backgroundColor" red="0.1176470588" green="0.47058823529999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="agD-fB-CHh"/>
+                    </constraints>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Pre-Authorise">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,18 +54,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="URA-3E-iqt" secondAttribute="bottom" constant="8" symbolic="YES" id="0HP-cM-Axf"/>
-                <constraint firstItem="ccd-ES-uL9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gew-MI-BE4"/>
-                <constraint firstAttribute="trailing" secondItem="ccd-ES-uL9" secondAttribute="trailing" id="X9l-li-nZK"/>
-                <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="105" id="byG-Ci-tdP"/>
-                <constraint firstItem="ccd-ES-uL9" firstAttribute="centerX" secondItem="URA-3E-iqt" secondAttribute="centerX" id="wfj-Hb-Vxd"/>
+                <constraint firstItem="URA-3E-iqt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7wW-uZ-evf"/>
+                <constraint firstItem="URA-3E-iqt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="Bab-Sy-tYU"/>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="top" secondItem="URA-3E-iqt" secondAttribute="bottom" constant="8" symbolic="YES" id="KfH-GH-g0o"/>
+                <constraint firstItem="1eY-Wj-wOO" firstAttribute="top" secondItem="ccd-ES-uL9" secondAttribute="bottom" constant="194" id="MX9-4c-dpm"/>
+                <constraint firstAttribute="trailing" secondItem="1eY-Wj-wOO" secondAttribute="trailing" id="WiM-dn-ECh"/>
+                <constraint firstItem="1eY-Wj-wOO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YrT-RN-Dt2"/>
+                <constraint firstAttribute="bottom" secondItem="1eY-Wj-wOO" secondAttribute="bottom" id="bck-0l-FeI"/>
+                <constraint firstItem="ccd-ES-uL9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uH9-sI-IRr"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

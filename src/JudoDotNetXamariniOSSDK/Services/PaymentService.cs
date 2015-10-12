@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
@@ -155,5 +155,20 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
+		public async Task<IResult<ITransactionResult>> CompleteDSecure (string receiptID,string paRes, string md)
+		{
+			try
+			{
+				ThreeDResultModel model = new ThreeDResultModel();
+				model.PaRes = paRes;
+				Task<IResult<PaymentReceiptModel>> task = _judoAPI.ThreeDs.Complete3DSecure(receiptID,model);
+				return await task;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.InnerException.ToString());
+				return null;
+			}
+		}
 	}
 }

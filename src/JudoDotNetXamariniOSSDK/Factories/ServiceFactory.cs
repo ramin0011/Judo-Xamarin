@@ -2,6 +2,7 @@
 using JudoPayDotNet;
 using JudoDotNetXamarin;
 
+
 namespace JudoDotNetXamariniOSSDK
 {
 	internal class ServiceFactory

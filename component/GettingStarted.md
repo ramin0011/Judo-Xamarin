@@ -31,7 +31,7 @@ protected override void OnCreate( Bundle bundle )
 	JudoSDKManager.Configuration.SetApiTokenAndSecret(
 	ApiToken, 
 	ApiSecret,
-	Environment.Sandbox );
+	JudoPayDotNet.Enums.Environment.Sandbox );
 	
 	JudoSDKManager.Configuration.IsAVSEnabled = true;
 	JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
@@ -48,7 +48,7 @@ public override bool FinishedLaunching (UIApplication a,NSDictionary o)
 var configInstance = JudoConfiguration.Instance;
 
 	//setting for SandBox
-	configInstance.Environment = Environment.Sandbox;
+	configInstance.Environment = JudoPayDotNet.Enums.Environment.Sandbox;
 
 	configInstance.ApiToken =  "{ApiToken}";
 	configInstance.ApiSecret = "{ApiSecret}";
@@ -108,7 +108,8 @@ var cardPayment = new PaymentViewModel
       Amount = 4.5m, 
       ConsumerReference = consumerRef,
       PaymentReference = paymentReference,
-      Currency = "GBP"
+      Currency = "GBP",
+      Card = new CardViewModel()
      };
 
 //Let Judo do the rest
@@ -161,6 +162,11 @@ StartActivityForResult ( intent, ACTION_TOKEN_PAYMENT );
 JudoSDKManager.TokenPayment(tokenPayment, successCallback, failureCallback, this.NavigationController);
 // your code ...
 ```
+
+### 3D Secure
+
+The iOS Implementation supports 3D Secure Validation on payment,PreAuthorisation and Registering a card. This applies to UI Mode Only.
+
 
 # Customizing the judoPay UI
 
@@ -253,3 +259,6 @@ Our sandbox environment allows you to process test transactions while developing
 
 ### Production
 Once you're ready to go live, you can switch to our production environment. Please  note you'll need to change your API token and API secret for a Live token and secret. Only real payment cards will work in this environment.
+
+### Issues
+For a list of known issues in the current Xamarin Framework that could affect this component please see [Github](https://github.com/JudoPay/Judo-Xamarin)

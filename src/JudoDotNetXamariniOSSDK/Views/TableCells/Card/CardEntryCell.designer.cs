@@ -4,8 +4,31 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using Foundation;
 using System.CodeDom.Compiler;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -16,43 +39,43 @@ namespace JudoDotNetXamariniOSSDK
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView ccPlaceHolder { get; set; }
 
 		[Outlet]
-		UIKit.NSLayoutConstraint ccPLaceHolderToScrollViewConstraint { get; set; }
+		NSLayoutConstraint ccPLaceHolderToScrollViewConstraint { get; set; }
 
 		[Outlet]
-		UIKit.NSLayoutConstraint ccPlaceHolderWidthConstraint { get; set; }
+		NSLayoutConstraint ccPlaceHolderWidthConstraint { get; set; }
 
 		[Outlet]
-		UIKit.UITextView ccText { get; set; }
+		UITextView ccText { get; set; }
 
 		[Outlet]
-		UIKit.UIView containerView { get; set; }
+		UIView containerView { get; set; }
 
 		[Outlet]
-		UIKit.UIImageView creditCardImage { get; set; }
+		UIImageView creditCardImage { get; set; }
 
 		[Outlet]
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView cvTwoPlaceHolder { get; set; }
 
 		[Outlet]
-		UIKit.UITextView cvTwoText { get; set; }
+		UITextView cvTwoText { get; set; }
 
 		[Outlet]
-		UIKit.NSLayoutConstraint ExpiryGap { get; set; }
+		NSLayoutConstraint ExpiryGap { get; set; }
 
 		[Outlet]
-		UIKit.UIButton ExpiryInfoButton { get; set; }
+		UIButton ExpiryInfoButton { get; set; }
 
 		[Outlet]
 		JudoDotNetXamariniOSSDK.PlaceHolderTextView expiryPlaceHolder { get; set; }
 
 		[Outlet]
-		UIKit.UITextView expiryText { get; set; }
+		UITextView expiryText { get; set; }
 
 		[Outlet]
-		UIKit.UILabel PaymentErrorLabel { get; set; }
+		UILabel PaymentErrorLabel { get; set; }
 
 		[Outlet]
-		UIKit.UILabel StatusHelpLabel { get; set; }
+		UILabel StatusHelpLabel { get; set; }
 
 		[Outlet]
 		JudoDotNetXamariniOSSDK.FixedScrollView textScroller { get; set; }

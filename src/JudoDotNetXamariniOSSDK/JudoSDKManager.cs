@@ -1,12 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using CoreGraphics;
 using JudoDotNetXamariniOSSDK.Clients;
 using JudoDotNetXamariniOSSDK.Utils;
 using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
-using UIKit;
 using Environment = JudoPayDotNet.Enums.Environment;
+using System.Drawing;
+
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -121,10 +145,11 @@ namespace JudoDotNetXamariniOSSDK
 		internal static void ShowLoading (UIView view)
 		{
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				_loadPop = new LoadingOverlay (new CGRect ((view.Frame.Width / 2) - 75f, (view.Frame.Height / 2) - 75f, 150f, 150f), true);
+				_loadPop = new LoadingOverlay (new RectangleF ((view.Frame.Width / 2) - 75f, (view.Frame.Height / 2) - 75f, 150f, 150f), true);
 			} else {
                 view = UIApplication.SharedApplication.Windows[0].RootViewController.View;
                 _loadPop = new LoadingOverlay();
+				_loadPop.Frame = view.Frame;
 			}
 			view.Add (_loadPop);
 		}
@@ -232,6 +257,42 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
+		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
+		{
+			secureWebView.ReceiptID =	threedDSecureReceipt.ReceiptId;
+
+			NSCharacterSet allowedCharecterSet = NSCharacterSet.FromString (@":/=,!$&'()*+;[]@#?").InvertedSet;
+			NSString paReq = new NSString (threedDSecureReceipt.PaReq);
+			var encodedPaReq = paReq.CreateStringByAddingPercentEncoding (allowedCharecterSet);
+
+			NSString termUrl = new NSString ("judo1234567890://threedsecurecallback");
+			var encodedTermUrl = termUrl.CreateStringByAddingPercentEncoding (allowedCharecterSet);
+
+
+			NSUrl url = new NSUrl (threedDSecureReceipt.AcsUrl);
+
+			NSMutableUrlRequest req = new NSMutableUrlRequest (url);
+
+			NSString postString = new NSString ("MD=" + threedDSecureReceipt.Md + "&PaReq=" + encodedPaReq + "&TermUrl=" + encodedTermUrl + "");
+			NSData postData = postString.Encode (NSStringEncoding.UTF8);
+
+			req.HttpMethod = "POST";
+			req.Body = postData;
+
+			try {
+				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+					secureWebView.LoadRequest (req);
+
+					JudoSDKManager.HideLoading ();
+					secureWebView.Hidden = false;
+				});
+			} catch (Exception e) {
+				if (secureWebView._failureCallback != null) {
+					var judoError = new JudoError { Exception = e };
+					secureWebView._failureCallback (judoError);
+				}
+			}
+		}
     }
 }
 

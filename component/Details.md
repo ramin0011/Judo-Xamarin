@@ -11,6 +11,8 @@ The judoPay library lets you integrate card payments into your Xamarin project. 
 
 Learn more about judo by visiting [judopay.com](https://www.judopay.com/xamarin?utm_source=xamarin&utm_medium=partnership%20inbound%20links&utm_term=xamarin%20components%20%2D%20learn%20more%20link&utm_content=partnerships&utm_campaign=xamarin%20components%20%2D%20learn%20more%20link)
 
+Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xamarin)
+
 # Release 
 
 Version 2.0

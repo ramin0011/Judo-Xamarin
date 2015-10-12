@@ -1,12 +1,34 @@
 ﻿using System;
-using Foundation;
-using UIKit;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using CoreFoundation;
 using JudoPayDotNet.Models;
+using System.IO;
+using System.Text;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
 using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -30,6 +52,8 @@ namespace JudoDotNetXamariniOSSDK
 		public SuccessCallback successCallback { private get; set; }
 
 		public FailureCallback failureCallback { private get; set; }
+
+		//private string ReceiptID;
 
 		public PaymentViewModel cardPayment { get; set; }
 
@@ -93,8 +117,11 @@ namespace JudoDotNetXamariniOSSDK
 					this.DismissViewController (true, null);
 				};
 			}
-			SubmitButton.Disable();
+			SubmitButton.Disable ();
 			detailCell.ccTextOutlet.BecomeFirstResponder ();
+
+
+			SecureWebView.SetupWebView (_paymentService, successCallback, failureCallback);
 		}
 
 		private void OnKeyboardNotification (NSNotification notification)
@@ -124,10 +151,10 @@ namespace JudoDotNetXamariniOSSDK
 		private void ScrollTheView (bool move)
 		{
 			if (move) {
-				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 100f), true);
+				TableView.SetContentOffset (new PointF (0, 100f), true);
 				TableView.ScrollEnabled = false;
 			} else {
-				TableView.SetContentOffset (new CoreGraphics.CGPoint (0, 0), true);
+				TableView.SetContentOffset (new PointF (0, 0), true);
 
 			}
 
@@ -176,7 +203,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 
 				}
-					if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
+				if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.MaestroAccepted) {
 					if (!CellsToShow.Contains (maestroCell)) {
 						TableView.BeginUpdates ();
 						CellsToShow.Insert (row, maestroCell);
@@ -268,12 +295,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
+
 		public override void ViewDidDisappear (bool animated)
 		{
 			base.ViewWillDisappear (animated);
 
 			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				this.View.Hidden=true;
+				this.View.Hidden = true;
 			}
 		}
 
@@ -286,41 +314,60 @@ namespace JudoDotNetXamariniOSSDK
              
 				cardPayment.Card = GatherCardDetails ();
 
-				SubmitButton.Disable();
+				SubmitButton.Disable ();
 
 				_paymentService.MakePayment (cardPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
-					if (result != null && !result.HasError && result.Response.Result != "Declined") {
-						var paymentreceipt = result.Response as PaymentReceiptModel;
+					if (JudoSDKManager.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
-						if (paymentreceipt != null) {
-							// call success callback
-							if (successCallback != null)
+						var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-								successCallback (paymentreceipt);
-						} else {
-							throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-						}
+
+					JudoSDKManager.SummonThreeDSecure(threedDSecureReceipt,SecureWebView);
 
 					} else {
-						// Failure callback
-						if (failureCallback != null) {
-							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+						if (result != null && !result.HasError && result.Response.Result != "Declined") {
+							var paymentreceipt = result.Response as PaymentReceiptModel;
 
 							if (paymentreceipt != null) {
-								// send receipt even we got card declined
+								// call success callback
+								if (successCallback != null)
+									successCallback (paymentreceipt);
+								} 
+								else 
+								{
+								var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+								if(threedDSecureReceipt!=null)
+								{
+									failureCallback (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Account requires 3D Secure but application is not configured to accept it", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
+								}
+								else
+								{
+								throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+								}
+							}
 
-								failureCallback (judoError, paymentreceipt);
-							} else {
+						} else {
+							// Failure callback
+							if (failureCallback != null) {
+								var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+								var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
-								failureCallback (judoError);
+								if (paymentreceipt != null) {
+									// send receipt even we got card declined
+
+									failureCallback (judoError, paymentreceipt);
+								} else {
+
+									failureCallback (judoError);
+								}
 							}
 						}
-					}
 
-					JudoSDKManager.HideLoading ();
+						JudoSDKManager.HideLoading ();
+					}
 				});
+
 			} catch (Exception ex) {
 				JudoSDKManager.HideLoading ();
 				// Failure callback
@@ -329,7 +376,7 @@ namespace JudoDotNetXamariniOSSDK
 					failureCallback (judoError);
 				}
 			}
-
+	
 		}
 
 		void CleanOutCardDetails ()

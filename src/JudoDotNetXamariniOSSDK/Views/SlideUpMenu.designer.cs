@@ -4,36 +4,60 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using Foundation;
 using System.CodeDom.Compiler;
+
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
 	partial class SlideUpMenu
 	{
 		[Outlet]
-		UIKit.UISwitch AmexSwitch { get; set; }
+		UISwitch AmexSwitch { get; set; }
 
 		[Outlet]
-		UIKit.UIImageView ArrowIcon { get; set; }
+		UIImageView ArrowIcon { get; set; }
 
 		[Outlet]
-		UIKit.UISwitch AVSSwitch { get; set; }
+		UISwitch AVSSwitch { get; set; }
 
 		[Outlet]
-		UIKit.UISwitch MaestroSwitch { get; set; }
+		UISwitch MaestroSwitch { get; set; }
 
 		[Outlet]
-		UIKit.UISwitch NoneUISwitch { get; set; }
+		UISwitch NoneUISwitch { get; set; }
 
 		[Outlet]
-		UIKit.UISwitch RiskSwitch { get; set; }
+		UISwitch RiskSwitch { get; set; }
 
 		[Outlet]
-		UIKit.UISwitch ThreeDSwitch { get; set; }
+		UISwitch ThreeDSwitch { get; set; }
 
 		[Outlet]
-		UIKit.UIView View { get; set; }
+		UIView View { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{

@@ -1,7 +1,25 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
+#if__UNIFIED__
+using Foundation;
 using UIKit;
+using CoreFoundation;
+using CoreGraphics;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
@@ -94,11 +112,17 @@ namespace JudoDotNetXamariniOSSDK.Clients
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined")
             {
-                var paymentreceipt = result.Response as PaymentReceiptModel;
+				var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+				if (secureReceipt != null) {
+					var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+					failure (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Account requires 3D Secure but non UI Mode does not support this", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
+				}
+
+				var paymentReceipt = result.Response as PaymentReceiptModel;
 
                 if (success != null)
                 {
-                    success(paymentreceipt);
+                    success(paymentReceipt);
                 }
                 else
                 {

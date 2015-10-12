@@ -1,11 +1,30 @@
 ﻿using System;
-using UIKit;
-using Foundation;
-
-using CoreGraphics;
-using ObjCRuntime;
 using System.Drawing;
 using System.Collections.Generic;
+
+#if__UNIFIED__
+using Foundation;
+using UIKit;
+using CoreFoundation;
+using CoreAnimation;
+using CoreGraphics;
+using ObjCRuntime;
+// Mappings Unified CoreGraphic classes to MonoTouch classes
+using RectangleF = global::CoreGraphics.CGRect;
+using SizeF = global::CoreGraphics.CGSize;
+using PointF = global::CoreGraphics.CGPoint;
+#else
+using MonoTouch.UIKit;
+using MonoTouch.Foundation;
+using MonoTouch.CoreFoundation;
+using MonoTouch.CoreGraphics;
+using MonoTouch.ObjCRuntime;
+using MonoTouch.CoreAnimation;
+// Mappings Unified types to MonoTouch types
+using nfloat = global::System.Single;
+using nint = global::System.Int32;
+using nuint = global::System.UInt32;
+#endif
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -93,11 +112,12 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			var arr = NSBundle.MainBundle.LoadNib ("SlideUpMenu", this, null);
 			var v = Runtime.GetNSObject (arr.ValueAt (0)) as UIView;
-			v.Frame = new CGRect (0, 0, Frame.Width, Frame.Height);
+			v.Frame = new RectangleF (0, 0, Frame.Width, Frame.Height);
+			v.AutoresizingMask = UIViewAutoresizing.FlexibleMargins;
 			AddSubview (v);
 		}
 
-		public override void Draw (CGRect rect)
+		public override void Draw (RectangleF rect)
 		{
 			base.Draw (rect);
 
@@ -109,7 +129,6 @@ namespace JudoDotNetXamariniOSSDK
 			UIView piece = gesture.View;
 			nfloat yComponent = piece.Superview.Center.Y - 40f;
 			if (!ComponentExpanded || piece.Frame.Top < piece.Superview.Center.Y) {
-				//yComponent = piece.Superview.Center.Y;
 				ComponentExpanded = true;
 
 			} else {
@@ -122,9 +141,9 @@ namespace JudoDotNetXamariniOSSDK
 				delay: 0,
 				options: UIViewAnimationOptions.TransitionNone,
 				animation: () => {
-					piece.Frame = new CGRect (new CGPoint (piece.Frame.X, yComponent), piece.Frame.Size);
+					piece.Frame = new RectangleF (new PointF (piece.Frame.X, yComponent), piece.Frame.Size);
 
-					gesture.SetTranslation (new CGPoint (0, 0), piece.Superview);
+					gesture.SetTranslation (new PointF (0, 0), piece.Superview);
 				},
 				completion: () => {
 					
@@ -137,9 +156,9 @@ namespace JudoDotNetXamariniOSSDK
 			var yComponent = piece.Superview.Frame.Height - 40f;
 			ComponentExpanded = false;
 
-			piece.Frame = new CGRect (new CGPoint (piece.Frame.X, yComponent), piece.Frame.Size);
+			piece.Frame = new RectangleF (new PointF (piece.Frame.X, yComponent), piece.Frame.Size);
 
-			panGesture.SetTranslation (new CGPoint (0, 0), piece.Superview);
+			panGesture.SetTranslation (new PointF (0, 0), piece.Superview);
 
 			this.Draw (this.Frame);
 		}
@@ -153,11 +172,11 @@ namespace JudoDotNetXamariniOSSDK
 
 			if (gesture.State == UIGestureRecognizerState.Began || gesture.State == UIGestureRecognizerState.Changed) {
 
-				CGPoint translation = gesture.TranslationInView (piece.Superview);
+				PointF translation = gesture.TranslationInView (piece.Superview);
 
-				piece.Center = new CGPoint (piece.Center.X, piece.Center.Y + translation.Y);
+				piece.Center = new PointF (piece.Center.X, piece.Center.Y + translation.Y);
 				 
-				gesture.SetTranslation (new CGPoint (0, 0), piece.Superview);
+				gesture.SetTranslation (new PointF (0, 0), piece.Superview);
 
 			} else if (gesture.State == UIGestureRecognizerState.Ended) {
 				SlideAndFix (gesture);
@@ -168,10 +187,10 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			if (gestureRecognizer.State == UIGestureRecognizerState.Began) {
 				UIView piece = gestureRecognizer.View;
-				CGPoint locationInView = gestureRecognizer.LocationInView (piece);
-				CGPoint locationInSuperview = gestureRecognizer.LocationInView (piece.Superview);
+				PointF locationInView = gestureRecognizer.LocationInView (piece);
+				PointF locationInSuperview = gestureRecognizer.LocationInView (piece.Superview);
 
-				piece.Layer.AnchorPoint = new CGPoint (locationInView.X / piece.Bounds.Size.Width, locationInView.Y / piece.Bounds.Size.Height);			
+				piece.Layer.AnchorPoint = new PointF (locationInView.X / piece.Bounds.Size.Width, locationInView.Y / piece.Bounds.Size.Height);			
 				piece.Center = locationInSuperview;
 			}
 		}
@@ -198,10 +217,10 @@ namespace JudoDotNetXamariniOSSDK
 				UIColor.Black.SetStroke ();
 				var currentPath = new CGPath ();
 	
-				currentPath.AddLines (new CGPoint[] {
-					new CGPoint (10, 20),
-					new CGPoint (16, 10), 
-					new CGPoint (22, 20)
+				currentPath.AddLines (new PointF[] {
+					new PointF (10, 20),
+					new PointF (16, 10), 
+					new PointF (22, 20)
 				});
 				currentPath.CloseSubpath ();
 				context.AddPath (currentPath);    
