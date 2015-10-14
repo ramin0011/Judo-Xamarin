@@ -24,7 +24,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal class UIMethods : IJudoSDKApi
+	internal class UIMethods : IJudoSDKApi
     {
         private readonly ViewLocator _viewLocator;
         public UIMethods(ViewLocator viewLocator)

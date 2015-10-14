@@ -103,7 +103,7 @@ private void FailurePayment(JudoError error, PaymentReceiptModel receipt)
      }
 
 //Pass through the payment you would like to facilitate
-var cardPayment = new PaymentViewModel
+var paymentViewModel = new PaymentViewModel
      {
       Amount = 4.5m, 
       ConsumerReference = consumerRef,
@@ -113,12 +113,36 @@ var cardPayment = new PaymentViewModel
      };
 
 //Let Judo do the rest
-JudoSDKManager.Payment(cardPayment, successCallback, failureCallback, this.NavigationController);
+JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.NavigationController);
 
 ```
 ####Note: 
 This callback should be non-blocking
 
+### PreAuthorise card
+
+You can PreAuthorise an amount on a consumer's card with our SDK in order to settle in the future. You can invoke this method, with the below:
+
+#####Android
+```csharp
+var intent = JudoSDKManager.UIMethods.PreAuth (this, MY_JUDO_ID,
+											   currency, amount,
+											    paymentReference,
+											    consumerReference,
+											    token, null,
+											    preAuth_consumerToken);
+
+StartActivityForResult ( intent, ACTION_PREAUTH );
+
+// your code ...
+```
+
+#####iOS
+```csharp
+JudoSDKManager.PreAuth(paymentViewModel, successCallback, failureCallback, this.NavigationController);
+//set the amount to the amount of money you wish to preAuthorise the card against
+// your code ...
+```
 ### Register card
 
 You can register a consumer's card with our SDK in order to process future payments. You can invoke this method, with the below:
@@ -134,7 +158,8 @@ StartActivityForResult ( intent, ACTION_REGISTER_CARD );
 
 #####iOS
 ```csharp
-JudoSDKManager.RegisterCard(cardPayment, successCallback, failureCallback, this.NavigationController);
+JudoSDKManager.RegisterCard(paymentViewModel, successCallback, failureCallback, this.NavigationController);
+//set amount in paymentViewModel to 0.00, no money should be charged through card Registration
 // your code ...
 ```
 
@@ -232,7 +257,7 @@ JudoSDKManager.UIMode = false;
 
 var cardViewModel =new CardViewModel() { CardNumber = cardNumber, CV2 = cv2, ExpireDate = expiryDate, PostCode = addressPostCode, CountryCode = ISO3166CountryCodes.UK}
 
-var cardPayment = new PaymentViewModel
+var paymentViewModel = new PaymentViewModel
             {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
@@ -241,7 +266,7 @@ var cardPayment = new PaymentViewModel
                 // Non-UI API needs to pass card detail
                 Card =cardViewModel
             };
- JudoSDKManager.Payment(cardPayment, successCallback, failureCallback, this.NavigationController);            
+ JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.NavigationController);            
  
 // your code ...
 ```

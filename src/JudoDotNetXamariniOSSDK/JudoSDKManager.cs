@@ -6,6 +6,7 @@ using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
 using Environment = JudoPayDotNet.Enums.Environment;
 using System.Drawing;
+using PassKit;
 
 
 #if__UNIFIED__
@@ -67,6 +68,20 @@ namespace JudoDotNetXamariniOSSDK
         /// Enable/Disable Mestro card support
         /// </summary>
 		public static bool MaestroAccepted { get; set; }
+
+		public static bool ApplePayAvailable{get{
+				string[] paymentNetworks = new string[] {
+					"PKPaymentNetworkAmex",
+					"PKPaymentNetworkMasterCard",
+					"PKPaymentNetworkVisa"
+				};
+				if (PKPaymentAuthorizationViewController.CanMakePayments &&PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+					return true;
+				} else {
+
+					return false;
+				}		
+			}}
 
         /// <summary>
         /// Enable/Disable risk signal to pass fruad monitoring device data
@@ -255,6 +270,14 @@ namespace JudoDotNetXamariniOSSDK
 			} else {
                 _judoSdkApi.RegisterCard(innerModel, success, failure, navigationController);
 			}
+		}
+
+		public static void MakeApplePayment (PaymentViewModel payment, SuccessCallback success, FailureCallback failure)
+		{
+			var innerModel = payment.Clone ();
+
+			_judoSdkApi.ApplePayment (innerModel, success, failure);
+
 		}
 
 		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)

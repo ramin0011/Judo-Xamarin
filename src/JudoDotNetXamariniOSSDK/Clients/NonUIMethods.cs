@@ -23,7 +23,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal class NonUIMethods : IJudoSDKApi
+	internal class NonUIMethods : IJudoSDKApi
     {
         private readonly IPaymentService _paymentService;
 

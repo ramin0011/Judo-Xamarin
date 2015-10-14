@@ -146,6 +146,11 @@
       <DependentUpon>RegisterCardView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SecureWebView.cs" />
+    <Compile Include="Clients\ApplePayMethods.cs" />
+    <Compile Include="Services\IApplePayService.cs" />
+    <Compile Include="Services\ApplePayService.cs" />
+    <Compile Include="ViewModels\ApplePayViewModel.cs" />
+    <Compile Include="Controllers\JudoPKPaymentViewControllerDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

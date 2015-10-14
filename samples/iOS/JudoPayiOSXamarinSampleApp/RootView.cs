@@ -145,6 +145,17 @@ namespace JudoPayiOSXamarinSampleApp
 			buttonDictionary.Add ("Register a Card", delegate {
 				JudoSDKManager.RegisterCard (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
 			});
+			if (JudoSDKManager.ApplePayAvailable) {
+
+				buttonDictionary.Add ("Make a ApplePay Payment", () => {
+					JudoSDKManager.MakeApplePayment (GetCardViewModel (), successCallback, failureCallback);
+				});
+
+				buttonDictionary.Add ("Make a ApplePay PreAuthorise", () => {
+					JudoSDKManager.MakeApplePreAuth (GetCardViewModel (), successCallback, failureCallback);
+				});
+
+			}
 
 			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
 			ButtonTable.Source = menuSource;
