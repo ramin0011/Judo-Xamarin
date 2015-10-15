@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using CoreFoundation;
 using CoreGraphics;
 using JudoPayDotNet.Models;
+using PassKit;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -148,11 +149,11 @@ namespace JudoPayiOSXamarinSampleApp
 			if (JudoSDKManager.ApplePayAvailable) {
 
 				buttonDictionary.Add ("Make a ApplePay Payment", () => {
-					JudoSDKManager.MakeApplePayment (GetCardViewModel (), successCallback, failureCallback);
+					JudoSDKManager.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback,this.NavigationController);
 				});
 
 				buttonDictionary.Add ("Make a ApplePay PreAuthorise", () => {
-					JudoSDKManager.MakeApplePreAuth (GetCardViewModel (), successCallback, failureCallback);
+					JudoSDKManager.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback,this.NavigationController);
 				});
 
 			}
@@ -192,6 +193,40 @@ namespace JudoPayiOSXamarinSampleApp
 				}
 			};
 			return cardPayment;
+		}
+
+		ApplePayViewModel GetApplePayViewModel ()
+		{
+			var summaryItems = new PKPaymentSummaryItem[] {
+				new PKPaymentSummaryItem ()
+				{
+					Amount= new NSDecimalNumber("5.00"),
+					Label =@"Judo Burrito"
+
+				},
+				new PKPaymentSummaryItem ()
+				{
+					Amount= new NSDecimalNumber("1.00"),
+					Label =@"Extra Guac"
+
+				}
+			};
+			
+			var applePayment = new ApplePayViewModel {
+				
+				CurrencyCode = (NSString)"GBP",
+				CountryCode = (NSString)@"GB",
+				SupportedNetworks = new NSString[3]{(NSString)"PKPaymentNetworkVisa",(NSString)"PKPaymentNetworkMasterCard",(NSString)"PKPaymentNetworkAmex"},
+				SummaryItems =summaryItems,
+				TotalSummaryItem =  new PKPaymentSummaryItem ()
+				{
+					Amount= new NSDecimalNumber("6.00"),
+					Label =@"Pay El Judorito"
+
+				},
+				MerchantIdentifier = (NSString)"merchant.com.judopay.dev.Xamarin"
+			};
+			return applePayment;
 		}
 
 		public override void ViewWillDisappear (bool animated)

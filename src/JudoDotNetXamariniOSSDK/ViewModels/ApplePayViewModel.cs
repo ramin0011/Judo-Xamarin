@@ -30,7 +30,7 @@ namespace JudoDotNetXamariniOSSDK
 		public PKPaymentSummaryItem[] Basket {
 			get{ 
 				if (SummaryItems.Length == 0) {
-					return new PKPaymentSummaryItem[0] ();
+					return new PKPaymentSummaryItem[0];
 				} else {
 					var _basket = SummaryItems.ToList ();
 					if (TotalSummaryItem != null) {

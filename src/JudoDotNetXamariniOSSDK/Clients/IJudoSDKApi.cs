@@ -33,6 +33,6 @@ namespace JudoDotNetXamariniOSSDK.Clients
         void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
 
-		void ApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+		void ApplePayment (ApplePayViewModel payment, ApplePayCallBack appleCallBack, FailureCallback failure, UINavigationController navigationController);
     }
 }

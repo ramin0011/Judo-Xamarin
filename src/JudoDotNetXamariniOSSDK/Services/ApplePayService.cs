@@ -17,24 +17,24 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			_judoAPI = judoAPI;
 		}
-			
-		public async Task<IResult<ITransactionResult>> MakeApplePayment (ApplePayViewModel payModel,UINavigationController controller)
+
+		public  void MakeApplePayment (ApplePayViewModel payment, ApplePayCallBack appleCallback, UINavigationController controller)
 		{
 			try
 			{
 				PKPaymentRequest request = new PKPaymentRequest();
 
 				// identify the currency you wish to process the transaction in. This currency must be supported by your judo account.
-				request.CurrencyCode = payModel.CurrencyCode;
+				request.CurrencyCode = payment.CurrencyCode;
 
 				// This identifies the country where the transaction will be processed, for judo this will be "GB"
-				request.CountryCode = payModel.CountryCode;
+				request.CountryCode = payment.CountryCode;
 
 				// Identify the type of Apple Pay transaction you want to process, this will always be PKMerchantCapability3DS
-				request.MerchantCapabilities = payModel.MerchantCapabilities;
+				request.MerchantCapabilities = payment.MerchantCapabilities;
 
 				// add the card networks you can accept, this will usually be either @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard] or @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]
-				request.SupportedNetworks = payModel.SupportedNetworks;
+				request.SupportedNetworks = payment.SupportedNetworks;
 
 				// Next you need to include a summary of the user's basket, including total amount payable as the last line.
 
@@ -46,11 +46,11 @@ namespace JudoDotNetXamariniOSSDK
 				//PKPaymentSummaryItem *total = [self paymentSummaryItemWithLabel:@"Awesome Co" amount:16.80f];
 
 				//NSArray *basket = @[lineItem1, vatLine, total];
-				request.PaymentSummaryItems =payModel.Basket;
+				request.PaymentSummaryItems =payment.Basket;
 
-	
+
 				// set the merchant ID you wish to use (useful when you have multiple merchant IDs in a single app)
-				request.MerchantIdentifier =payModel.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overattion
+				request.MerchantIdentifier =payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overattion
 
 
 				// Finally create the Apple Pay view controller show it to the user
@@ -59,34 +59,33 @@ namespace JudoDotNetXamariniOSSDK
 
 				// Set a delegate to handle the processing once the user has approved payment in the Apple Pay sleeve.
 				pkController.DidAuthorizePayment  +=  delegate(object sender, PKPaymentAuthorizationEventArgs args) {
-			
-			    ExitDelegate(args.Payment);
-								
+
+					ExitDelegate(args.Payment,appleCallback);
+
 				};
 
 				controller.PresentViewController(pkController,true,null);
-				
 
-				 
+
+
 			}
 			catch(Exception e){
 				Console.WriteLine(e.InnerException.ToString());
-			//	return null;
 			}
-		}
+		}			
+	
 
-		async void  ExitDelegate (PKPayment payment)
+		 void  ExitDelegate (PKPayment payment, ApplePayCallBack applePayCallback)
 		{
-			Task<IResult<ITransactionResult>> task =  _judoAPI. Payments.Create(payment);
-			return await task;
+			applePayCallback (payment);
+//			Task<IResult<ITransactionResult>> task =  _judoAPI. Payments.Create(payment);
+//			return await task;
 		}
 
-
-		public Task<IResult<ITransactionResult>> ApplePreAuthoriseCard (ApplePayViewModel payment,UINavigationController controller)
+		public void ApplePreAuthoriseCard (ApplePayViewModel payment, ApplePayCallBack appleCallback, UINavigationController controller)
 		{
 			throw new NotImplementedException ();
 		}
-
 	}
 }
 

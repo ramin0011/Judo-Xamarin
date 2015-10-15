@@ -39,14 +39,17 @@ namespace JudoDotNetXamariniOSSDK
     /// Callback for success transaction, this should be known blocking call
     /// </summary>
     public delegate void SuccessCallback(PaymentReceiptModel receipt);
+	
+	public delegate void ApplePayCallBack(PKPayment payment);
 
     /// <summary>
     /// Callback for fail transaction, this should be known blocking call
     /// </summary>
     public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
-
 	public class JudoSDKManager
 	{
+		
+		
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName ("Courier", 17.0f);
 
         /// <summary>
@@ -275,10 +278,18 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
-			//var innerModel = payment.Clone ();
+			ApplePayCallBack appleCallBack  = (PKPayment pkPayment)  => {
+				
+				//success();
+			};
 
-			_judoSdkApi.ApplePayment(payment, success, failure,navigationController);
+			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController);
 
+		}
+
+		public static void MakeApplePreAuth (ApplePayViewModel paymentViewModel, SuccessCallback successCallback, FailureCallback failureCallback, UINavigationController navigationController)
+		{
+			throw new NotImplementedException ();
 		}
 
 		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
