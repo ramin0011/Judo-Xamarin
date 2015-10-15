@@ -5,6 +5,7 @@ using PassKit;
 using UIKit;
 using System.Net.Cache;
 using JudoPayDotNet;
+using System.Runtime.Remoting.Channels;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -57,11 +58,10 @@ namespace JudoDotNetXamariniOSSDK
 				var pkController = new PKPaymentAuthorizationViewController(request);
 
 				// Set a delegate to handle the processing once the user has approved payment in the Apple Pay sleeve.
-				pkController.DidAuthorizePayment  += async delegate (PKPaymentAuthorizationViewController parentController, PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
-				{
+				pkController.DidAuthorizePayment  +=  delegate(object sender, PKPaymentAuthorizationEventArgs args) {
+			
+			    ExitDelegate(args.Payment);
 								
-					Task<IResult<ITransactionResult>> task =  _judoAPI. Payments.Create(payment);
-					return await task;
 				};
 
 				controller.PresentViewController(pkController,true,null);
@@ -71,15 +71,22 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			catch(Exception e){
 				Console.WriteLine(e.InnerException.ToString());
-				return null;
+			//	return null;
 			}
 		}
 
-		public System.Threading.Tasks.Task<JudoPayDotNet.Models.IResult<JudoPayDotNet.Models.ITransactionResult>> ApplePreAuthoriseCard (PaymentViewModel payment)
+		async void  ExitDelegate (PKPayment payment)
+		{
+			Task<IResult<ITransactionResult>> task =  _judoAPI. Payments.Create(payment);
+			return await task;
+		}
+
+
+		public Task<IResult<ITransactionResult>> ApplePreAuthoriseCard (ApplePayViewModel payment,UINavigationController controller)
 		{
 			throw new NotImplementedException ();
 		}
-			
+
 	}
 }
 

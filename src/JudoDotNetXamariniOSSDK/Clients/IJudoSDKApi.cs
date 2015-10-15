@@ -25,12 +25,14 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal interface IJudoSDKApi : ApplePayMethods
+    internal interface IJudoSDKApi 
     {
-        void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+		void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+
+		void ApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
     }
 }

@@ -2,21 +2,22 @@
 using System.Dynamic;
 using PassKit;
 using System.Linq;
+using Foundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
 	public class ApplePayViewModel
 	{
-		public String CurrencyCode  { get; set;}
+		public NSString CurrencyCode  { get; set;}
 
-		public String CountryCode  { get; set;}
+		public NSString CountryCode  { get; set;}
 
-		public String MerchantCapabilities  { get {return"PKMerchantCapability3DS";}}
+		public PKMerchantCapability MerchantCapabilities  { get {return PKMerchantCapability.ThreeDS;}}
 
 		//[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard] or @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]
 	
-		public String[] SupportedNetworks { get; set;}
-		# Next you need to include a summary of the user's basket, including total amount payable as the last line.
+		public NSString[] SupportedNetworks { get; set;}
+		//# Next you need to include a summary of the user's basket, including total amount payable as the last line.
 
 		public PKPaymentSummaryItem[] SummaryItems {get;set;}
 
@@ -41,7 +42,7 @@ namespace JudoDotNetXamariniOSSDK
 				}
 		}
 
-		public String MerchantIdentifier  { get; set;}
+		public NSString MerchantIdentifier  { get; set;}
 
 	}
 }

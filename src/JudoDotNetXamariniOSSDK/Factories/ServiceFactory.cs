@@ -14,6 +14,11 @@ namespace JudoDotNetXamariniOSSDK
 			return  new PaymentService(judoApi);
 		}
 
+		public IApplePayService GetApplePaymentService ()
+		{
+			var judoApi = JudoPaymentsFactory.Create(JudoConfiguration.Instance.Environment, JudoConfiguration.Instance.ApiToken, JudoConfiguration.Instance.ApiSecret);
+			return  new ApplePayService(judoApi);
+		}
 	}
 
 }

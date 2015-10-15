@@ -70,12 +70,12 @@ namespace JudoDotNetXamariniOSSDK
 		public static bool MaestroAccepted { get; set; }
 
 		public static bool ApplePayAvailable{get{
-				string[] paymentNetworks = new string[] {
-					"PKPaymentNetworkAmex",
-					"PKPaymentNetworkMasterCard",
-					"PKPaymentNetworkVisa"
+				NSString[] paymentNetworks = new NSString[] {
+					(NSString)"PKPaymentNetworkAmex",
+					(NSString)"PKPaymentNetworkMasterCard",
+					(NSString)"PKPaymentNetworkVisa"
 				};
-				if (PKPaymentAuthorizationViewController.CanMakePayments &&PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
 					return true;
 				} else {
 
@@ -133,6 +133,7 @@ namespace JudoDotNetXamariniOSSDK
         private static IJudoSDKApi _judoSdkApi;
 		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
 		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
+		private static readonly IApplePayService ApplePaymentService = ServiceFactory.GetApplePaymentService ();
 		private static LoadingOverlay _loadPop;
 
 		private static bool _uiMode { get; set; }
@@ -145,9 +146,9 @@ namespace JudoDotNetXamariniOSSDK
 			get { return _uiMode; }
 			set {
 			    if (value)
-			        _judoSdkApi = new UIMethods(new ViewLocator(PaymentService));
+					_judoSdkApi = new UIMethods(ApplePaymentService,new ViewLocator(PaymentService));
 			    else
-			        _judoSdkApi = new NonUIMethods(PaymentService);
+					_judoSdkApi = new NonUIMethods(ApplePaymentService,PaymentService);
 
 			    _uiMode = value;
 			}
@@ -272,11 +273,11 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public static void MakeApplePayment (PaymentViewModel payment, SuccessCallback success, FailureCallback failure)
+		public static void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
-			var innerModel = payment.Clone ();
+			//var innerModel = payment.Clone ();
 
-			_judoSdkApi.ApplePayment (innerModel, success, failure);
+			_judoSdkApi.ApplePayment(payment, success, failure,navigationController);
 
 		}
 
