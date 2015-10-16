@@ -3,14 +3,14 @@
 </p>
 #Judo-Xamarin
 
-Mobile Payments Xamarin SDK
+Secure in-app payments SDK for Xamarin
 
 
 The JudoPay library lets you integrate card payments into your Xamarin project. It is built to be mobile first with ease of integration in mind. Judo's SDK enables a faster, simpler and more secure payment experience within your app. Build trust and user loyalty in your app with our secure and intuitive UX.
 
 ####Sell more Risk less
 
-## Requirments
+## Requirements
 
 Xamarin developer Licence
 
@@ -21,14 +21,14 @@ Thats it!
 ## Installation
 
 ####[Xamarin Component Store]( https://components.xamarin.com/view/judopay-xamarin-sdk "Component Store")
--   Within Xamaring Studio- Project/Get More Components- Search "JudoPay" and add to app
+-   Within Xamarin Studio- Project/Get More Components- Search "JudoPay" and add to app
 -   Click download from the above link and unzip the .Xam file and run the install command using the xamarin-component.exe above
   -  mono xamarin-component.exe install /path/to/your.xam (mac)
   -  xamarin-component.exe install /path/to/your.xam (windows)
 -   You can also download the component .xam from this page component/judopay-xamarin-sdk-2.0.xam
 
 ####Here!
--  Fork the SDK and build it yorself. It won't bite
+-  Fork the SDK and build it yourself. It won't bite.
 -  Again download the component .xam from this page component/judopay-xamarin-sdk-2.0.xam
 
 ####Nuget
@@ -135,11 +135,11 @@ This callback should be non-blocking
 ## TroubleShooting
 
 -  For further SDK reference please visit our SDK [docs]( https://www.judopay.com/docs/ "Docs")
--  Raise an issue here- if your having problems lets us know! This will be an active and evolving SDK and helping you helps us
+-  Raise an issue here - if your having problems let us know! This will be an active and evolving SDK and helping you helps us.
 
 ## FAQ
 
--  [Maybe somebody got their answer]( http://help.judopayments.com/ "Help")
+-  [Check our FAQ page]( http://help.judopayments.com/ "Help")
 -  [Email our support Team]( http://help.judopayments.com/customer/portal/emails/new "Support")
 -  Contact one of our Maintainers
 
