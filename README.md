@@ -1,7 +1,7 @@
 <p>
   <img  align="right" src="https://github.com/JudoPay/Judo-Xamarin/blob/master/resources/judo_logo.png?raw=true" alt="Judo"/>
 </p>
-#Judo-Xamarin
+<h1>Judo-Xamarin</h1>
 
 Mobile Payments Xamarin SDK
 
