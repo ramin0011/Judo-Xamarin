@@ -3,16 +3,16 @@
 </p>
 #Judo-Xamarin
 
-Secure in-app payments SDK for Xamarin
+Secure in-app payments SDK for Xamarin.
 
 
-The JudoPay library lets you integrate card payments into your Xamarin project. It is built to be mobile first with ease of integration in mind. Judo's SDK enables a faster, simpler and more secure payment experience within your app. Build trust and user loyalty in your app with our secure and intuitive UX.
+The judoPay library lets you integrate card payments into your Xamarin project. It is built to be mobile first with ease of integration in mind. Judo's SDK enables a faster, simpler and more secure payment experience within your app. Build trust and user loyalty in your app with our secure and intuitive UX.
 
-####Sell more Risk less
+####Sell more. Risk less.
 
 ## Requirements
 
-Xamarin developer Licence
+Xamarin developer licence
 
 [JudoPay Account]( https://www.judopay.com/docs/ "JudoPay")
 
@@ -21,11 +21,11 @@ Thats it!
 ## Installation
 
 ####[Xamarin Component Store]( https://components.xamarin.com/view/judopay-xamarin-sdk "Component Store")
--   Within Xamarin Studio- Project/Get More Components- Search "JudoPay" and add to app
+-   Within Xamarin Studio- Project/Get More Components - Search "JudoPay" and add to app
 -   Click download from the above link and unzip the .Xam file and run the install command using the xamarin-component.exe above
   -  mono xamarin-component.exe install /path/to/your.xam (mac)
   -  xamarin-component.exe install /path/to/your.xam (windows)
--   You can also download the component .xam from this page component/judopay-xamarin-sdk-2.0.xam
+  -  You can also download the component .xam from this page component/judopay-xamarin-sdk-2.0.xam
 
 ####Here!
 -  Fork the SDK and build it yourself. It won't bite.
@@ -135,12 +135,12 @@ This callback should be non-blocking
 ## TroubleShooting
 
 -  For further SDK reference please visit our SDK [docs]( https://www.judopay.com/docs/ "Docs")
--  Raise an issue here - if your having problems let us know! This will be an active and evolving SDK and helping you helps us.
+-  Raise an issue here - if you're having problems let us know! This will be an active and evolving SDK, and helping you helps us.
 
 ## FAQ
 
 -  [Check our FAQ page]( http://help.judopayments.com/ "Help")
--  [Email our support Team]( http://help.judopayments.com/customer/portal/emails/new "Support")
+-  [Email our support team]( http://help.judopayments.com/customer/portal/emails/new "Support")
 -  Contact one of our Maintainers
 
 ## Maintainers
@@ -160,19 +160,19 @@ Have your say, If you want a feature maybe we can work together on it?
 ## Release Notes
 
 ####V2.0 iOS support
--  Full Suite of Judo services are now available to Xamarin iOS Developers
+-  Full suite of judo services are now available to Xamarin iOS developers
   -  Payments
-  -  preAuth
+  -  pre-Auth
   -  Token Payments
   -  Card Registry
--  3DSecure support for Xamarion iOS
+-  3D Secure support for Xamarin iOS
 -  64bit component support
 -  iPad form factor support
 
 ## Known Issues
 
--  Some Implementations of 3dSecure require subsequent reloads of JudoPay 3dSecure viewer, your application may block this
-add the key below to the info.plist of your app if 3dSecure view does not load properly
+-  Some implementations of 3D Secure require subsequent reloads of judoPay 3D Secure viewer, your application may block this,
+add the key below to the info.plist of your app if 3D Secure view does not load properly.
 ```
 <key>NSAppTransportSecurity</key> 
 <dict> 
