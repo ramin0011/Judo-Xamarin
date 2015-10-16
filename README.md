@@ -1,9 +1,14 @@
-# Judo-Xamarin
+<p>
+  <img  align="right" src="https://github.com/JudoPay/Judo-Xamarin/blob/master/resources/judo_logo.png?raw=true" alt="Judo"/>
+</p>
+#Judo-Xamarin
+
 Mobile Payments Xamarin SDK
+
 
 The JudoPay library lets you integrate card payments into your Xamarin project. It is built to be mobile first with ease of integration in mind. Judo's SDK enables a faster, simpler and more secure payment experience within your app. Build trust and user loyalty in your app with our secure and intuitive UX.
 
-####Sell More Risk Less
+####Sell more Risk less
 
 ## Requirments
 
