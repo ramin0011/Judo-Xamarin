@@ -31,7 +31,7 @@ namespace JudoDotNetXamariniOSSDK
 				request.CountryCode = payment.CountryCode;
 
 				// Identify the type of Apple Pay transaction you want to process, this will always be PKMerchantCapability3DS
-				request.MerchantCapabilities = payment.MerchantCapabilities;
+				request.MerchantCapabilities = (PKMerchantCapability)payment.MerchantCapabilities;
 
 				// add the card networks you can accept, this will usually be either @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard] or @[PKPaymentNetworkVisa, PKPaymentNetworkMasterCard, PKPaymentNetworkAmex]
 				request.SupportedNetworks = payment.SupportedNetworks;
@@ -56,6 +56,8 @@ namespace JudoDotNetXamariniOSSDK
 				// Finally create the Apple Pay view controller show it to the user
 				//self.apController = [[PKPaymentAuthorizationViewController alloc]initWithPaymentRequest: request];
 				var pkController = new PKPaymentAuthorizationViewController(request);
+
+
 
 				// Set a delegate to handle the processing once the user has approved payment in the Apple Pay sleeve.
 				pkController.DidAuthorizePayment  +=  delegate(object sender, PKPaymentAuthorizationEventArgs args) {

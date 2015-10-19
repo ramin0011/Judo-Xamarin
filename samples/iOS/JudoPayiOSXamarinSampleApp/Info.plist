@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>JudoPayiOSXamarinSampleApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.JudoPayiOSXamarinSampleApp</string>
+	<string>com.JudoPay.JudoPayiOSXamarinSampleApp</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
