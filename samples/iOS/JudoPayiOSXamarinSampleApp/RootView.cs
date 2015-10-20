@@ -214,17 +214,18 @@ namespace JudoPayiOSXamarinSampleApp
 			
 			var applePayment = new ApplePayViewModel {
 				
-				CurrencyCode = (NSString)"GBP",
-				CountryCode = (NSString)@"GB",
-				SupportedNetworks = new NSString[3]{(NSString)"PKPaymentNetworkVisa",(NSString)"PKPaymentNetworkMasterCard",(NSString)"PKPaymentNetworkAmex"},
+				CurrencyCode = new NSString("GBP"),
+				CountryCode = new NSString(@"GB"),
+				SupportedNetworks = new NSString[3]{new NSString("Visa"),new NSString("MasterCard"),new NSString("Amex")},
 				SummaryItems =summaryItems,
 				TotalSummaryItem =  new PKPaymentSummaryItem ()
 				{
 					Amount= new NSDecimalNumber("6.00"),
-					Label =@"Pay El Judorito"
+					Label =@"El Judorito"
 
 				},
-				MerchantIdentifier = (NSString)"merchant.com.judo.Xamarin"
+				MerchantIdentifier = new NSString("merchant.com.judo.Xamarin")
+
 
 			};
 			return applePayment;

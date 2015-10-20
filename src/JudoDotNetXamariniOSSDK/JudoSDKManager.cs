@@ -74,12 +74,12 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static bool ApplePayAvailable{get{
 				NSString[] paymentNetworks = new NSString[] {
-					new NSString(@"PKPaymentNetworkAmex"),
-					new NSString(@"PKPaymentNetworkMasterCard"),
-					new NSString(@"PKPaymentNetworkVisa")
+					new NSString(@"Amex"),
+					new NSString(@"MasterCard"),
+					new NSString(@"Visa")
 				};
 
-				if (PKPaymentAuthorizationViewController.CanMakePayments /*&& PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)*/) {
+				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
 					return true;
 				} else {
 

@@ -150,6 +150,7 @@
     <Compile Include="Services\IApplePayService.cs" />
     <Compile Include="Services\ApplePayService.cs" />
     <Compile Include="ViewModels\ApplePayViewModel.cs" />
+    <Compile Include="Delegates\JudoPKPaymentAuthorizationViewControllerDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -242,5 +243,8 @@
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
       <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Delegates\" />
   </ItemGroup>
 </Project>
