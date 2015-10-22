@@ -10,15 +10,18 @@ namespace JudoDotNetXamariniOSSDK
 	public partial class JudoPKPaymentAuthorizationViewControllerDelegate :NSObject, IPKPaymentAuthorizationViewControllerDelegate
 	{
 		IApplePayService _applePayService ;
-		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService)
+		NSDecimalNumber _runningTotal;
+		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request)
 		{
 			_applePayService = applePayService;
+			_runningTotal = request.PaymentSummaryItems [request.PaymentSummaryItems.Length-1].Amount;
 		}
 
 
 
 		public void DidAuthorizePayment (PKPaymentAuthorizationViewController controller, PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
 		{
+
 			ClearPaymentWithJudo (payment, completion);
 		//	completion.BeginInvoke(PKPaymentAuthorizationStatus.Success,
 //			_applePayService.HandlePKPayment (payment).ContinueWith (reponse => {
@@ -33,7 +36,6 @@ namespace JudoDotNetXamariniOSSDK
 //			});
 		}
 
-	
 
 		public void PaymentAuthorizationViewControllerDidFinish (PKPaymentAuthorizationViewController controller)
 		{
@@ -48,9 +50,9 @@ namespace JudoDotNetXamariniOSSDK
 		 async Task ClearPaymentWithJudo (PKPayment payment, Action<PKPaymentAuthorizationStatus> completion) 
 		{
 			IResult res;
-			var response = await _applePayService.HandlePKPayment (payment);
-				
-			InvokeOnMainThread (() => EndDelegate (response.Response,completion));
+			var response = await _applePayService.HandlePKPayment (payment,_runningTotal);
+			completion.BeginInvoke (PKPaymentAuthorizationStatus.Failure,null,null);
+			//InvokeOnMainThread (() => EndDelegate (response.Response,completion));
 		//	EndDelegate (response.Response,completion);
 		}
 

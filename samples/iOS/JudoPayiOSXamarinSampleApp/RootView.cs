@@ -200,13 +200,13 @@ namespace JudoPayiOSXamarinSampleApp
 			var summaryItems = new PKPaymentSummaryItem[] {
 				new PKPaymentSummaryItem ()
 				{
-					Amount= new NSDecimalNumber("5.00"),
+					Amount= new NSDecimalNumber("0.90"),
 					Label =@"Judo Burrito"
 
 				},
 				new PKPaymentSummaryItem ()
 				{
-					Amount= new NSDecimalNumber("1.00"),
+					Amount= new NSDecimalNumber("0.10"),
 					Label =@"Extra Guac"
 
 				}
@@ -220,7 +220,7 @@ namespace JudoPayiOSXamarinSampleApp
 				SummaryItems =summaryItems,
 				TotalSummaryItem =  new PKPaymentSummaryItem ()
 				{
-					Amount= new NSDecimalNumber("6.00"),
+					Amount= new NSDecimalNumber("1.00"),
 					Label =@"El Judorito"
 
 				},

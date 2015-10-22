@@ -6,6 +6,7 @@ using UIKit;
 using System.Net.Cache;
 using JudoPayDotNet;
 using System.Runtime.Remoting.Channels;
+using Foundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -38,7 +39,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				request.MerchantIdentifier =payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overattion
 
-				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate(this);
+				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate(this,request);
 
 
 
@@ -79,7 +80,7 @@ namespace JudoDotNetXamariniOSSDK
 			throw new NotImplementedException ();
 		}
 
-		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment)
+		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,NSDecimalNumber amount)
 		{
 			try
 			{
@@ -99,8 +100,29 @@ namespace JudoDotNetXamariniOSSDK
 					ClientDetails = JudoSDKManager.GetClientDetails(),
 					//Currency = paymentViewModel.Currency
 				};
+				PKPaymentModel pkModel = new PKPaymentModel()
+				{
+					JudoId = JudoConfiguration.Instance.JudoId,
+					YourPaymentReference = "paymentRef12343",
+					YourConsumerReference = "CUSTOMERREF1234",
+					Amount = amount.ToDecimal(),
+//					BillingAddress = new CardAddressModel()
+//					{
+//						PostCode =payment.BillingContact.PostalAddress.PostalCode,
+//						Line1 = payment.BillingContact.PostalAddress.Street,
+//						Town = payment.BillingContact.PostalAddress.City
+//					},
+					ClientDetails = JudoSDKManager.GetClientDetails(),
+					Token = new PKPaymentTokenClientModel()
+					{
+						PaymentData = payment.Token.PaymentData.GetBase64EncodedData(Foundation.NSDataBase64EncodingOptions.None),
+						PaymentInstrumentName = payment.Token.PaymentInstrumentName,
+						PaymentNetwork = payment.Token.PaymentNetwork
+					}
 
-				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(paymentmodel);
+				};
+
+				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(pkModel);
 
 				return await task;
 			}
