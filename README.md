@@ -34,6 +34,22 @@ Thats it!
 ####Nuget
 -  Coming Soon
 
+####Getting Started
+
+Ready to start integrating? This tutorial will help you get started with integrating judo with your Xamarin Mobile Application.
+
+### Step 1 
+
+You can create your judo account by clicking “Get Started” here: [https://www.judopay.com/docs/](https://www.judopay.com/docs/)
+
+### Step 2 
+
+Once registered, you will receive an email providing you with temporary login details and will be asked to reset your password to a memorable, strong password. Once logged in, you'll be able to download our SDKs, access development tools, run test transactions in our Sandbox environment and be able to add and administer your first App by following the on-screen steps.
+
+### Step 3 
+
+To start using the judoPay library you'll first need to configure your SDK to set your API credentials, which are used to authenticate your access with judo.
+
 ## Configuration
 
 #####iOS
