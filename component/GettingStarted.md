@@ -4,11 +4,11 @@ Ready to start integrating? This tutorial will help you get started with integra
 
 ### Step 1 
 
-You can create your judo account in seconds with our [sign-up form](https://www.judopay.com/signup). Once registered, you'll be able to download our SDKs, access development tools, and run test transactions in our Sandbox environment.
+You can create your judo account by clicking “Get Started” here: [https://www.judopay.com/docs/](https://www.judopay.com/docs/)
 
 ### Step 2 
 
-Access your judo dashboard by logging in at https://portal.judopay.com. Once logged in, you'll be able to add and administer your first App by following the on-screen steps.
+Once registered, you will receive an email providing you with temporary login details and will be asked to reset your password to a memorable, strong password. Once logged in, you'll be able to download our SDKs, access development tools, run test transactions in our Sandbox environment and be able to add and administer your first App by following the on-screen steps.
 
 ### Step 3 
 
@@ -55,7 +55,7 @@ var configInstance = JudoConfiguration.Instance;
 	configInstance.JudoId =    "{JudoID}";
 
  
-    // setting up 3d secure, AVS, Amex and mestro card support
+    // setting up 3d secure, AVS, Amex and maestro card support
     JudoSDKManager.AVSEnabled = true;
     JudoSDKManager.AmExAccepted = true;
     JudoSDKManager.MaestroAccepted = true;
@@ -79,10 +79,7 @@ By calling the following with the SDK Manager, you'll invoke judo's UI to enter 
 #####Android
 ```csharp
 
-var intent = JudoSDKManager.UIMethods.Payment ( this, MY_JUDO_ID,
-                                                currency, amount,
-                                                paymentReference,
-                                                consumerRef, metaData );
+var intent = JudoSDKManager.UIMethods.Payment ( Context context,  	judoId, currency, amount, paymentReference, consumerRef, metaData );
 
 StartActivityForResult ( intent, ACTION_CARD_PAYMENT );
 
@@ -103,7 +100,7 @@ private void FailurePayment(JudoError error, PaymentReceiptModel receipt)
      }
 
 //Pass through the payment you would like to facilitate
-var cardPayment = new PaymentViewModel
+var paymentViewModel = new PaymentViewModel
      {
       Amount = 4.5m, 
       ConsumerReference = consumerRef,
@@ -113,28 +110,46 @@ var cardPayment = new PaymentViewModel
      };
 
 //Let Judo do the rest
-JudoSDKManager.Payment(cardPayment, successCallback, failureCallback, this.NavigationController);
+JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.NavigationController);
 
 ```
 ####Note: 
 This callback should be non-blocking
 
-### Register card
+### PreAuthorise card
 
-You can register a consumer's card with our SDK in order to process future payments. You can invoke this method, with the below:
+You can PreAuthorise an amount on a consumer's card with our SDK in order to settle in the future. You can invoke this method, with the below:
 
 #####Android
 ```csharp
-var intent = JudoSDKManager.UIMethods.RegisterCard ( this, consumerRef );
+var intent = JudoSDKManager.UIMethods.PreAuth(Context context,string judoId, string currency, string amount,string paymentReference, string consumerRef, Dictionary<string, string> metaData,string consumerToken);
 
-StartActivityForResult ( intent, ACTION_REGISTER_CARD );
+StartActivityForResult ( intent, ACTION_PREAUTH );
 
 // your code ...
 ```
 
 #####iOS
 ```csharp
-JudoSDKManager.RegisterCard(cardPayment, successCallback, failureCallback, this.NavigationController);
+JudoSDKManager.PreAuth(paymentViewModel, successCallback, failureCallback, this.NavigationController);
+//set the amount to the amount of money you wish to preAuthorise the card against
+// your code ...
+```
+### Register card
+
+You can register a consumer's card with our SDK in order to process future payments. You can invoke this method, with the below:
+
+#####Android
+```csharp
+var intent = JudoSDKManager.UIMethods.RegisterCard (Context context, consumerRef );
+
+// your code ...
+```
+
+#####iOS
+```csharp
+JudoSDKManager.RegisterCard(paymentViewModel, successCallback, failureCallback, this.NavigationController);
+//set amount in paymentViewModel to 0.00, no money should be charged through card Registration
 // your code ...
 ```
 
@@ -146,12 +161,7 @@ When you've successfully processed this call, judo's API will return a Consumer 
 A Token payment allows you to process future payments on behalf of a consumer without you having to store sensitive card data - this means you don't have to worry about PCI compliance. You can initiate a Token payment with the below:
 #####Android
 ```csharp
-var intent = JudoSDKManager.UIMethods.TokenPayment ( this, MY_JUDO_ID,
-                                                    currency, amount,
-                                                    paymentReference,
-                                                    consumerReference,
-                                                    token, metadata,
-                                                    consumerToken);
+var intent = JudoSDKManager.UIMethods.TokenPayment (Context context, string judoId, string currency, string amount,string paymentRef, string consumerRef, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null);
 
 StartActivityForResult ( intent, ACTION_TOKEN_PAYMENT );
 
@@ -232,7 +242,7 @@ JudoSDKManager.UIMode = false;
 
 var cardViewModel =new CardViewModel() { CardNumber = cardNumber, CV2 = cv2, ExpireDate = expiryDate, PostCode = addressPostCode, CountryCode = ISO3166CountryCodes.UK}
 
-var cardPayment = new PaymentViewModel
+var paymentViewModel = new PaymentViewModel
             {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
@@ -241,7 +251,7 @@ var cardPayment = new PaymentViewModel
                 // Non-UI API needs to pass card detail
                 Card =cardViewModel
             };
- JudoSDKManager.Payment(cardPayment, successCallback, failureCallback, this.NavigationController);            
+ JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.NavigationController);            
  
 // your code ...
 ```
