@@ -224,7 +224,9 @@ namespace JudoPayiOSXamarinSampleApp
 					Label =@"El Judorito"
 
 				},
+				//MerchantIdentifier = new NSString("merchant.com.judo.Xamarin")
 				MerchantIdentifier = new NSString("merchant.com.judo.Xamarin")
+
 
 
 			};

@@ -64,10 +64,22 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
-			//			//Salatha
+						//Salatha
 			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
 			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
 			configInstance.JudoId = "100915867";
+
+//			//Luke
+//			configInstance.ApiToken = "5tZfrXDngpvu8iGS";
+//			configInstance.ApiSecret = "da36e4c8f5805173060c934b12dcc14bb05761af310ea364cd787710b1da346b";
+//			configInstance.JudoId = "100515592";
+
+
+			//applePay works
+//			configInstance.ApiToken = "SFJHtrV2XWHPbkbu";
+//			configInstance.ApiSecret = "4339b2732fa46627787336191e6db150ff2a70c42c8f3dc0d525ec86ff580504";
+//			configInstance.JudoId = "100016";
+
 
 			if (configInstance.ApiToken == null) {
 				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));

@@ -7,6 +7,8 @@ using System.Net.Cache;
 using JudoPayDotNet;
 using System.Runtime.Remoting.Channels;
 using Foundation;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -100,24 +102,34 @@ namespace JudoDotNetXamariniOSSDK
 					ClientDetails = JudoSDKManager.GetClientDetails(),
 					//Currency = paymentViewModel.Currency
 				};
+					
+				//var test= new NSString(payment.Token.PaymentData,NSStringEncoding.UTF8).ToString();
+				var test = payment.Token.PaymentData.ToString(NSStringEncoding.UTF8);
+//				test = test.Replace("\"","");
+				JObject jo=  JObject.Parse(test.ToString());
 				PKPaymentModel pkModel = new PKPaymentModel()
 				{
 					JudoId = JudoConfiguration.Instance.JudoId,
 					YourPaymentReference = "paymentRef12343",
 					YourConsumerReference = "CUSTOMERREF1234",
 					Amount = amount.ToDecimal(),
-//					BillingAddress = new CardAddressModel()
-//					{
-//						PostCode =payment.BillingContact.PostalAddress.PostalCode,
-//						Line1 = payment.BillingContact.PostalAddress.Street,
-//						Town = payment.BillingContact.PostalAddress.City
-//					},
+				
+//					
 					ClientDetails = JudoSDKManager.GetClientDetails(),
-					Token = new PKPaymentTokenClientModel()
+					PkPayment = new PKPaymentInnerModel()
 					{
-						PaymentData = payment.Token.PaymentData.GetBase64EncodedData(Foundation.NSDataBase64EncodingOptions.None),
-						PaymentInstrumentName = payment.Token.PaymentInstrumentName,
-						PaymentNetwork = payment.Token.PaymentNetwork
+							// 					BillingAddress = new CardAddressModel()
+							//					{
+							//						PostCode =payment.BillingContact.PostalAddress.PostalCode,
+							//						Line1 = payment.BillingContact.PostalAddress.Street,
+							//						Town = payment.BillingContact.PostalAddress.City
+							//					},
+						Token = new PKPaymentTokenModel()
+						{
+							PaymentData = jo,
+							PaymentInstrumentName = payment.Token.PaymentInstrumentName,
+							PaymentNetwork = payment.Token.PaymentNetwork
+						}
 					}
 
 				};
