@@ -53,7 +53,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		public FailureCallback failureCallback { private get; set; }
 
-		//private string ReceiptID;
 
 		public PaymentViewModel cardPayment { get; set; }
 

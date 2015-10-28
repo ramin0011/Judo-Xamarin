@@ -21,7 +21,7 @@ namespace JudoDotNetXamariniOSSDK
 			_judoAPI = judoAPI;
 		}
 
-		public  void MakeApplePayment (ApplePayViewModel payment, ApplePayCallBack appleCallback, UINavigationController controller, ApplePaymentType type)
+		public  void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController controller, ApplePaymentType type)
 		{
 			try
 			{
@@ -39,14 +39,14 @@ namespace JudoDotNetXamariniOSSDK
 
 				request.PaymentSummaryItems =payment.Basket;
 
-				request.MerchantIdentifier =payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overattion
+				request.MerchantIdentifier =payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overwrite
 
-				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate(this,request,type);
+				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate(this,request,type,success,failure);
 
 
 
 				PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController(request){Delegate = pkDelegate };
-
+				controller.PresentViewController(pkController,true,null);
 
 			}
 			catch(Exception e){
@@ -55,19 +55,11 @@ namespace JudoDotNetXamariniOSSDK
 		}		
 
 
-		public void ApplePreAuthoriseCard (ApplePayViewModel payment, ApplePayCallBack appleCallback, UINavigationController controller)
+		public void ApplePreAuthoriseCard (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController controller)
 		{
 			throw new NotImplementedException ();
 		}
 	
-
-		 void  ExitDelegate (PKPayment payment, ApplePayCallBack applePayCallback)
-		{
-			applePayCallback (payment);
-
-		}
-
-
 
 		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,NSDecimalNumber amount, ApplePaymentType type)
 		{

@@ -12,14 +12,14 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			_paymentService = paymentService;
 		}
-		public void ApplePayment( ApplePayViewModel viewModel, ApplePayCallBack appleCallback, FailureCallback failure,UINavigationController navigationController, ApplePaymentType type)
+		public void ApplePayment( ApplePayViewModel viewModel,SuccessCallback success, FailureCallback failure,UINavigationController navigationController, ApplePaymentType type)
 		{
 			if (!JudoSDKManager.ApplePayAvailable) {
 				failure (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Apple Pay is not enabled on device, application entitlement or setup by user.", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
 			}
 			try
 			{
-				_paymentService.MakeApplePayment(viewModel,appleCallback,navigationController, type);
+				_paymentService.MakeApplePayment(viewModel,success,failure,navigationController, type);
 			}
 			catch (Exception ex)
 			{
@@ -28,7 +28,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public void ApplePreAuth( ApplePayViewModel viewModel, ApplePayCallBack appleCallback, FailureCallback failure,UINavigationController navigationController)
+		public void ApplePreAuth( ApplePayViewModel viewModel, SuccessCallback success, FailureCallback failure,UINavigationController navigationController)
 		{
 
 			if (!JudoSDKManager.ApplePayAvailable) {
@@ -36,7 +36,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			try
 			{
-					_paymentService.ApplePreAuthoriseCard(viewModel,appleCallback,navigationController);
+				_paymentService.ApplePreAuthoriseCard(viewModel,success,failure,navigationController);
 			}
 			catch (Exception ex)
 			{

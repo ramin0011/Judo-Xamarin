@@ -39,8 +39,6 @@ namespace JudoDotNetXamariniOSSDK
     /// Callback for success transaction, this should be known blocking call
     /// </summary>
     public delegate void SuccessCallback(PaymentReceiptModel receipt);
-	
-	public delegate void ApplePayCallBack(PKPayment payment);
 
     /// <summary>
     /// Callback for fail transaction, this should be known blocking call
@@ -279,23 +277,13 @@ namespace JudoDotNetXamariniOSSDK
 
 		public static void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
-			ApplePayCallBack appleCallBack  = (PKPayment pkPayment)  => {
-				
-				//success();
-			};
-
-			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController,ApplePaymentType.Payment);
-
+			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.Payment);
 		}
 
 		public static void MakeApplePreAuth (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
-			ApplePayCallBack appleCallBack  = (PKPayment pkPayment)  => {
 
-				//success();
-			};
-			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController,ApplePaymentType.PreAuth);
-//			_judoSdkApi.ApplePreAuth(payment,appleCallBack,failure,navigationController);
+			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.PreAuth);
 
 		}
 
