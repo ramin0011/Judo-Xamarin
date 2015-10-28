@@ -10,8 +10,7 @@ namespace JudoDotNetXamariniOSSDK
 	public interface IApplePayService
 	{
 		void MakeApplePayment (ApplePayViewModel payment,SuccessCallback success, FailureCallback failure,UINavigationController controller, ApplePaymentType type);
-		void ApplePreAuthoriseCard (ApplePayViewModel payment,SuccessCallback success, FailureCallback failure,UINavigationController controller);
-		Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,NSDecimalNumber amount, ApplePaymentType type);
+		Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure);
 	}
 }
 

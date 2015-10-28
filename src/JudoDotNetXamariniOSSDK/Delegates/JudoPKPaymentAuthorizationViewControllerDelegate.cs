@@ -24,8 +24,6 @@ namespace JudoDotNetXamariniOSSDK
 			_failureCallback = failure;
 		}
 
-
-
 		public void DidAuthorizePayment (PKPaymentAuthorizationViewController controller, PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
 		{
 
@@ -46,7 +44,7 @@ namespace JudoDotNetXamariniOSSDK
 		async Task ClearPaymentWithJudo (PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
 		{
 			IResult res;
-			var result = await _applePayService.HandlePKPayment (payment, _runningTotal, _paymentAction);
+			var result = await _applePayService.HandlePKPayment (payment, _runningTotal, _paymentAction,_failureCallback);
 			if (result != null && !result.HasError && result.Response.Result != "Declined") {
 				
 				var paymentreceipt = result.Response as PaymentReceiptModel;
@@ -74,9 +72,7 @@ namespace JudoDotNetXamariniOSSDK
 					}
 				}
 			}
-
-
-
+				
 		}
 	}
 }

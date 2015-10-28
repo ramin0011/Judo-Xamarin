@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Channels;
 using Foundation;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using JudoPayDotNet.Errors;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -23,9 +24,8 @@ namespace JudoDotNetXamariniOSSDK
 
 		public  void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController controller, ApplePaymentType type)
 		{
-			try
-			{
-				PKPaymentRequest request = new PKPaymentRequest();
+			try {
+				PKPaymentRequest request = new PKPaymentRequest ();
 
 				request.CurrencyCode = payment.CurrencyCode;
 
@@ -37,88 +37,72 @@ namespace JudoDotNetXamariniOSSDK
 				request.SupportedNetworks = payment.SupportedNetworks;
 
 
-				request.PaymentSummaryItems =payment.Basket;
+				request.PaymentSummaryItems = payment.Basket;
 
-				request.MerchantIdentifier =payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overwrite
+				request.MerchantIdentifier = payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overwrite
 
-				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate(this,request,type,success,failure);
+				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate (this, request, type, success, failure);
 
 
 
-				PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController(request){Delegate = pkDelegate };
-				controller.PresentViewController(pkController,true,null);
+				PKPaymentAuthorizationViewController pkController = new PKPaymentAuthorizationViewController (request){ Delegate = pkDelegate };
+				controller.PresentViewController (pkController, true, null);
 
+			} catch (Exception e) {
+				Console.WriteLine (e.InnerException.ToString ());
+
+				var judoError = new JudoError() {Exception = e };
+				failure (judoError);
 			}
-			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
-			}
-		}		
-
-
-		public void ApplePreAuthoriseCard (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController controller)
-		{
-			throw new NotImplementedException ();
 		}
-	
 
-		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,NSDecimalNumber amount, ApplePaymentType type)
+
+
+		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment, NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure)
 		{
-			try
-			{
-				CardPaymentModel paymentmodel = new CardPaymentModel
-				{
+			try {
+				CardPaymentModel paymentmodel = new CardPaymentModel {
 					JudoId = JudoConfiguration.Instance.JudoId,
-					ClientDetails = JudoSDKManager.GetClientDetails(),
+					ClientDetails = JudoSDKManager.GetClientDetails (),
 				};
-					
-			
-				var test = payment.Token.PaymentData.ToString(NSStringEncoding.UTF8);
-				JObject jo=  JObject.Parse(test.ToString());
-				PKPaymentModel pkModel = new PKPaymentModel()
-				{
+
+
+				var test = payment.Token.PaymentData.ToString (NSStringEncoding.UTF8);
+				JObject jo = JObject.Parse (test.ToString ());
+				PKPaymentModel pkModel = new PKPaymentModel () {
 					JudoId = JudoConfiguration.Instance.JudoId,
 					YourPaymentReference = "paymentRef12343",
 					YourConsumerReference = "CUSTOMERREF1234",
-					Amount = amount.ToDecimal(),
-					ClientDetails = JudoSDKManager.GetClientDetails(),
-					PkPayment = new PKPaymentInnerModel()
-					{
-					// 					BillingAddress = new CardAddressModel()
-					//					{
-					//						PostCode =payment.BillingContact.PostalAddress.PostalCode,
-					//						Line1 = payment.BillingContact.PostalAddress.Street,
-					//						Town = payment.BillingContact.PostalAddress.City
-					//					},
-						Token = new PKPaymentTokenModel()
-						{
+					Amount = amount.ToDecimal (),
+					ClientDetails = JudoSDKManager.GetClientDetails (),
+					PkPayment = new PKPaymentInnerModel () {
+						Token = new PKPaymentTokenModel () {
 							PaymentData = jo,
 							PaymentInstrumentName = payment.Token.PaymentInstrumentName,
 							PaymentNetwork = payment.Token.PaymentNetwork
 						}
 					}
-
 				};
-				Task<IResult<ITransactionResult>> task=null ;
-				if(type == ApplePaymentType.Payment)
-				{
-					
-				task =  _judoAPI.Payments.Create(pkModel);
+				Task<IResult<ITransactionResult>> task = null;
+				if (type == ApplePaymentType.Payment) {
+
+					task = _judoAPI.Payments.Create (pkModel);
+				} else if (type == ApplePaymentType.PreAuth) {
+					task = _judoAPI.PreAuths.Create (pkModel);
 				}
-				else if(type == ApplePaymentType.PreAuth)
-				{
-				task =  _judoAPI.PreAuths.Create(pkModel);
-				}
-				if(task==null)
-				{
-					throw new Exception("MAKE A PROPER EXCEPTION");
+				if (task == null) {
+					var judoError = new JudoError() {Exception = new Exception("Judo server did not return response. Please contact customer support") };
+					failure (judoError);
 				}
 				return await task;
-			}
-			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
+			} catch (Exception e) {
+				Console.WriteLine (e.InnerException.ToString ());
+				var judoError = new JudoError() {Exception = e };
+				failure (judoError);
 				return null;
 			}
 		}
+			
 	}
 }
 
