@@ -110,20 +110,26 @@ namespace JudoPayiOSXamarinSampleApp
 			SuccessCallback successCallback = SuccessPayment;
 			FailureCallback failureCallback = FailurePayment;
 
-			var tokenPayment = new TokenPaymentViewModel {
+			var tokenPayment = new TokenPaymentViewModel () {
 				Amount = 3.5m,
 				ConsumerReference = consumerRef,
 				PaymentReference = paymentReference,
 				CV2 = cv2
 			};
 
-			buttonDictionary.Add ("Make a Payment", () => {
+			buttonDictionary.Add ("Make a Payment", delegate {
 				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
 			});
+
+			buttonDictionary.Add ("Make a Payment", delegate {
+				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
+			});
+
 
 			buttonDictionary.Add ("PreAuthorise", delegate {
 				JudoSDKManager.PreAuth (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
 			});
+
 
 			buttonDictionary.Add ("Token Payment", delegate {
 				tokenPayment.Token = cardToken;
@@ -148,12 +154,12 @@ namespace JudoPayiOSXamarinSampleApp
 			});
 			if (JudoSDKManager.ApplePayAvailable) {
 
-				buttonDictionary.Add ("Make a ApplePay Payment", () => {
-					JudoSDKManager.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback,this.NavigationController);
+				buttonDictionary.Add ("Make a ApplePay Payment", delegate {
+					JudoSDKManager.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback, this.NavigationController);
 				});
 
-				buttonDictionary.Add ("Make a ApplePay PreAuthorise", () => {
-					JudoSDKManager.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback,this.NavigationController);
+				buttonDictionary.Add ("Make a ApplePay PreAuthorise", delegate {
+					JudoSDKManager.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback, this.NavigationController);
 				});
 
 			}
@@ -198,34 +204,31 @@ namespace JudoPayiOSXamarinSampleApp
 		ApplePayViewModel GetApplePayViewModel ()
 		{
 			var summaryItems = new PKPaymentSummaryItem[] {
-				new PKPaymentSummaryItem ()
-				{
-					Amount= new NSDecimalNumber("0.90"),
-					Label =@"Judo Burrito"
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.90"),
+					Label = @"Judo Burrito"
 
 				},
-				new PKPaymentSummaryItem ()
-				{
-					Amount= new NSDecimalNumber("0.10"),
-					Label =@"Extra Guac"
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.10"),
+					Label = @"Extra Guac"
 
 				}
 			};
 			
 			var applePayment = new ApplePayViewModel {
 				
-				CurrencyCode = new NSString("GBP"),
-				CountryCode = new NSString(@"GB"),
-				SupportedNetworks = new NSString[3]{new NSString("Visa"),new NSString("MasterCard"),new NSString("Amex")},
-				SummaryItems =summaryItems,
-				TotalSummaryItem =  new PKPaymentSummaryItem ()
-				{
-					Amount= new NSDecimalNumber("1.00"),
-					Label =@"El Judorito"
+				CurrencyCode = new NSString ("GBP"),
+				CountryCode = new NSString (@"GB"),
+				SupportedNetworks = new NSString[3]{ new NSString ("Visa"), new NSString ("MasterCard"), new NSString ("Amex") },
+				SummaryItems = summaryItems,
+				TotalSummaryItem = new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("1.00"),
+					Label = @"El Judorito"
 
 				},
 				//MerchantIdentifier = new NSString("merchant.com.judo.Xamarin")
-				MerchantIdentifier = new NSString("merchant.com.judo.Xamarin")
+				MerchantIdentifier = new NSString ("merchant.com.judo.Xamarin")
 
 
 

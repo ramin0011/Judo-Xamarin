@@ -11,10 +11,12 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		IApplePayService _applePayService ;
 		NSDecimalNumber _runningTotal;
-		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request)
+		ApplePaymentType _paymentAction;
+		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request, ApplePaymentType type)
 		{
 			_applePayService = applePayService;
 			_runningTotal = request.PaymentSummaryItems [request.PaymentSummaryItems.Length-1].Amount;
+			_paymentAction = type;
 		}
 
 
@@ -50,10 +52,31 @@ namespace JudoDotNetXamariniOSSDK
 		 async Task ClearPaymentWithJudo (PKPayment payment, Action<PKPaymentAuthorizationStatus> completion) 
 		{
 			IResult res;
-			var response = await _applePayService.HandlePKPayment (payment,_runningTotal);
-			completion.BeginInvoke (PKPaymentAuthorizationStatus.Failure,null,null);
-			//InvokeOnMainThread (() => EndDelegate (response.Response,completion));
-		//	EndDelegate (response.Response,completion);
+			var result = await _applePayService.HandlePKPayment (payment,_runningTotal,_paymentAction);
+			if (result != null && !result.HasError && result.Response.Result != "Declined") {
+				completion.BeginInvoke (PKPaymentAuthorizationStatus.Success,null,null);
+
+				//InvokeOnMainThread (() => EndDelegate (response.Response,completion));
+				//	EndDelegate (response.Response,completion);
+			} else {
+				// Failure callback
+//				if (failureCallback != null) {
+//					var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+//					var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+//
+//					if (paymentreceipt != null) {
+//						// send receipt even we got card declined
+//						completion.BeginInvoke (PKPaymentAuthorizationStatus.Failure,null,null);
+//						failureCallback (judoError, paymentreceipt);
+//					} else {
+//						completion.BeginInvoke (PKPaymentAuthorizationStatus.Failure,);
+//						failureCallback (judoError);
+//					}
+//				}
+			}
+
+
+
 		}
 
 

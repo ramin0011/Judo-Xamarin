@@ -284,13 +284,19 @@ namespace JudoDotNetXamariniOSSDK
 				//success();
 			};
 
-			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController);
+			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController,ApplePaymentType.Payment);
 
 		}
 
-		public static void MakeApplePreAuth (ApplePayViewModel paymentViewModel, SuccessCallback successCallback, FailureCallback failureCallback, UINavigationController navigationController)
+		public static void MakeApplePreAuth (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
 		{
-			throw new NotImplementedException ();
+			ApplePayCallBack appleCallBack  = (PKPayment pkPayment)  => {
+
+				//success();
+			};
+			_judoSdkApi.ApplePayment(payment,appleCallBack,failure,navigationController,ApplePaymentType.PreAuth);
+//			_judoSdkApi.ApplePreAuth(payment,appleCallBack,failure,navigationController);
+
 		}
 
 		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
