@@ -44,6 +44,10 @@ namespace JudoDotNetXamariniOSSDK
 
 		public NSString MerchantIdentifier  { get; set;}
 
+		public NSString ConsumerRef {
+			get;
+			set;
+		}
 	}
 }
 

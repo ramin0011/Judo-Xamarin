@@ -41,7 +41,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				request.MerchantIdentifier = payment.MerchantIdentifier;// @"merchant.com.judo.Xamarin"; // do it with configuration/overwrite
 
-				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate (this, request, type, success, failure);
+				var pkDelegate = new JudoPKPaymentAuthorizationViewControllerDelegate (this, request,payment.ConsumerRef.ToString(), type, success, failure);
 
 
 
@@ -58,7 +58,7 @@ namespace JudoDotNetXamariniOSSDK
 
 
 
-		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment, NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure)
+		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,string customerRef, NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure)
 		{
 			try {
 				CardPaymentModel paymentmodel = new CardPaymentModel {
@@ -72,7 +72,7 @@ namespace JudoDotNetXamariniOSSDK
 				PKPaymentModel pkModel = new PKPaymentModel () {
 					JudoId = JudoConfiguration.Instance.JudoId,
 					YourPaymentReference = "paymentRef12343",
-					YourConsumerReference = "CUSTOMERREF1234",
+					YourConsumerReference = customerRef,
 					Amount = amount.ToDecimal (),
 					ClientDetails = JudoSDKManager.GetClientDetails (),
 					PkPayment = new PKPaymentInnerModel () {

@@ -14,20 +14,22 @@ namespace JudoDotNetXamariniOSSDK
 		ApplePaymentType _paymentAction;
 		SuccessCallback _successCallBack;
 		FailureCallback _failureCallback;
-
-		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request, ApplePaymentType type, SuccessCallback success, FailureCallback failure)
+		string _customerRef ;
+		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request,string customerRef, ApplePaymentType type, SuccessCallback success, FailureCallback failure)
 		{
 			_applePayService = applePayService;
 			_runningTotal = request.PaymentSummaryItems [request.PaymentSummaryItems.Length - 1].Amount;
 			_paymentAction = type;
 			_successCallBack = success;
 			_failureCallback = failure;
+			_customerRef = customerRef;
+
 		}
 
 		public void DidAuthorizePayment (PKPaymentAuthorizationViewController controller, PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
 		{
 
-			ClearPaymentWithJudo (payment, completion);
+			ClearPaymentWithJudo (payment,_customerRef, completion);
 		}
 
 
@@ -41,10 +43,10 @@ namespace JudoDotNetXamariniOSSDK
 			
 		}
 
-		async Task ClearPaymentWithJudo (PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
+		async Task ClearPaymentWithJudo (PKPayment payment,string customerRef, Action<PKPaymentAuthorizationStatus> completion)
 		{
 			IResult res;
-			var result = await _applePayService.HandlePKPayment (payment, _runningTotal, _paymentAction,_failureCallback);
+			var result = await _applePayService.HandlePKPayment (payment,customerRef, _runningTotal, _paymentAction,_failureCallback);
 			if (result != null && !result.HasError && result.Response.Result != "Declined") {
 				
 				var paymentreceipt = result.Response as PaymentReceiptModel;
