@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
@@ -8,25 +9,7 @@ using CoreFoundation;
 using CoreGraphics;
 using JudoPayDotNet.Models;
 using PassKit;
-#if__UNIFIED__
-using Foundation;
-using UIKit;
-using CoreFoundation;
-using CoreGraphics;
-// Mappings Unified CoreGraphic classes to MonoTouch classes
-using RectangleF = global::CoreGraphics.CGRect;
-using SizeF = global::CoreGraphics.CGSize;
-using PointF = global::CoreGraphics.CGPoint;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreFoundation;
-using MonoTouch.CoreGraphics;
-// Mappings Unified types to MonoTouch types
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-#endif
+
 namespace JudoPayiOSXamarinSampleApp
 {
 	public partial class RootView : UIViewController
@@ -134,7 +117,9 @@ namespace JudoPayiOSXamarinSampleApp
 				CV2 = cv2
 			};
 
-
+			buttonDictionary.Add ("Make a Payment", delegate {
+				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
+			});
 
 			buttonDictionary.Add ("Make a Payment", delegate {
 				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);

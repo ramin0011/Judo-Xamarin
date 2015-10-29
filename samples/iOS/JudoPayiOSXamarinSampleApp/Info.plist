@@ -18,9 +18,9 @@
 		<integer>2</integer>
 	</array>
 	<key>UIMainNibFile</key>
-	<string>MainView</string>
+	<string>RootView</string>
 	<key>UIMainNibFile~ipad</key>
-	<string>MainView</string>
+	<string>RootView</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
