@@ -119,6 +119,10 @@
     </Compile>
     <Compile Include="MainMenuSource.cs" />
     <None Include="packages.config" />
+    <Compile Include="MainView.cs" />
+    <Compile Include="MainView.designer.cs">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -136,6 +140,7 @@
     <BundleResource Include="Resources\Icon-Small.png" />
     <BundleResource Include="Resources\Icon.png" />
     <BundleResource Include="Resources\Icon%402x.png" />
+    <InterfaceDefinition Include="MainView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

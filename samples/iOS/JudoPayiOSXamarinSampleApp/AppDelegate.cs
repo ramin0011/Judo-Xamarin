@@ -22,7 +22,7 @@ namespace JudoPayiOSXamarinSampleApp
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{  
 			Window = new UIWindow (UIScreen.MainScreen.Bounds); 
-			RootView root = new RootView ();
+			MainView root = new MainView ();
 			Window.RootViewController = new UINavigationController (root);
 			Window.TintColor = UIColor.Black;
 			Window.MakeKeyAndVisible ();

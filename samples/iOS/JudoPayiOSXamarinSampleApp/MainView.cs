@@ -1,35 +1,19 @@
-﻿using System;
+﻿
+using System;
+
 using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
-using System.Drawing;
-using System.Collections.Generic;
-using CoreFoundation;
-using CoreGraphics;
 using JudoPayDotNet.Models;
-using PassKit;
-#if__UNIFIED__
-using Foundation;
-using UIKit;
 using CoreFoundation;
+using PassKit;
+using System.Collections.Generic;
 using CoreGraphics;
-// Mappings Unified CoreGraphic classes to MonoTouch classes
-using RectangleF = global::CoreGraphics.CGRect;
-using SizeF = global::CoreGraphics.CGSize;
-using PointF = global::CoreGraphics.CGPoint;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreFoundation;
-using MonoTouch.CoreGraphics;
-// Mappings Unified types to MonoTouch types
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-#endif
+using System.Drawing;
+
 namespace JudoPayiOSXamarinSampleApp
 {
-	public partial class RootView : UIViewController
+	public partial class MainView : UIViewController
 	{
 		SlideUpMenu _menu;
 
@@ -47,8 +31,8 @@ namespace JudoPayiOSXamarinSampleApp
 		private  const string expiryDate = "12/15";
 		private const string cv2 = "452";
 
-		public RootView ()
-			: base ("RootView", null)
+		public MainView ()
+			: base ("MainView", null)
 		{
 
 		}
@@ -89,7 +73,7 @@ namespace JudoPayiOSXamarinSampleApp
 				// move back to home screen
 				CloseView ();
 
-  
+
 				// show receipt
 				ShowMessage ("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
 
@@ -121,68 +105,6 @@ namespace JudoPayiOSXamarinSampleApp
 			});
 		}
 
-		void SetUpTableView ()
-		{
-			Dictionary<string, Action> buttonDictionary = new Dictionary<string, Action> ();
-			SuccessCallback successCallback = SuccessPayment;
-			FailureCallback failureCallback = FailurePayment;
-
-			var tokenPayment = new TokenPaymentViewModel () {
-				Amount = 3.5m,
-				ConsumerReference = consumerRef,
-				PaymentReference = paymentReference,
-				CV2 = cv2
-			};
-
-
-
-			buttonDictionary.Add ("Make a Payment", delegate {
-				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
-			});
-
-
-			buttonDictionary.Add ("PreAuthorise", delegate {
-				JudoSDKManager.PreAuth (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
-			});
-
-
-			buttonDictionary.Add ("Token Payment", delegate {
-				tokenPayment.Token = cardToken;
-				tokenPayment.ConsumerToken = consumerToken;
-				tokenPayment.LastFour = lastFour;
-				tokenPayment.CardType = cardType;
-
-				JudoSDKManager.TokenPayment (tokenPayment, successCallback, failureCallback, this.NavigationController);
-			});
-
-			buttonDictionary.Add ("Token PreAuthorise", delegate {
-				tokenPayment.Token = cardToken;
-				tokenPayment.ConsumerToken = consumerToken;
-				tokenPayment.LastFour = lastFour;
-				tokenPayment.CardType = cardType;
-
-				JudoSDKManager.TokenPreAuth (tokenPayment, successCallback, failureCallback, this.NavigationController);
-			});
-
-			buttonDictionary.Add ("Register a Card", delegate {
-				JudoSDKManager.RegisterCard (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
-			});
-			if (JudoSDKManager.ApplePayAvailable) {
-
-				buttonDictionary.Add ("Make a ApplePay Payment", delegate {
-					JudoSDKManager.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback, this.NavigationController);
-				});
-
-				buttonDictionary.Add ("Make a ApplePay PreAuthorise", delegate {
-					JudoSDKManager.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback, this.NavigationController);
-				});
-
-			}
-
-			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
-			ButtonTable.Source = menuSource;
-			TableHeightConstrant.Constant = menuSource.GetTableHeight () + 60f;
-		}
 
 		/// <summary>
 		/// just for sample app, you can set all settings while configuring SDK
@@ -230,9 +152,9 @@ namespace JudoPayiOSXamarinSampleApp
 
 				}
 			};
-			
+
 			var applePayment = new ApplePayViewModel {
-				
+
 				CurrencyCode = new NSString ("GBP"),
 				CountryCode = new NSString (@"GB"),
 				SupportedNetworks = new NSString[3]{ new NSString ("Visa"), new NSString ("MasterCard"), new NSString ("Amex") },
@@ -242,13 +164,74 @@ namespace JudoPayiOSXamarinSampleApp
 					Label = @"El Judorito"
 
 				},
-				ConsumerRef=new NSString (@"GenerateYourOwnCustomerRefHere"),
+				ConsumerRef = new NSString (@"GenerateYourOwnCustomerRefHere"),
 				MerchantIdentifier = new NSString ("merchant.com.judo.Xamarin")
 
 
 
 			};
 			return applePayment;
+		}
+
+		void SetUpTableView ()
+		{
+			UITableViewCell cell = new UITableViewCell ();
+
+			Dictionary<string, Action> buttonDictionary = new Dictionary<string, Action> ();
+			SuccessCallback successCallback = SuccessPayment;
+			FailureCallback failureCallback = FailurePayment;
+
+			var tokenPayment = new TokenPaymentViewModel {
+				Amount = 3.5m,
+				ConsumerReference = consumerRef,
+				PaymentReference = paymentReference,
+				CV2 = cv2
+			};
+
+			buttonDictionary.Add ("Make a Payment", () => {
+				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
+			});
+
+			buttonDictionary.Add ("PreAuthorise", delegate {
+				JudoSDKManager.PreAuth (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
+			});
+
+			buttonDictionary.Add ("Token Payment", delegate {
+				tokenPayment.Token = cardToken;
+				tokenPayment.ConsumerToken = consumerToken;
+				tokenPayment.LastFour = lastFour;
+				tokenPayment.CardType = cardType;
+
+				JudoSDKManager.TokenPayment (tokenPayment, successCallback, failureCallback, this.NavigationController);
+			});
+
+			buttonDictionary.Add ("Token PreAuthorise", delegate {
+				tokenPayment.Token = cardToken;
+				tokenPayment.ConsumerToken = consumerToken;
+				tokenPayment.LastFour = lastFour;
+				tokenPayment.CardType = cardType;
+
+				JudoSDKManager.TokenPreAuth (tokenPayment, successCallback, failureCallback, this.NavigationController);
+			});
+
+			buttonDictionary.Add ("Register a Card", delegate {
+				JudoSDKManager.RegisterCard (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
+			});
+
+			if (JudoSDKManager.ApplePayAvailable) {
+
+				buttonDictionary.Add ("Apple Pay Payment", delegate {
+					JudoSDKManager.MakeApplePayment (GetApplePayViewModel(), successCallback, failureCallback, this.NavigationController);
+				});
+
+				buttonDictionary.Add ("Apple Pay PreAuthorise", delegate {
+					JudoSDKManager.MakeApplePreAuth (GetApplePayViewModel(), successCallback, failureCallback, this.NavigationController);
+				});
+			}
+
+			MainMenuSource menuSource = new MainMenuSource (buttonDictionary);
+			OptionTable.Source = menuSource;
+			HeightConstraint.Constant = menuSource.GetTableHeight () + 60f;
 		}
 
 		public override void ViewWillDisappear (bool animated)
