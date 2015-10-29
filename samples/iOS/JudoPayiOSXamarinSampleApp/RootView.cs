@@ -121,9 +121,6 @@ namespace JudoPayiOSXamarinSampleApp
 				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
 			});
 
-			buttonDictionary.Add ("Make a Payment", delegate {
-				JudoSDKManager.Payment (GetCardViewModel (), successCallback, failureCallback, this.NavigationController);
-			});
 
 
 			buttonDictionary.Add ("PreAuthorise", delegate {

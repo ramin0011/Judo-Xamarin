@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.NetworkInformation;
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
