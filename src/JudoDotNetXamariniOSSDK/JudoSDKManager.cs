@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Environment = JudoPayDotNet.Enums.Environment;
 using System.Drawing;
 using PassKit;
+using System.Diagnostics;
 
 
 #if __UNIFIED__
@@ -121,6 +122,15 @@ namespace JudoDotNetXamariniOSSDK
 
             return null;
         }
+
+		public static string GetSDKVersion ()
+		{
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+			string version = fvi.FileVersion;
+
+			return "Xamarin-iOS-" + version;
+		}
 
 		internal static void SetUserAgent ()
 		{

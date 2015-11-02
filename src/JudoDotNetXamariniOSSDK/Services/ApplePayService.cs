@@ -64,6 +64,7 @@ namespace JudoDotNetXamariniOSSDK
 				CardPaymentModel paymentmodel = new CardPaymentModel {
 					JudoId = JudoConfiguration.Instance.JudoId,
 					ClientDetails = JudoSDKManager.GetClientDetails (),
+					UserAgent = JudoSDKManager.GetSDKVersion()
 				};
 
 
@@ -75,6 +76,7 @@ namespace JudoDotNetXamariniOSSDK
 					YourConsumerReference = customerRef,
 					Amount = amount.ToDecimal (),
 					ClientDetails = JudoSDKManager.GetClientDetails (),
+					UserAgent = JudoSDKManager.GetSDKVersion(),
 					PkPayment = new PKPaymentInnerModel () {
 						Token = new PKPaymentTokenModel () {
 							PaymentData = jo,
