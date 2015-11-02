@@ -8,8 +8,8 @@ namespace JudoDotNetXamarinSDK.Clients
     internal class NonUIMethods : INonUIMethods
     {
         public Task<IResult<ITransactionResult>> Payment(Context context, string judoId, string currency, decimal amount, string paymentReference,
-            string consumerReference, IDictionary<string, string> metaData, string cardNumber,
-            string postCode, string startDate, string expiryDate, string cv2)
+            string consumerReference, IDictionary<string, string> metaData, 
+			string cardNumber,string postCode, string startDate, string expiryDate, string cv2)
         {
             var cardPayment = new CardPaymentModel()
             {

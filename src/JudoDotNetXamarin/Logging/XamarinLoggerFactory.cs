@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JudoPayDotNet.Logging;
 using Serilog;
 
+
 namespace JudoDotNetXamarin.Logging
 {
     public static class XamarinLoggerFactory

@@ -16,6 +16,7 @@ namespace JudoDotNetXamarin
         private static readonly string LIVE_URL = "https://GW1.judopay.com/";
 		private static readonly string SANDBOX_URL = "https://GW1.judopay-sandbox.com/";
 		private static readonly string DEV_LIVE_URL = "http://partnerapi.test1.hq.judo/";
+		private static readonly string Creator_LIVE_URL = "http://172.27.132.66/PartnerApi/";
         private static readonly string API_VERSION = "4.1.0.0";
         private const string Apiversionheader = "api-version";
 

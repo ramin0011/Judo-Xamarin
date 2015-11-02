@@ -6,7 +6,7 @@ using JudoPayDotNet.Models;
 using System.IO;
 using System.Text;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -53,7 +53,6 @@ namespace JudoDotNetXamariniOSSDK
 
 		public FailureCallback failureCallback { private get; set; }
 
-		//private string ReceiptID;
 
 		public PaymentViewModel cardPayment { get; set; }
 

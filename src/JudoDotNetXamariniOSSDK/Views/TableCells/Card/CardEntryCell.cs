@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using JudoPayDotNet.Models;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;

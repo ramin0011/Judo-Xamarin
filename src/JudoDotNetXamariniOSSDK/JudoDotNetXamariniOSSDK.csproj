@@ -9,6 +9,7 @@
     <RootNamespace>JudoDotNetXamariniOSSDK</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>JudoDotNetXamariniOSSDK</AssemblyName>
+    <ReleaseVersion>2.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,18 +30,24 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JudoPayDotNet">
-      <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="JudoPayDotNet">
+      <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog">
+      <HintPath>..\..\samples\iOS\packages\Serilog.1.5.12\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="JudoShieldXamarin">
+      <HintPath>..\..\lib\JudoShieldXamarin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +153,14 @@
       <DependentUpon>RegisterCardView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\SecureWebView.cs" />
+    <Compile Include="Clients\ApplePayMethods.cs" />
+    <Compile Include="Services\IApplePayService.cs" />
+    <Compile Include="Services\ApplePayService.cs" />
+    <Compile Include="ViewModels\ApplePayViewModel.cs" />
+    <Compile Include="Delegates\JudoPKPaymentAuthorizationViewControllerDelegate.cs" />
+    <Compile Include="Models\PKPaymentTokenClientModel.cs" />
+    <Compile Include="Controllers\NumberHelper.cs" />
+    <Compile Include="Enum\ApplePaymentType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -238,5 +253,8 @@
       <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
       <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Delegates\" />
   </ItemGroup>
 </Project>

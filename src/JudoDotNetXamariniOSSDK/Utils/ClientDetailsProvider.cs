@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net.NetworkInformation;
-#if__UNIFIED__
+using JudoShieldXamarin;
+
+
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -38,7 +41,7 @@ namespace JudoDotNetXamariniOSSDK.Utils
                 OS = "iOS " + UIDevice.CurrentDevice.SystemVersion,
                 DeviceId = GetDeviceMacAddress(),
                 DeviceModel = UIDevice.CurrentDevice.Model,
-                Serial = UIDevice.CurrentDevice.IdentifierForVendor.AsString(),
+				Serial = JudoShield.GetDeviceIdentifier(),
                 CultureLocale = NSLocale.CurrentLocale.CountryCode,
                 SslPinningEnabled = JudoSDKManager.SSLPinningEnabled
             };

@@ -2,10 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>JudoPayiOSXamarinSampleApp</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.your-company.JudoPayiOSXamarinSampleApp</string>
+	<string>com.JudoPay.JudoPayiOSXamarinSampleApp</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -56,5 +54,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>CFBundleDisplayName</key>
+	<string>sampleApp</string>
 </dict>
 </plist>

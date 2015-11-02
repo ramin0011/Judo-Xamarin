@@ -6,9 +6,10 @@ using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
 using Environment = JudoPayDotNet.Enums.Environment;
 using System.Drawing;
+using PassKit;
 
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -43,9 +44,10 @@ namespace JudoDotNetXamariniOSSDK
     /// Callback for fail transaction, this should be known blocking call
     /// </summary>
     public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
-
 	public class JudoSDKManager
 	{
+		
+		
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName ("Courier", 17.0f);
 
         /// <summary>
@@ -67,6 +69,21 @@ namespace JudoDotNetXamariniOSSDK
         /// Enable/Disable Mestro card support
         /// </summary>
 		public static bool MaestroAccepted { get; set; }
+
+		public static bool ApplePayAvailable{get{
+				NSString[] paymentNetworks = new NSString[] {
+					new NSString(@"Amex"),
+					new NSString(@"MasterCard"),
+					new NSString(@"Visa")
+				};
+
+				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+					return true;
+				} else {
+
+					return false;
+				}		
+			}}
 
         /// <summary>
         /// Enable/Disable risk signal to pass fruad monitoring device data
@@ -118,6 +135,7 @@ namespace JudoDotNetXamariniOSSDK
         private static IJudoSDKApi _judoSdkApi;
 		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
 		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
+		private static readonly IApplePayService ApplePaymentService = ServiceFactory.GetApplePaymentService ();
 		private static LoadingOverlay _loadPop;
 
 		private static bool _uiMode { get; set; }
@@ -130,9 +148,9 @@ namespace JudoDotNetXamariniOSSDK
 			get { return _uiMode; }
 			set {
 			    if (value)
-			        _judoSdkApi = new UIMethods(new ViewLocator(PaymentService));
+					_judoSdkApi = new UIMethods(ApplePaymentService,new ViewLocator(PaymentService));
 			    else
-			        _judoSdkApi = new NonUIMethods(PaymentService);
+					_judoSdkApi = new NonUIMethods(ApplePaymentService,PaymentService);
 
 			    _uiMode = value;
 			}
@@ -255,6 +273,18 @@ namespace JudoDotNetXamariniOSSDK
 			} else {
                 _judoSdkApi.RegisterCard(innerModel, success, failure, navigationController);
 			}
+		}
+
+		public static void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		{
+			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.Payment);
+		}
+
+		public static void MakeApplePreAuth (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		{
+
+			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.PreAuth);
+
 		}
 
 		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)

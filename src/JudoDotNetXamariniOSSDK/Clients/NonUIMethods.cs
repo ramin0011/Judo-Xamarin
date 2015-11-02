@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
-#if__UNIFIED__
+
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -23,11 +24,11 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal class NonUIMethods : IJudoSDKApi
+	internal class NonUIMethods :ApplePayMethods, IJudoSDKApi
     {
         private readonly IPaymentService _paymentService;
 
-        public NonUIMethods(IPaymentService paymentService)
+		public NonUIMethods(IApplePayService applePayService,IPaymentService paymentService) :base(applePayService)
         {
             _paymentService = paymentService;
         }
@@ -153,5 +154,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 }
             }
         }
+
+	
     }
 }
