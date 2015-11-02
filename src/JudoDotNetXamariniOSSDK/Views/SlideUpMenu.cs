@@ -1,30 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.Collections.Generic;
-
-#if __UNIFIED__
-using Foundation;
 using UIKit;
-using CoreFoundation;
-using CoreAnimation;
-using CoreGraphics;
+using Foundation;
 using ObjCRuntime;
-// Mappings Unified CoreGraphic classes to MonoTouch classes
+using CoreGraphics;
 using RectangleF = global::CoreGraphics.CGRect;
 using SizeF = global::CoreGraphics.CGSize;
 using PointF = global::CoreGraphics.CGPoint;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreFoundation;
-using MonoTouch.CoreGraphics;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.CoreAnimation;
-// Mappings Unified types to MonoTouch types
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-#endif
+using WatchKit;
+
+
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -33,6 +19,8 @@ namespace JudoDotNetXamariniOSSDK
 	{
 		bool ComponentExpanded;
 		UIPanGestureRecognizer panGesture;
+
+		UITapGestureRecognizer tapGesture;
 
 		public SlideUpMenu (IntPtr p) : base (p)
 		{
@@ -117,18 +105,18 @@ namespace JudoDotNetXamariniOSSDK
 			AddSubview (v);
 		}
 
-		public override void Draw (RectangleF rect)
+		public override void Draw (CGRect rect)
 		{
 			base.Draw (rect);
 
 		}
 
-		void SlideAndFix (UIPanGestureRecognizer gesture)
+		void SlideAndFix (UIGestureRecognizer gesture)
 		{
 
 			UIView piece = gesture.View;
 			nfloat yComponent = piece.Superview.Center.Y - 40f;
-			if (!ComponentExpanded || piece.Frame.Top < piece.Superview.Center.Y) {
+			if (!ComponentExpanded || piece.Frame.Top < piece.Superview.Center.Y- 40f) {
 				ComponentExpanded = true;
 
 			} else {
@@ -143,7 +131,12 @@ namespace JudoDotNetXamariniOSSDK
 				animation: () => {
 					piece.Frame = new RectangleF (new PointF (piece.Frame.X, yComponent), piece.Frame.Size);
 
-					gesture.SetTranslation (new PointF (0, 0), piece.Superview);
+					if(gesture.GetType() == typeof( UIPanGestureRecognizer))
+					{
+						var concreteType = (UIPanGestureRecognizer) gesture;
+						concreteType.SetTranslation (new PointF (0, 0), piece.Superview);
+					}
+
 				},
 				completion: () => {
 					
@@ -183,6 +176,15 @@ namespace JudoDotNetXamariniOSSDK
 			} 		
 		}
 
+		void ExpandMenu (UITapGestureRecognizer gesture)
+		{
+			if(gesture.LocationOfTouch(0,gesture.View).Y<=40f)
+				{
+				SlideAndFix (gesture);
+				}
+
+		}
+
 		void AdjustAnchorPointForGestureRecognizer (UIGestureRecognizer gestureRecognizer)
 		{
 			if (gestureRecognizer.State == UIGestureRecognizerState.Began) {
@@ -200,11 +202,22 @@ namespace JudoDotNetXamariniOSSDK
 
 			panGesture = new UIPanGestureRecognizer ();
 
+			tapGesture = new UITapGestureRecognizer ();
+
 			panGesture.AddTarget (() => { 				
 				PanGestureMoveAround (panGesture);
 			});
+
+			tapGesture.AddTarget (() => { 				
+				ExpandMenu (tapGesture);
+			});
+
+
+			tapGesture.NumberOfTapsRequired = 1;
 			panGesture.MaximumNumberOfTouches = 2;
+
 			this.AddGestureRecognizer (panGesture);
+			this.AddGestureRecognizer (tapGesture);
 		}
 
 
