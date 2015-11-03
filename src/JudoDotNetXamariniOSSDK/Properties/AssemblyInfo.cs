@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Luke.Fieldsend")]
+[assembly: AssemblyCopyright ("Judo Payments")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 
