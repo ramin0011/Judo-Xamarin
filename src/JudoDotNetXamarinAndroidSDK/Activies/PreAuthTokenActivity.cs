@@ -38,7 +38,8 @@ namespace JudoDotNetXamarinSDK.Activies
                 YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2(),
-                ClientDetails = JudoSDKManager.GetClientDetails(this)
+                ClientDetails = JudoSDKManager.GetClientDetails(this),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             ShowLoadingSpinner(true);

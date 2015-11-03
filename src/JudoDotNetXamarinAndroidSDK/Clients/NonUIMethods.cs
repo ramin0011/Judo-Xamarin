@@ -24,7 +24,8 @@ namespace JudoDotNetXamarinSDK.Clients
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context)
+                ClientDetails = JudoSDKManager.GetClientDetails(context),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             return JudoSDKManager.JudoClient.Payments.Create(cardPayment);
@@ -45,7 +46,8 @@ namespace JudoDotNetXamarinSDK.Clients
                 YourPaymentMetaData = metaData,
                 CardToken = cardToken,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context)
+                ClientDetails = JudoSDKManager.GetClientDetails(context),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             return JudoSDKManager.JudoClient.Payments.Create(payment);
@@ -68,7 +70,8 @@ namespace JudoDotNetXamarinSDK.Clients
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context)
+                ClientDetails = JudoSDKManager.GetClientDetails(context),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             return JudoSDKManager.JudoClient.PreAuths.Create(cardPayment);
@@ -89,7 +92,8 @@ namespace JudoDotNetXamarinSDK.Clients
                 YourPaymentMetaData = metaData,
                 CardToken = cardToken,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context)
+                ClientDetails = JudoSDKManager.GetClientDetails(context),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             return JudoSDKManager.JudoClient.PreAuths.Create(payment);
