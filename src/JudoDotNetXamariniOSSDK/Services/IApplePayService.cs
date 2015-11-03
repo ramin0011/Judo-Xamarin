@@ -7,7 +7,7 @@ using Foundation;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public interface IApplePayService
+	internal interface IApplePayService
 	{
 		void MakeApplePayment (ApplePayViewModel payment,SuccessCallback success, FailureCallback failure,UINavigationController controller, ApplePaymentType type);
 		Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,string customerRef,NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure);

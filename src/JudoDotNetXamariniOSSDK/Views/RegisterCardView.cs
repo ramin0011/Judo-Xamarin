@@ -32,7 +32,7 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class RegisterCardView : UIViewController
+	internal partial class RegisterCardView : UIViewController
 	{
 
 		private UIView activeview;

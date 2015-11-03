@@ -4,7 +4,7 @@ using UIKit;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public abstract class ApplePayMethods
+	internal abstract class ApplePayMethods
 	{
 		private readonly IApplePayService _paymentService;
 

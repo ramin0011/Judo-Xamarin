@@ -30,7 +30,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class TokenPreAuthorisationView : UIViewController
+	internal partial class TokenPreAuthorisationView : UIViewController
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;

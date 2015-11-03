@@ -61,7 +61,7 @@ using nuint = global::System.UInt32;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register("PlaceHolderTextView")]
-	public partial class PlaceHolderTextView : UIView
+	internal partial class PlaceHolderTextView : UIView
 	{
 		
 		public  string Text { get; set;}

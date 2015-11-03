@@ -8,7 +8,7 @@ namespace JudoDotNetXamariniOSSDK
 {
 	public enum BundledOrReplacementOptions { Bundled, BundledOrReplacement };
 
-	public static class ThemeBundleReplacement
+	internal class ThemeBundleReplacement
 	{
 
 		private static NSBundle frameworkBundle;

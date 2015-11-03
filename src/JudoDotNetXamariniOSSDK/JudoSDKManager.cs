@@ -287,7 +287,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
+		internal static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
 		{
 			secureWebView.ReceiptID =	threedDSecureReceipt.ReceiptId;
 

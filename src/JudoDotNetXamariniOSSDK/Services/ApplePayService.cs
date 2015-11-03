@@ -13,7 +13,7 @@ using JudoPayDotNet.Errors;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class ApplePayService :IApplePayService
+	internal class ApplePayService :IApplePayService
 	{
 		private	JudoPayApi _judoAPI;
 

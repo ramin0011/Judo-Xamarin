@@ -33,7 +33,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class PreAuthorisationView : UIViewController
+	internal partial class PreAuthorisationView : UIViewController
 	{
 
 		private UIView activeview;
