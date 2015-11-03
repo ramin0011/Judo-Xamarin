@@ -20,9 +20,9 @@ namespace Android.Xamarin.SampleApp
     public class WithUIActivity : Activity
     {
         // Configure your JudoID and payment detail
-        private const string ApiToken   = "4eVWyZQnO5DyaXZy";
-        private const string ApiSecret  = "1d5e8381ed9ef3cc1ecc1daaf8ce550bdc97ea058ac804be4b68c28d02fdb791";
-        private string MY_JUDO_ID       = "100016";
+		private const string ApiToken   = "MzEtkQK1bHi8v8qy";
+		private const string ApiSecret  = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+		private string MY_JUDO_ID       = "100915867";
         private string currency         = "GBP";
         private string amount           = "4.99";
         private string paymentReference = "payment101010102";
@@ -54,7 +54,7 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withui);
 
             // setting up API token/secret 
-            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
+			JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret,JudoPayDotNet.Enums.Environment.Live);
             JudoSDKManager.Configuration.IsAVSEnabled = true;
             JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
             JudoSDKManager.Configuration.IsMaestroEnabled = true;
