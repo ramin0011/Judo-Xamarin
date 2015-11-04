@@ -22,9 +22,9 @@ namespace Android.Xamarin.SampleApp
     public class WithoutUIActivity : Activity
     {
         // Configure your JudoID and payment detail
-		private const string ApiToken   = "MzEtkQK1bHi8v8qy";
-		private const string ApiSecret  = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-		private string MY_JUDO_ID       = "100915867";
+		private const string ApiToken   = "[Application ApiToken]";//retrieve from JudoPortal
+		private const string ApiSecret  = "[Application ApiSecret]";//retrieve from JudoPortal
+		private string MY_JUDO_ID       = "[Judo ID]"; //Received when registering an account with Judo
         private string currency         = "GBP";
         private decimal amount          = 4.99M;
         private string paymentReference = "payment101010102";
