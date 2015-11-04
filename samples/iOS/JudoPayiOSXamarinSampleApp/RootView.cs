@@ -226,9 +226,6 @@ namespace JudoPayiOSXamarinSampleApp
 				},
 				ConsumerRef=new NSString (@"GenerateYourOwnCustomerRefHere"),
 				MerchantIdentifier = new NSString ("merchant.com.judo.Xamarin")
-
-
-
 			};
 			return applePayment;
 		}
