@@ -32,7 +32,7 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class TokenPaymentView : UIViewController
+	internal partial class TokenPaymentView : UIViewController
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;

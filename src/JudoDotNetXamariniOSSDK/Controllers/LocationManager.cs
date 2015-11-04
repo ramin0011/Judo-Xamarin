@@ -27,7 +27,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-    class LocationManager
+	internal class LocationManager
     {
         private bool stopped;
         private CLLocation _currentLocationAquired;

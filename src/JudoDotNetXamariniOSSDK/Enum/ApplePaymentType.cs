@@ -2,7 +2,7 @@
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public enum ApplePaymentType
+	internal enum ApplePaymentType
 	{
 		Payment,
 		PreAuth

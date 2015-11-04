@@ -67,7 +67,7 @@ namespace JudoDotNetXamariniOSSDK.Utils
         }
     }
 
-    public class ClientDetails
+	internal class ClientDetails
     {
         public string OS { get; set; }
         public string DeviceModel { get; set; }

@@ -24,7 +24,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public static class UIExtensions
+	internal static class UIExtensions
 	{
 		public static void Disable(this UIButton button)
 		{

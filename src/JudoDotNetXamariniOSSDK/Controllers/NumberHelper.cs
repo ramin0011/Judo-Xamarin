@@ -5,7 +5,7 @@ using System.Globalization;
 namespace JudoDotNetXamariniOSSDK
 {
 
-		public static class NumberHelper
+	internal static class NumberHelper
 		{
 			public static decimal ToDecimal(this NSDecimalNumber number)
 			{

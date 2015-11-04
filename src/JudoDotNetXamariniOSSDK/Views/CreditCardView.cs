@@ -32,7 +32,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class CreditCardView : UIViewController
+	internal partial class CreditCardView : UIViewController
 	{
 		private UIView _activeview;
 		private bool _moveViewUp;

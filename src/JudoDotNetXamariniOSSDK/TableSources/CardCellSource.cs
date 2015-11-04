@@ -25,7 +25,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class CardCellSource : UITableViewSource
+	internal class CardCellSource : UITableViewSource
 	{
 	    private List<CardCell> TableItems;
 

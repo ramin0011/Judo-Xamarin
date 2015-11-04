@@ -33,7 +33,7 @@ using nuint = global::System.UInt32;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register ("CreditCardView")]
-	partial class CreditCardView
+	partial  class CreditCardView
 	{
 		[Outlet]
 		UIView EncapsulatingView { get; set; }

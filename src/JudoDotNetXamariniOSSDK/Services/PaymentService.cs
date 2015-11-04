@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class PaymentService : IPaymentService
+	internal class PaymentService : IPaymentService
 	{
 		private	JudoPayApi _judoAPI;
 
