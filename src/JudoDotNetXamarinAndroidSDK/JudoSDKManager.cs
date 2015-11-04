@@ -26,6 +26,7 @@ using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 using Environment = JudoPayDotNet.Enums.Environment;
 using Error = JudoDotNetXamarinSDK.Models.Error;
 using Result = Android.App.Result;
+using System.Diagnostics;
 
 namespace JudoDotNetXamarinSDK
 {
@@ -228,5 +229,14 @@ namespace JudoDotNetXamarinSDK
         {
             return JObject.FromObject(ClientDetailsProvider.GetClientDetails(context));
         }
+
+		internal static string GetSDKVersion ()
+		{
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+			string version = fvi.FileVersion;
+
+			return "Xamarin-Android-" + version;
+		}
     }
 }
