@@ -22,6 +22,7 @@ libraries:
     - ../src/JudoDotNetXamarin/bin/Release/JudoDotNetXamarin.dll
     - ../src/JudoDotNetXamariniOSSDK/bin/Release/JudoDotNetXamariniOSSDK.dll
     - ../lib/JudoPayDotNet.dll
+    - ../lib/JudoShieldXamarin.dll
 samples:
   - name: "iOS Unified Sample"
     path: ../samples/iOS/JudoPayiOSXamarinSampleApp.sln
