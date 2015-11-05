@@ -1,4 +1,4 @@
-using Environment = JudoPayDotNet.Enums.Environment;
+using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamarinSDK.Configurations
 {
@@ -33,6 +33,6 @@ namespace JudoDotNetXamarinSDK.Configurations
         /// <param name="apiToken">The API token.</param>
         /// <param name="apiSecret">The API secret.</param>
         /// <param name="environment">The environment.</param>
-        void SetApiTokenAndSecret(string apiToken, string apiSecret, Environment environment = Environment.Sandbox);
+        void SetApiTokenAndSecret(string apiToken, string apiSecret, JudoEnvironment environment = JudoEnvironment.Sandbox);
     }
 }

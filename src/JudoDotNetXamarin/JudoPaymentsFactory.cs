@@ -7,7 +7,7 @@ using JudoDotNetXamarin.Logging;
 using JudoPayDotNet;
 using JudoPayDotNet.Authentication;
 using JudoPayDotNet.Http;
-using Environment = JudoPayDotNet.Enums.Environment;
+using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamarin
 {
@@ -20,15 +20,15 @@ namespace JudoDotNetXamarin
         private static readonly string API_VERSION = "4.1.0.0";
         private const string Apiversionheader = "api-version";
 
-        private static JudoPayApi Create(Credentials credentials, Environment environment)
+        private static JudoPayApi Create(Credentials credentials, JudoEnvironment environment)
         {
             string baseUrl = null;
             switch (environment)
             {
-                case Environment.Live:
+                case JudoEnvironment.Live:
 				baseUrl = LIVE_URL;
                     break;
-                case Environment.Sandbox:
+            case JudoEnvironment.Sandbox:
 				baseUrl = SANDBOX_URL;
                     break;
             }
@@ -44,12 +44,12 @@ namespace JudoDotNetXamarin
             return new JudoPayApi(XamarinLoggerFactory.Create, client);
         }
 
-        public static JudoPayApi Create(Environment environment, string token, string secret)
+        public static JudoPayApi Create(JudoEnvironment environment, string token, string secret)
         {
             return Create(new Credentials(token, secret), environment);
         }
 
-        public static JudoPayApi Create(Environment environment, string oauthAccessToken)
+        public static JudoPayApi Create(JudoEnvironment environment, string oauthAccessToken)
         {
             return Create(new Credentials(oauthAccessToken), environment);
         }

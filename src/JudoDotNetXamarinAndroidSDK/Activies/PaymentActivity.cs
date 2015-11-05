@@ -18,7 +18,6 @@ using JudoDotNetXamarinSDK.Ui;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamarinSDK.Activies
 {

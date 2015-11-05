@@ -64,7 +64,7 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withoutui);
 
             // setting up API token/secret 
-            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret,JudoPayDotNet.Enums.Environment.Live);
+            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
             JudoSDKManager.Configuration.IsAVSEnabled = true;
             JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
             JudoSDKManager.Configuration.IsMaestroEnabled = true;

@@ -1,6 +1,6 @@
 ﻿using System;
 using JudoPayDotNet.Models;
-using Environment = JudoPayDotNet.Enums.Environment;
+using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -30,7 +30,7 @@ namespace JudoDotNetXamariniOSSDK
         /// <summary>
         /// Environment SANDBOX or LIVE
         /// </summary>
-        public Environment Environment { get; set; }
+        public JudoEnvironment Environment { get; set; }
 	}
 }
 

@@ -4,7 +4,6 @@ using JudoDotNetXamariniOSSDK.Clients;
 using JudoDotNetXamariniOSSDK.Utils;
 using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
-using Environment = JudoPayDotNet.Enums.Environment;
 using System.Drawing;
 using PassKit;
 using System.Diagnostics;

@@ -2,7 +2,7 @@
 using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
-using Environment = JudoPayDotNet.Enums.Environment;
+using JudoPayDotNet.Enums;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -56,7 +56,7 @@ namespace JudoPayiOSXamarinSampleApp
 			var configInstance = JudoConfiguration.Instance;
 
 			//setting for Sandnox
-			configInstance.Environment = Environment.Live;
+            configInstance.Environment = JudoEnvironment.Live;
 
 
 			/*
