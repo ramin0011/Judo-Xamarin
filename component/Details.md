@@ -21,3 +21,4 @@ Version 2.1.0
 - Judo Shield Support
 - Device DNA
 - Improved Sample application UI
+- Improved SDK Configuration

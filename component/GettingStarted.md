@@ -31,7 +31,7 @@ protected override void OnCreate( Bundle bundle )
 	JudoSDKManager.Configuration.SetApiTokenAndSecret(
 	ApiToken, 
 	ApiSecret,
-	JudoPayDotNet.Enums.Environment.Sandbox );
+	JudoEnvironment.Sandbox );
 	
 	JudoSDKManager.Configuration.IsAVSEnabled = true;
 	JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
@@ -48,7 +48,7 @@ public override bool FinishedLaunching (UIApplication a,NSDictionary o)
 var configInstance = JudoConfiguration.Instance;
 
 	//setting for SandBox
-	configInstance.Environment = JudoPayDotNet.Enums.Environment.Sandbox;
+	configInstance.Environment = JudoEnvironment.Sandbox;
 
 	configInstance.ApiToken =  "{ApiToken}";
 	configInstance.ApiSecret = "{ApiSecret}";
@@ -67,7 +67,7 @@ var configInstance = JudoConfiguration.Instance;
 }
 ```
 
-**Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `Environment.Sandbox` to `Environment.live`
+**Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `JudoEnvironment.Sandbox` to `JudoEnvironment.live`
 
 
 ### Card payment
@@ -182,7 +182,7 @@ The iOS Implementation supports 3D Secure Validation on payment,PreAuthorisation
 
 The iOS Implementation supports Apple Pay on payments and PreAuthorisations.
 
-To integrate ApplePay with your app, you must set it up at the Judo Account level ([https://www.judopay.com/docs/v4_6/apple-pay/quickstart/](guide here)), as well as make some changes to your applications settings.
+To integrate ApplePay with your app, you must set it up at the Judo Account level ([guide here](https://www.judopay.com/docs/v4_6/apple-pay/quickstart/)), as well as make some changes to your applications settings.
 
 Add this block of code in your applications Entitlements.Plist:
 ```
