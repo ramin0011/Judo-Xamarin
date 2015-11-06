@@ -18,7 +18,6 @@ using JudoDotNetXamarinSDK.Ui;
 using JudoDotNetXamarinSDK.Utils;
 using JudoPayDotNet.Models;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Environment = JudoPayDotNet.Enums.Environment;
 
 namespace JudoDotNetXamarinSDK.Activies
 {
@@ -69,7 +68,8 @@ namespace JudoDotNetXamarinSDK.Activies
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(this)
+                ClientDetails = JudoSDKManager.GetClientDetails(this),
+				UserAgent = JudoSDKManager.GetSDKVersion()
             };
 
             ShowLoadingSpinner(true);

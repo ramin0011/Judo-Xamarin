@@ -2,7 +2,7 @@
 using System.Runtime.Remoting.Contexts;
 using JudoPayDotNet.Models;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -24,10 +24,10 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal class UIMethods : IJudoSDKApi
+	internal class UIMethods :ApplePayMethods, IJudoSDKApi
     {
         private readonly ViewLocator _viewLocator;
-        public UIMethods(ViewLocator viewLocator)
+		public UIMethods(IApplePayService applePayService,ViewLocator viewLocator):base(applePayService)
         {
             _viewLocator = viewLocator;
         }

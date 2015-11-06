@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -25,7 +25,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class CardCellSource : UITableViewSource
+	internal class CardCellSource : UITableViewSource
 	{
 	    private List<CardCell> TableItems;
 

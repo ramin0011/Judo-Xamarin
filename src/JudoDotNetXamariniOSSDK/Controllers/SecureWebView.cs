@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using HomeKit;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -30,7 +30,7 @@ using nuint = global::System.UInt32;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register("SecureWebView")]
-	public partial class SecureWebView :UIWebView
+	internal partial class SecureWebView :UIWebView
 	{
 		
 		public SecureWebView(IntPtr p) : base(p)

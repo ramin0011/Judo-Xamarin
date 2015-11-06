@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public class PaymentService : IPaymentService
+	internal class PaymentService : IPaymentService
 	{
 		private	JudoPayApi _judoAPI;
 
@@ -33,7 +33,8 @@ namespace JudoDotNetXamariniOSSDK
                     IssueNumber = paymentViewModel.Card.IssueNumber,
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails(),
-                    Currency = paymentViewModel.Currency
+                    Currency = paymentViewModel.Currency,
+					UserAgent = JudoSDKManager.GetSDKVersion()
                 };
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
@@ -65,6 +66,7 @@ namespace JudoDotNetXamariniOSSDK
                     IssueNumber = authorisation.Card.IssueNumber,
                     YourPaymentMetaData = authorisation.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails(),
+					UserAgent = JudoSDKManager.GetSDKVersion(),
                     Currency = authorisation.Currency
                 };
 
@@ -92,7 +94,8 @@ namespace JudoDotNetXamariniOSSDK
 				    CV2 = tokenPayment.CV2,
                     ConsumerToken = tokenPayment.ConsumerToken,
                     YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails()
+                    ClientDetails = JudoSDKManager.GetClientDetails(),
+					UserAgent = JudoSDKManager.GetSDKVersion()
 			    };
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
@@ -115,7 +118,8 @@ namespace JudoDotNetXamariniOSSDK
 				CV2 = tokenPayment.CV2,
                 ConsumerToken = tokenPayment.ConsumerToken,
                 YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
-                ClientDetails = JudoSDKManager.GetClientDetails()
+                ClientDetails = JudoSDKManager.GetClientDetails(),
+				UserAgent = JudoSDKManager.GetSDKVersion()
 			};
 			try
 			{

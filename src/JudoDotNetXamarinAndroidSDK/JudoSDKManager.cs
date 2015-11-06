@@ -23,9 +23,10 @@ using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
 using Configuration = JudoDotNetXamarinSDK.Configurations.Configuration;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Environment = JudoPayDotNet.Enums.Environment;
 using Error = JudoDotNetXamarinSDK.Models.Error;
 using Result = Android.App.Result;
+using System.Diagnostics;
+using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamarinSDK
 {
@@ -72,9 +73,9 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        private Environment _environment;
+        private JudoEnvironment _environment;
 
-        public Environment Environment
+        public JudoEnvironment Environment
         {
             get
             {
@@ -130,7 +131,7 @@ namespace JudoDotNetXamarinSDK
             }
         }
 
-        internal void SetEnvironment(Environment environment)
+        internal void SetEnvironment(JudoEnvironment environment)
         {
             lock (_clientLock)
             {
@@ -228,5 +229,14 @@ namespace JudoDotNetXamarinSDK
         {
             return JObject.FromObject(ClientDetailsProvider.GetClientDetails(context));
         }
+
+		internal static string GetSDKVersion ()
+		{
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+			string version = fvi.FileVersion;
+
+			return "Xamarin-Android-" + version;
+		}
     }
 }

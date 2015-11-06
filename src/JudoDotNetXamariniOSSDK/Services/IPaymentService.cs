@@ -4,7 +4,7 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public interface IPaymentService
+	internal interface IPaymentService
 	{
 		Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel payment);
 		Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel payment);

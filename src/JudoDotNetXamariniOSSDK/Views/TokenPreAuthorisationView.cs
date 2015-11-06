@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using JudoPayDotNet.Models;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -30,7 +30,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class TokenPreAuthorisationView : UIViewController
+	internal partial class TokenPreAuthorisationView : UIViewController
 	{
 		IPaymentService _paymentService;
 		bool KeyboardVisible = false;

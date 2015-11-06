@@ -15,4 +15,10 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.0
+Version 2.1.0
+
+- ApplePay Support for Judo Xamarin iOS
+- Judo Shield Support
+- Device DNA
+- Improved Sample application UI
+- Improved SDK Configuration

@@ -2,7 +2,7 @@
 using System.Drawing;
 
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -24,7 +24,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public static class UIExtensions
+	internal static class UIExtensions
 	{
 		public static void Disable(this UIButton button)
 		{

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using JudoPayDotNet.Models;
 
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -33,7 +33,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public partial class PreAuthorisationView : UIViewController
+	internal partial class PreAuthorisationView : UIViewController
 	{
 
 		private UIView activeview;

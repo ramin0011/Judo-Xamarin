@@ -31,7 +31,7 @@ protected override void OnCreate( Bundle bundle )
 	JudoSDKManager.Configuration.SetApiTokenAndSecret(
 	ApiToken, 
 	ApiSecret,
-	JudoPayDotNet.Enums.Environment.Sandbox );
+	JudoEnvironment.Sandbox );
 	
 	JudoSDKManager.Configuration.IsAVSEnabled = true;
 	JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
@@ -48,7 +48,7 @@ public override bool FinishedLaunching (UIApplication a,NSDictionary o)
 var configInstance = JudoConfiguration.Instance;
 
 	//setting for SandBox
-	configInstance.Environment = JudoPayDotNet.Enums.Environment.Sandbox;
+	configInstance.Environment = JudoEnvironment.Sandbox;
 
 	configInstance.ApiToken =  "{ApiToken}";
 	configInstance.ApiSecret = "{ApiSecret}";
@@ -67,7 +67,7 @@ var configInstance = JudoConfiguration.Instance;
 }
 ```
 
-**Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `Environment.Sandbox` to `Environment.live`
+**Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `JudoEnvironment.Sandbox` to `JudoEnvironment.live`
 
 
 ### Card payment
@@ -176,6 +176,71 @@ JudoSDKManager.TokenPayment(tokenPayment, successCallback, failureCallback, this
 ### 3D Secure
 
 The iOS Implementation supports 3D Secure Validation on payment,PreAuthorisation and Registering a card. This applies to UI Mode Only.
+
+
+### Apple Pay
+
+The iOS Implementation supports Apple Pay on payments and PreAuthorisations.
+
+To integrate ApplePay with your app, you must set it up at the Judo Account level ([guide here](https://www.judopay.com/docs/v4_6/apple-pay/quickstart/)), as well as make some changes to your applications settings.
+
+Add this block of code in your applications Entitlements.Plist:
+```
+<dict>
+<key>com.apple.developer.in-app-payments</key> 
+<array> 
+<string>INSERT-MERCHANT-NAME-HERE</string> 
+</array>
+</dict>
+```
+
+After you are all set up making an Apple Pay transaction is just as easy as before
+
+#### Payment
+
+ApplePay
+```
+
+//Construct the viewModel
+var summaryItems = new PKPaymentSummaryItem[] {
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.90"),
+					Label = @"Judo Burrito"
+
+				},
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.10"),
+					Label = @"Extra Guac"
+
+				}
+			};
+			
+			var applePayViewModel = new ApplePayViewModel {
+				
+				CurrencyCode = new NSString ("GBP"),
+				CountryCode = new NSString (@"GB"),
+				SupportedNetworks = new NSString[3]{ new NSString ("Visa"),
+				new NSString ("MasterCard"), new NSString ("Amex") },
+				SummaryItems = summaryItems,
+				TotalSummaryItem = new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("1.00"),//total of the previous items
+					Label = @"El Judorito" // who the transaction is made out to pay
+
+				},
+				ConsumerRef=new NSString (@"GenerateYourOwnCustomerRefHere"),
+				MerchantIdentifier = new NSString ("INSERT_MERCHANT_ID_HERE")
+
+			};
+
+public static void MakeApplePayment (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+
+```
+
+#### PreAuthorise
+ApplePay
+```
+public static void MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+```
 
 
 # Customizing the judoPay UI

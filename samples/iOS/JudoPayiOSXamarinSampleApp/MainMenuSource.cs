@@ -17,7 +17,6 @@ namespace JudoPayiOSXamarinSampleApp
 		public MainMenuSource (Dictionary<string,Action> buttonDictionary)
 		{
 			TableCells = new List<UITableViewCell> ();
-			ButtonDictionary = buttonDictionary;
 			ButtonArray = buttonDictionary.ToArray ();
 			foreach (var buttonProperty in ButtonArray) {
 				var cell = new UITableViewCell ();
@@ -28,7 +27,7 @@ namespace JudoPayiOSXamarinSampleApp
 
 		public override nint RowsInSection (UITableView tableview, nint section)
 		{
-			return ButtonDictionary.Count;
+			return ButtonArray.Length;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)

@@ -2,7 +2,7 @@
 using System.Drawing;
 
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -26,7 +26,7 @@ using nuint = global::System.UInt32;
 namespace JudoDotNetXamariniOSSDK
 {
 	[Register("FixedScrollView")]
-	public class FixedScrollView :UIScrollView
+	internal class FixedScrollView :UIScrollView
 	{
 
 

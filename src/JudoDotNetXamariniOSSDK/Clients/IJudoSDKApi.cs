@@ -3,7 +3,7 @@ using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -25,12 +25,14 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Clients
 {
-    internal interface IJudoSDKApi
+    internal interface IJudoSDKApi 
     {
-        void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+		void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
         void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+
+		void ApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController,ApplePaymentType type);
     }
 }

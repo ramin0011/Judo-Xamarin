@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Linq;
 using JudoPayDotNet.Models;
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -81,7 +81,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		}
 
-		public int LengthOfFormattedStringTilLastGroupForType (CardType type)
+		internal int LengthOfFormattedStringTilLastGroupForType (CardType type)
 		{
 			int idx = 0;
 
@@ -149,12 +149,12 @@ namespace JudoDotNetXamariniOSSDK
 			return CardType.UNKNOWN;
 		}
 
-		string CleanNumber (string str)
+		internal string CleanNumber (string str)
 		{
 			return str.Replace (@" ", @"");
 		}
 
-		public string FormatForViewing (string enteredNumber)
+		internal string FormatForViewing (string enteredNumber)
 		{
 			string cleaned = CleanNumber (enteredNumber);
 			int len = cleaned.Length;
@@ -365,12 +365,12 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public string ccvFormat (CardType type)
+		internal string ccvFormat (CardType type)
 		{
 			return type == CardType.AMEX ? @"%04.4u" : @"%03.3u";
 		}
 
-		public string PromptStringForType (CardType type, bool justNumber)
+		internal string PromptStringForType (CardType type, bool justNumber)
 		{
 			string number = "0000 0000 0000 0000";
 
@@ -396,7 +396,7 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public string CVTwoPromptForType (CardType type, bool justNumber)
+		internal string CVTwoPromptForType (CardType type, bool justNumber)
 		{
 			string text = "CV2";
 
@@ -424,7 +424,7 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public UIImage CreditCardImage (CardType type)
+		internal UIImage CreditCardImage (CardType type)
 		{
 			string name;
 
@@ -449,7 +449,7 @@ namespace JudoDotNetXamariniOSSDK
 		}
 
 
-		public UIImage CreditCardBackImage (CardType type)
+		internal UIImage CreditCardBackImage (CardType type)
 		{
 			string backName;
 

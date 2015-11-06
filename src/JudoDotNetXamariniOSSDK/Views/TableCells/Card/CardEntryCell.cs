@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using JudoPayDotNet.Models;
 
-#if__UNIFIED__
+#if __UNIFIED__
 using Foundation;
 using UIKit;
 using CoreFoundation;
@@ -568,7 +568,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public bool EndDelegate (PlaceHolderTextView placeView, UITextView textview, string formattedText)
+		private bool EndDelegate (PlaceHolderTextView placeView, UITextView textview, string formattedText)
 		{
 
 			if (scrollForward && textScroller.ContentOffset.X < 50f) {
