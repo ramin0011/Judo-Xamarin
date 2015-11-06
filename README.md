@@ -148,6 +148,70 @@ JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.
 ####Note: 
 This callback should be non-blocking
 
+### Apple Pay
+
+The iOS Implementation supports Apple Pay on payments and PreAuthorisations.
+
+To integrate ApplePay with your app, you must set it up at the Judo Account level ([guide here](https://www.judopay.com/docs/v4_6/apple-pay/quickstart/)), as well as make some changes to your applications settings.
+
+Add this block of code in your applications Entitlements.Plist:
+```
+<dict>
+<key>com.apple.developer.in-app-payments</key> 
+<array> 
+<string>INSERT-MERCHANT-NAME-HERE</string> 
+</array>
+</dict>
+```
+
+After you are all set up making an Apple Pay transaction is just as easy as before
+
+#### Payment
+
+ApplePay
+```
+
+//Construct the viewModel
+var summaryItems = new PKPaymentSummaryItem[] {
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.90"),
+					Label = @"Judo Burrito"
+
+				},
+				new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("0.10"),
+					Label = @"Extra Guac"
+
+				}
+			};
+			
+			var applePayViewModel = new ApplePayViewModel {
+				
+				CurrencyCode = new NSString ("GBP"),
+				CountryCode = new NSString (@"GB"),
+				SupportedNetworks = new NSString[3]{ new NSString ("Visa"),
+				new NSString ("MasterCard"), new NSString ("Amex") },
+				SummaryItems = summaryItems,
+				TotalSummaryItem = new PKPaymentSummaryItem () {
+					Amount = new NSDecimalNumber ("1.00"),//total of the previous items
+					Label = @"El Judorito" // who the transaction is made out to pay
+
+				},
+				ConsumerRef=new NSString (@"GenerateYourOwnCustomerRefHere"),
+				MerchantIdentifier = new NSString ("INSERT_MERCHANT_ID_HERE")
+
+			};
+
+public static void MakeApplePayment (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+
+```
+
+#### PreAuthorise
+ApplePay
+```
+public static void MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+```
+
 ## TroubleShooting
 
 -  For further SDK reference please visit our SDK [docs]( https://www.judopay.com/docs/ "Docs")
@@ -175,6 +239,13 @@ Have your say, If you want a feature maybe we can work together on it?
 
 ## Release Notes
 
+####V2.1.0
+- Apple Pay Support for Judo Xamarin iOS: Payments and preauthorisations.
+- JudoShield Support.
+- Device DNA.
+- Improved Sample application UI.
+- Improved SDK Configuration
+- 
 ####V2.0 iOS support
 -  Full suite of judo services are now available to Xamarin iOS developers
   -  Payments
