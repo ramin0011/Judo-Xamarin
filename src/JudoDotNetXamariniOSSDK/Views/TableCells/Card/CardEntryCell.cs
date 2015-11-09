@@ -327,7 +327,7 @@ namespace JudoDotNetXamariniOSSDK
 							updateText = true;
 						} else if (len == lenForCard) {
 							if (cardHelper.isValidNumber (newText)) {
-								if (cardHelper.IsLuhnValid (newText)) {
+								if (newText.IsLuhnValid()) {
 									numberLength = cardHelper.LengthOfFormattedStringForType (Type);
 									creditCardNum = newText;
 

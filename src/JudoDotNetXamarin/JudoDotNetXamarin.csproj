@@ -48,10 +48,14 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\JudoError.cs" />
+    <Compile Include="Helpers\CreditCard.cs" />
+    <Compile Include="Helpers\CSRange.cs" />
+    <Compile Include="JudoConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="JudoPayDotNet">
