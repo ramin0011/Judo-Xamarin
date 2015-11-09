@@ -65,7 +65,7 @@ namespace JudoDotNetXamariniOSSDK
 
 		public override void SetUpCell ()
 		{
-			UIImage frontImage = cardHelper.CreditCardImage (CardType);
+			UIImage frontImage =CardType.CreditCardImage ();
 
 			CALayer layer = EntryEnclosingView.Layer;
 			layer.CornerRadius = 4.0f;

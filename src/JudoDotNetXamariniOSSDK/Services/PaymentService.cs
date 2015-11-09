@@ -1,5 +1,4 @@
 using System;
-
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
 using System.Threading.Tasks;

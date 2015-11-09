@@ -543,12 +543,12 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			if (creditCardImage.Tag != (int)Type || force == true) {
 
-				UIImage frontImage = cardHelper.CreditCardImage (Type);
+				UIImage frontImage = Type.CreditCardImage ();
 				ccImage = new UIImageView (frontImage);
 				ccImage.Frame = creditCardImage.Frame;
 				ccImage.Tag = (int)Type;
 
-				ccBackImage = new UIImageView (cardHelper.CreditCardBackImage (Type));
+				ccBackImage = new UIImageView (Type.CreditCardBackImage ());
 				ccBackImage.Frame = creditCardImage.Frame;
 				ccBackImage.Tag = (int)Type;
 
@@ -711,7 +711,7 @@ namespace JudoDotNetXamariniOSSDK
 			SetUpCell ();
 	
 			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-				UIImage defaultImage = cardHelper.CreditCardImage (CardType.UNKNOWN);
+				UIImage defaultImage = CardType.UNKNOWN.CreditCardImage ();
 				creditCardImage.Image = defaultImage;
 
 			});
