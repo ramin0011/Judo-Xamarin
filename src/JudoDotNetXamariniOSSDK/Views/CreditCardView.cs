@@ -5,6 +5,7 @@ using System.Linq;
 using JudoPayDotNet.Models;
 using System.IO;
 using System.Text;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -49,9 +50,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
-		public SuccessCallback successCallback { private get; set; }
+		public JudoSuccessCallback successCallback { private get; set; }
 
-		public FailureCallback failureCallback { private get; set; }
+		public JudoFailureCallback failureCallback { private get; set; }
 
 
 		public PaymentViewModel cardPayment { get; set; }
@@ -309,7 +310,7 @@ namespace JudoDotNetXamariniOSSDK
 		private void MakePayment ()
 		{
 			try {
-				JudoSDKManager.ShowLoading (this.View);
+				LoadingScreen.ShowLoading (this.View);
              
 				cardPayment.Card = GatherCardDetails ();
 
@@ -322,7 +323,7 @@ namespace JudoDotNetXamariniOSSDK
 						var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
 
-					JudoSDKManager.SummonThreeDSecure(threedDSecureReceipt,SecureWebView);
+					SecureManager.SummonThreeDSecure(threedDSecureReceipt,SecureWebView);
 
 					} else {
 						if (result != null && !result.HasError && result.Response.Result != "Declined") {
@@ -363,12 +364,12 @@ namespace JudoDotNetXamariniOSSDK
 							}
 						}
 
-						JudoSDKManager.HideLoading ();
+						LoadingScreen.HideLoading ();
 					}
 				});
 
 			} catch (Exception ex) {
-				JudoSDKManager.HideLoading ();
+				LoadingScreen.HideLoading ();
 				// Failure callback
 				if (failureCallback != null) {
 					var judoError = new JudoError { Exception = ex };

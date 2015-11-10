@@ -4,6 +4,7 @@ using PassKit;
 using Foundation;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -12,10 +13,10 @@ namespace JudoDotNetXamariniOSSDK
 		IApplePayService _applePayService;
 		NSDecimalNumber _runningTotal;
 		ApplePaymentType _paymentAction;
-		SuccessCallback _successCallBack;
-		FailureCallback _failureCallback;
+		JudoSuccessCallback _successCallBack;
+		JudoFailureCallback _failureCallback;
 		string _customerRef ;
-		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request,string customerRef, ApplePaymentType type, SuccessCallback success, FailureCallback failure)
+		public JudoPKPaymentAuthorizationViewControllerDelegate (IApplePayService applePayService, PKPaymentRequest request,string customerRef, ApplePaymentType type, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
 			_applePayService = applePayService;
 			_runningTotal = request.PaymentSummaryItems [request.PaymentSummaryItems.Length - 1].Amount;

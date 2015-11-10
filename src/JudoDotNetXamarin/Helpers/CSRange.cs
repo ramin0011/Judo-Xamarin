@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	internal class CSRange
 	{

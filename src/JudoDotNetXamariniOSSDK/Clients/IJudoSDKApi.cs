@@ -2,6 +2,7 @@
 using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -23,16 +24,16 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
-namespace JudoDotNetXamariniOSSDK.Clients
+namespace JudoDotNetXamariniOSSDK
 {
     internal interface IJudoSDKApi 
     {
-		void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
-        void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController);
+		void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
+		void PreAuth(PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
+		void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
+		void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
+		void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
 
-		void ApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController,ApplePaymentType type);
+		void ApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController,ApplePaymentType type);
     }
 }

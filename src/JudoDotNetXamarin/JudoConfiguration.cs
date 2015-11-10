@@ -2,7 +2,7 @@
 using JudoPayDotNet.Models;
 using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public class JudoConfiguration
 	{

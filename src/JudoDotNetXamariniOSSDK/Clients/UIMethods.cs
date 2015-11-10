@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Remoting.Contexts;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -22,7 +23,7 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
-namespace JudoDotNetXamariniOSSDK.Clients
+namespace JudoDotNetXamariniOSSDK
 {
 	internal class UIMethods :ApplePayMethods, IJudoSDKApi
     {
@@ -32,7 +33,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             _viewLocator = viewLocator;
         }
 
-        public void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetPaymentView();
             view.successCallback = success;
@@ -44,7 +45,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         }
 
 
-        public void PreAuth(PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void PreAuth(PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetPreAuthView();
 
@@ -55,7 +56,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 			PresentView (navigationController, view);
         }
 
-        public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetTokenPaymentView();
             view.successCallback = success;
@@ -64,7 +65,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 			PresentView (navigationController, view);
         }
 
-        public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetTokenPreAuthView();
             view.successCallback = success;
@@ -73,7 +74,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 			PresentView (navigationController, view);
         }
 
-        public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             var view = _viewLocator.GetRegisterCardView();
             view.successCallback = success;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -44,9 +45,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		private List<CardCell> CellsToShow { get; set; }
 
-		public SuccessCallback successCallback { get; set; }
+		public JudoSuccessCallback successCallback { get; set; }
 
-		public FailureCallback failureCallback { get; set; }
+		public JudoFailureCallback failureCallback { get; set; }
 
 		public TokenPaymentViewModel tokenPayment { get; set; }
 
@@ -170,11 +171,12 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			try {
 
-				JudoSDKManager.ShowLoading (this.View);
+				LoadingScreen.ShowLoading (this.View);
 				var instance = JudoConfiguration.Instance;
 				tokenPayment.CV2 = tokenCell.CCV;
-
+			
 				PaymentButton.Disable();
+
 
 				_paymentService.MakeTokenPreAuthorisation (tokenPayment).ContinueWith (reponse => {
 					var result = reponse.Result;
@@ -199,10 +201,10 @@ namespace JudoDotNetXamariniOSSDK
 
 
 					}
-					JudoSDKManager.HideLoading ();
+					LoadingScreen.HideLoading ();
 				});
 			} catch (Exception ex) {
-				JudoSDKManager.HideLoading ();
+				LoadingScreen.HideLoading ();
 				// Failure callback
 				if (failureCallback != null) {
 					var judoError = new JudoError { Exception = ex };

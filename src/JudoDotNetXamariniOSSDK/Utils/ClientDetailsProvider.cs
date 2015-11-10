@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net.NetworkInformation;
 using JudoShieldXamarin;
+using PassKit;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 
 #if __UNIFIED__
@@ -25,11 +28,11 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
-namespace JudoDotNetXamariniOSSDK.Utils
+namespace JudoDotNetXamariniOSSDK
 {
-    internal static class ClientDetailsProvider
+    public static class ClientDetailsProvider
     {
-        public static ClientDetails GetClientDetails()
+        internal static ClientDetails GetClientDetails()
         {
             if (!JudoSDKManager.RiskSignals)
             {
@@ -65,6 +68,33 @@ namespace JudoDotNetXamariniOSSDK.Utils
 
             return "NoMac";
         }
+
+		public static bool ApplePayAvailable{get{
+				NSString[] paymentNetworks = new NSString[] {
+					new NSString(@"Amex"),
+					new NSString(@"MasterCard"),
+					new NSString(@"Visa")
+				};
+
+				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+					return true;
+				} else {
+
+					return false;
+				}		
+			}}
+
+		public static string GetSDKVersion ()
+		{
+			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+			string version = fvi.FileVersion;
+
+			return "Xamarin-iOS-" + version;
+		}
+
+		
+
     }
 
 	internal class ClientDetails

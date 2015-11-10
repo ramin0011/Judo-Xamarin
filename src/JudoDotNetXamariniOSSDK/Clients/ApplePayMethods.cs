@@ -1,6 +1,7 @@
 ﻿using System;
 using JudoPayDotNet.Models;
 using UIKit;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -13,9 +14,9 @@ namespace JudoDotNetXamariniOSSDK
 			_paymentService = paymentService;
 		}
 
-		public void ApplePayment (ApplePayViewModel viewModel, SuccessCallback success, FailureCallback failure, UINavigationController navigationController, ApplePaymentType type)
+		public void ApplePayment (ApplePayViewModel viewModel, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController, ApplePaymentType type)
 		{
-			if (!JudoSDKManager.ApplePayAvailable) {
+			if (!ClientDetailsProvider.ApplePayAvailable) {
 				failure (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
 						ErrorMessage = "Apple Pay is not enabled on device, application entitlement or setup by user.",
 						ErrorType = JudoApiError.General_Error,
@@ -30,7 +31,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		private void HandleFailure (FailureCallback failure, Exception ex)
+		private void HandleFailure (JudoFailureCallback failure, Exception ex)
 		{
 			if (failure != null) {
 				var judoError = new JudoError {

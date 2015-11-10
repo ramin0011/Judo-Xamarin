@@ -6,6 +6,7 @@ using JudoPayDotNet.Models;
 using System.IO;
 using System.Text;
 using HomeKit;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -101,11 +102,11 @@ namespace JudoDotNetXamariniOSSDK
 
 		private IPaymentService _paymentService;
 		public string ReceiptID;
-		public SuccessCallback _successCallback {  get; set; }
-		public FailureCallback _failureCallback {  get; set; }
+		public JudoSuccessCallback _successCallback {  get; set; }
+		public JudoFailureCallback _failureCallback {  get; set; }
 
 
-		public void SetupWebView(IPaymentService paymentService,SuccessCallback successCallback,FailureCallback failureCallback)
+		public void SetupWebView(IPaymentService paymentService,JudoSuccessCallback successCallback,JudoFailureCallback failureCallback)
 		{
 			_paymentService = paymentService;
 			_successCallback = successCallback;

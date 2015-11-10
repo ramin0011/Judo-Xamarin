@@ -1,7 +1,7 @@
 ﻿using System;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public class CardViewModel
 	{

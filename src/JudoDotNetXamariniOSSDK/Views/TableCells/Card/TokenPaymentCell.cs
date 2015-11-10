@@ -2,6 +2,7 @@
 using System;
 using System.Text;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;

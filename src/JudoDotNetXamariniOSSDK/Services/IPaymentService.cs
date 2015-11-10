@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {

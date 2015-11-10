@@ -1,7 +1,7 @@
 ﻿using System;
 using JudoPayDotNet.Errors;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
     public class JudoError
     {

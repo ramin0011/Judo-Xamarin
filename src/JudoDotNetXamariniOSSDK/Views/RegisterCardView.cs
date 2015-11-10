@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -51,9 +52,9 @@ namespace JudoDotNetXamariniOSSDK
 
 		AVSCell avsCell{ get; set; }
 
-		public SuccessCallback successCallback { get; set; }
+		public JudoSuccessCallback successCallback { get; set; }
 
-		public FailureCallback failureCallback { get; set; }
+		public JudoFailureCallback failureCallback { get; set; }
 
 		public PaymentViewModel registerCardModel { get; set; }
 
@@ -293,7 +294,7 @@ namespace JudoDotNetXamariniOSSDK
 		{
 			try {
 
-				JudoSDKManager.ShowLoading (this.View);
+				LoadingScreen.ShowLoading (this.View);
 				registerCardModel.Card = GatherCardDetails ();
 
 				RegisterButton.Disable();
@@ -303,7 +304,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 			catch (Exception ex)
 			{
-				JudoSDKManager.HideLoading();
+				LoadingScreen.HideLoading();
 				// Failure callback
 				if (failureCallback != null)
 				{
@@ -322,7 +323,7 @@ namespace JudoDotNetXamariniOSSDK
 
 				var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-				JudoSDKManager.SummonThreeDSecure (threedDSecureReceipt, SWebView);
+				SecureManager.SummonThreeDSecure (threedDSecureReceipt, SWebView);
 
 			} else {
 
@@ -362,9 +363,9 @@ namespace JudoDotNetXamariniOSSDK
 						}
 
 					}
-					JudoSDKManager.HideLoading ();
+					LoadingScreen.HideLoading ();
 				} catch (Exception ex) {
-					JudoSDKManager.HideLoading ();
+					LoadingScreen.HideLoading ();
 					// Failure callback
 					if (failureCallback != null) {
 						var judoError = new JudoError { Exception = ex };

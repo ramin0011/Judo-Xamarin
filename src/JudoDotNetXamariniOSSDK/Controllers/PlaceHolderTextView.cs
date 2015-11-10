@@ -30,11 +30,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-
-#define LED_FONT
-
+using JudoDotNetXamarin;
 using System;
 using System.Drawing;
 

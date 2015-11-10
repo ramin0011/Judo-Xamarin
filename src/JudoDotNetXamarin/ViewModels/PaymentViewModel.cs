@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
-	public class PaymentViewModel 
+	public class PaymentViewModel :BasePaymentViewModel
 	{
         /// <summary>
         /// Card Detail

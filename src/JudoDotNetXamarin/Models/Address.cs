@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public class Address
 	{

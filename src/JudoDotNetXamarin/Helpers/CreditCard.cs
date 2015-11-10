@@ -4,7 +4,7 @@ using System.Linq;
 using JudoPayDotNet.Models;
 
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public class CreditCard
 	{

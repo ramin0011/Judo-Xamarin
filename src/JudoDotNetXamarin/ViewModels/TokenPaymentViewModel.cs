@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
-	public class TokenPaymentViewModel 
+	public class TokenPaymentViewModel :BasePaymentViewModel
 	{
         /// <summary>
         /// Card Token

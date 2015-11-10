@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;
@@ -22,7 +23,7 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
-namespace JudoDotNetXamariniOSSDK.Clients
+namespace JudoDotNetXamariniOSSDK
 {
 	internal class NonUIMethods :ApplePayMethods, IJudoSDKApi
     {
@@ -33,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             _paymentService = paymentService;
         }
 
-        public void Payment(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController = null)
+		public void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController = null)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-		private void HandleFailure (FailureCallback failure,Exception ex)
+		private void HandleFailure (JudoFailureCallback failure,Exception ex)
 		{
 			if (failure != null) {
 				var judoError = new JudoError {
@@ -56,7 +57,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 			}
 		}
 
-        public void PreAuth(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void PreAuth(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        public void TokenPayment(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        public void TokenPreAuth(TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             try
             {
@@ -95,7 +96,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        public void RegisterCard(PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
         {
             try
             {
@@ -108,7 +109,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             }
         }
 
-        private static void HandResponse(SuccessCallback success, FailureCallback failure, Task<IResult<ITransactionResult>> reponse)
+		private static void HandResponse(JudoSuccessCallback success, JudoFailureCallback failure, Task<IResult<ITransactionResult>> reponse)
         {
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined")

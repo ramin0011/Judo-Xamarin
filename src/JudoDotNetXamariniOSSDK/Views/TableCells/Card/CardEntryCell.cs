@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;

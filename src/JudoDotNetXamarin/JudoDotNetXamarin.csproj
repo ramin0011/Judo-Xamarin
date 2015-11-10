@@ -51,11 +51,17 @@
     <Compile Include="Helpers\CreditCard.cs" />
     <Compile Include="Helpers\CSRange.cs" />
     <Compile Include="JudoConfiguration.cs" />
+    <Compile Include="ViewModels\BasePaymentViewModel.cs" />
+    <Compile Include="IJudoSDKManager.cs" />
+    <Compile Include="Delegates\JudoFailureCallback.cs" />
+    <Compile Include="Delegates\JudoSuccessCallback.cs" />
+    <Compile Include="Models\ClientDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Delegates\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="JudoPayDotNet">

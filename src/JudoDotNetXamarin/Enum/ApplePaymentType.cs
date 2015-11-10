@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
 [assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	internal enum ApplePaymentType
 	{

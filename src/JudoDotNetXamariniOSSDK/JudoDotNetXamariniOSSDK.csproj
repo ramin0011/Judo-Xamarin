@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="Helpers\LoadingOverlay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Helpers\ThemeBundleReplacement.cs" />
     <Compile Include="Controllers\PlaceHolderTextView.designer.cs">
       <DependentUpon>PlaceHolderTextView.cs</DependentUpon>
@@ -148,6 +147,10 @@
     <Compile Include="Controllers\CardImageHelper.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="Helpers\EnumExtensions.cs" />
+    <Compile Include="Helpers\iOSConstants.cs" />
+    <Compile Include="Controllers\LoadingScreen.cs" />
+    <Compile Include="Controllers\SecureManager.cs" />
+    <Compile Include="JudoSDKManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

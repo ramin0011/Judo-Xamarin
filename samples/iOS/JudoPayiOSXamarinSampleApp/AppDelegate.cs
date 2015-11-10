@@ -3,6 +3,7 @@ using Foundation;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
 using JudoPayDotNet.Enums;
+using JudoDotNetXamarin;
 
 namespace JudoPayiOSXamarinSampleApp
 {

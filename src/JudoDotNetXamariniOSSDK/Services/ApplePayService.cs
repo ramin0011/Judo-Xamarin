@@ -10,6 +10,7 @@ using Foundation;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using JudoPayDotNet.Errors;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -22,7 +23,7 @@ namespace JudoDotNetXamariniOSSDK
 			_judoAPI = judoAPI;
 		}
 
-		public  void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController controller, ApplePaymentType type)
+		public  void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController controller, ApplePaymentType type)
 		{
 			try {
 				PKPaymentRequest request = new PKPaymentRequest ();
@@ -58,13 +59,13 @@ namespace JudoDotNetXamariniOSSDK
 
 
 
-		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,string customerRef, NSDecimalNumber amount, ApplePaymentType type,FailureCallback failure)
+		public async Task<IResult<ITransactionResult>> HandlePKPayment (PKPayment payment,string customerRef, NSDecimalNumber amount, ApplePaymentType type,JudoFailureCallback failure)
 		{
 			try {
 				CardPaymentModel paymentmodel = new CardPaymentModel {
 					JudoId = JudoConfiguration.Instance.JudoId,
 					ClientDetails = JudoSDKManager.GetClientDetails (),
-					UserAgent = JudoSDKManager.GetSDKVersion()
+					UserAgent = ClientDetailsProvider.GetSDKVersion()
 				};
 
 
@@ -76,7 +77,7 @@ namespace JudoDotNetXamariniOSSDK
 					YourConsumerReference = customerRef,
 					Amount = amount.ToDecimal (),
 					ClientDetails = JudoSDKManager.GetClientDetails (),
-					UserAgent = JudoSDKManager.GetSDKVersion(),
+					UserAgent = ClientDetailsProvider.GetSDKVersion(),
 					PkPayment = new PKPaymentInnerModel () {
 						Token = new PKPaymentTokenModel () {
 							PaymentData = jo,

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public enum BillingCountryOptions
 	{

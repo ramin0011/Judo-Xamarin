@@ -1,53 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using JudoDotNetXamariniOSSDK.Clients;
-using JudoDotNetXamariniOSSDK.Utils;
 using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
-using System.Drawing;
-using PassKit;
 using System.Diagnostics;
-
-
-#if __UNIFIED__
-using Foundation;
+using JudoDotNetXamarin;
 using UIKit;
-using CoreFoundation;
-using CoreAnimation;
-using CoreGraphics;
-using ObjCRuntime;
-// Mappings Unified CoreGraphic classes to MonoTouch classes
-using RectangleF = global::CoreGraphics.CGRect;
-using SizeF = global::CoreGraphics.CGSize;
-using PointF = global::CoreGraphics.CGPoint;
-#else
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using MonoTouch.CoreFoundation;
-using MonoTouch.CoreGraphics;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.CoreAnimation;
-// Mappings Unified types to MonoTouch types
-using nfloat = global::System.Single;
-using nint = global::System.Int32;
-using nuint = global::System.UInt32;
-#endif
+using JudoDotNetXamariniOSSDK;
 
 namespace JudoDotNetXamariniOSSDK
 {
     /// <summary>
     /// Callback for success transaction, this should be known blocking call
     /// </summary>
-    public delegate void SuccessCallback(PaymentReceiptModel receipt);
+	/// 
+	/// 
+    //public delegate void SuccessCallback(PaymentReceiptModel receipt);
 
     /// <summary>
     /// Callback for fail transaction, this should be known blocking call
     /// </summary>
-    public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
-	public class JudoSDKManager
+   // public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
+
+
+	public class JudoSDKManager : IJudoSDKManager
 	{
-		
-		
 		internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName ("Courier", 17.0f);
 
         /// <summary>
@@ -70,20 +46,6 @@ namespace JudoDotNetXamariniOSSDK
         /// </summary>
 		public static bool MaestroAccepted { get; set; }
 
-		public static bool ApplePayAvailable{get{
-				NSString[] paymentNetworks = new NSString[] {
-					new NSString(@"Amex"),
-					new NSString(@"MasterCard"),
-					new NSString(@"Visa")
-				};
-
-				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
-					return true;
-				} else {
-
-					return false;
-				}		
-			}}
 
         /// <summary>
         /// Enable/Disable risk signal to pass fruad monitoring device data
@@ -96,8 +58,7 @@ namespace JudoDotNetXamariniOSSDK
         /// </summary>
         public static bool SSLPinningEnabled { get; set; }
 
-        // get the top most view 
-		private static UIView appView = UIApplication.SharedApplication.Windows [0].RootViewController.View;
+       
 
 		private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager> (() => new JudoSDKManager ());
 
@@ -122,14 +83,6 @@ namespace JudoDotNetXamariniOSSDK
             return null;
         }
 
-		public static string GetSDKVersion ()
-		{
-			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-			string version = fvi.FileVersion;
-
-			return "Xamarin-iOS-" + version;
-		}
 
 		internal static void SetUserAgent ()
 		{
@@ -145,7 +98,7 @@ namespace JudoDotNetXamariniOSSDK
 		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
 		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
 		private static readonly IApplePayService ApplePaymentService = ServiceFactory.GetApplePaymentService ();
-		private static LoadingOverlay _loadPop;
+
 
 		private static bool _uiMode { get; set; }
 
@@ -164,35 +117,7 @@ namespace JudoDotNetXamariniOSSDK
 			    _uiMode = value;
 			}
 		}
-
-        /// <summary>
-        /// shows loading screen while processing payment
-        /// </summary>
-        /// <param name="view"></param>
-		internal static void ShowLoading (UIView view)
-		{
-			if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-				_loadPop = new LoadingOverlay (new RectangleF ((view.Frame.Width / 2) - 75f, (view.Frame.Height / 2) - 75f, 150f, 150f), true);
-			} else {
-                view = UIApplication.SharedApplication.Windows[0].RootViewController.View;
-                _loadPop = new LoadingOverlay();
-				_loadPop.Frame = view.Frame;
-			}
-			view.Add (_loadPop);
-		}
-
-        /// <summary>
-        /// hides loading screen while processing payment
-        /// </summary>
-		internal static void HideLoading ()
-		{
-			if (_loadPop != null)
-            {
-				_loadPop.Hide (appView);
-                _loadPop.Dispose();
-            }
-		}
-
+       
         /// <summary>
         /// Process a card payment
         /// </summary>
@@ -200,15 +125,16 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-		public static void Payment (PaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
+			var vc = GetCurrentViewController ();
 			var innerModel = payment.Clone ();
-			if (UIMode && navigationController == null) {
+			if (UIMode && vc == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
 				
-				_judoSdkApi.Payment (innerModel, success, failure, navigationController);
+				_judoSdkApi.Payment (innerModel, success, failure, vc as UINavigationController);
 			}
 		}
 
@@ -219,14 +145,15 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-		public static void PreAuth (PaymentViewModel preAuthorisation, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public  void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
+			var vc = GetCurrentViewController ();
 			var innerModel = preAuthorisation.Clone ();
-			if (UIMode && navigationController == null) {
+			if (UIMode && vc == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.PreAuth (innerModel, success, failure, navigationController);
+				_judoSdkApi.PreAuth (innerModel, success, failure, vc as UINavigationController);
 			}
 		}
 
@@ -237,14 +164,15 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-		public static void TokenPayment (TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
+			var vc = GetCurrentViewController ();
 			var innerModel = payment.Clone ();
-			if (UIMode && navigationController == null) {
+			if (UIMode && vc == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.TokenPayment (innerModel, success, failure, navigationController);
+				_judoSdkApi.TokenPayment (innerModel, success, failure, vc as UINavigationController);
 			}
 		}
 
@@ -255,14 +183,15 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-		public static void TokenPreAuth (TokenPaymentViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
+			var vc = GetCurrentViewController ();
 			var innerModel = payment.Clone ();
-			if (UIMode && navigationController == null) {
+			if (UIMode && vc == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-				_judoSdkApi.TokenPreAuth (innerModel, success, failure, navigationController);
+				_judoSdkApi.TokenPreAuth (innerModel, success, failure, vc as UINavigationController);
 			}
 		}
 
@@ -273,64 +202,54 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="success">Callback for success transaction</param>
         /// <param name="failure">Callback for fail transaction</param>
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
-		public static void RegisterCard (PaymentViewModel registerCard, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
+			var vc = GetCurrentViewController ();
 			var innerModel = registerCard.Clone ();
-			if (UIMode && navigationController == null) {
+			if (UIMode && vc == null) {
 				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
 				failure (error);
 			} else {
-                _judoSdkApi.RegisterCard(innerModel, success, failure, navigationController);
+				_judoSdkApi.RegisterCard(innerModel, success, failure, vc as UINavigationController);
 			}
 		}
 
-		public static void MakeApplePayment (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+		public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.Payment);
-		}
+			var vc = GetCurrentViewController ();
 
-		public static void MakeApplePreAuth (ApplePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
-		{
-
-			_judoSdkApi.ApplePayment(payment,success,failure,navigationController,ApplePaymentType.PreAuth);
-
-		}
-
-		internal static void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, SecureWebView secureWebView)
-		{
-			secureWebView.ReceiptID =	threedDSecureReceipt.ReceiptId;
-
-			NSCharacterSet allowedCharecterSet = NSCharacterSet.FromString (@":/=,!$&'()*+;[]@#?").InvertedSet;
-			NSString paReq = new NSString (threedDSecureReceipt.PaReq);
-			var encodedPaReq = paReq.CreateStringByAddingPercentEncoding (allowedCharecterSet);
-
-			NSString termUrl = new NSString ("judo1234567890://threedsecurecallback");
-			var encodedTermUrl = termUrl.CreateStringByAddingPercentEncoding (allowedCharecterSet);
-
-
-			NSUrl url = new NSUrl (threedDSecureReceipt.AcsUrl);
-
-			NSMutableUrlRequest req = new NSMutableUrlRequest (url);
-
-			NSString postString = new NSString ("MD=" + threedDSecureReceipt.Md + "&PaReq=" + encodedPaReq + "&TermUrl=" + encodedTermUrl + "");
-			NSData postData = postString.Encode (NSStringEncoding.UTF8);
-
-			req.HttpMethod = "POST";
-			req.Body = postData;
-
-			try {
-				DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-					secureWebView.LoadRequest (req);
-
-					JudoSDKManager.HideLoading ();
-					secureWebView.Hidden = false;
-				});
-			} catch (Exception e) {
-				if (secureWebView._failureCallback != null) {
-					var judoError = new JudoError { Exception = e };
-					secureWebView._failureCallback (judoError);
-				}
+			if (vc == null) {
+				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null.") };
+				failure (error);
+			} else {
+				_judoSdkApi.ApplePayment(payment,success,failure,vc as UINavigationController,ApplePaymentType.Payment);
 			}
+
+		}
+
+		public void MakeApplePreAuth (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
+		{
+			var vc = GetCurrentViewController ();
+			if (vc == null) {
+				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null.") };
+				failure (error);
+			} else {
+				_judoSdkApi.ApplePayment(payment,success,failure,vc as UINavigationController,ApplePaymentType.PreAuth);
+			}
+
+
+		}
+
+	
+		UIViewController GetCurrentViewController ()
+		{
+			var window= UIApplication.SharedApplication.KeyWindow;
+			var vc = window.RootViewController;
+			while (vc.PresentedViewController != null)
+			{
+				vc = vc.PresentedViewController;
+			}
+			return vc;
 		}
     }
 }

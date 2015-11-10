@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Text;
+using JudoDotNetXamarin;
 
 #if __UNIFIED__
 using Foundation;

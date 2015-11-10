@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamarin
 {
 	public class Card
 	{

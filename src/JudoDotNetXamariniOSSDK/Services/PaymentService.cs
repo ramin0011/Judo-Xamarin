@@ -2,6 +2,7 @@ using System;
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
 using System.Threading.Tasks;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -33,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails(),
                     Currency = paymentViewModel.Currency,
-					UserAgent = JudoSDKManager.GetSDKVersion()
+					UserAgent = ClientDetailsProvider.GetSDKVersion()
                 };
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
@@ -65,7 +66,7 @@ namespace JudoDotNetXamariniOSSDK
                     IssueNumber = authorisation.Card.IssueNumber,
                     YourPaymentMetaData = authorisation.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails(),
-					UserAgent = JudoSDKManager.GetSDKVersion(),
+					UserAgent = ClientDetailsProvider.GetSDKVersion(),
                     Currency = authorisation.Currency
                 };
 
@@ -94,7 +95,7 @@ namespace JudoDotNetXamariniOSSDK
                     ConsumerToken = tokenPayment.ConsumerToken,
                     YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
                     ClientDetails = JudoSDKManager.GetClientDetails(),
-					UserAgent = JudoSDKManager.GetSDKVersion()
+					UserAgent = ClientDetailsProvider.GetSDKVersion()
 			    };
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
@@ -118,7 +119,7 @@ namespace JudoDotNetXamariniOSSDK
                 ConsumerToken = tokenPayment.ConsumerToken,
                 YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
                 ClientDetails = JudoSDKManager.GetClientDetails(),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+				UserAgent = ClientDetailsProvider.GetSDKVersion()
 			};
 			try
 			{
