@@ -14,7 +14,7 @@ using Android.Views.Animations;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Java.Security;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 
 namespace JudoDotNetXamarinSDK.Ui
 {
@@ -59,7 +59,7 @@ namespace JudoDotNetXamarinSDK.Ui
             Orientation = Orientation.Vertical;
 
             cardImageView = new CardImageView(Context);
-            cardImageView.SetCardImageWithoutAnimation(JudoSDKManager.GetCardResourceId(Context, currentCard, true));
+            cardImageView.SetCardImageWithoutAnimation(JudoSDKManagerA.GetCardResourceId(Context, currentCard, true));
 
             LinearLayout layoutHolder = new LinearLayout(Context);
             layoutHolder.Orientation = Orientation.Horizontal;
@@ -110,20 +110,20 @@ namespace JudoDotNetXamarinSDK.Ui
 
                 if (currentCardType != currentCard)
                 {
-                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManager.Configuration.IsAVSEnabled)
+                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManagerA.Configuration.IsAVSEnabled)
                     {
                         cardNumberTextView.ShowInvalid("AmEx not accepted");
                     }
-                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManager.Configuration.IsMaestroEnabled)
+                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManagerA.Configuration.IsMaestroEnabled)
                     {
                         cardNumberTextView.ShowInvalid("Maestro not accepted");
                     }
                     else
                     {
-                        cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCardType, true), false);
-                        cardNumberTextView.SetHintText(JudoSDKManager.GetCardHintFormat(currentCardType));
-                        cardExpiryCv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(currentCardType));
-                        cardExpiryCv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(currentCardType));
+                        cardImageView.SetCardImage(JudoSDKManagerA.GetCardResourceId(Context, currentCardType, true), false);
+                        cardNumberTextView.SetHintText(JudoSDKManagerA.GetCardHintFormat(currentCardType));
+                        cardExpiryCv2TextView.SetHintText(JudoSDKManagerA.GetExpiryAndValidationHintFormat(currentCardType));
+                        cardExpiryCv2TextView.SetErrorText(JudoSDKManagerA.GetExpiryAndValidationErrorMessage(currentCardType));
                     }
 
                     currentCard = currentCardType;
@@ -155,7 +155,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
                 if (position > 4)
                 {
-                    cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCard, false), true);
+                    cardImageView.SetCardImage(JudoSDKManagerA.GetCardResourceId(Context, currentCard, false), true);
                     if (HintTextView != null)
                     {
                         HintTextView.SetText(Resource.String.enter_card_cv2);
@@ -175,7 +175,7 @@ namespace JudoDotNetXamarinSDK.Ui
                 }
                 else
                 {
-                    cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCard, true), true);
+                    cardImageView.SetCardImage(JudoSDKManagerA.GetCardResourceId(Context, currentCard, true), true);
                     if (HintTextView != null)
                     {
                         HintTextView.SetText(Resource.String.enter_card_expiry);
@@ -198,7 +198,7 @@ namespace JudoDotNetXamarinSDK.Ui
             cardNumberTextView.GetEditText().Text = "";
             cardExpiryCv2TextView.GetEditText().Text = "";
             currentCard = CardBase.CardType.UNKNOWN;
-            cardImageView.SetCardImage(JudoSDKManager.GetCardResourceId(Context, currentCard, true), false);
+            cardImageView.SetCardImage(JudoSDKManagerA.GetCardResourceId(Context, currentCard, true), false);
 
             if (HintTextView != null)
             {

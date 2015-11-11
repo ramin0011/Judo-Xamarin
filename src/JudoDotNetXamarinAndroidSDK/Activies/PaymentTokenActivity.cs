@@ -44,13 +44,13 @@ namespace JudoDotNetXamarinSDK.Activies
             SetHelpText(Resource.String.help_info, Resource.String.help_cv2_text);
             SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoPaymentRef = Intent.GetStringExtra(JudoSDKManager.JUDO_PAYMENT_REF);
+            judoPaymentRef = Intent.GetStringExtra(JudoSDKManagerA.JUDO_PAYMENT_REF);
 
-            judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra(JudoSDKManager.JUDO_CURRENCY);
-            judoCardToken = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<CardToken>();
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManagerA.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra(JudoSDKManagerA.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra(JudoSDKManagerA.JUDO_CURRENCY);
+            judoCardToken = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CARD_DETAILS).JavaCast<CardToken>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
 
             if (judoPaymentRef == null)
             {
@@ -79,7 +79,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             cv2EntryView.SetCardDetails(judoCardToken);
 
-            judoMetaData = Intent.GetParcelableExtra(JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData>();
+            judoMetaData = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_META_DATA).JavaCast<MetaData>();
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
@@ -89,7 +89,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
         public override void OnBackPressed()
         {
-            SetResult(JudoSDKManager.JUDO_CANCELLED);
+            SetResult(JudoSDKManagerA.JUDO_CANCELLED);
             base.OnBackPressed();
         }
 
@@ -106,13 +106,13 @@ namespace JudoDotNetXamarinSDK.Activies
                 YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2(),
-                ClientDetails = JudoSDKManager.GetClientDetails(this),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
             ShowLoadingSpinner(true);
 
-            JudoSDKManager.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+            JudoSDKManagerA.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner(bool show)

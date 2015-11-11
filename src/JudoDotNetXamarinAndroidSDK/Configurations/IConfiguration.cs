@@ -1,6 +1,6 @@
 using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamarinSDK.Configurations
+namespace JudoDotNetXamarinSDK
 {
     /// <summary>
     /// JudoPay Sdk configurations

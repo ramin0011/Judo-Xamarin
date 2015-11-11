@@ -15,7 +15,7 @@ using Java.Interop;
 using Java.IO;
 using Java.Util;
 
-namespace JudoDotNetXamarinSDK.Utils
+namespace JudoDotNetXamarinSDK
 {
     public class RootCheck
     {

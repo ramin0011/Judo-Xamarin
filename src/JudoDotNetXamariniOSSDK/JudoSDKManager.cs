@@ -127,15 +127,11 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
+			
 			var innerModel = payment.Clone ();
-			if (UIMode && vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-				failure (error);
-			} else {
-				
-				_judoSdkApi.Payment (innerModel, success, failure, vc as UINavigationController);
-			}
+
+				_judoSdkApi.Payment (innerModel, success, failure);
+
 		}
 
         /// <summary>
@@ -147,14 +143,8 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public  void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
 			var innerModel = preAuthorisation.Clone ();
-			if (UIMode && vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-				failure (error);
-			} else {
-				_judoSdkApi.PreAuth (innerModel, success, failure, vc as UINavigationController);
-			}
+			_judoSdkApi.PreAuth (innerModel, success, failure);
 		}
 
         /// <summary>
@@ -166,14 +156,10 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
+
 			var innerModel = payment.Clone ();
-			if (UIMode && vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-				failure (error);
-			} else {
-				_judoSdkApi.TokenPayment (innerModel, success, failure, vc as UINavigationController);
-			}
+			_judoSdkApi.TokenPayment (innerModel, success, failure);
+
 		}
 
         /// <summary>
@@ -185,14 +171,10 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
+			
 			var innerModel = payment.Clone ();
-			if (UIMode && vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-				failure (error);
-			} else {
-				_judoSdkApi.TokenPreAuth (innerModel, success, failure, vc as UINavigationController);
-			}
+			_judoSdkApi.TokenPreAuth (innerModel, success, failure);
+
 		}
 
         /// <summary>
@@ -204,39 +186,24 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
 		public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
+
 			var innerModel = registerCard.Clone ();
-			if (UIMode && vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-				failure (error);
-			} else {
-				_judoSdkApi.RegisterCard(innerModel, success, failure, vc as UINavigationController);
-			}
+
+			_judoSdkApi.RegisterCard(innerModel, success, failure);
+
 		}
 
 		public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
 
-			if (vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null.") };
-				failure (error);
-			} else {
-				_judoSdkApi.ApplePayment(payment,success,failure,vc as UINavigationController,ApplePaymentType.Payment);
-			}
-
+			_judoSdkApi.ApplePayment(payment,success,failure,ApplePaymentType.Payment);
+		
 		}
 
 		public void MakeApplePreAuth (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-			var vc = GetCurrentViewController ();
-			if (vc == null) {
-				var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null.") };
-				failure (error);
-			} else {
-				_judoSdkApi.ApplePayment(payment,success,failure,vc as UINavigationController,ApplePaymentType.PreAuth);
-			}
 
+			_judoSdkApi.ApplePayment(payment,success,failure,ApplePaymentType.PreAuth);
 
 		}
 

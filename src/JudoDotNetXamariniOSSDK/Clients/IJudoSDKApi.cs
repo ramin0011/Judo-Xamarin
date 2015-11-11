@@ -28,12 +28,12 @@ namespace JudoDotNetXamariniOSSDK
 {
     internal interface IJudoSDKApi 
     {
-		void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
-		void PreAuth(PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
-		void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
-		void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
-		void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController);
+		void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+		void PreAuth(PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure);
+		void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+		void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+		void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
 
-		void ApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController,ApplePaymentType type);
+		void ApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure,ApplePaymentType type);
     }
 }

@@ -13,7 +13,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Util;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using Orientation = Android.Widget.Orientation;
 
 namespace JudoDotNetXamarinSDK.Ui

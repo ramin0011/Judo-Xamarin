@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Android.Content;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarinSDK.Clients
+namespace JudoDotNetXamarinSDK
 {
     /// <summary>
     /// Provides a set of operations that receive all the information gathered by the developer app and directly interact with JudoPay backend server
@@ -26,7 +26,7 @@ namespace JudoDotNetXamarinSDK.Clients
         /// <param name="expiryDate">The expiry date.</param>
         /// <param name="cv2">The CV2.</param>
         /// <returns>The transaction result of the operation.</returns>
-        Task<IResult<ITransactionResult>> Payment(Context context, string judoId,
+        Task<IResult<ITransactionResult>> Payment(string judoId,
             string currency, decimal amount, string paymentReference,
             string consumerReference, IDictionary<string, string> metaData, string cardNumber,
             string postCode, string startDate, string expiryDate, string cv2);

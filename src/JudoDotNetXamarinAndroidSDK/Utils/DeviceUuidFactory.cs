@@ -15,7 +15,7 @@ using Java.Lang;
 using Java.Util;
 using Exception = System.Exception;
 
-namespace JudoDotNetXamarinSDK.Utils
+namespace JudoDotNetXamarinSDK
 {
     public class DeviceUuidFactory
     {

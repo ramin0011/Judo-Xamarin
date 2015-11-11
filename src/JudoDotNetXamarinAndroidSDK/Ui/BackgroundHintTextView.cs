@@ -16,7 +16,7 @@ using Android.Views.Animations;
 using Android.Widget;
 using Java.Lang;
 using Java.Util;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using Exception = System.Exception;
 
 namespace JudoDotNetXamarinSDK.Ui
@@ -253,7 +253,7 @@ namespace JudoDotNetXamarinSDK.Ui
                     }
                     catch (Exception exception)
                     {
-                        Log.Error(JudoSDKManager.DEBUG_TAG, exception.Message, exception);
+                        Log.Error(JudoSDKManagerA.DEBUG_TAG, exception.Message, exception);
                     }
 
                     ShowInvalid();

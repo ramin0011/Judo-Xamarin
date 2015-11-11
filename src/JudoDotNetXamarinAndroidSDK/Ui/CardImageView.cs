@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 
 namespace JudoDotNetXamarinSDK.Ui
 {
@@ -40,7 +40,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public void SetCardType(CardBase.CardType cardType)
         {
-            SetCardImageWithoutAnimation(JudoSDKManager.GetCardResourceId(Context, cardType, true));            
+            SetCardImageWithoutAnimation(JudoSDKManagerA.GetCardResourceId(Context, cardType, true));            
         }
 
         public void SetCardImage(int drawbleId, bool vertical)

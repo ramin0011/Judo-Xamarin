@@ -13,7 +13,7 @@ using Android.Views;
 using Android.Widget;
 using System.IO;
 
-namespace JudoDotNetXamarinSDK.Utils
+namespace JudoDotNetXamarinSDK
 {
     public static class Typefaces
     {
@@ -33,7 +33,7 @@ namespace JudoDotNetXamarinSDK.Utils
                     }
                     catch (Exception e)
                     {
-                        Log.Error(JudoSDKManager.DEBUG_TAG,
+                        Log.Error(JudoSDKManagerA.DEBUG_TAG,
                             "Could not get typeface '" + assetPath + "' because " + e.Message);
                         return null;
                     }

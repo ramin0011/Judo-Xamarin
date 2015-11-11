@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 
 namespace JudoDotNetXamarinSDK.Ui
 {
@@ -33,7 +33,7 @@ namespace JudoDotNetXamarinSDK.Ui
 
         private void Init()
         {
-            SetHintText(JudoSDKManager.CardHintFormat(CardBase.CardType.UNKNOWN));
+            SetHintText(JudoSDKManagerA.CardHintFormat(CardBase.CardType.UNKNOWN));
             SetErrorText("Please recheck number");
             //Set additional chars to skip
             SetText(" ");

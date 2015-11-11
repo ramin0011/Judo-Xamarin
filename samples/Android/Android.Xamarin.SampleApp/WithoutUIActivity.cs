@@ -7,7 +7,7 @@ using Android.Widget;
 using Android.OS;
 using JudoDotNetXamarinSDK;
 using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 using System.Collections.Generic;
@@ -64,10 +64,10 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withoutui);
 
             // setting up API token/secret 
-            JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
-            JudoSDKManager.Configuration.IsAVSEnabled = true;
-            JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
-            JudoSDKManager.Configuration.IsMaestroEnabled = true;
+            JudoSDKManagerA.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
+            JudoSDKManagerA.Configuration.IsAVSEnabled = true;
+            JudoSDKManagerA.Configuration.IsFraudMonitoringSignals = true;
+            JudoSDKManagerA.Configuration.IsMaestroEnabled = true;
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -141,7 +141,7 @@ namespace Android.Xamarin.SampleApp
             Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManager.NonUIMethods.Payment(this, MY_JUDO_ID, currency, amount, paymentReference,
+            var paymentTask = JudoSDKManagerA.NonUIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference,
                                                                 consumerRef, metaData, cardNumber, addressPostCode, startDate, expiryDate, cv2);
             dealWithTask(paymentTask, Resource.Id.payCard, ACTION_CARD_PAYMENT);
         }
@@ -168,7 +168,7 @@ namespace Android.Xamarin.SampleApp
             Dictionary<string, string> metaData = new Dictionary<string, string> { { "test1", "test2" } };
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManager.NonUIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference,
+            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference,
                                                                 consumerToken, consumerRef, metaData, cardToken, cv2);
             dealWithTask(paymentTask, Resource.Id.payToken, ACTION_TOKEN_PAYMENT);
         }
@@ -178,7 +178,7 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManager.NonUIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
+            var paymentTask = JudoSDKManagerA.NonUIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
                                                                 consumerRef, null, cardNumber, addressPostCode, startDate, expiryDate, cv2);
             dealWithTask(paymentTask, Resource.Id.payPreAuth, ACTION_PREAUTH);
         }
@@ -197,7 +197,7 @@ namespace Android.Xamarin.SampleApp
             }
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManager.NonUIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
+            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
                                                                 preAuth_consumerToken, consumerRef, null, preAuth_cardToken, cv2);
             dealWithTask(paymentTask, Resource.Id.payTokenPreAuth, ACTION_TOKEN_PREAUTH);
         }
@@ -207,7 +207,7 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var registerCardTask = JudoSDKManager.NonUIMethods.RegisterCard(cardNumber, cv2, expiryDate, consumerRef, addressPostCode);
+            var registerCardTask = JudoSDKManagerA.NonUIMethods.RegisterCard(cardNumber, cv2, expiryDate, consumerRef, addressPostCode);
             dealWithTask(registerCardTask, Resource.Id.registerCard, ACTION_REGISTER_CARD);
         }
 
@@ -228,7 +228,7 @@ namespace Android.Xamarin.SampleApp
                 ResponseText = "Payment Canceled.";
                 return;
             }
-            else if (resultCode == JudoSDKManager.JUDO_ERROR)
+            else if (resultCode == JudoSDKManagerA.JUDO_ERROR)
             {
                 ResponseText = string.Format("Error: {0}", data.Error.ErrorMessage);
                 return;

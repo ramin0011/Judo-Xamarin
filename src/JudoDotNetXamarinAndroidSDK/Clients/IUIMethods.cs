@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Android.Content;
 using JudoDotNetXamarinSDK.Models;
 
-namespace JudoDotNetXamarinSDK.Clients
+namespace JudoDotNetXamarinSDK
 {
     /// <summary>
     /// Provides a set of operations that will receive some parameters and prompt a UI enclosed in this SDK to request the consumer the rest of parameters needed to complete the operations
@@ -20,7 +20,7 @@ namespace JudoDotNetXamarinSDK.Clients
         /// <param name="consumerReference">The consumer reference (YourConsumerReference).</param>
         /// <param name="metaData">The metadata.</param>
         /// <returns>The transaction result of the operation.</returns>
-        Intent Payment(Context context, string judoId, string currency, string amount,
+        Intent Payment(string judoId, string currency, string amount,
             string paymentReference, string consumerReference, Dictionary<string, string> metaData);
 
         /// <summary>

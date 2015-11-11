@@ -16,13 +16,13 @@ using Java.Lang;
 using Java.Util;
 using String = System.String;
 
-namespace JudoDotNetXamarinSDK.Utils
+namespace JudoDotNetXamarinSDK
 {
     public static class ClientDetailsProvider
     {
         public static ClientDetails GetClientDetails(Context context)
         {
-            if (!JudoSDKManager.Configuration.IsFraudMonitoringSignals)
+            if (!JudoSDKManagerA.Configuration.IsFraudMonitoringSignals)
             {
                 return null;
             }
@@ -59,7 +59,7 @@ namespace JudoDotNetXamarinSDK.Utils
             RootCheck rootCheck = new RootCheck(context);
             clientDetails.Root = rootCheck.BuildRootCheckDetails();
 
-            clientDetails.SSLPinningEnabled = JudoSDKManager.Configuration.IsSSLPinningEnabled;
+            clientDetails.SSLPinningEnabled = JudoSDKManagerA.Configuration.IsSSLPinningEnabled;
 
             return clientDetails;
         }

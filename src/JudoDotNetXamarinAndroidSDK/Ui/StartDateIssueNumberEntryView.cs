@@ -11,7 +11,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Security;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 
 namespace JudoDotNetXamarinSDK.Ui
 {

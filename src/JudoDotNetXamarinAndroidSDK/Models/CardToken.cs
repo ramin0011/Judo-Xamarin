@@ -12,7 +12,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Java.Interop;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Clients;
 using Object = Java.Lang.Object;
 

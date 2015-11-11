@@ -7,7 +7,7 @@ using Android.Widget;
 using Android.OS;
 using JudoDotNetXamarinSDK;
 using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 using System.Collections.Generic;
@@ -54,10 +54,10 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withui);
 
             // setting up API token/secret 
-			JudoSDKManager.Configuration.SetApiTokenAndSecret(ApiToken,ApiSecret);
-            JudoSDKManager.Configuration.IsAVSEnabled = true;
-            JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
-            JudoSDKManager.Configuration.IsMaestroEnabled = true;
+			JudoSDKManagerA.Configuration.SetApiTokenAndSecret(ApiToken,ApiSecret);
+            JudoSDKManagerA.Configuration.IsAVSEnabled = true;
+            JudoSDKManagerA.Configuration.IsFraudMonitoringSignals = true;
+            JudoSDKManagerA.Configuration.IsMaestroEnabled = true;
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -84,7 +84,7 @@ namespace Android.Xamarin.SampleApp
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
             Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
             
-            var intent = JudoSDKManager.UIMethods.Payment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
+            var intent = JudoSDKManagerA.UIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
 
             StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         }
@@ -92,7 +92,7 @@ namespace Android.Xamarin.SampleApp
         private void payPreAuth_Click(object sender, EventArgs e)
         {
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            Intent intent = JudoSDKManager.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
+            Intent intent = JudoSDKManagerA.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
 
             StartActivityForResult(intent, ACTION_PREAUTH);
         }
@@ -118,7 +118,7 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManager.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+            var intent = JudoSDKManagerA.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
 
@@ -145,14 +145,14 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManager.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
+            var intent = JudoSDKManagerA.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
 
             StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
         }
 
         private void registerCard_Click(object sender, EventArgs e)
         {
-            var intent = JudoSDKManager.UIMethods.RegisterCard(this, consumerRef);
+            var intent = JudoSDKManagerA.UIMethods.RegisterCard(this, consumerRef);
 
             StartActivityForResult(intent, ACTION_REGISTER_CARD);
         }
@@ -176,21 +176,21 @@ namespace Android.Xamarin.SampleApp
                 Toast.MakeText(this, "Payment Canceled.", ToastLength.Long).Show();
                 return;
             }
-            else if (resultCode == JudoSDKManager.JUDO_ERROR)
+            else if (resultCode == JudoSDKManagerA.JUDO_ERROR)
             {
-                Error err =  data.GetParcelableExtra(JudoSDKManager.JUDO_ERROR_EXCEPTION) as Error;
+                Error err =  data.GetParcelableExtra(JudoSDKManagerA.JUDO_ERROR_EXCEPTION) as Error;
 
-                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE),
+                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE),
                     err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show();
                 return;
             }
 
             if(data != null)
-                receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
+                receipt = data.GetParcelableExtra(JudoSDKManagerA.JUDO_RECEIPT) as Receipt;
 
             if (receipt == null)
             {
-                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
+                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
                 return;
             }
 

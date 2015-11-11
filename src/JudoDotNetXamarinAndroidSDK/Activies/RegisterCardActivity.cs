@@ -15,7 +15,7 @@ using Android.Widget;
 using Java.Lang;
 using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Ui;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 using Exception = System.Exception;
@@ -61,14 +61,14 @@ namespace JudoDotNetXamarinSDK.Activies
             SetHelpText(Resource.String.help_info, Resource.String.help_card_text);
             SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
 
             if (judoConsumer == null)
             {
                 throw new IllegalArgumentException("JUDO_CONSUMER must be supplied");
             }
 
-            judoMetaData = Intent.GetBundleExtra(JudoSDKManager.JUDO_META_DATA);
+            judoMetaData = Intent.GetBundleExtra(JudoSDKManagerA.JUDO_META_DATA);
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
@@ -90,11 +90,11 @@ namespace JudoDotNetXamarinSDK.Activies
                 }
                 catch (InvalidDataException e)
                 {
-                    Log.Error(JudoSDKManager.DEBUG_TAG, e.StackTrace, e);
+                    Log.Error(JudoSDKManagerA.DEBUG_TAG, e.StackTrace, e);
                 }
 
                 bool startDateFocus = false;
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.Configuration.IsMaestroEnabled)
+                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Configuration.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
@@ -102,7 +102,7 @@ namespace JudoDotNetXamarinSDK.Activies
                     aVsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManager.Configuration.IsAVSEnabled && aVsEntryView != null)
+                if (JudoSDKManagerA.Configuration.IsAVSEnabled && aVsEntryView != null)
                 {
                     aVsEntryView.Visibility = ViewStates.Visible;
 
@@ -121,7 +121,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
         public override void OnBackPressed()
         {
-            SetResult(JudoSDKManager.JUDO_CANCELLED);
+            SetResult(JudoSDKManagerA.JUDO_CANCELLED);
             base.OnBackPressed();
         }
 
@@ -145,7 +145,7 @@ namespace JudoDotNetXamarinSDK.Activies
             
             ShowLoadingSpinner(true);
 
-            JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+            JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner(bool show)

@@ -34,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK
             _paymentService = paymentService;
         }
 
-		public void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController = null)
+		public void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace JudoDotNetXamariniOSSDK
 			}
 		}
 
-		public void PreAuth(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
+		public void PreAuth(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-		public void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
+		public void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-		public void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
+		public void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
-		public void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController navigationController)
+		public void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
             try
             {

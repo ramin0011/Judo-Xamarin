@@ -38,13 +38,13 @@ namespace JudoDotNetXamarinSDK.Activies
                 YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2(),
-                ClientDetails = JudoSDKManager.GetClientDetails(this),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
             ShowLoadingSpinner(true);
 
-            JudoSDKManager.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+            JudoSDKManagerA.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

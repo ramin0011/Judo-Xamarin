@@ -12,7 +12,7 @@ using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 
-namespace JudoDotNetXamarinSDK.Utils
+namespace JudoDotNetXamarinSDK
 {
     public class CompatibilityAnimation
     {

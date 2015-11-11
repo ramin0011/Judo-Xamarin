@@ -15,7 +15,7 @@ using Android.Widget;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinSDK.Models;
 using JudoDotNetXamarinSDK.Ui;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 
@@ -53,12 +53,12 @@ namespace JudoDotNetXamarinSDK.Activies
             SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text,
                 Resource.Id.postCodeHelpButton);
 
-            judoPaymentRef = Intent.GetStringExtra(JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManager.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoPaymentRef = Intent.GetStringExtra(JudoSDKManagerA.JUDO_PAYMENT_REF);
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
 
-            judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra(JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra(JudoSDKManager.JUDO_CURRENCY);
+            judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManagerA.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra(JudoSDKManagerA.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra(JudoSDKManagerA.JUDO_CURRENCY);
 
             if (judoPaymentRef == null)
             {
@@ -81,7 +81,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 throw new ArgumentException("JUDO_CURRENCY must be supplied");
             }
 
-            judoMetaData = Intent.Extras.GetParcelable(JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData>();
+            judoMetaData = Intent.Extras.GetParcelable(JudoSDKManagerA.JUDO_META_DATA).JavaCast<MetaData>();
 
             var payButton = FindViewById<Button>(Resource.Id.payButton);
 
@@ -107,14 +107,14 @@ namespace JudoDotNetXamarinSDK.Activies
                     Console.Error.Write(e.StackTrace);
                 }
 
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManager.Configuration.IsMaestroEnabled)
+                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Configuration.IsMaestroEnabled)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
                     avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManager.Configuration.IsAVSEnabled && avsEntryView != null)
+                if (JudoSDKManagerA.Configuration.IsAVSEnabled && avsEntryView != null)
                 {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
@@ -128,7 +128,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
         public override void OnBackPressed()
         {
-            SetResult(JudoSDKManager.JUDO_CANCELLED);
+            SetResult(JudoSDKManagerA.JUDO_CANCELLED);
             base.OnBackPressed();
         }
 
@@ -140,7 +140,7 @@ namespace JudoDotNetXamarinSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel();
 
-            if (JudoSDKManager.Configuration.IsAVSEnabled)
+            if (JudoSDKManagerA.Configuration.IsAVSEnabled)
             {
                 var country = avsEntryView.GetCountry();
                 cardAddress.PostCode = avsEntryView.GetPostCode();
@@ -149,7 +149,7 @@ namespace JudoDotNetXamarinSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManager.Configuration.IsMaestroEnabled)
+            if (JudoSDKManagerA.Configuration.IsMaestroEnabled)
             {
                 issueNumber = startDateEntryView.GetIssueNumber();
                 startDate = startDateEntryView.GetStartDate();
@@ -168,15 +168,15 @@ namespace JudoDotNetXamarinSDK.Activies
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(this),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
 					
             };
 
             ShowLoadingSpinner(true);
 
 
-            var judoPay = JudoSDKManager.JudoClient;
+            var judoPay = JudoSDKManagerA.JudoClient;
 
             judoPay.Payments.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }

@@ -15,7 +15,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Utils;
+using JudoDotNetXamarinSDK;
 using LayoutParams = Android.Widget.LinearLayout.LayoutParams;
 using Orientation = Android.Widget.Orientation;
 
@@ -138,10 +138,10 @@ namespace JudoDotNetXamarinSDK.Ui
 
         public void SetCardType(CardBase.CardType cardType)
         {
-            cv2TextView.SetHintText(JudoSDKManager.GetExpiryAndValidationHintFormat(cardType));
+            cv2TextView.SetHintText(JudoSDKManagerA.GetExpiryAndValidationHintFormat(cardType));
             cv2TextView.SetInputFilter("/");
-            cv2TextView.SetErrorText(JudoSDKManager.GetExpiryAndValidationErrorMessage(cardType));
-            SetCardImageWithoutAnimation(JudoSDKManager.GetCardResourceId(Context, cardType, false));
+            cv2TextView.SetErrorText(JudoSDKManagerA.GetExpiryAndValidationErrorMessage(cardType));
+            SetCardImageWithoutAnimation(JudoSDKManagerA.GetCardResourceId(Context, cardType, false));
         }
 
         public void SetCardImageWithoutAnimation(int drawableId)

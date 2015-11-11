@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
 using JudoPayDotNet.Models;
+using Android.App;
 
-namespace JudoDotNetXamarinSDK.Clients
+namespace JudoDotNetXamarinSDK
 {
     internal class NonUIMethods : INonUIMethods
     {
-        public Task<IResult<ITransactionResult>> Payment(Context context, string judoId, string currency, decimal amount, string paymentReference,
+        public Task<IResult<ITransactionResult>> Payment( string judoId, string currency, decimal amount, string paymentReference,
             string consumerReference, IDictionary<string, string> metaData, 
 			string cardNumber,string postCode, string startDate, string expiryDate, string cv2)
         {
@@ -24,11 +25,11 @@ namespace JudoDotNetXamarinSDK.Clients
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(Application.Context),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManager.JudoClient.Payments.Create(cardPayment);
+            return JudoSDKManagerA.JudoClient.Payments.Create(cardPayment);
         }
 
         public Task<IResult<ITransactionResult>> TokenPayment(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -46,11 +47,11 @@ namespace JudoDotNetXamarinSDK.Clients
                 YourPaymentMetaData = metaData,
                 CardToken = cardToken,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManager.JudoClient.Payments.Create(payment);
+            return JudoSDKManagerA.JudoClient.Payments.Create(payment);
         }
 
         public Task<IResult<ITransactionResult>> PreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -70,11 +71,11 @@ namespace JudoDotNetXamarinSDK.Clients
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManager.JudoClient.PreAuths.Create(cardPayment);
+            return JudoSDKManagerA.JudoClient.PreAuths.Create(cardPayment);
         }
 
         public Task<IResult<ITransactionResult>> TokenPreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -92,11 +93,11 @@ namespace JudoDotNetXamarinSDK.Clients
                 YourPaymentMetaData = metaData,
                 CardToken = cardToken,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManager.GetClientDetails(context),
-				UserAgent = JudoSDKManager.GetSDKVersion()
+                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
+				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManager.JudoClient.PreAuths.Create(payment);
+            return JudoSDKManagerA.JudoClient.PreAuths.Create(payment);
         }
 
         public Task<IResult<ITransactionResult>> RegisterCard(string cardNumber, string cv2, string expiryDate, string consumerReference, string postCode)
@@ -113,7 +114,7 @@ namespace JudoDotNetXamarinSDK.Clients
                 YourConsumerReference = consumerReference
             };
 
-            return JudoSDKManager.JudoClient.RegisterCards.Create(registerCard);
+            return JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard);
         }
     }
 }

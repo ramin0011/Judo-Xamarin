@@ -1,7 +1,7 @@
 using JudoDotNetXamarin;
 using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamarinSDK.Configurations
+namespace JudoDotNetXamarinSDK
 {
     internal class Configuration : IConfiguration
     {
@@ -25,7 +25,7 @@ namespace JudoDotNetXamarinSDK.Configurations
         /// <param name="environment">The environment to use</param>
         public void SetApiTokenAndSecret(string apiToken, string apiSecret, JudoEnvironment environment)
         {
-            var judoSDKManager = JudoSDKManager.Instance;
+            var judoSDKManager = JudoSDKManagerA.Instance;
             judoSDKManager.SetEnvironment(environment);
             judoSDKManager.SetJudoClient(JudoPaymentsFactory.Create(judoSDKManager.Environment, apiToken, apiSecret));
         }
