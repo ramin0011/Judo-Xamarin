@@ -25,11 +25,11 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	internal class NonUIMethods :ApplePayMethods, IJudoSDKApi
+	internal class NonUIMethods :IJudoSDKApi
     {
         private readonly IPaymentService _paymentService;
 
-		public NonUIMethods(IApplePayService applePayService,IPaymentService paymentService) :base(applePayService)
+		public NonUIMethods(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }

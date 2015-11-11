@@ -94,11 +94,13 @@ namespace JudoDotNetXamariniOSSDK
 			return false;
 		}
 
-        private static IJudoSDKApi _judoSdkApi;
+
+
 		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
 		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
 		private static readonly IApplePayService ApplePaymentService = ServiceFactory.GetApplePaymentService ();
-
+		private  IApplePayMethods _applePayMethods =new ApplePayMethods (ApplePaymentService);
+		private static IJudoSDKApi _judoSdkApi;
 
 		private static bool _uiMode { get; set; }
 
@@ -110,9 +112,9 @@ namespace JudoDotNetXamariniOSSDK
 			get { return _uiMode; }
 			set {
 			    if (value)
-					_judoSdkApi = new UIMethods(ApplePaymentService,new ViewLocator(PaymentService));
+					_judoSdkApi = new UIMethods(new ViewLocator(PaymentService));
 			    else
-					_judoSdkApi = new NonUIMethods(ApplePaymentService,PaymentService);
+					_judoSdkApi = new NonUIMethods(PaymentService);
 
 			    _uiMode = value;
 			}
@@ -196,14 +198,13 @@ namespace JudoDotNetXamariniOSSDK
 		public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
 
-			_judoSdkApi.ApplePayment(payment,success,failure,ApplePaymentType.Payment);
+			_applePayMethods.ApplePayment(payment,success,failure,ApplePaymentType.Payment);
 		
 		}
 
 		public void MakeApplePreAuth (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
 		{
-
-			_judoSdkApi.ApplePayment(payment,success,failure,ApplePaymentType.PreAuth);
+			_applePayMethods.ApplePayment(payment,success,failure,ApplePaymentType.PreAuth);
 
 		}
 

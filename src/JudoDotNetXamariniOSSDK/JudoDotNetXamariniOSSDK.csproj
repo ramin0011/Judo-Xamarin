@@ -69,7 +69,6 @@
     <InterfaceDefinition Include="Views\RegisterCardView~ipad.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\IJudoSDKApi.cs" />
     <Compile Include="Clients\NonUIMethods.cs" />
     <Compile Include="Clients\UIMethods.cs" />
     <Compile Include="Controllers\LocationManager.cs" />
@@ -151,6 +150,7 @@
     <Compile Include="Controllers\LoadingScreen.cs" />
     <Compile Include="Controllers\SecureManager.cs" />
     <Compile Include="JudoSDKManager.cs" />
+    <Compile Include="Clients\IApplePayMethods.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

@@ -27,11 +27,11 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	internal class UIMethods :ApplePayMethods, IJudoSDKApi
+	internal class UIMethods : IJudoSDKApi
 	{
 		private readonly ViewLocator _viewLocator;
 
-		public UIMethods (IApplePayService applePayService, ViewLocator viewLocator) : base (applePayService)
+		public UIMethods ( ViewLocator viewLocator)
 		{
 			_viewLocator = viewLocator;
 		}

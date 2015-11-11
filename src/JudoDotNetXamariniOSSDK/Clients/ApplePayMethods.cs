@@ -5,7 +5,7 @@ using JudoDotNetXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	internal abstract class ApplePayMethods
+	internal class ApplePayMethods : IApplePayMethods
 	{
 		private readonly IApplePayService _paymentService;
 
