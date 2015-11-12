@@ -5,14 +5,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using JudoDotNetXamarinSDK;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using Result = Android.App.Result;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
+using JudoDotNetXamarinAndroidSDK.Utils;
 
 namespace Android.Xamarin.SampleApp
 {

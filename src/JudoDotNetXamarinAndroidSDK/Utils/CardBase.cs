@@ -20,6 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
         };
 
 
+
         public abstract bool IsValidCard();
     }
 }
