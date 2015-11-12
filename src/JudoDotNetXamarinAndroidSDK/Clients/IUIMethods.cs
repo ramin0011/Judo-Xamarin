@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Android.Content;
-using JudoDotNetXamarinSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Models;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Clients
 {
     /// <summary>
     /// Provides a set of operations that will receive some parameters and prompt a UI enclosed in this SDK to request the consumer the rest of parameters needed to complete the operations

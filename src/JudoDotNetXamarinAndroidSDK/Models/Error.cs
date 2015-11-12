@@ -11,7 +11,7 @@ using JudoPayDotNet.Errors;
 using Newtonsoft.Json;
 using Exception = System.Exception;
 
-namespace JudoDotNetXamarinSDK.Models
+namespace JudoDotNetXamarinAndroidSDK.Models
 {
     public class Error : Object, IParcelable
     {

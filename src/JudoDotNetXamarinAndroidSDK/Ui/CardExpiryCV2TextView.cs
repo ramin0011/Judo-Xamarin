@@ -1,20 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Java.Sql;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 
-namespace JudoDotNetXamarinSDK.Ui
+namespace JudoDotNetXamarinAndroidSDK.Ui
 {
     public class CardExpiryCV2TextView : BackgroundHintTextView
     {

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -13,21 +9,19 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Java.Lang;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
-using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Exception = System.Exception;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     [Activity(Label = "RegisterCardActivity")]
     public class RegisterCardActivity : BaseActivity
     {
         private Bundle judoMetaData;
         private CardEntryView cardEntryView;
-        private Consumer judoConsumer;
+        private Models.Consumer judoConsumer;
         private EditText addressLine1;
         private EditText addressLine2;
         private EditText addressLine3;
@@ -61,7 +55,7 @@ namespace JudoDotNetXamarinSDK.Activies
             SetHelpText(Resource.String.help_info, Resource.String.help_card_text);
             SetHelpText(Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Models.Consumer>();
 
             if (judoConsumer == null)
             {

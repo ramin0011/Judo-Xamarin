@@ -1,22 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Net;
 using Android.OS;
 using Android.Runtime;
-using Android.Systems;
 using Android.Telephony;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
 using Java.Lang;
 using Java.Util;
+using JudoDotNetXamarinSDK;
 using String = System.String;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Utils
 {
     public static class ClientDetailsProvider
     {

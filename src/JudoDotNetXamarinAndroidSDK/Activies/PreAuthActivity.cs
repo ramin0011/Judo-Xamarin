@@ -1,25 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
-using JudoDotNetXamarin;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Ui;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
-using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     public class PreAuthActivity : PaymentActivity
     {

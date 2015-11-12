@@ -1,28 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Android.Content;
-using Android.Content.Res;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Javax.Xml.Transform;
-using JudoDotNetXamarinSDK;
 using JudoPayDotNet;
 using JudoPayDotNet.Errors;
-using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
-using Configuration = JudoDotNetXamarinSDK.Configuration;
-using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Error = JudoDotNetXamarinSDK.Models.Error;
+using Configuration = JudoDotNetXamarinAndroidSDK.Configurations.Configuration;
+using Error = JudoDotNetXamarinAndroidSDK.Models.Error;
 using Result = Android.App.Result;
 using System.Diagnostics;
 using JudoPayDotNet.Enums;
 using JudoDotNetXamarin;
+using JudoDotNetXamarinAndroidSDK;
+using JudoDotNetXamarinAndroidSDK.Clients;
+using JudoDotNetXamarinAndroidSDK.Configurations;
+using JudoDotNetXamarinAndroidSDK.Utils;
 
 namespace JudoDotNetXamarinSDK
 {

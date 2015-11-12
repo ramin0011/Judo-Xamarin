@@ -1,22 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Ui;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     public static class BuildConfig
     {

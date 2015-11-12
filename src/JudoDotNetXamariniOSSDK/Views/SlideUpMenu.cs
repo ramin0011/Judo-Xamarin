@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
-using UIKit;
+using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
-using CoreGraphics;
+using UIKit;
 using RectangleF = global::CoreGraphics.CGRect;
-using SizeF = global::CoreGraphics.CGSize;
 using PointF = global::CoreGraphics.CGPoint;
-using WatchKit;
 
 
-
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Views
 {
 	[Register ("SlideUpMenu")]
 	public partial class SlideUpMenu :UIView

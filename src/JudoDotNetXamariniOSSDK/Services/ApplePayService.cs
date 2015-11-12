@@ -1,18 +1,18 @@
 ﻿using System;
-using JudoPayDotNet.Models;
 using System.Threading.Tasks;
+using Foundation;
+using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Controllers;
+using JudoDotNetXamariniOSSDK.Delegates;
+using JudoDotNetXamariniOSSDK.Utils;
+using JudoDotNetXamariniOSSDK.ViewModels;
+using JudoPayDotNet;
+using JudoPayDotNet.Models;
+using Newtonsoft.Json.Linq;
 using PassKit;
 using UIKit;
-using System.Net.Cache;
-using JudoPayDotNet;
-using System.Runtime.Remoting.Channels;
-using Foundation;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using JudoPayDotNet.Errors;
-using JudoDotNetXamarin;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Services
 {
 	internal class ApplePayService :IApplePayService
 	{

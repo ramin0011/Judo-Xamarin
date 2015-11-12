@@ -1,7 +1,6 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Helpers
 {
 	public static class iOSConstants
 	{

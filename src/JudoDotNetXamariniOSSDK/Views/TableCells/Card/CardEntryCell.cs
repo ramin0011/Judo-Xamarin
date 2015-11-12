@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Drawing;
-using System.Collections.Generic;
 using System.Text;
-using JudoPayDotNet.Models;
-using JudoDotNetXamarin;
-
-#if __UNIFIED__
-using Foundation;
-using UIKit;
-using CoreFoundation;
 using CoreAnimation;
-using CoreGraphics;
-using ObjCRuntime;
+using CoreFoundation;
+using Foundation;
+using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Controllers;
+using JudoDotNetXamariniOSSDK.Helpers;
+using JudoPayDotNet.Models;
+using UIKit;
+#if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
 using RectangleF = global::CoreGraphics.CGRect;
 using SizeF = global::CoreGraphics.CGSize;
@@ -30,7 +27,7 @@ using nuint = global::System.UInt32;
 #endif
 
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
 {
 	public partial class CardEntryCell : CardCell
 	{
@@ -285,7 +282,7 @@ namespace JudoDotNetXamariniOSSDK
 
 					string newText = newTextOrig.Replace (" ", String.Empty);
 					int len = newText.Length;
-					if (len < Card.CC_LEN_FOR_TYPE) {
+					if (len < JudoDotNetXamarin.Card.CC_LEN_FOR_TYPE) {
 						updateText = true;
 						formattedText = newTextOrig;
 
@@ -313,7 +310,7 @@ namespace JudoDotNetXamariniOSSDK
 							break;
 						}
 
-						if (len == Card.CC_LEN_FOR_TYPE) {
+						if (len == JudoDotNetXamarin.Card.CC_LEN_FOR_TYPE) {
 							ccPlaceHolder.Text = cardHelper.PromptStringForType (Type, true);
 							cvTwoPlaceHolder.Text = cardHelper.CVTwoPromptForType (Type, true);
 							cvTwoPlaceHolder.SetShowTextOffSet (Math.Min (0, 0));

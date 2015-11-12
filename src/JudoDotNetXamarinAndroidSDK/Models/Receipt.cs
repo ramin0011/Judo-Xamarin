@@ -5,7 +5,7 @@ using JudoPayDotNet.Models;
 using Newtonsoft.Json;
 using Type = System.Type;
 
-namespace JudoDotNetXamarinSDK.Models
+namespace JudoDotNetXamarinAndroidSDK.Models
 {
     public class Receipt : Object, IParcelable, ITransactionResult
     {

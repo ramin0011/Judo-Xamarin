@@ -1,25 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
-using JudoDotNetXamarin;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
-using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     public class PaymentActivity : BaseActivity
     {
@@ -29,7 +22,7 @@ namespace JudoDotNetXamarinSDK.Activies
         protected string judoCurrency;
         protected MetaData judoMetaData;
         protected CardEntryView cardEntryView;
-        protected Consumer judoConsumer;
+        protected Models.Consumer judoConsumer;
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
@@ -54,7 +47,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 Resource.Id.postCodeHelpButton);
 
             judoPaymentRef = Intent.GetStringExtra(JudoSDKManagerA.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Models.Consumer>();
 
             judoAmount = decimal.Parse(Intent.GetStringExtra(JudoSDKManagerA.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra(JudoSDKManagerA.JUDO_ID);

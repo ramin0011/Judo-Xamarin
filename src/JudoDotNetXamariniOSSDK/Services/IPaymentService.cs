@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using JudoPayDotNet.Models;
+﻿using System.Threading.Tasks;
 using JudoDotNetXamarin;
+using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Services
 {
 	internal interface IPaymentService
 	{

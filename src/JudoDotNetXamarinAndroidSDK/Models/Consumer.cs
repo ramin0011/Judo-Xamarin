@@ -3,7 +3,7 @@ using Android.OS;
 using Java.Interop;
 using Object = Java.Lang.Object;
 
-namespace JudoDotNetXamarinSDK.Models
+namespace JudoDotNetXamarinAndroidSDK.Models
 {
     public class Consumer : Object, IParcelable
     {

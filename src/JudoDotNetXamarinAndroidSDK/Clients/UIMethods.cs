@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Android.Content;
-using JudoDotNetXamarinSDK.Activies;
-using JudoDotNetXamarinSDK.Models;
 using Android.App;
+using Android.Content;
+using JudoDotNetXamarinAndroidSDK.Activies;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinSDK;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Clients
 {
     internal class UIMethods : IUIMethods
     {

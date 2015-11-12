@@ -1,24 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
-using Java.Lang;
-using JudoDotNetXamarinSDK.Models;
-using JudoDotNetXamarinSDK.Ui;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Ui;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
-using Consumer = JudoDotNetXamarinSDK.Models.Consumer;
-using Exception = System.Exception;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     [Activity(Label = "PaymentTokenActivity")]
     public class PaymentTokenActivity : BaseActivity
@@ -30,7 +24,7 @@ namespace JudoDotNetXamarinSDK.Activies
         protected string judoCurrency;
         protected MetaData judoMetaData;
         protected CardToken judoCardToken;
-        protected Consumer judoConsumer;
+        protected Models.Consumer judoConsumer;
         protected CV2EntryView cv2EntryView;
     
 
@@ -50,7 +44,7 @@ namespace JudoDotNetXamarinSDK.Activies
             judoId = Intent.GetStringExtra(JudoSDKManagerA.JUDO_ID);
             judoCurrency = Intent.GetStringExtra(JudoSDKManagerA.JUDO_CURRENCY);
             judoCardToken = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CARD_DETAILS).JavaCast<CardToken>();
-            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Consumer>();
+            judoConsumer = Intent.GetParcelableExtra(JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Models.Consumer>();
 
             if (judoPaymentRef == null)
             {

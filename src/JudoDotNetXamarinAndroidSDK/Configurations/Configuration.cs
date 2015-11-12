@@ -1,7 +1,8 @@
 using JudoDotNetXamarin;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Configurations
 {
     internal class Configuration : IConfiguration
     {

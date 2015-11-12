@@ -1,19 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Text;
-using JudoDotNetXamarin;
-
-#if __UNIFIED__
-using Foundation;
-using UIKit;
 using CoreFoundation;
-using CoreAnimation;
-using CoreGraphics;
-using ObjCRuntime;
+using Foundation;
+using JudoDotNetXamarin;
+using UIKit;
+#if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
-using RectangleF = global::CoreGraphics.CGRect;
-using SizeF = global::CoreGraphics.CGSize;
-using PointF = global::CoreGraphics.CGPoint;
+
 #else
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
@@ -27,7 +20,7 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
 {
 	public partial class MaestroCell : CardCell
 	{

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using JudoPayDotNet;
-using System.Reflection;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Helpers
 {
 	internal static class EnumExtensions
 	{

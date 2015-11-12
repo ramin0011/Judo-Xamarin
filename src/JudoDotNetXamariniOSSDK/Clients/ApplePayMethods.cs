@@ -1,9 +1,12 @@
 ﻿using System;
+using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Services;
+using JudoDotNetXamariniOSSDK.Utils;
+using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet.Models;
 using UIKit;
-using JudoDotNetXamarin;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Clients
 {
 	internal class ApplePayMethods : IApplePayMethods
 	{

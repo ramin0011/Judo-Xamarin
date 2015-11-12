@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Android.Content;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Clients
 {
     /// <summary>
     /// Provides a set of operations that receive all the information gathered by the developer app and directly interact with JudoPay backend server

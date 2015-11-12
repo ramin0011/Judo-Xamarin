@@ -1,9 +1,8 @@
-﻿using System;
+﻿using CoreGraphics;
+using JudoDotNetXamariniOSSDK.Helpers;
 using UIKit;
-using System.Drawing;
-using CoreGraphics;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Controllers
 {
 	public class LoadingScreen
 	{

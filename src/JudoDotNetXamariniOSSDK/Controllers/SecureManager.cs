@@ -1,10 +1,10 @@
 ﻿using System;
-using JudoPayDotNet.Models;
-using Foundation;
 using CoreFoundation;
+using Foundation;
 using JudoDotNetXamarin;
+using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Controllers
 {
 	public class SecureManager
 	{

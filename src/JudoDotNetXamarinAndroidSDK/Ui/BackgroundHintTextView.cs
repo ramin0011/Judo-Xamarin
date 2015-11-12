@@ -1,25 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using Java.Lang;
-using Java.Util;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 using Exception = System.Exception;
 
-namespace JudoDotNetXamarinSDK.Ui
+namespace JudoDotNetXamarinAndroidSDK.Ui
 {
     public abstract class BackgroundHintTextView : RelativeLayout
     {

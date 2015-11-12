@@ -1,19 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
-using JudoDotNetXamarinSDK.Models;
+using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarinSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     [Activity(Label = "PreAuthTokenActivity")]
     public class PreAuthTokenActivity : PaymentTokenActivity
@@ -39,7 +31,7 @@ namespace JudoDotNetXamarinSDK.Activies
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2(),
                 ClientDetails = JudoSDKManagerA.GetClientDetails(this),
-				UserAgent = JudoSDKManagerA.GetSDKVersion()
+                UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
             ShowLoadingSpinner(true);

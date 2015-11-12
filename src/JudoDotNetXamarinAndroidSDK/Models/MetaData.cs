@@ -5,7 +5,7 @@ using Java.Interop;
 using Newtonsoft.Json;
 using Object = Java.Lang.Object;
 
-namespace JudoDotNetXamarinSDK.Models
+namespace JudoDotNetXamarinAndroidSDK.Models
 {
     public class MetaData : Object, IParcelable
     {

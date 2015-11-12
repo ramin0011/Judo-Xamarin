@@ -1,12 +1,12 @@
-﻿using System;
-using JudoPayDotNet.Models;
-using System.Threading.Tasks;
-using UIKit;
-using PassKit;
+﻿using System.Threading.Tasks;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.ViewModels;
+using JudoPayDotNet.Models;
+using PassKit;
+using UIKit;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Services
 {
 	internal interface IApplePayService
 	{

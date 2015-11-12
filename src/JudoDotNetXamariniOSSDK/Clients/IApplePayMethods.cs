@@ -1,7 +1,7 @@
-﻿using System;
-using JudoDotNetXamarin;
+﻿using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.ViewModels;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Clients
 {
 	public interface IApplePayMethods
 	{

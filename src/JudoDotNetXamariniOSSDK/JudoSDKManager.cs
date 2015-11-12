@@ -6,6 +6,11 @@ using System.Diagnostics;
 using JudoDotNetXamarin;
 using UIKit;
 using JudoDotNetXamariniOSSDK;
+using JudoDotNetXamariniOSSDK.Clients;
+using JudoDotNetXamariniOSSDK.Factories;
+using JudoDotNetXamariniOSSDK.Services;
+using JudoDotNetXamariniOSSDK.Utils;
+using JudoDotNetXamariniOSSDK.ViewModels;
 
 namespace JudoDotNetXamariniOSSDK
 {

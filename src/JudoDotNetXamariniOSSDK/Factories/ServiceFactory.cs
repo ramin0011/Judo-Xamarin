@@ -1,9 +1,7 @@
-﻿using System;
-using JudoPayDotNet;
-using JudoDotNetXamarin;
+﻿using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Services;
 
-
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Factories
 {
 	internal class ServiceFactory
 	{

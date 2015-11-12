@@ -12,11 +12,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Java.Interop;
-using JudoDotNetXamarinSDK;
+using JudoDotNetXamarinAndroidSDK;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Clients;
 using Object = Java.Lang.Object;
 
-namespace JudoDotNetXamarinSDK.Models
+namespace JudoDotNetXamarinAndroidSDK.Models
 {
     public class CardToken : Object, IParcelable
     {

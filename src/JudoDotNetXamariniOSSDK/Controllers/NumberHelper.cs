@@ -1,9 +1,8 @@
-﻿using System;
-using Foundation;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
+using Foundation;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Controllers
 {
 
 	internal static class NumberHelper

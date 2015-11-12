@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Android.Content;
-using JudoPayDotNet.Models;
 using Android.App;
+using Android.Content;
+using JudoDotNetXamarinSDK;
+using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarinSDK
+namespace JudoDotNetXamarinAndroidSDK.Clients
 {
     internal class NonUIMethods : INonUIMethods
     {

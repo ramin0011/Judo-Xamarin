@@ -1,13 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using System.Linq;
+﻿using JudoDotNetXamariniOSSDK.Helpers;
 using JudoPayDotNet.Models;
-using Foundation;
 using UIKit;
-using CoreFoundation;
-using CoreGraphics;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Controllers
 {
 
 	internal static class CardImageHelper

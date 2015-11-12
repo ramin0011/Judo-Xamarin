@@ -1,4 +1,7 @@
-﻿namespace JudoDotNetXamariniOSSDK
+﻿using JudoDotNetXamariniOSSDK.Services;
+using JudoDotNetXamariniOSSDK.Views;
+
+namespace JudoDotNetXamariniOSSDK
 {
     internal class ViewLocator
     {

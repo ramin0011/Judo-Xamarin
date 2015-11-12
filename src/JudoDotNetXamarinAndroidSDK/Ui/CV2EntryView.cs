@@ -1,25 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.Media;
-using Android.OS;
-using Android.Runtime;
 using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using JudoDotNetXamarinSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
-using LayoutParams = Android.Widget.LinearLayout.LayoutParams;
 using Orientation = Android.Widget.Orientation;
 
-namespace JudoDotNetXamarinSDK.Ui
+namespace JudoDotNetXamarinAndroidSDK.Ui
 {
     public class CV2EntryView : LinearLayout
     {

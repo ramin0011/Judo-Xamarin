@@ -1,12 +1,12 @@
 ﻿using System;
-using JudoPayDotNet.Logging;
-using PassKit;
-using Foundation;
 using System.Threading.Tasks;
-using JudoPayDotNet.Models;
+using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Services;
+using JudoPayDotNet.Models;
+using PassKit;
 
-namespace JudoDotNetXamariniOSSDK
+namespace JudoDotNetXamariniOSSDK.Delegates
 {
 	internal partial class JudoPKPaymentAuthorizationViewControllerDelegate :NSObject, IPKPaymentAuthorizationViewControllerDelegate
 	{
