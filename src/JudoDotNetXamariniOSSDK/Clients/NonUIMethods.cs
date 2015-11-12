@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Clients;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Models;
+using JudoDotNetXamarin.ViewModels;
 using JudoDotNetXamariniOSSDK.Services;
 using JudoPayDotNet.Models;
 #if __UNIFIED__

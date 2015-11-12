@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Enum;
+using JudoDotNetXamarin.Models;
 using JudoDotNetXamariniOSSDK.Controllers;
 using JudoDotNetXamariniOSSDK.Delegates;
 using JudoDotNetXamariniOSSDK.Utils;

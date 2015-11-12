@@ -2,6 +2,9 @@
 using CoreFoundation;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Enum;
+using JudoDotNetXamarin.Helpers;
+using JudoDotNetXamarin.ViewModels;
 using JudoDotNetXamariniOSSDK.Helpers;
 using UIKit;
 #if __UNIFIED__

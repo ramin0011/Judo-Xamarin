@@ -1,10 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
-namespace JudoDotNetXamarin
+[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
+[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
+namespace JudoDotNetXamarin.Models
 {
-	[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
-	[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
+
 
 	internal class ClientDetails
 	{

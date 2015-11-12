@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
+using JudoDotNetXamarin.Models;
 using JudoPayDotNet.Models;
 
-
-namespace JudoDotNetXamarin
+namespace JudoDotNetXamarin.Helpers
 {
 	public class CreditCard
 	{
@@ -98,7 +98,7 @@ namespace JudoDotNetXamarin
 			if (proposedNumber.Length < Card.CC_LEN_FOR_TYPE)
 				return CardType.UNKNOWN;
 
-            CardType lastcardtype = Enum.GetValues(typeof(CardType)).Cast<CardType>().Last();
+            CardType lastcardtype = System.Enum.GetValues(typeof(CardType)).Cast<CardType>().Last();
             for (int idx = 0; idx < (int)lastcardtype; ++idx)
             {
 				switch (idx) {

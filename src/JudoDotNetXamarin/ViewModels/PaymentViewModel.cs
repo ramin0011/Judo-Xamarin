@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace JudoDotNetXamarin
+namespace JudoDotNetXamarin.ViewModels
 {
 	public class PaymentViewModel :BasePaymentViewModel
 	{

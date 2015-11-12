@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using JudoPayDotNet.Models;
-using JudoDotNetXamarin;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.ViewModels;
 
 [assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
-[assembly: InternalsVisibleTo("JudoDotNetXamarinSDK")]
-namespace JudoDotNetXamarin
+[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
+namespace JudoDotNetXamarin.Clients
 {
 	
     internal interface IJudoSDKApi 

@@ -1,4 +1,4 @@
-﻿namespace JudoDotNetXamarin
+﻿namespace JudoDotNetXamarin.Enum
 {
     public enum ISO3166CountryCodes
     {

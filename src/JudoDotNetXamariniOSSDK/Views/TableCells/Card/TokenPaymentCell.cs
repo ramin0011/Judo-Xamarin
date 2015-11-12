@@ -4,6 +4,7 @@ using CoreAnimation;
 using CoreFoundation;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Helpers;
 using JudoDotNetXamariniOSSDK.Controllers;
 using JudoDotNetXamariniOSSDK.Helpers;
 using JudoPayDotNet.Models;

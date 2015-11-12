@@ -1,5 +1,8 @@
 ﻿using System;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Enum;
+using JudoDotNetXamarin.Models;
 using JudoDotNetXamariniOSSDK.Services;
 using JudoDotNetXamariniOSSDK.Utils;
 using JudoDotNetXamariniOSSDK.ViewModels;

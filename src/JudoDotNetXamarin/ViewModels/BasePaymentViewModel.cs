@@ -1,7 +1,6 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
-namespace JudoDotNetXamarin
+namespace JudoDotNetXamarin.ViewModels
 {
 	public class BasePaymentViewModel
 	{

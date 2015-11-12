@@ -1,5 +1,9 @@
 ﻿using System;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Clients;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Models;
+using JudoDotNetXamarin.ViewModels;
 using UIKit;
 #if __UNIFIED__
 

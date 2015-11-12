@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace JudoDotNetXamarin
+﻿namespace JudoDotNetXamarin.Models
 {
 	public class Address
 	{

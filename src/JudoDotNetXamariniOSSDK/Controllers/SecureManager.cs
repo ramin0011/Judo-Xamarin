@@ -2,6 +2,7 @@
 using CoreFoundation;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Models;
 using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamariniOSSDK.Controllers

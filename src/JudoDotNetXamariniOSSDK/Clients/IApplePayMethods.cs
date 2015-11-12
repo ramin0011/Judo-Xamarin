@@ -1,4 +1,6 @@
 ﻿using JudoDotNetXamarin;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Enum;
 using JudoDotNetXamariniOSSDK.ViewModels;
 
 namespace JudoDotNetXamariniOSSDK.Clients

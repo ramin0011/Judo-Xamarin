@@ -3,6 +3,8 @@ using System.Text;
 using CoreFoundation;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Helpers;
+using JudoDotNetXamarin.ViewModels;
 using UIKit;
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes

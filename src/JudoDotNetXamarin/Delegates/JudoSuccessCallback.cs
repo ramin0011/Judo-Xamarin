@@ -1,7 +1,6 @@
-﻿using System;
-using JudoPayDotNet.Models;
+﻿using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarin
+namespace JudoDotNetXamarin.Delegates
 {
 	
 	public delegate void JudoSuccessCallback(PaymentReceiptModel receipt);

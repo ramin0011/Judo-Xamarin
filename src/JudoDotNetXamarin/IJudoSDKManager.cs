@@ -1,6 +1,8 @@
 ﻿using System;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.ViewModels;
 
-		  
+
 namespace JudoDotNetXamarin
 {
 	public interface IJudoSDKManager

@@ -35,6 +35,7 @@ using System;
 using CoreGraphics;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Helpers;
 using UIKit;
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes

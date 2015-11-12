@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Enum;
 using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet.Models;
 using PassKit;

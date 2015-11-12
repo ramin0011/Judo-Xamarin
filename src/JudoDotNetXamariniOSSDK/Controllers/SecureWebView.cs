@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Foundation;
 using JudoDotNetXamarin;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin.Models;
 using JudoDotNetXamariniOSSDK.Services;
 using JudoPayDotNet.Models;
 using UIKit;
