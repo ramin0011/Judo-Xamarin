@@ -2,11 +2,14 @@ using System;
 using System.Threading.Tasks;
 using JudoDotNetXamarin;
 using JudoDotNetXamarin.ViewModels;
-using JudoDotNetXamariniOSSDK.Utils;
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin.Models;
+using System.Runtime.CompilerServices;
 
-namespace JudoDotNetXamariniOSSDK.Services
+[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
+[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
+namespace JudoDotNetXamarin
 {
 	internal class PaymentService : IPaymentService
 	{
@@ -17,7 +20,7 @@ namespace JudoDotNetXamariniOSSDK.Services
 			_judoAPI = judoAPI;
 		}
 
-		public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel)
+		public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel,IClientService clientService)
 		{
             try
             {
@@ -34,9 +37,9 @@ namespace JudoDotNetXamariniOSSDK.Services
 				    StartDate = paymentViewModel.Card.StartDate,
                     IssueNumber = paymentViewModel.Card.IssueNumber,
                     YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails(),
+					ClientDetails = clientService.GetClientDetails(),
                     Currency = paymentViewModel.Currency,
-					UserAgent = ClientDetailsProvider.GetSDKVersion()
+					UserAgent = clientService.GetSDKVersion()
                 };
 
                 Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
@@ -44,13 +47,21 @@ namespace JudoDotNetXamariniOSSDK.Services
 				return await task;
 			}
 			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;
 				return null;
 			}
 
 		}
 			
-		public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation)
+		public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation,IClientService clientService)
 		{
             try
             {
@@ -67,8 +78,8 @@ namespace JudoDotNetXamariniOSSDK.Services
                     StartDate = authorisation.Card.StartDate,
                     IssueNumber = authorisation.Card.IssueNumber,
                     YourPaymentMetaData = authorisation.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails(),
-					UserAgent = ClientDetailsProvider.GetSDKVersion(),
+					ClientDetails = clientService.GetClientDetails(),
+					UserAgent = clientService.GetSDKVersion(),
                     Currency = authorisation.Currency
                 };
 
@@ -76,13 +87,21 @@ namespace JudoDotNetXamariniOSSDK.Services
 				return await task;
 			}
 			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;		
 				return null;
 			}
 
 		}
 
-		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenPaymentViewModel tokenPayment)
+		public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenPaymentViewModel tokenPayment,IClientService clientService)
 		{
             try
             {
@@ -96,20 +115,28 @@ namespace JudoDotNetXamariniOSSDK.Services
 				    CV2 = tokenPayment.CV2,
                     ConsumerToken = tokenPayment.ConsumerToken,
                     YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
-                    ClientDetails = JudoSDKManager.GetClientDetails(),
-					UserAgent = ClientDetailsProvider.GetSDKVersion()
+					ClientDetails = clientService.GetClientDetails(),
+					UserAgent = clientService.GetSDKVersion()
 			    };
 				Task<IResult<ITransactionResult>> task =  _judoAPI.Payments.Create(payment);
 				return await task;
 			}
 			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;	
 				return null;
 			}
 
 		}
 
-		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenPaymentViewModel tokenPayment)
+		public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenPaymentViewModel tokenPayment,IClientService clientService)
 		{
 			TokenPaymentModel payment = new TokenPaymentModel {
 				JudoId = JudoConfiguration.Instance.JudoId,
@@ -120,8 +147,8 @@ namespace JudoDotNetXamariniOSSDK.Services
 				CV2 = tokenPayment.CV2,
                 ConsumerToken = tokenPayment.ConsumerToken,
                 YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
-                ClientDetails = JudoSDKManager.GetClientDetails(),
-				UserAgent = ClientDetailsProvider.GetSDKVersion()
+				ClientDetails = clientService.GetClientDetails(),
+				UserAgent = clientService.GetSDKVersion()
 			};
 			try
 			{
@@ -129,12 +156,20 @@ namespace JudoDotNetXamariniOSSDK.Services
 				return await task;
 			}
 			catch(Exception e){
-				Console.WriteLine(e.InnerException.ToString());
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;	
 				return null;
 			}
 		}
 
-        public async Task<IResult<ITransactionResult>> RegisterCard(PaymentViewModel payment)
+		public async Task<IResult<ITransactionResult>> RegisterCard(PaymentViewModel payment,IClientService clientService)
         {
             var registerCard = new RegisterCardModel()
             {
@@ -156,8 +191,16 @@ namespace JudoDotNetXamariniOSSDK.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.InnerException.ToString());
-                return null;
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;
+				return null;
             }
         }
 
@@ -172,7 +215,15 @@ namespace JudoDotNetXamariniOSSDK.Services
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e.InnerException.ToString());
+				var error = new JudoError ()
+				{ 
+					Exception = e,
+					ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel()
+					{
+						ErrorMessage = e.InnerException.ToString()
+					}
+				};
+				throw error;
 				return null;
 			}
 		}

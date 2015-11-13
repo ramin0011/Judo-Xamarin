@@ -6,6 +6,9 @@ using Android.Views;
 using Android.Widget;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using Orientation = Android.Widget.Orientation;
+using JudoDotNetXamarin.Enum;
+using System;
+using System.Collections.Generic;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -90,6 +93,11 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
             Typeface type = Typefaces.LoadTypefaceFromRaw(Context, Resource.Raw.courier);
             postCodeEditText.Typeface = type;
+
+			List<string> countries = new List<string> ();
+			foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
+				countries.Add(option.ToDescriptionString());
+			}
 
             // Populate country spinner
             ArrayAdapter<string> dataAdapter = new CountryArrayAdapter(Context,

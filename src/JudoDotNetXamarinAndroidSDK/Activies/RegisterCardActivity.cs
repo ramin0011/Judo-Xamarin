@@ -88,7 +88,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 }
 
                 bool startDateFocus = false;
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Configuration.IsMaestroEnabled)
+				if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Instance.MaestroAccepted)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
@@ -96,7 +96,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                     aVsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManagerA.Configuration.IsAVSEnabled && aVsEntryView != null)
+				if (JudoSDKManagerA.Instance.AVSEnabled && aVsEntryView != null)
                 {
                     aVsEntryView.Visibility = ViewStates.Visible;
 

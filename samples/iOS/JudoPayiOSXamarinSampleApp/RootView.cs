@@ -10,6 +10,13 @@ using CoreGraphics;
 using JudoPayDotNet.Models;
 using PassKit;
 using JudoDotNetXamarin;
+using JudoDotNetXamariniOSSDK.Views;
+using JudoDotNetXamarin.Models;
+using JudoDotNetXamariniOSSDK.ViewModels;
+using JudoDotNetXamarin.ViewModels;
+using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamariniOSSDK;
+using JudoDotNetXamarin.Enum;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -31,10 +38,12 @@ namespace JudoPayiOSXamarinSampleApp
 		private  const string expiryDate = "12/15";
 		private const string cv2 = "452";
 
+		private ClientService _clientService;
+
 		public RootView ()
 			: base ("RootView", null)
 		{
-
+			_clientService = new ClientService ();
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -150,7 +159,7 @@ namespace JudoPayiOSXamarinSampleApp
 			buttonDictionary.Add ("Register a Card", delegate {
 				JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), successCallback, failureCallback);
 			});
-			if (ClientDetailsProvider.ApplePayAvailable) {
+			if (_clientService.ApplePayAvailable) {
 
 				buttonDictionary.Add ("Make a ApplePay Payment", delegate {
 					JudoSDKManager.Instance.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback);

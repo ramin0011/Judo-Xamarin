@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin;
 using JudoDotNetXamarin.ViewModels;
 
 [assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]

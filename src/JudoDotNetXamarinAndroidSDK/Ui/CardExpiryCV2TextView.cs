@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Util;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -32,7 +33,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private void Init()
         {
             // Set our hint text
-            SetHintText(JudoSDKManagerA.GetExpiryAndValidationHintFormat(CardBase.CardType.UNKNOWN));
+            SetHintText(JudoSDKManagerA.GetExpiryAndValidationHintFormat(CardType.UNKNOWN));
             // Set error text
             SetErrorText("Invalid CV2");
             // Set additional chars to skip

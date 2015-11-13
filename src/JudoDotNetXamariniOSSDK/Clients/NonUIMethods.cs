@@ -36,7 +36,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakePayment(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
+				_paymentService.MakePayment(payment, new ClientService()).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.PreAuthoriseCard(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
+				_paymentService.PreAuthoriseCard(payment,new ClientService()).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPayment(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
+				_paymentService.MakeTokenPayment(payment,new ClientService()).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.MakeTokenPreAuthorisation(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
+				_paymentService.MakeTokenPreAuthorisation(payment,new ClientService()).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             try
             {
-                _paymentService.RegisterCard(payment).ContinueWith(reponse => HandResponse(success, failure, reponse));
+				_paymentService.RegisterCard(payment,new ClientService()).ContinueWith(reponse => HandResponse(success, failure, reponse));
             }
             catch (Exception ex)
             {

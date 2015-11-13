@@ -12,6 +12,8 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Android.Views.InputMethods;
+using JudoDotNetXamarinSDK;
+using JudoDotNetXamarinAndroidSDK.Models;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -43,13 +45,13 @@ namespace Android.Xamarin.SampleApp
         private volatile string consumerToken;
         private volatile string rcp_consumerRef;
         private volatile string lastFour;
-        private volatile CardBase.CardType cardType;
+        private volatile CardType cardType;
 
         private volatile string preAuth_cardToken;
         private volatile string preAuth_consumerToken;
         private volatile string preAuth_rcp_consumerRef;
         private volatile string preAuth_lastFour;
-        private volatile CardBase.CardType preAuth_cardType;
+        private volatile CardType preAuth_cardType;
 
         private TextView MsgText;
 
@@ -254,7 +256,7 @@ namespace Android.Xamarin.SampleApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
+                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
                         }
                         msg_prefix = "Payment succeeded";
                     }
@@ -273,7 +275,7 @@ namespace Android.Xamarin.SampleApp
                             preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            preAuth_cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
+                            preAuth_cardType = (CardType)paymentReceipt.CardDetails.CardType;
                         }
 
                         msg_prefix = "PreAuth card payment succeeded";
@@ -313,7 +315,7 @@ namespace Android.Xamarin.SampleApp
                             consumerToken = paymentReceipt.Consumer.ConsumerToken;
                             rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
                             lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            cardType = (CardBase.CardType)paymentReceipt.CardDetails.CardType;
+                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
                         }
 
                         msg_prefix = "Register card succeeded";

@@ -9,7 +9,13 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 {
     internal class UIMethods : IUIMethods
     {
-        public Intent Payment(string judoId, string currency, string amount,
+		private const int ACTION_CARD_PAYMENT   = 101;
+		private const int ACTION_TOKEN_PAYMENT  = 102;
+		private const int ACTION_PREAUTH        = 201;
+		private const int ACTION_TOKEN_PREAUTH  = 202;
+		private const int ACTION_REGISTER_CARD  = 301;
+
+        public void Payment(string judoId, string currency, string amount,
             string paymentReference, string consumerReference, Dictionary<string, string> metaData)
         {
             Intent intent = new Intent(Application.Context, typeof(PaymentActivity));
@@ -22,7 +28,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 
             intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
 
-            return intent;
+			Activity.StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         }
 
         public Intent PreAuth(Context context, string judoId, string currency, string amount,

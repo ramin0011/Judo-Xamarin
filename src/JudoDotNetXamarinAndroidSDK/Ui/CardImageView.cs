@@ -5,6 +5,7 @@ using Android.Widget;
 
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -32,7 +33,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView(imageView);
         }
 
-        public void SetCardType(CardBase.CardType cardType)
+        public void SetCardType(CardType cardType)
         {
             SetCardImageWithoutAnimation(JudoSDKManagerA.GetCardResourceId(Context, cardType, true));            
         }

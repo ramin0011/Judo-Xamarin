@@ -297,14 +297,14 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
 							flashForError = true;
 							break;
 						case CardType.MAESTRO:
-							if (!JudoSDKManager.MaestroAccepted) {
+							if (!JudoSDKManager.Instance.MaestroAccepted) {
 
 								flashForError = true;
 								return EndDelegate (ccPlaceHolder, ccText, formattedText);
 							}
 							break;
 						case CardType.AMEX:
-							if (!JudoSDKManager.AmExAccepted) {
+							if (!JudoSDKManager.Instance.AmExAccepted) {
 
 								flashForError = true; 
 								return EndDelegate (ccPlaceHolder, ccText, formattedText);

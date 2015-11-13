@@ -26,9 +26,16 @@ namespace JudoDotNetXamarinAndroidSDK.Configurations
         /// <param name="environment">The environment to use</param>
         public void SetApiTokenAndSecret(string apiToken, string apiSecret, JudoEnvironment environment)
         {
-            var judoSDKManager = JudoSDKManagerA.Instance;
-            judoSDKManager.SetEnvironment(environment);
-            judoSDKManager.SetJudoClient(JudoPaymentsFactory.Create(judoSDKManager.Environment, apiToken, apiSecret));
+			var configInstance = JudoConfiguration.Instance;
+
+			//setting for Sandnox
+			configInstance.Environment = environment;
+			configInstance.ApiToken = apiToken; //retrieve from JudoPortal
+			configInstance.ApiSecret = apiSecret; //retrieve from JudoPortal
+
+//            var judoSDKManager = JudoSDKManagerA.Instance;
+//            judoSDKManager. (environment);
+//            judoSDKManager.SetJudoClient(JudoPaymentsFactory.Create(judoSDKManager.Environment, apiToken, apiSecret));
         }
     }
 }

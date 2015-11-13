@@ -176,7 +176,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
 				PaymentButton.Disable();
 
-				_paymentService.MakeTokenPayment (tokenPayment).ContinueWith (reponse => {
+				_paymentService.MakeTokenPayment (tokenPayment,new ClientService()).ContinueWith (reponse => {
 					var result = reponse.Result;
 					if (result != null && !result.HasError && result.Response.Result != "Declined") {
 						PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;

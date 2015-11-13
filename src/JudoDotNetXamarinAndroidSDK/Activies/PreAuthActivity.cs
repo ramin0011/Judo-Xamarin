@@ -25,7 +25,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel();
 
-            if (JudoSDKManagerA.Configuration.IsAVSEnabled)
+			if (JudoSDKManagerA.Instance.AVSEnabled)
             {
                 var country = avsEntryView.GetCountry();
                 cardAddress.PostCode = avsEntryView.GetPostCode();
@@ -34,7 +34,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManagerA.Configuration.IsMaestroEnabled)
+			if (JudoSDKManagerA.Instance.MaestroAccepted)
             {
                 issueNumber = startDateEntryView.GetIssueNumber();
                 startDate = startDateEntryView.GetStartDate();
@@ -60,7 +60,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             ShowLoadingSpinner(true);
 
 
-            var judoPay = JudoSDKManagerA.JudoClient;
+			var judoPay = JudoSDKManagerA.JudoClient;
 
             judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }

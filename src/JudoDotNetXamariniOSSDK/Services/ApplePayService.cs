@@ -7,7 +7,7 @@ using JudoDotNetXamarin.Enum;
 using JudoDotNetXamarin.Models;
 using JudoDotNetXamariniOSSDK.Controllers;
 using JudoDotNetXamariniOSSDK.Delegates;
-using JudoDotNetXamariniOSSDK.Utils;
+using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet;
 using JudoPayDotNet.Models;
@@ -20,10 +20,12 @@ namespace JudoDotNetXamariniOSSDK.Services
 	internal class ApplePayService :IApplePayService
 	{
 		private	JudoPayApi _judoAPI;
+		private ClientService _clientService;
 
 		public ApplePayService (JudoPayApi judoAPI)
 		{
 			_judoAPI = judoAPI;
+			_clientService = new ClientService ();
 		}
 
 		public  void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, UINavigationController controller, ApplePaymentType type)
@@ -67,8 +69,8 @@ namespace JudoDotNetXamariniOSSDK.Services
 			try {
 				CardPaymentModel paymentmodel = new CardPaymentModel {
 					JudoId = JudoConfiguration.Instance.JudoId,
-					ClientDetails = JudoSDKManager.GetClientDetails (),
-					UserAgent = ClientDetailsProvider.GetSDKVersion()
+					ClientDetails = _clientService.GetClientDetails (),
+					UserAgent = _clientService.GetSDKVersion()
 				};
 
 
@@ -79,8 +81,8 @@ namespace JudoDotNetXamariniOSSDK.Services
 					YourPaymentReference = "paymentRef12343",
 					YourConsumerReference = customerRef,
 					Amount = amount.ToDecimal (),
-					ClientDetails = JudoSDKManager.GetClientDetails (),
-					UserAgent = ClientDetailsProvider.GetSDKVersion(),
+					ClientDetails = _clientService.GetClientDetails (),
+					UserAgent = _clientService.GetSDKVersion(),
 					PkPayment = new PKPaymentInnerModel () {
 						Token = new PKPaymentTokenModel () {
 							PaymentData = jo,

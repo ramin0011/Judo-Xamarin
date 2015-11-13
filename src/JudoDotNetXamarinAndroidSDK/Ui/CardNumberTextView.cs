@@ -5,6 +5,7 @@ using Android.Util;
 
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -27,7 +28,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         private void Init()
         {
-            SetHintText(JudoSDKManagerA.CardHintFormat(CardBase.CardType.UNKNOWN));
+            SetHintText(JudoSDKManagerA.CardHintFormat(CardType.UNKNOWN));
             SetErrorText("Please recheck number");
             //Set additional chars to skip
             SetText(" ");

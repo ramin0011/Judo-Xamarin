@@ -11,6 +11,9 @@ using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
+using JudoDotNetXamarin.Models;
+using JudoDotNetXamarin.ViewModels;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -26,11 +29,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
+		protected JudoSuccessCallback successCallback;
+		protected JudoFailureCallback failureCallback;
+		IPaymentService _paymentService;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
             SetContentView(Resource.Layout.payment);
             Title = GetString(Resource.String.title_payment);
             cardEntryView = FindViewById<CardEntryView>(Resource.Id.cardEntryView);
@@ -100,14 +105,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                     Console.Error.Write(e.StackTrace);
                 }
 
-                if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Configuration.IsMaestroEnabled)
+				if (ValidationHelper.IsStartDateRequiredForCardNumber(cardNumber) && JudoSDKManagerA.Instance.MaestroAccepted)
                 {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus();
                     avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner();
                 }
 
-                if (JudoSDKManagerA.Configuration.IsAVSEnabled && avsEntryView != null)
+                if (JudoSDKManagerA.Instance.AVSEnabled && avsEntryView != null)
                 {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
@@ -127,51 +132,56 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         public virtual void MakeCardPayment()
         {
-            var cardNumber = cardEntryView.GetCardNumber();
-            var expiryDate = cardEntryView.GetCardExpiry();
-            var cv2 = cardEntryView.GetCardCV2();
-
-            CardAddressModel cardAddress = new CardAddressModel();
-
-            if (JudoSDKManagerA.Configuration.IsAVSEnabled)
-            {
-                var country = avsEntryView.GetCountry();
-                cardAddress.PostCode = avsEntryView.GetPostCode();
-            }
-
-            string startDate = null;
-            string issueNumber = null;
-
-            if (JudoSDKManagerA.Configuration.IsMaestroEnabled)
-            {
-                issueNumber = startDateEntryView.GetIssueNumber();
-                startDate = startDateEntryView.GetStartDate();
-            }
-
-            var cardPayment = new CardPaymentModel()
-            {
-                JudoId = judoId,
-                Currency = judoCurrency,
-                Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
-                YourConsumerReference = judoConsumer.YourConsumerReference,
-                YourPaymentMetaData = judoMetaData.Metadata,
-                CardNumber = cardNumber,
-                CardAddress = cardAddress,
-                StartDate = startDate,
-                ExpiryDate = expiryDate,
-                CV2 = cv2,
-                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
-				UserAgent = JudoSDKManagerA.GetSDKVersion()
-					
-            };
+			PaymentViewModel cardPayment = new PaymentViewModel ();
+			cardPayment.Card = GatherCardDetails ();
 
             ShowLoadingSpinner(true);
 
+			_paymentService.MakePayment (cardPayment, new ClientService() ).ContinueWith (reponse => {
+				var result = reponse.Result;
 
-            var judoPay = JudoSDKManagerA.JudoClient;
+					if (result != null && !result.HasError && result.Response.Result != "Declined") {
+						var paymentreceipt = result.Response as PaymentReceiptModel;
 
-            judoPay.Payments.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+						if (paymentreceipt != null) {
+							// call success callback
+							if (successCallback != null)
+								successCallback (paymentreceipt);
+						} 
+						else 
+						{
+							var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+							if(threedDSecureReceipt!=null)
+							{
+								failureCallback (new JudoError {ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel{ErrorMessage ="Account requires 3D Secure but application is not configured to accept it", ErrorType = JudoApiError.General_Error, ModelErrors = null }});
+							}
+							else
+							{
+								throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+							}
+						}
+
+					} else {
+						// Failure callback
+						if (failureCallback != null) {
+							var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+							var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+							if (paymentreceipt != null) {
+								// send receipt even we got card declined
+
+								failureCallback (judoError, paymentreceipt);
+							} else {
+
+								failureCallback (judoError);
+							}
+						}
+					}
+
+				ShowLoadingSpinner(false);
+			});
+            //var judoPay = JudoSDKManagerA.JudoClient;
+            //judoPay.Payments.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner(bool show)
@@ -184,5 +194,63 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             });
         }
+
+		CardViewModel GatherCardDetails ()
+		{
+			var cardNumber = cardEntryView.GetCardNumber();
+			var expiryDate = cardEntryView.GetCardExpiry();
+			var cv2 = cardEntryView.GetCardCV2();
+
+			CardAddressModel cardAddress = new CardAddressModel();
+
+			if (JudoSDKManagerA.Instance.MaestroAccepted)
+			{
+				var country = avsEntryView.GetCountry();
+				cardAddress.PostCode = avsEntryView.GetPostCode();
+			}
+
+			string startDate = null;
+			string issueNumber = null;
+
+			if (JudoSDKManagerA.Instance.MaestroAccepted)
+			{
+				issueNumber = startDateEntryView.GetIssueNumber();
+				startDate = startDateEntryView.GetStartDate();
+			}
+
+
+			CardViewModel cardViewModel = new CardViewModel ();
+
+
+			var cardPayment = new CardViewModel()
+            {
+				CardNumber =cardNumber,
+				CardType = CardType,
+				//CountryCode = ,
+				CV2= cv2,
+				ExpireDate =expiryDate,
+				IssueNumber =issueNumber,
+				StartDate = startDate,
+				PostCode=cardAddress.PostCode,
+				
+				
+//                JudoId = judoId,
+//                Currency = judoCurrency,
+//                Amount = judoAmount,
+//                YourPaymentReference = judoPaymentRef,
+//                YourConsumerReference = judoConsumer.YourConsumerReference,
+//                YourPaymentMetaData = judoMetaData.Metadata,
+//                CardNumber = cardNumber,
+//                CardAddress = cardAddress,
+//                StartDate = startDate,
+//                ExpiryDate = expiryDate,
+//                CV2 = cv2,
+//                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
+//				UserAgent = JudoSDKManagerA.GetSDKVersion()
+					
+            };
+
+			return cardViewModel;
+		}
     }
 }

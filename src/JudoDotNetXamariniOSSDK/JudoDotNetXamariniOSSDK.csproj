@@ -81,8 +81,6 @@
     <Compile Include="Controllers\PlaceHolderTextView.designer.cs">
       <DependentUpon>PlaceHolderTextView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\IPaymentService.cs" />
-    <Compile Include="Services\PaymentService.cs" />
     <Compile Include="ViewLocator.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
     <Compile Include="Views\CreditCardView.cs" />
@@ -140,17 +138,16 @@
     <Compile Include="ViewModels\ApplePayViewModel.cs" />
     <Compile Include="Delegates\JudoPKPaymentAuthorizationViewControllerDelegate.cs" />
     <Compile Include="Controllers\NumberHelper.cs" />
-    <Compile Include="Utils\ClientDetailsProvider.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\CardImageHelper.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
-    <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Helpers\iOSConstants.cs" />
     <Compile Include="Controllers\LoadingScreen.cs" />
     <Compile Include="Controllers\SecureManager.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Clients\IApplePayMethods.cs" />
+    <Compile Include="Utils\ClientService.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

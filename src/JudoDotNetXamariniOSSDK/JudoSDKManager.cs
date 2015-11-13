@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using JudoPayDotNet.Models;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using JudoDotNetXamarin;
 using JudoDotNetXamarin.Clients;
 using JudoDotNetXamarin.Delegates;
 using JudoDotNetXamarin.Enum;
 using JudoDotNetXamarin.ViewModels;
-using UIKit;
 using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.Clients;
 using JudoDotNetXamariniOSSDK.Factories;
 using JudoDotNetXamariniOSSDK.Services;
-using JudoDotNetXamariniOSSDK.Utils;
 using JudoDotNetXamariniOSSDK.ViewModels;
+using JudoPayDotNet.Models;
+using Newtonsoft.Json.Linq;
+using UIKit;
 
 namespace JudoDotNetXamariniOSSDK
 {
@@ -38,34 +37,34 @@ namespace JudoDotNetXamariniOSSDK
         /// <summary>
         /// Enable 3D security process
         /// </summary>
-		public static bool ThreeDSecureEnabled{ get; set; }
+		public bool ThreeDSecureEnabled{ get; set; }
 
         /// <summary>
         /// Enable/Disable AVS check
         /// </summary>
-		public static bool AVSEnabled { get; set; }
+		public bool AVSEnabled { get; set; }
 
         /// <summary>
         /// Enable/Disable Amex card support
         /// </summary>
-		public static bool AmExAccepted { get; set; }
+		public bool AmExAccepted { get; set; }
 
         /// <summary>
         /// Enable/Disable Mestro card support
         /// </summary>
-		public static bool MaestroAccepted { get; set; }
+		public bool MaestroAccepted { get; set; }
 
 
         /// <summary>
         /// Enable/Disable risk signal to pass fruad monitoring device data
         /// default is true
         /// </summary>
-		public static bool RiskSignals{ get; set; }
+		public bool RiskSignals{ get; set; }
 		
         /// <summary>
         /// SSLPinningEnabled
         /// </summary>
-        public static bool SSLPinningEnabled { get; set; }
+        public bool SSLPinningEnabled { get; set; }
 
        
 
@@ -76,22 +75,12 @@ namespace JudoDotNetXamariniOSSDK
             get { return _singleton.Value; }
         }
 
-        static JudoSDKManager()
+         static JudoSDKManager()
         {
             // setting up UI mode by default
             UIMode = true;
-            RiskSignals = true;
+			Instance.RiskSignals = true;
         }
-
-
-        internal static JObject GetClientDetails()
-        {
-            if(RiskSignals)
-                return JObject.FromObject(ClientDetailsProvider.GetClientDetails());
-
-            return null;
-        }
-
 
 		internal static void SetUserAgent ()
 		{

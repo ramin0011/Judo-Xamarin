@@ -4,7 +4,7 @@ using JudoDotNetXamarin.Delegates;
 using JudoDotNetXamarin.Enum;
 using JudoDotNetXamarin.Models;
 using JudoDotNetXamariniOSSDK.Services;
-using JudoDotNetXamariniOSSDK.Utils;
+using JudoDotNetXamariniOSSDK;
 using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet.Models;
 using UIKit;
@@ -15,14 +15,17 @@ namespace JudoDotNetXamariniOSSDK.Clients
 	{
 		private readonly IApplePayService _paymentService;
 
+		private ClientService _clientService;
+
 		public ApplePayMethods (IApplePayService paymentService)
 		{
 			_paymentService = paymentService;
+			_clientService = new ClientService ();
 		}
 
 		public void ApplePayment (ApplePayViewModel viewModel, JudoSuccessCallback success, JudoFailureCallback failure, ApplePaymentType type)
 		{
-			if (!ClientDetailsProvider.ApplePayAvailable) {
+			if (!_clientService.ApplePayAvailable) {
 				failure (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
 						ErrorMessage = "Apple Pay is not enabled on device, application entitlement or setup by user.",
 						ErrorType = JudoApiError.General_Error,

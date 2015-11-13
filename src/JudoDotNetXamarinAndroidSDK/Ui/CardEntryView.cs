@@ -7,6 +7,7 @@ using Android.Views.InputMethods;
 using Android.Widget;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -26,7 +27,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private CardImageView cardImageView;
         public TextView HintTextView { get; set; }
         // TODO: CHECK IF WE CAN'T USE THE JUDODOTNETSDK CARDTYPE
-        private CardBase.CardType currentCard = CardBase.CardType.UNKNOWN;
+        private CardType currentCard = CardType.UNKNOWN;
 
         private Stage currentStage = Stage.STAGE_CC_NO;
 
@@ -79,7 +80,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView(layoutHolder);
 
             int lastPos = 0;
-            CardBase.CardType currentCardType;
+            CardType currentCardType;
 
             cardNumberTextView.OnEntryComplete += cardNumber =>
             {
@@ -102,11 +103,11 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
                 if (currentCardType != currentCard)
                 {
-                    if (currentCard == CardBase.CardType.AMEX && !JudoSDKManagerA.Configuration.IsAVSEnabled)
+                    if (currentCard == CardType.AMEX && !JudoSDKManagerA.Instance.AVSEnabled)
                     {
                         cardNumberTextView.ShowInvalid("AmEx not accepted");
                     }
-                    else if (currentCard == CardBase.CardType.MASTRO && !JudoSDKManagerA.Configuration.IsMaestroEnabled)
+                    else if (currentCard == CardType.MAESTRO && !JudoSDKManagerA.Instance.MaestroAccepted)
                     {
                         cardNumberTextView.ShowInvalid("Maestro not accepted");
                     }
@@ -189,7 +190,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         {
             cardNumberTextView.GetEditText().Text = "";
             cardExpiryCv2TextView.GetEditText().Text = "";
-            currentCard = CardBase.CardType.UNKNOWN;
+            currentCard = CardType.UNKNOWN;
             cardImageView.SetCardImage(JudoSDKManagerA.GetCardResourceId(Context, currentCard, true), false);
 
             if (HintTextView != null)

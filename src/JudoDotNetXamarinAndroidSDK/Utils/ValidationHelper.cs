@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Utils
 {
@@ -47,18 +48,18 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
         /// <param name="cardType"></param>
         /// <remarks>AMEX and MAESTRO card types must be enabled on your account before you can process them.</remarks>
         /// <returns></returns>
-        public static bool CheckCardType(CardBase.CardType cardType)
+        public static bool CheckCardType(CardType cardType)
         {
             switch (cardType)
             {
-                case CardBase.CardType.VISA:
-                case CardBase.CardType.MASTERCARD:
-                case CardBase.CardType.VISA_DEBIT:
-                case CardBase.CardType.VISA_ELECTRON:
+                case CardType.VISA:
+                case CardType.MASTERCARD:
+                case CardType.VISA_DEBIT:
+                case CardType.VISA_ELECTRON:
                     return true;
 
-                case CardBase.CardType.MASTRO:
-                case CardBase.CardType.AMEX:
+                case CardType.MAESTRO:
+                case CardType.AMEX:
                     return true;
                 default:
                     return false;
@@ -163,13 +164,13 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             return new DateTime(year, month, 1) < DateTime.Now;
         }
 
-        public static bool CheckCVV(string cvv, CardBase.CardType cardType)
+        public static bool CheckCVV(string cvv, CardType cardType)
         {
             try
             {
                 switch (cardType)
                 {
-                    case CardBase.CardType.AMEX:
+                    case CardType.AMEX:
                         return CheckCIDV(int.Parse(cvv));
                     default:
                         return CheckCV2(int.Parse(cvv));
@@ -220,29 +221,29 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             return issueNumber > 0 && issueNumber < 100;
         }
 
-        public static CardBase.CardType GetCardType(string cardNumber)
+        public static CardType GetCardType(string cardNumber)
         {
             if (REGEX_VISA.IsMatch(cardNumber))
             {
-                return CardBase.CardType.VISA;
+                return CardType.VISA;
             }
 
             if (REGEX_MC.IsMatch(cardNumber))
             {
-                return CardBase.CardType.MASTERCARD;
+                return CardType.MASTERCARD;
             }
 
             if (REGEX_MAESTRO.IsMatch(cardNumber))
             {
-                return CardBase.CardType.MASTRO;
+                return CardType.MAESTRO;
             }
 
             if (REGEX_AMEX.IsMatch(cardNumber))
             {
-                return CardBase.CardType.AMEX;
+                return CardType.AMEX;
             }
 
-            return CardBase.CardType.UNKNOWN;
+            return CardType.UNKNOWN;
         }
 
         public static bool IsStartDateRequiredForCardNumber(string cardNumber)
@@ -250,9 +251,9 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             return IsStartDateOrIssueNumberRequiredForCardType(GetCardType(cardNumber));
         }
 
-        public static bool IsStartDateOrIssueNumberRequiredForCardType(CardBase.CardType cardType)
+        public static bool IsStartDateOrIssueNumberRequiredForCardType(CardType cardType)
         {
-            return CardBase.CardType.MASTRO == cardType;
+            return CardType.MAESTRO == cardType;
         }
 
         public static bool CheckLength(string cardNumber)
@@ -273,9 +274,9 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             return CheckCardType(GetCardType(cardNumber));
         }
 
-        public static bool CheckCard(CardBase card)
-        {
-            return card.IsValidCard();
-        }
+//        public static bool CheckCard(CardType card)
+//        {
+//            return card.IsValidCard();
+//        }
     }
 }

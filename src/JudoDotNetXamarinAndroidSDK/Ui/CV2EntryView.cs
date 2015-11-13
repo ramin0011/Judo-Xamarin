@@ -10,12 +10,13 @@ using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoDotNetXamarinSDK;
 using Orientation = Android.Widget.Orientation;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
     public class CV2EntryView : LinearLayout
     {
-        private CardBase.CardType currentCard = CardBase.CardType.UNKNOWN;
+        private CardType currentCard = CardType.UNKNOWN;
 
         private CV2TextView cv2TextView;
         private FrameLayout cardImageLayout;
@@ -128,7 +129,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             last4CCNosTextView.Text = Resources.GetString(Resource.String.card_no_obscured, text);
         }
 
-        public void SetCardType(CardBase.CardType cardType)
+        public void SetCardType(CardType cardType)
         {
             cv2TextView.SetHintText(JudoSDKManagerA.GetExpiryAndValidationHintFormat(cardType));
             cv2TextView.SetInputFilter("/");

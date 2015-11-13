@@ -16,6 +16,7 @@ using JudoDotNetXamarinAndroidSDK;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Clients;
 using Object = Java.Lang.Object;
+using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Models
 {
@@ -25,7 +26,7 @@ namespace JudoDotNetXamarinAndroidSDK.Models
         public string CardLastFour { get; set; }
         public string CardFirstSix { get; set; }
         public string Token { get; set; }
-        public CardBase.CardType CardType { get; set; }
+        public CardType CardType { get; set; }
         public string ExpiryDate { get; set; }
 
         public string ConsumerToken { get; set; }
@@ -43,7 +44,7 @@ namespace JudoDotNetXamarinAndroidSDK.Models
             CardLastFour = parcel.ReadString();
             ExpiryDate = parcel.ReadString();
             Token = parcel.ReadString();
-            CardType = (CardBase.CardType)parcel.ReadInt();
+            CardType = (CardType)parcel.ReadInt();
             ConsumerToken = parcel.ReadString();
         }
 
@@ -67,7 +68,7 @@ namespace JudoDotNetXamarinAndroidSDK.Models
             return true;
         }
 
-        public static CardToken InitCardToken(string token, string consumerToken, string cv2, CardBase.CardType cardType, string expiryDate = null, string firstSix = null, string lastfour = null)
+        public static CardToken InitCardToken(string token, string consumerToken, string cv2, CardType cardType, string expiryDate = null, string firstSix = null, string lastfour = null)
         {
             CardToken cd = new CardToken();
 
