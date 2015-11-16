@@ -9,6 +9,7 @@ using Orientation = Android.Widget.Orientation;
 using JudoDotNetXamarin.Enum;
 using System;
 using System.Collections.Generic;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -58,7 +59,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private TextView postCodeTitleText;
         private TextView avsMsgText;
         private View postCodeContainer;
-        private string[] countries;
+       // private string[] countries;
         private string[] postcodeText;
         private bool ignoreFocus;
 
@@ -82,7 +83,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView(view);
 
             //get the arrays of values from Strings
-            countries = Resources.GetStringArray(Resource.Array.avs_countries);
+            //countries = Resources.GetStringArray(Resource.Array.avs_countries);
             postcodeText = Resources.GetStringArray(Resource.Array.avs_countries_postcode_label_text);
 
             countrySpinner = view.FindViewById<Spinner>(Resource.Id.countrySpinner);
@@ -129,13 +130,36 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             };
         }
 
-        public string GetCountry()
+		public BillingCountryOptions GetCountry()
         {
+			switch (countrySpinner.SelectedItem as Int32) {
+			case (int) BillingCountryOptions.BillingCountryOptionUK:
+				return BillingCountryOptions.BillingCountryOptionUK;
+
+				break;
+			case (int)BillingCountryOptions.BillingCountryOptionUSA:
+				return BillingCountryOptions.BillingCountryOptionUSA;
+
+				break;
+			case (int)BillingCountryOptions.BillingCountryOptionCanada:
+				return BillingCountryOptions.BillingCountryOptionCanada;
+
+				break;
+			case (int)BillingCountryOptions.BillingCountryOptionOther:
+				return BillingCountryOptions.BillingCountryOptionOther;
+
+				break;
+			default:
+				return BillingCountryOptions.BillingCountryOptionUK;
+				break;
+
+			}
             return (string)countrySpinner.SelectedItem;
         }
 
         public string GetPostCode()
         {
+			
             return postCodeEditText.Text;
         }
 

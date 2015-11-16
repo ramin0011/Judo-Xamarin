@@ -3,6 +3,8 @@ using Android.OS;
 using Android.Widget;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin.Enum;
+using JudoDotNetXamarin.ViewModels;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -64,5 +66,45 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+		CardViewModel GatherCardDetails ()
+		{
+			var cardNumber = cardEntryView.GetCardNumber();
+			var expiryDate = cardEntryView.GetCardExpiry();
+			var cv2 = cardEntryView.GetCardCV2();
+			BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
+			CardAddressModel cardAddress = new CardAddressModel();
+
+			if (JudoSDKManagerA.Instance.MaestroAccepted)
+			{
+				country = avsEntryView.GetCountry();
+				cardAddress.PostCode = avsEntryView.GetPostCode();
+			}
+
+			string startDate = null;
+			string issueNumber = null;
+
+			if (JudoSDKManagerA.Instance.MaestroAccepted)
+			{
+				issueNumber = startDateEntryView.GetIssueNumber();
+				startDate = startDateEntryView.GetStartDate();
+			}
+
+
+			CardViewModel cardViewModel = new CardViewModel ();
+
+			var cardPayment = new CardViewModel()
+			{
+				CardNumber =cardNumber,
+				CountryCode = country,
+				CV2= cv2,
+				ExpireDate =expiryDate,
+				IssueNumber =issueNumber,
+				StartDate = startDate,
+				PostCode=cardAddress.PostCode,
+			};
+
+			return cardViewModel;
+		}
     }
 }

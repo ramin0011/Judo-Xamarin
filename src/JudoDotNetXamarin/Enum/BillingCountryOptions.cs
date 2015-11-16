@@ -1,6 +1,7 @@
 ﻿using JudoPayDotNet.Enums;
 
-namespace JudoDotNetXamarin.Enum
+
+namespace JudoDotNetXamarin
 {
 	public enum BillingCountryOptions
 	{
@@ -13,5 +14,7 @@ namespace JudoDotNetXamarin.Enum
 		[Description("Other")]
 		BillingCountryOptionOther
 	}
+		
+
 }
 

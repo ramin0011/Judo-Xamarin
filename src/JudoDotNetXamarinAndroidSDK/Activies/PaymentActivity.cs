@@ -14,6 +14,7 @@ using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using JudoDotNetXamarin.Models;
 using JudoDotNetXamarin.ViewModels;
+using JudoDotNetXamarin.Enum;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -200,12 +201,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 			var cardNumber = cardEntryView.GetCardNumber();
 			var expiryDate = cardEntryView.GetCardExpiry();
 			var cv2 = cardEntryView.GetCardCV2();
-
+			BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
 			CardAddressModel cardAddress = new CardAddressModel();
 
 			if (JudoSDKManagerA.Instance.MaestroAccepted)
 			{
-				var country = avsEntryView.GetCountry();
+				country = avsEntryView.GetCountry();
 				cardAddress.PostCode = avsEntryView.GetPostCode();
 			}
 
@@ -225,8 +226,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 			var cardPayment = new CardViewModel()
             {
 				CardNumber =cardNumber,
-				CardType = CardType,
-				//CountryCode = ,
+				CountryCode = country.GetISOCode(),
 				CV2= cv2,
 				ExpireDate =expiryDate,
 				IssueNumber =issueNumber,

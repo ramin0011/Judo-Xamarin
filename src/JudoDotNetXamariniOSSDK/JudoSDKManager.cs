@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using JudoDotNetXamarin;
 using JudoDotNetXamarin.Clients;
-using JudoDotNetXamarin.Delegates;
+using JudoDotNetXamarin;
 using JudoDotNetXamarin.Enum;
 using JudoDotNetXamarin.ViewModels;
 using JudoDotNetXamariniOSSDK;
@@ -92,8 +92,6 @@ namespace JudoDotNetXamariniOSSDK
 			return false;
 		}
 
-
-
 		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
 		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
 		private static readonly IApplePayService ApplePaymentService = ServiceFactory.GetApplePaymentService ();
@@ -130,7 +128,7 @@ namespace JudoDotNetXamariniOSSDK
 			
 			var innerModel = payment.Clone ();
 
-				_judoSdkApi.Payment (innerModel, success, failure);
+			_judoSdkApi.Payment (innerModel, success, failure);
 
 		}
 

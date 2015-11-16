@@ -96,6 +96,7 @@
     <Compile Include="Utils\ValidationHelper.cs" />
     <Compile Include="JudoSDKManagerA.cs" />
     <Compile Include="Services\ClientService.cs" />
+    <Compile Include="Utils\EnumExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
