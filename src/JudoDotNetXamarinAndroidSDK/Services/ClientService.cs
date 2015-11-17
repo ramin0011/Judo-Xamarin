@@ -8,10 +8,10 @@ using Java.Lang;
 using Java.Util;
 using JudoDotNetXamarinSDK;
 using String = System.String;
-using Android.App;
-using JudoDotNetXamarinAndroidSDK.Utils;
-using Newtonsoft.Json.Linq;
 using JudoDotNetXamarin;
+using JudoDotNetXamarinAndroidSDK.Utils;
+using System;
+using Newtonsoft.Json.Linq;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -24,18 +24,18 @@ namespace JudoDotNetXamarinAndroidSDK
 			{
 				return null;
 			}
-
-			var connectivityManager =Application.App.Context.GetSystemService(Context.ConnectivityService).JavaCast<ConnectivityManager>();
+			var context = Android.App.Application.Context;
+			var connectivityManager =context.GetSystemService(Context.ConnectivityService).JavaCast<ConnectivityManager>();
 			var telephonyManager = context.GetSystemService(Context.TelephonyService).JavaCast<TelephonyManager>();
 
-			var clientDetails = new ClientDetails();
+			var clientDetails = new JudoDotNetXamarin.ClientDetails();
 
 			clientDetails.OS = "android " + Build.VERSION.SdkInt;
 			clientDetails.DeviceId = new DeviceUuidFactory(context).GetDeviceUuid();
 			clientDetails.DeviceModel = Build.Model;
 			clientDetails.Serial = Build.Serial;
 
-			clientDetails.CultureLocale = Locale.Default.ISO3Country;
+			clientDetails.CultureLocale = Java.Util.Locale.Default.ISO3Country;
 
 			try
 			{
@@ -50,15 +50,15 @@ namespace JudoDotNetXamarinAndroidSDK
 
 			if (telephonyManager != null)
 			{
-				clientDetails.NetworkName = telephonyManager.NetworkOperatorName != String.Empty ? telephonyManager.NetworkOperatorName : telephonyManager.SimOperatorName;
+				clientDetails.NetworkName = telephonyManager.NetworkOperatorName != System.String.Empty ? telephonyManager.NetworkOperatorName : telephonyManager.SimOperatorName;
 			}
 
 			RootCheck rootCheck = new RootCheck(context);
-			clientDetails.Root = rootCheck.BuildRootCheckDetails();
+			clientDetails.Rooted = rootCheck.IsRooted();
 
-			clientDetails.SSLPinningEnabled = JudoSDKManagerA.Instance.SSLPinningEnabled;
+			clientDetails.SslPinningEnabled = JudoSDKManagerA.Instance.SSLPinningEnabled;
 
-			return clientDetails;
+			return new JObject( clientDetails);
 		}
 
 		public string GetSDKVersion ()

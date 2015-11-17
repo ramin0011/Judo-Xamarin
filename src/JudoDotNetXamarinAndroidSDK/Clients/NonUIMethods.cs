@@ -30,7 +30,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManagerA.JudoClient.Payments.Create(cardPayment);
+			return null; //JudoSDKManagerA.JudoClient.Payments.Create(cardPayment);
         }
 
         public Task<IResult<ITransactionResult>> TokenPayment(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -52,7 +52,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManagerA.JudoClient.Payments.Create(payment);
+			return null;// JudoSDKManagerA.JudoClient.Payments.Create(payment);
         }
 
         public Task<IResult<ITransactionResult>> PreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -76,7 +76,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManagerA.JudoClient.PreAuths.Create(cardPayment);
+			return null;// JudoSDKManagerA.JudoClient.PreAuths.Create(cardPayment);
         }
 
         public Task<IResult<ITransactionResult>> TokenPreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -98,7 +98,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 				UserAgent = JudoSDKManagerA.GetSDKVersion()
             };
 
-            return JudoSDKManagerA.JudoClient.PreAuths.Create(payment);
+			return null;//  JudoSDKManagerA.JudoClient.PreAuths.Create(payment);
         }
 
         public Task<IResult<ITransactionResult>> RegisterCard(string cardNumber, string cv2, string expiryDate, string consumerReference, string postCode)
@@ -115,7 +115,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
                 YourConsumerReference = consumerReference
             };
 
-            return JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard);
+			return null;//  JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard);
         }
     }
 }

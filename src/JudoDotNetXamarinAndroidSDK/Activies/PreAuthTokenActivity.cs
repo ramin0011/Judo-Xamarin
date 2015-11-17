@@ -36,7 +36,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             ShowLoadingSpinner(true);
 
-            JudoSDKManagerA.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+         //   JudoSDKManagerA.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

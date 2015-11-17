@@ -27,8 +27,8 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
 
 
             intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
-
-			Activity.StartActivityForResult(intent, ACTION_CARD_PAYMENT);
+			PaymentActivity pa = new PaymentActivity ();
+			pa.StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         }
 
         public Intent PreAuth(Context context, string judoId, string currency, string amount,

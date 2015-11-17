@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JudoDotNetXamarin.ViewModels
+namespace JudoDotNetXamarin
 {
 	public class PaymentViewModel :BasePaymentViewModel
 	{

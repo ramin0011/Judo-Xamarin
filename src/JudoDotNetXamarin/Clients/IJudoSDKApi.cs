@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using JudoDotNetXamarin;
-using JudoDotNetXamarin.ViewModels;
 
 [assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
 [assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]

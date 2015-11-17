@@ -1,6 +1,5 @@
 ﻿using System;
 using JudoDotNetXamarin;
-using JudoDotNetXamarin.ViewModels;
 
 
 namespace JudoDotNetXamarin

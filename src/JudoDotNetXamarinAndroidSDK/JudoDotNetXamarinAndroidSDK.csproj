@@ -68,7 +68,6 @@
     <Compile Include="Clients\INonUIMethods.cs" />
     <Compile Include="Clients\IUIMethods.cs" />
     <Compile Include="Models\CardToken.cs" />
-    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -97,6 +96,8 @@
     <Compile Include="JudoSDKManagerA.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
+    <Compile Include="Models\JudoDroidError.cs" />
+    <Compile Include="JudoSDKManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

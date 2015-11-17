@@ -1,7 +1,7 @@
 ﻿using JudoDotNetXamarin.Enum;
 using JudoPayDotNet.Models;
 
-namespace JudoDotNetXamarin.ViewModels
+namespace JudoDotNetXamarin
 {
 	public class CardViewModel
 	{

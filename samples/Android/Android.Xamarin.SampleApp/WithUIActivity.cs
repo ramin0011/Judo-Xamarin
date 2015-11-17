@@ -1,19 +1,13 @@
-﻿using System;
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+﻿using Android.App;
 using Android.OS;
-using Result = Android.App.Result;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Diagnostics;
-using JudoDotNetXamarinAndroidSDK.Utils;
-using JudoDotNetXamarinSDK;
-using JudoDotNetXamarinAndroidSDK.Models;
-using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
+using JudoPayDotNet.Enums;
+using System;
+using Android.Widget;
+using JudoPayDotNet.Models;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoDotNetXamarinSDK;
+using JudoDotNetXamarinAndroidSDK;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -25,7 +19,7 @@ namespace Android.Xamarin.SampleApp
 		private const string ApiSecret  = "[Application ApiSecret]";//retrieve from JudoPortal
 		private string MY_JUDO_ID       = "[Judo ID]"; //Received when registering an account with Judo
         private string currency         = "GBP";
-        private string amount           = "4.99";
+        private string amount           = "1.99";
 //        private string paymentReference = "payment101010102";
 //        private string consumerRef      = "consumer1010102";
 
@@ -63,10 +57,24 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withui);
 
             // setting up API token/secret 
-			JudoSDKManagerA.Configuration.SetApiTokenAndSecret(ApiToken,ApiSecret);
-            JudoSDKManagerA.Configuration.IsAVSEnabled = true;
-            JudoSDKManagerA.Configuration.IsFraudMonitoringSignals = true;
-            JudoSDKManagerA.Configuration.IsMaestroEnabled = true;
+			var configInstance = JudoConfiguration.Instance;
+
+			//setting for Sandnox
+			configInstance.Environment = JudoEnvironment.Live;
+
+
+			/*
+			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
+			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
+			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
+			*/
+			// //Salatha
+			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+			configInstance.JudoId = "100915867";
+			if (configInstance.ApiToken == null) {
+				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+			}
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -132,9 +140,13 @@ namespace Android.Xamarin.SampleApp
 
         private void payCard_Click(object sender, EventArgs e)
         {
+			var cardModel = GetCardViewModel ();
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
-			JudoSDKManagerA.Instance.Payment (GetCardViewModel (), SuccessPayment, FailurePayment);
+           // Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
+			JudoSDKManager.Instance.AmExAccepted= true;
+			JudoSDKManager.Payment (cardModel, SuccessPayment, FailurePayment);
+
+
             //var intent = JudoSDKManagerA.UIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
 
 			//StartActivityForResult(intent, ACTION_CARD_PAYMENT);
@@ -142,10 +154,12 @@ namespace Android.Xamarin.SampleApp
 
         private void payPreAuth_Click(object sender, EventArgs e)
         {
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            Intent intent = JudoSDKManagerA.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
+			JudoSDKManagerA.Instance.Payment (GetCardViewModel (), SuccessPayment, FailurePayment);
 
-            StartActivityForResult(intent, ACTION_PREAUTH);
+            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
+          //  Intent intent = JudoSDKManagerA.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
+
+         //  StartActivityForResult(intent, ACTION_PREAUTH);
         }
 
         private void payToken_Click(object sender, EventArgs e) 
@@ -169,9 +183,9 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManagerA.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
+           // var intent = JudoSDKManagerA.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
 
-            StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
+           // StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
 
         }
 
@@ -196,16 +210,16 @@ namespace Android.Xamarin.SampleApp
             };
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            var intent = JudoSDKManagerA.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
+          //  var intent = JudoSDKManagerA.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
 
-            StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
+          //  StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
         }
 
         private void registerCard_Click(object sender, EventArgs e)
         {
-            var intent = JudoSDKManagerA.UIMethods.RegisterCard(this, consumerRef);
+           // var intent = JudoSDKManagerA.UIMethods.RegisterCard(this, consumerRef);
 
-            StartActivityForResult(intent, ACTION_REGISTER_CARD);
+         //   StartActivityForResult(intent, ACTION_REGISTER_CARD);
         }
 
         private void nonUiExamples_Click(object sender, EventArgs e) 
@@ -217,125 +231,125 @@ namespace Android.Xamarin.SampleApp
         {
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            Receipt receipt = null;
-            string msg_prefix = "";
+//        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+//        {
+//            Receipt receipt = null;
+//            string msg_prefix = "";
+//
+//            if (resultCode == Result.Canceled) 
+//            {
+//                Toast.MakeText(this, "Payment Canceled.", ToastLength.Long).Show();
+//                return;
+//            }
+//            else if (resultCode == JudoSDKManagerA.JUDO_ERROR)
+//            {
+//                Error err =  data.GetParcelableExtra(JudoSDKManagerA.JUDO_ERROR_EXCEPTION) as Error;
+//
+//                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE),
+//                    err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show();
+//                return;
+//            }
+//
+//            if(data != null)
+//                receipt = data.GetParcelableExtra(JudoSDKManagerA.JUDO_RECEIPT) as Receipt;
+//
+//            if (receipt == null)
+//            {
+//                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
+//                return;
+//            }
+//
+//            switch (requestCode)
+//            {
+//                case ACTION_CARD_PAYMENT:
+//                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+//                    {
+//                        PaymentReceiptModel paymentReceipt;
+//                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
+//                        {
+//                            cardToken = paymentReceipt.CardDetails.CardToken;
+//                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
+//                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
+//                            lastFour = paymentReceipt.CardDetails.CardLastfour;
+//                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
+//                        }
+//                        msg_prefix = "Payment succeeded";
+//                    }
+//                    else
+//                    {
+//                        msg_prefix = "Payment failed";
+//                    }
+//                    break;
+//                case ACTION_PREAUTH:
+//                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+//                    {
+//                        PaymentReceiptModel paymentReceipt;
+//                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
+//                        {
+//                            preAuth_cardToken = paymentReceipt.CardDetails.CardToken;
+//                            preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
+//                            preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
+//                            preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
+//                            preAuth_cardType = (CardType)paymentReceipt.CardDetails.CardType;
+//                        }
+//
+//                        msg_prefix = "PreAuth card payment succeeded";
+//                    }
+//                    else
+//                    {
+//                        msg_prefix = "PreAuth card payment failed";
+//                    }
+//                    break;
+//                case ACTION_TOKEN_PAYMENT:
+//                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+//                    {
+//                        msg_prefix = "Token payment succeeded";
+//                    }
+//                    else
+//                    {
+//                        msg_prefix = "Token payment failed";
+//                    }
+//                    break;
+//                case ACTION_TOKEN_PREAUTH:
+//                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+//                    {
+//                        msg_prefix = "PreAuth Token payment succeeded";
+//                    }
+//                    else
+//                    {
+//                        msg_prefix = "PreAuth Token payment failed";
+//                    }
+//                    break;
+//                case ACTION_REGISTER_CARD:
+//                    if (resultCode == Result.Ok && receipt.Result != "Declined")
+//                    {
+//                        PaymentReceiptModel paymentReceipt;
+//                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
+//                        {
+//                            cardToken = paymentReceipt.CardDetails.CardToken;
+//                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
+//                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
+//                            lastFour = paymentReceipt.CardDetails.CardLastfour;
+//                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
+//                        }
+//
+//                        msg_prefix = "Register card succeeded";
+//                    }
+//                    else
+//                    {
+//                        msg_prefix = "Register card failed";
+//                    }
+//                    break;
+//            }
+//
+//            if (receipt != null)
+//            {
+//                Toast.MakeText(this, string.Format("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
+//            }
+//
+//        }
 
-            if (resultCode == Result.Canceled) 
-            {
-                Toast.MakeText(this, "Payment Canceled.", ToastLength.Long).Show();
-                return;
-            }
-            else if (resultCode == JudoSDKManagerA.JUDO_ERROR)
-            {
-                Error err =  data.GetParcelableExtra(JudoSDKManagerA.JUDO_ERROR_EXCEPTION) as Error;
-
-                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE),
-                    err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show();
-                return;
-            }
-
-            if(data != null)
-                receipt = data.GetParcelableExtra(JudoSDKManagerA.JUDO_RECEIPT) as Receipt;
-
-            if (receipt == null)
-            {
-                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManagerA.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
-                return;
-            }
-
-            switch (requestCode)
-            {
-                case ACTION_CARD_PAYMENT:
-                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentReceipt;
-                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-                        {
-                            cardToken = paymentReceipt.CardDetails.CardToken;
-                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
-                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-                            lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
-                        }
-                        msg_prefix = "Payment succeeded";
-                    }
-                    else
-                    {
-                        msg_prefix = "Payment failed";
-                    }
-                    break;
-                case ACTION_PREAUTH:
-                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentReceipt;
-                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-                        {
-                            preAuth_cardToken = paymentReceipt.CardDetails.CardToken;
-                            preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
-                            preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-                            preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            preAuth_cardType = (CardType)paymentReceipt.CardDetails.CardType;
-                        }
-
-                        msg_prefix = "PreAuth card payment succeeded";
-                    }
-                    else
-                    {
-                        msg_prefix = "PreAuth card payment failed";
-                    }
-                    break;
-                case ACTION_TOKEN_PAYMENT:
-                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-                    {
-                        msg_prefix = "Token payment succeeded";
-                    }
-                    else
-                    {
-                        msg_prefix = "Token payment failed";
-                    }
-                    break;
-                case ACTION_TOKEN_PREAUTH:
-                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-                    {
-                        msg_prefix = "PreAuth Token payment succeeded";
-                    }
-                    else
-                    {
-                        msg_prefix = "PreAuth Token payment failed";
-                    }
-                    break;
-                case ACTION_REGISTER_CARD:
-                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-                    {
-                        PaymentReceiptModel paymentReceipt;
-                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-                        {
-                            cardToken = paymentReceipt.CardDetails.CardToken;
-                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
-                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-                            lastFour = paymentReceipt.CardDetails.CardLastfour;
-                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
-                        }
-
-                        msg_prefix = "Register card succeeded";
-                    }
-                    else
-                    {
-                        msg_prefix = "Register card failed";
-                    }
-                    break;
-            }
-
-            if (receipt != null)
-            {
-                Toast.MakeText(this, string.Format("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
-            }
-
-        }
-
-		private JudoDotNetXamarin.PaymentViewModel GetCardViewModel ()
+		private PaymentViewModel GetCardViewModel ()
 		{
 			var cardPayment = new PaymentViewModel {
 				Amount = 4.5m, 

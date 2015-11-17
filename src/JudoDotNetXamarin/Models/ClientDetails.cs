@@ -1,7 +1,5 @@
 ﻿namespace JudoDotNetXamarin
 {
-
-
 	public class ClientDetails
 	{
 		public string OS { get; set; }
@@ -19,6 +17,8 @@
 		public bool IsRoaming { get; set; }
 
 		public string NetworkName { get; set; }
+
+		public bool Rooted {get;set;}
 	}
 }
 

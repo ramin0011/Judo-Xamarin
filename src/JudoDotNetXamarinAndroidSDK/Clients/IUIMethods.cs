@@ -20,7 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
         /// <param name="consumerReference">The consumer reference (YourConsumerReference).</param>
         /// <param name="metaData">The metadata.</param>
         /// <returns>The transaction result of the operation.</returns>
-        Intent Payment(string judoId, string currency, string amount,
+        void Payment(string judoId, string currency, string amount,
             string paymentReference, string consumerReference, Dictionary<string, string> metaData);
 
         /// <summary>

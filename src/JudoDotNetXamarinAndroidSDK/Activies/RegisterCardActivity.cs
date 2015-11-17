@@ -139,7 +139,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             
             ShowLoadingSpinner(true);
 
-            JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+           // JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner(bool show)

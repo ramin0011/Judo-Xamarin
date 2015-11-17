@@ -102,7 +102,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
             // Populate country spinner
             ArrayAdapter<string> dataAdapter = new CountryArrayAdapter(Context,
-                Android.Resource.Layout.SimpleSpinnerItem, countries, type);
+				Android.Resource.Layout.SimpleSpinnerItem, countries.ToArray(), type);
 
             dataAdapter.SetDropDownViewResource(Resource.Layout.country_spinner_dropdown_item);
             countrySpinner.Adapter = dataAdapter;
@@ -132,7 +132,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
 		public BillingCountryOptions GetCountry()
         {
-			switch (countrySpinner.SelectedItem as Int32) {
+			switch ((Int32)countrySpinner.SelectedItem ) {
 			case (int) BillingCountryOptions.BillingCountryOptionUK:
 				return BillingCountryOptions.BillingCountryOptionUK;
 
@@ -154,7 +154,6 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 				break;
 
 			}
-            return (string)countrySpinner.SelectedItem;
         }
 
         public string GetPostCode()

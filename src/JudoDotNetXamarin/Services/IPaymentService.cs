@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using JudoDotNetXamarin;
-using JudoDotNetXamarin.ViewModels;
 using JudoPayDotNet.Models;
 using System.Runtime.CompilerServices;
 

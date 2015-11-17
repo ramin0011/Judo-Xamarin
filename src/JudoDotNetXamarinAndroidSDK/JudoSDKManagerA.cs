@@ -1,51 +1,45 @@
-using System;
-using Android.Content;
-using JudoPayDotNet;
-using JudoPayDotNet.Errors;
-using Newtonsoft.Json.Linq;
-using Configuration = JudoDotNetXamarinAndroidSDK.Configurations.Configuration;
-using Error = JudoDotNetXamarinAndroidSDK.Models.Error;
-using Result = Android.App.Result;
-using System.Diagnostics;
-using JudoPayDotNet.Enums;
 using JudoDotNetXamarin;
-using JudoDotNetXamarin.Clients;
-using JudoDotNetXamarin.ViewModels;
-using JudoDotNetXamarinAndroidSDK;
-using JudoDotNetXamarinAndroidSDK.Clients;
-using JudoDotNetXamarinAndroidSDK.Configurations;
-using JudoDotNetXamarinAndroidSDK.Utils;
-using JudoPayDotNet.Models;
 using Android.App;
+using JudoDotNetXamarin.Clients;
+using System;
+using JudoPayDotNet.Models;
+//using System.Runtime.Remoting.Contexts;
+using JudoDotNetXamarinAndroidSDK;
+using Android.Content;
+using Newtonsoft.Json.Linq;
+using JudoDotNetXamarinAndroidSDK.Utils;
+using System.Diagnostics;
+using JudoPayDotNet.Errors;
+using JudoDotNetXamarinAndroidSDK.Models;
 
 namespace JudoDotNetXamarinSDK
 {
-	public sealed class JudoSDKManagerA : IJudoSDKManager
+	public sealed class JudoSDKManagerA //: IJudoSDKManager
     {
-        public static readonly Result JUDO_SUCCESS = Result.Ok;
-        public static readonly Result JUDO_CANCELLED = Result.Canceled;
-        public static readonly Result JUDO_ERROR = Result.FirstUser;
+		public static readonly Android.App.Result JUDO_SUCCESS = Android.App.Result.Ok;
+		public static readonly Android.App.Result JUDO_CANCELLED = Android.App.Result.Canceled;
+		public static readonly Android.App.Result JUDO_ERROR = Android.App.Result.FirstUser;
 
-        public static String JUDO_PAYMENT_REF = "JudoPay-yourPaymentReference";
-        public static String JUDO_AMOUNT = "JudoPay-amount";
-        public static String JUDO_ID = "JudoPay-judoId";
-        public static String JUDO_CURRENCY = "JudoPay-currency";
-        public static String JUDO_META_DATA = "JudoPay-yourPaymentMetaData";
+        public static string JUDO_PAYMENT_REF = "JudoPay-yourPaymentReference";
+		public static string JUDO_AMOUNT = "JudoPay-amount";
+		public static string JUDO_ID = "JudoPay-judoId";
+		public static string JUDO_CURRENCY = "JudoPay-currency";
+		public static string JUDO_META_DATA = "JudoPay-yourPaymentMetaData";
 
-        public static String JUDO_RECEIPT = "JudoPay-receipt";
+		public static string JUDO_RECEIPT = "JudoPay-receipt";
 
-        public static String JUDO_CARD_DETAILS = "JudoPay-CardToken";
-        public static String JUDO_CONSUMER = "JudoPay-consumer";
+		public static string JUDO_CARD_DETAILS = "JudoPay-CardToken";
+		public static string JUDO_CONSUMER = "JudoPay-consumer";
 
-        public static String JUDO_ERROR_MESSAGE = "ERROR_MESSAGE";
-        public static String JUDO_ERROR_EXCEPTION = "ERROR_EXCEPTION";
+		public static string JUDO_ERROR_MESSAGE = "ERROR_MESSAGE";
+		public static string JUDO_ERROR_EXCEPTION = "ERROR_EXCEPTION";
 
         private static string REGULAR_CARD_FORMAT_HINT = "0000 0000 0000 0000";
         private static string AMEX_CARD_FORMAT_HINT = "0000 000000 00000";
-        private static String REGULAR_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CV2";
-        private static String AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CIDV";
-        private static String REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
-        private static String AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
+		private static string REGULAR_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CV2";
+		private static string AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CIDV";
+		private static string REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
+		private static string AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
 
 		private static IJudoSDKApi _judoSdkApi;
 
@@ -83,8 +77,19 @@ namespace JudoDotNetXamarinSDK
 		/// </summary>
 		public bool SSLPinningEnabled { get; set; }
 
+		private static readonly Lazy<JudoSDKManagerA> _singleton = new Lazy<JudoSDKManagerA>(() => new JudoSDKManagerA());
+
+		public static JudoSDKManagerA Instance
+		{
+			get { return _singleton.Value; }
+		}
 
 		static JudoSDKManagerA()
+		{
+
+		}
+
+		private JudoSDKManagerA()
 		{
 			// setting up UI mode by default
 			Instance.UIMode = true;
@@ -195,12 +200,6 @@ namespace JudoDotNetXamarinSDK
 //            get { return Instance._configuration; }
 //        }
 
-        private static readonly Lazy<JudoSDKManagerA> _singleton = new Lazy<JudoSDKManagerA>(() => new JudoSDKManagerA());
-
-        public static JudoSDKManagerA Instance
-        {
-            get { return _singleton.Value; }
-        }
 
 //        static JudoSDKManagerA()
 //        {
@@ -311,7 +310,7 @@ namespace JudoDotNetXamarinSDK
         {
             Intent intent = new Intent();
             intent.PutExtra(JUDO_ERROR_MESSAGE, message);
-            intent.PutExtra(JUDO_ERROR_EXCEPTION, new Error(exception, apiErrorModel));
+            intent.PutExtra(JUDO_ERROR_EXCEPTION, new JudoDroidError(exception, apiErrorModel));
 
             return intent;
         }

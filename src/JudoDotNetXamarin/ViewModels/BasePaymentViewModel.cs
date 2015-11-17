@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace JudoDotNetXamarin.ViewModels
+namespace JudoDotNetXamarin
 {
 	public class BasePaymentViewModel
 	{

@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using Android.Views.InputMethods;
 using JudoDotNetXamarinSDK;
 using JudoDotNetXamarinAndroidSDK.Models;
+using JudoPayDotNet.Enums;
+using JudoDotNetXamarin;
+using JudoDotNetXamarinAndroidSDK;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -63,10 +66,24 @@ namespace Android.Xamarin.SampleApp
             SetContentView(Resource.Layout.withoutui);
 
             // setting up API token/secret 
-            JudoSDKManagerA.Configuration.SetApiTokenAndSecret(ApiToken, ApiSecret);
-            JudoSDKManagerA.Configuration.IsAVSEnabled = true;
-            JudoSDKManagerA.Configuration.IsFraudMonitoringSignals = true;
-            JudoSDKManagerA.Configuration.IsMaestroEnabled = true;
+			var configInstance = JudoConfiguration.Instance;
+
+			//setting for Sandnox
+			configInstance.Environment = JudoEnvironment.Live;
+
+
+			/*
+			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
+			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
+			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
+			*/
+			// //Salatha
+			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+			configInstance.JudoId = "100915867";
+			if (configInstance.ApiToken == null) {
+				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+			}
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -135,14 +152,16 @@ namespace Android.Xamarin.SampleApp
 
         private void payCard_Click(object sender, EventArgs e)
         {
-            MsgText.Text = "";
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
-
-            ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManagerA.NonUIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference,
-                                                                consumerRef, metaData, cardNumber, addressPostCode, startDate, expiryDate, cv2);
-            dealWithTask(paymentTask, Resource.Id.payCard, ACTION_CARD_PAYMENT);
+			JudoSDKManager.Instance.AmExAccepted= true;
+		//	JudoSDKManager.Payment (cardModel, SuccessPayment, FailurePayment);
+//            MsgText.Text = "";
+//            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
+//            Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
+//
+//            ShowLoadingSpinner(true, Resource.Id.payCard);
+////            var paymentTask = JudoSDKManagerA.NonUIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference,
+////                                                                consumerRef, metaData, cardNumber, addressPostCode, startDate, expiryDate, cv2);
+////            dealWithTask(paymentTask, Resource.Id.payCard, ACTION_CARD_PAYMENT);
         }
 
         private void threeDsecure_Click(object sender, EventArgs e)
@@ -167,9 +186,9 @@ namespace Android.Xamarin.SampleApp
             Dictionary<string, string> metaData = new Dictionary<string, string> { { "test1", "test2" } };
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference,
-                                                                consumerToken, consumerRef, metaData, cardToken, cv2);
-            dealWithTask(paymentTask, Resource.Id.payToken, ACTION_TOKEN_PAYMENT);
+//            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference,
+//                                                                consumerToken, consumerRef, metaData, cardToken, cv2);
+//            dealWithTask(paymentTask, Resource.Id.payToken, ACTION_TOKEN_PAYMENT);
         }
 
         private void payPreAuth_Click(object sender, EventArgs e)
@@ -177,9 +196,9 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManagerA.NonUIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
-                                                                consumerRef, null, cardNumber, addressPostCode, startDate, expiryDate, cv2);
-            dealWithTask(paymentTask, Resource.Id.payPreAuth, ACTION_PREAUTH);
+//            var paymentTask = JudoSDKManagerA.NonUIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
+//                                                                consumerRef, null, cardNumber, addressPostCode, startDate, expiryDate, cv2);
+//            dealWithTask(paymentTask, Resource.Id.payPreAuth, ACTION_PREAUTH);
         }
 
         private void payTokenPreAuth_Click(object sender, EventArgs e)
@@ -196,9 +215,9 @@ namespace Android.Xamarin.SampleApp
             }
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
-                                                                preAuth_consumerToken, consumerRef, null, preAuth_cardToken, cv2);
-            dealWithTask(paymentTask, Resource.Id.payTokenPreAuth, ACTION_TOKEN_PREAUTH);
+//            var paymentTask = JudoSDKManagerA.NonUIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference,
+//                                                                preAuth_consumerToken, consumerRef, null, preAuth_cardToken, cv2);
+//            dealWithTask(paymentTask, Resource.Id.payTokenPreAuth, ACTION_TOKEN_PREAUTH);
         }
 
         private void registerCard_Click(object sender, EventArgs e)
@@ -206,8 +225,8 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             ShowLoadingSpinner(true, Resource.Id.payCard);
-            var registerCardTask = JudoSDKManagerA.NonUIMethods.RegisterCard(cardNumber, cv2, expiryDate, consumerRef, addressPostCode);
-            dealWithTask(registerCardTask, Resource.Id.registerCard, ACTION_REGISTER_CARD);
+//            var registerCardTask = JudoSDKManagerA.NonUIMethods.RegisterCard(cardNumber, cv2, expiryDate, consumerRef, addressPostCode);
+//            dealWithTask(registerCardTask, Resource.Id.registerCard, ACTION_REGISTER_CARD);
         }
 
         private void getTransactions_Click(object sender, EventArgs e)

@@ -4,7 +4,7 @@ using Android.Widget;
 using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin.Enum;
-using JudoDotNetXamarin.ViewModels;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -62,9 +62,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             ShowLoadingSpinner(true);
 
 
-			var judoPay = JudoSDKManagerA.JudoClient;
 
-            judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+
+            //judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
 		CardViewModel GatherCardDetails ()
@@ -96,7 +96,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 			var cardPayment = new CardViewModel()
 			{
 				CardNumber =cardNumber,
-				CountryCode = country,
+				CountryCode = country.GetISOCode(),
 				CV2= cv2,
 				ExpireDate =expiryDate,
 				IssueNumber =issueNumber,

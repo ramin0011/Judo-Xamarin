@@ -106,7 +106,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             ShowLoadingSpinner(true);
 
-            JudoSDKManagerA.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+           // JudoSDKManagerA.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner(bool show)

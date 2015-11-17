@@ -13,7 +13,6 @@ using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using JudoDotNetXamarin.Models;
-using JudoDotNetXamarin.ViewModels;
 using JudoDotNetXamarin.Enum;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
@@ -135,6 +134,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         {
 			PaymentViewModel cardPayment = new PaymentViewModel ();
 			cardPayment.Card = GatherCardDetails ();
+			cardPayment.Currency = judoCurrency;
+			cardPayment.Amount = judoAmount;
+			cardPayment.PaymentReference = judoPaymentRef;
+			cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
+			cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
+
 
             ShowLoadingSpinner(true);
 
@@ -219,10 +224,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 				startDate = startDateEntryView.GetStartDate();
 			}
 
-
-			CardViewModel cardViewModel = new CardViewModel ();
-
-
+		
 			var cardPayment = new CardViewModel()
             {
 				CardNumber =cardNumber,
@@ -231,26 +233,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 				ExpireDate =expiryDate,
 				IssueNumber =issueNumber,
 				StartDate = startDate,
-				PostCode=cardAddress.PostCode,
-				
-				
-//                JudoId = judoId,
-//                Currency = judoCurrency,
-//                Amount = judoAmount,
-//                YourPaymentReference = judoPaymentRef,
-//                YourConsumerReference = judoConsumer.YourConsumerReference,
-//                YourPaymentMetaData = judoMetaData.Metadata,
-//                CardNumber = cardNumber,
-//                CardAddress = cardAddress,
-//                StartDate = startDate,
-//                ExpiryDate = expiryDate,
-//                CV2 = cv2,
-//                ClientDetails = JudoSDKManagerA.GetClientDetails(this),
-//				UserAgent = JudoSDKManagerA.GetSDKVersion()
-					
+				PostCode=cardAddress.PostCode,	
             };
 
-			return cardViewModel;
+			return cardPayment;
 		}
     }
 }
