@@ -1,14 +1,14 @@
-﻿using JudoDotNetXamarin.Enum;
+﻿using JudoDotNetXamarin;
 using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarin
 {
-	public class CardViewModel
-	{
+    public class CardViewModel
+    {
         /// <summary>
         /// Card Number 
         /// </summary>
-		public string CardNumber { get; set; }
+        public string CardNumber { get; set; }
 
         /// <summary>
         /// Card expiry date 
@@ -45,21 +45,20 @@ namespace JudoDotNetXamarin
         /// </summary>
         public string IssueNumber { get; set; }
 
-		public CardViewModel Clone()
-		{
-			return new CardViewModel
-			{
-				CardNumber = this.CardNumber,
-				ExpireDate = this.ExpireDate,
-				CV2 = this.CV2,
-				CardType = this.CardType,
-				PostCode = this.PostCode,
-				CountryCode = this.CountryCode,
-				StartDate = this.StartDate,
-				IssueNumber = this.IssueNumber,
-			}; 
-		}
-	}
+        public CardViewModel Clone ()
+        {
+            return new CardViewModel {
+                CardNumber = this.CardNumber,
+                ExpireDate = this.ExpireDate,
+                CV2 = this.CV2,
+                CardType = this.CardType,
+                PostCode = this.PostCode,
+                CountryCode = this.CountryCode,
+                StartDate = this.StartDate,
+                IssueNumber = this.IssueNumber,
+            }; 
+        }
+    }
 
 
 }

@@ -1,13 +1,14 @@
 ﻿using System;
-using JudoDotNetXamarin.Models;
+using JudoDotNetXamarin;
 using Newtonsoft.Json.Linq;
 
 namespace JudoDotNetXamarin
 {
-	public interface IClientService
-	{
-		JObject GetClientDetails ();
-		string GetSDKVersion ();
-	}
+    public interface IClientService
+    {
+        JObject GetClientDetails ();
+
+        string GetSDKVersion ();
+    }
 }
 

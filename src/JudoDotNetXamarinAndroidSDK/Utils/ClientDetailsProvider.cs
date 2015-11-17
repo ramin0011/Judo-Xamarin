@@ -6,51 +6,45 @@ using Android.Telephony;
 using Android.Util;
 using Java.Lang;
 using Java.Util;
-using JudoDotNetXamarinSDK;
 using String = System.String;
 
 namespace JudoDotNetXamarinAndroidSDK.Utils
 {
     public static class ClientDetailsProvider
     {
-        public static ClientDetails GetClientDetails(Context context)
+        public static ClientDetails GetClientDetails (Context context)
         {
-            if (!JudoSDKManagerA.Instance.RiskSignals)
-            {
+            if (!JudoSDKManagerA.Instance.RiskSignals) {
                 return null;
             }
 
             var connectivityManager =
-                context.GetSystemService(Context.ConnectivityService).JavaCast<ConnectivityManager>();
-            var telephonyManager = context.GetSystemService(Context.TelephonyService).JavaCast<TelephonyManager>();
+                context.GetSystemService (Context.ConnectivityService).JavaCast<ConnectivityManager> ();
+            var telephonyManager = context.GetSystemService (Context.TelephonyService).JavaCast<TelephonyManager> ();
 
-            var clientDetails = new ClientDetails();
+            var clientDetails = new ClientDetails ();
 
             clientDetails.OS = "android " + Build.VERSION.SdkInt;
-            clientDetails.DeviceId = new DeviceUuidFactory(context).GetDeviceUuid();
+            clientDetails.DeviceId = new DeviceUuidFactory (context).GetDeviceUuid ();
             clientDetails.DeviceModel = Build.Model;
             clientDetails.Serial = Build.Serial;
 
             clientDetails.CultureLocale = Locale.Default.ISO3Country;
 
-            try
-            {
+            try {
                 clientDetails.IsRoaming = connectivityManager != null && connectivityManager.ActiveNetworkInfo.IsRoaming;
-            }
-            catch (SecurityException e)
-            {
-                Log.Warn("Not enough permissions to read ActiveNetworkInfo", e);
+            } catch (SecurityException e) {
+                Log.Warn ("Not enough permissions to read ActiveNetworkInfo", e);
             }
 
             
 
-            if (telephonyManager != null)
-            {
+            if (telephonyManager != null) {
                 clientDetails.NetworkName = telephonyManager.NetworkOperatorName != String.Empty ? telephonyManager.NetworkOperatorName : telephonyManager.SimOperatorName;
             }
 
-            RootCheck rootCheck = new RootCheck(context);
-            clientDetails.Root = rootCheck.BuildRootCheckDetails();
+            RootCheck rootCheck = new RootCheck (context);
+            clientDetails.Root = rootCheck.BuildRootCheckDetails ();
 
             clientDetails.SSLPinningEnabled = JudoSDKManagerA.Instance.SSLPinningEnabled;
 
@@ -61,13 +55,21 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
     public class ClientDetails
     {
         public string OS { get; set; }
+
         public string DeviceModel { get; set; }
+
         public string DeviceId { get; set; }
+
         public bool IsRoaming { get; set; }
+
         public string NetworkName { get; set; }
+
         public string CultureLocale { get; set; }
+
         public string Root { get; set; }
+
         public string Serial { get; set; }
+
         public bool SSLPinningEnabled { get; set; }
     }
 }

@@ -7,195 +7,173 @@ using Android.Util;
 using Android.Views;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Ui;
-using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     public static class BuildConfig
     {
-#if DEBUG
+        #if DEBUG
         public const bool DEBUG = true;
-#else
+        #else
         public const bool DEBUG = false;
 #endif
     }
 
     public abstract class BaseActivity : Activity
     {
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate (Bundle bundle)
         {
-            base.OnCreate(bundle);
+            base.OnCreate (bundle);
 
-            if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.IceCreamSandwich)
-            {
-                RequestWindowFeature(WindowFeatures.NoTitle);
-            }
-            else
-            {
-                SetTheme(Resource.Style.Theme_Judo_payments);
+            if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.IceCreamSandwich) {
+                RequestWindowFeature (WindowFeatures.NoTitle);
+            } else {
+                SetTheme (Resource.Style.Theme_Judo_payments);
 
-                if (BuildConfig.DEBUG)
-                {
-                    Window.SetFlags(WindowManagerFlags.Secure, WindowManagerFlags.Secure);
+                if (BuildConfig.DEBUG) {
+                    Window.SetFlags (WindowManagerFlags.Secure, WindowManagerFlags.Secure);
                 }
             }
         }
 
-        public void SetHelpText(int titleId, int messageId)
+        public void SetHelpText (int titleId, int messageId)
         {
-            SetHelpText(titleId, messageId, Resource.Id.infoButtonID);
+            SetHelpText (titleId, messageId, Resource.Id.infoButtonID);
         }
 
-        public void SetHelpText(int titleId, int messageId, int helpButtonResId)
+        public void SetHelpText (int titleId, int messageId, int helpButtonResId)
         {
-            String title = GetString(titleId);
-            String message = GetString(messageId);
-            SetHelpText(title, message, helpButtonResId);
+            String title = GetString (titleId);
+            String message = GetString (messageId);
+            SetHelpText (title, message, helpButtonResId);
         }
 
-        public void SetHelpText(string title, string message)
+        public void SetHelpText (string title, string message)
         {
-            SetHelpText(title, message, Resource.Id.infoButtonID);
+            SetHelpText (title, message, Resource.Id.infoButtonID);
         }
 
-        public void SetHelpText(string title, string message, int helpButtonResId)
+        public void SetHelpText (string title, string message, int helpButtonResId)
         {
-            HelpButton infoButton = FindViewById<HelpButton>(helpButtonResId);
+            HelpButton infoButton = FindViewById<HelpButton> (helpButtonResId);
 
-            if (infoButton == null)
-            {
+            if (infoButton == null) {
                 return;
             }
 
-            infoButton.HelpClickListener += help =>
-            {
-                ShowMessage(title, message);
+            infoButton.HelpClickListener += help => {
+                ShowMessage (title, message);
             };
         }
 
-        protected void ShowMessage(string message)
+        protected void ShowMessage (string message)
         {
-            ShowMessage(null, message);
+            ShowMessage (null, message);
         }
 
-        protected void ShowMessage(string title, string message)
+        protected void ShowMessage (string title, string message)
         {
-            RunOnUiThread(() => ShowConfirmation(title, message));
+            RunOnUiThread (() => ShowConfirmation (title, message));
         }
 
-        public void ShowConfirmation(string title, string message)
+        public void ShowConfirmation (string title, string message)
         {
-            ShowConfirmation(title, message, true, null, null);
+            ShowConfirmation (title, message, true, null, null);
         }
 
-        public void ShowConfirmation(string title, string message, bool cancelable, string buttonLabel, Action buttonAction)
+        public void ShowConfirmation (string title, string message, bool cancelable, string buttonLabel, Action buttonAction)
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            if (!String.IsNullOrWhiteSpace(title))
-            {
-                builder.SetTitle(title);
+            AlertDialog.Builder builder = new AlertDialog.Builder (this);
+            if (!String.IsNullOrWhiteSpace (title)) {
+                builder.SetTitle (title);
             }
 
-            builder.SetMessage(message);
-            builder.SetCancelable(cancelable);
+            builder.SetMessage (message);
+            builder.SetCancelable (cancelable);
 
-            var dialog = builder.Create();
+            var dialog = builder.Create ();
 
-            if (buttonLabel == null)
-            {
-                builder.SetPositiveButton(Resource.String.ok, (sender, args) => dialog.Dismiss());
-            }
-            else
-            {
-                builder.SetPositiveButton(buttonLabel,
-                    (sender, args) =>
-                    {
-                        if (buttonAction != null)
-                        {
-                            Task.Factory.StartNew(buttonAction);
+            if (buttonLabel == null) {
+                builder.SetPositiveButton (Resource.String.ok, (sender, args) => dialog.Dismiss ());
+            } else {
+                builder.SetPositiveButton (buttonLabel,
+                    (sender, args) => {
+                        if (buttonAction != null) {
+                            Task.Factory.StartNew (buttonAction);
                         }
-                        dialog.Dismiss();
+                        dialog.Dismiss ();
                     });
 
-                if (cancelable)
-                {
-                    builder.SetNegativeButton(Resource.String.cancel, (sender, args) => dialog.Dismiss());
+                if (cancelable) {
+                    builder.SetNegativeButton (Resource.String.cancel, (sender, args) => dialog.Dismiss ());
                 }
 
             }
 
-            builder.Show();
+            builder.Show ();
         }
 
-        protected override void OnPostCreate(Bundle savedInstanceState)
+        protected override void OnPostCreate (Bundle savedInstanceState)
         {
-            base.OnPostCreate(savedInstanceState);
+            base.OnPostCreate (savedInstanceState);
 
-            View cancelButton = FindViewById<View>(Resource.Id.cancelButton);
+            View cancelButton = FindViewById<View> (Resource.Id.cancelButton);
 
-            if (cancelButton != null)
-            {
-                cancelButton.Click += (sender, args) =>
-                {
-                    SetResult(JudoSDKManagerA.JUDO_CANCELLED);
-                    Finish();
+            if (cancelButton != null) {
+                cancelButton.Click += (sender, args) => {
+                    SetResult (JudoSDKManagerA.JUDO_CANCELLED);
+                    Finish ();
                 };
             }
         }
 
-        protected abstract void ShowLoadingSpinner(bool show);
+        protected abstract void ShowLoadingSpinner (bool show);
 
-        protected void TransactClickHandler(Action DoTransaction)
+        protected void TransactClickHandler (Action DoTransaction)
         {
-            try
-            {
-                DoTransaction();
-            }
-            catch (Exception e)
-            {
-                Log.Error(JudoSDKManagerA.DEBUG_TAG, "Exception", e);
-                SetResult(JudoSDKManagerA.JUDO_ERROR,
-                    JudoSDKManagerA.CreateErrorIntent(e.Message, e, null));
-                Finish();
+            try {
+                DoTransaction ();
+            } catch (Exception e) {
+                Log.Error (JudoSDKManagerA.DEBUG_TAG, "Exception", e);
+                SetResult (JudoSDKManagerA.JUDO_ERROR,
+                    JudoSDKManagerA.CreateErrorIntent (e.Message, e, null));
+                Finish ();
             }
         }
 
-        protected void HandleServerResponse(Task<IResult<ITransactionResult>> t)
+        protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
-            try
-            {
-                ShowLoadingSpinner(false);
+            try {
+                ShowLoadingSpinner (false);
 
-                if (t.IsFaulted || t.Result == null || t.Result.HasError)
-                {
+                if (t.IsFaulted || t.Result == null || t.Result.HasError) {
                     var errorMessage = !t.IsFaulted && t.Result != null
                         ? t.Result.Error.ErrorMessage
-                        : t.Exception.ToString();
-                    Log.Error("com.judopay.android", "ERROR: " + errorMessage);
-                    SetResult(JudoSDKManagerA.JUDO_ERROR,
-                        JudoSDKManagerA.CreateErrorIntent(errorMessage, t.Exception,
+                        : t.Exception.ToString ();
+                    Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
+                    SetResult (JudoSDKManagerA.JUDO_ERROR,
+                        JudoSDKManagerA.CreateErrorIntent (errorMessage, t.Exception,
                             !t.IsFaulted && t.Result != null ? t.Result.Error : null));
-                    Finish();
+                    Finish ();
                     return;
                 }
 
                 var receipt = t.Result.Response;
 
-                Intent intent = new Intent();
-                intent.PutExtra(JudoSDKManagerA.JUDO_RECEIPT, new Receipt(receipt));
-                SetResult(JudoSDKManagerA.JUDO_SUCCESS, intent);
-                Log.Debug("com.judopay.android", "SUCCESS: " + receipt.Result);
-                Finish();
+                Intent intent = new Intent ();
+                intent.PutExtra (JudoSDKManagerA.JUDO_RECEIPT, new Receipt (receipt));
+                SetResult (JudoSDKManagerA.JUDO_SUCCESS, intent);
+                Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
+                Finish ();
             }
             //Prevent being locked in a payment screen without being notified of an error
-            catch (Exception e)
-            {
-                var errorMessage = e.ToString();
-                Log.Error("com.judopay.android", "ERROR: " + errorMessage);
-                SetResult(JudoSDKManagerA.JUDO_ERROR,
-                    JudoSDKManagerA.CreateErrorIntent(errorMessage, e, null));
-                Finish();
+            catch (Exception e) {
+                var errorMessage = e.ToString ();
+                Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
+                SetResult (JudoSDKManagerA.JUDO_ERROR,
+                    JudoSDKManagerA.CreateErrorIntent (errorMessage, e, null));
+                Finish ();
                 return;
             }
         }

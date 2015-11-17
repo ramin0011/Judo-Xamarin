@@ -1,5 +1,4 @@
 using JudoDotNetXamarin;
-using JudoDotNetXamarinSDK;
 using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamarinAndroidSDK.Configurations
@@ -7,15 +6,19 @@ namespace JudoDotNetXamarinAndroidSDK.Configurations
     internal class Configuration : IConfiguration
     {
         private static volatile bool avsEnabled = false;
+
         public bool IsAVSEnabled { get { return avsEnabled; } set { avsEnabled = value; } }
 
         private static volatile bool maestroEnabled = false;
+
         public bool IsMaestroEnabled { get { return maestroEnabled; } set { maestroEnabled = value; } }
 
         private static volatile bool fraudMonitoringSignals = false;
+
         public bool IsFraudMonitoringSignals { get { return fraudMonitoringSignals; } set { fraudMonitoringSignals = value; } }
 
         private static volatile bool isSSLPinningEnabled = false;
+
         public bool IsSSLPinningEnabled { get { return isSSLPinningEnabled; } set { isSSLPinningEnabled = value; } }
 
         /// <summary>
@@ -24,14 +27,14 @@ namespace JudoDotNetXamarinAndroidSDK.Configurations
         /// <param name="apiToken">The apiToken of the merchant</param>
         /// <param name="apiSecret">The apiSecret of the merchant</param> 
         /// <param name="environment">The environment to use</param>
-        public void SetApiTokenAndSecret(string apiToken, string apiSecret, JudoEnvironment environment)
+        public void SetApiTokenAndSecret (string apiToken, string apiSecret, JudoEnvironment environment)
         {
-			var configInstance = JudoConfiguration.Instance;
+            var configInstance = JudoConfiguration.Instance;
 
-			//setting for Sandnox
-			configInstance.Environment = environment;
-			configInstance.ApiToken = apiToken; //retrieve from JudoPortal
-			configInstance.ApiSecret = apiSecret; //retrieve from JudoPortal
+            //setting for Sandnox
+            configInstance.Environment = environment;
+            configInstance.ApiToken = apiToken; //retrieve from JudoPortal
+            configInstance.ApiSecret = apiSecret; //retrieve from JudoPortal
 
 //            var judoSDKManager = JudoSDKManagerA.Instance;
 //            judoSDKManager. (environment);

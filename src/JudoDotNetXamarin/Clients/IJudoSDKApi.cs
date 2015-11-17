@@ -1,19 +1,23 @@
-﻿using System.Runtime.CompilerServices;
+﻿
 using JudoDotNetXamarin;
 
-[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
-[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
-namespace JudoDotNetXamarin.Clients
+//[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
+//[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
+namespace JudoDotNetXamarin
 {
 	
-    internal interface IJudoSDKApi 
+    public interface IJudoSDKApi
     {
 		
-		void Payment(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
-		void PreAuth(PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure);
-		void TokenPayment(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
-		void TokenPreAuth(TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
-		void RegisterCard(PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+        void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+
+        void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure);
+
+        void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+
+        void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
+
+        void RegisterCard (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure);
 
 
     }
