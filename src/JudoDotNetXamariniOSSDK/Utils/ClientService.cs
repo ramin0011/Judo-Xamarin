@@ -5,7 +5,6 @@ using Foundation;
 using JudoShieldXamarin;
 using PassKit;
 using UIKit;
-using JudoDotNetXamarin.Models;
 using JudoDotNetXamarin;
 using Newtonsoft.Json.Linq;
 
@@ -27,68 +26,68 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	public  class ClientService :IClientService
-	{
-		public  JObject GetClientDetails ()
-		{
-			if (!JudoSDKManager.Instance.RiskSignals) {
-				return null;
-			}
+    public  class ClientService :IClientService
+    {
+        public  JObject GetClientDetails ()
+        {
+            if (!JudoSDKManager.Instance.RiskSignals) {
+                return null;
+            }
 
-			var clientDetails = new ClientDetails {
-				OS = "iOS " + UIDevice.CurrentDevice.SystemVersion,
-				DeviceId = GetDeviceMacAddress (),
-				DeviceModel = UIDevice.CurrentDevice.Model,
-				Serial = JudoShield.GetDeviceIdentifier (),
-				CultureLocale = NSLocale.CurrentLocale.CountryCode,
-				SslPinningEnabled = JudoSDKManager.Instance.SSLPinningEnabled
-			};
+            var clientDetails = new ClientDetails {
+                OS = "iOS " + UIDevice.CurrentDevice.SystemVersion,
+                DeviceId = GetDeviceMacAddress (),
+                DeviceModel = UIDevice.CurrentDevice.Model,
+                Serial = JudoShield.GetDeviceIdentifier (),
+                CultureLocale = NSLocale.CurrentLocale.CountryCode,
+                SslPinningEnabled = JudoSDKManager.Instance.SSLPinningEnabled
+            };
 
 
-			return JObject.FromObject(clientDetails);
-		}
+            return JObject.FromObject (clientDetails);
+        }
 
-		private  string GetDeviceMacAddress ()
-		{
-			foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
-				if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
-				                netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet) {
-					var address = netInterface.GetPhysicalAddress ();
-					return BitConverter.ToString (address.GetAddressBytes ());
+        private  string GetDeviceMacAddress ()
+        {
+            foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
+                if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
+                netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet) {
+                    var address = netInterface.GetPhysicalAddress ();
+                    return BitConverter.ToString (address.GetAddressBytes ());
 
-				}
-			}
+                }
+            }
 
-			return "NoMac";
-		}
+            return "NoMac";
+        }
 
-		public  bool ApplePayAvailable {
-			get {
-				NSString[] paymentNetworks = new NSString[] {
-					new NSString (@"Amex"),
-					new NSString (@"MasterCard"),
-					new NSString (@"Visa")
-				};
+        public  bool ApplePayAvailable {
+            get {
+                NSString[] paymentNetworks = new NSString[] {
+                    new NSString (@"Amex"),
+                    new NSString (@"MasterCard"),
+                    new NSString (@"Visa")
+                };
 
-				if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
-					return true;
-				} else {
+                if (PKPaymentAuthorizationViewController.CanMakePayments && PKPaymentAuthorizationViewController.CanMakePaymentsUsingNetworks (paymentNetworks)) {
+                    return true;
+                } else {
 
-					return false;
-				}		
-			}
-		}
+                    return false;
+                }		
+            }
+        }
 
-		public string GetSDKVersion ()
-		{
-			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly ();
-			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
-			string version = fvi.FileVersion;
+        public string GetSDKVersion ()
+        {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly ();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
+            string version = fvi.FileVersion;
 
-			return "Xamarin-iOS-" + version;
-		}
+            return "Xamarin-iOS-" + version;
+        }
 
 		
 
-	}
+    }
 }

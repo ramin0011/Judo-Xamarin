@@ -6,7 +6,6 @@ using Android.Views;
 using Android.Widget;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using Orientation = Android.Widget.Orientation;
-using JudoDotNetXamarin.Enum;
 using System;
 using System.Collections.Generic;
 using JudoDotNetXamarin;
@@ -18,34 +17,32 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
     {
         private Typeface typeface;
 
-        public CountryArrayAdapter(Context context, int textViewResourceId, string[] objects, Typeface typeface) : base(context, textViewResourceId, objects)
+        public CountryArrayAdapter (Context context, int textViewResourceId, string[] objects, Typeface typeface) : base (context, textViewResourceId, objects)
         {
             this.typeface = typeface;
         }
 
 
-        public override View GetDropDownView(int position, View convertView, ViewGroup parent)
+        public override View GetDropDownView (int position, View convertView, ViewGroup parent)
         {
-            View row = base.GetDropDownView(position, convertView, parent);
-            if (row is TextView)
-            {
-                TextView textRow = (TextView) row;
+            View row = base.GetDropDownView (position, convertView, parent);
+            if (row is TextView) {
+                TextView textRow = (TextView)row;
                 textRow.Typeface = typeface;
-                textRow.SetTextColor(Context.Resources.GetColor(Resource.Color.default_text));
+                textRow.SetTextColor (Context.Resources.GetColor (Resource.Color.default_text));
                 textRow.TextSize = 18;
             }
 
             return row;
         }
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override View GetView (int position, View convertView, ViewGroup parent)
         {
-            View row = base.GetView(position, convertView, parent);
-            if (row is TextView)
-            {
-                TextView textRow = (TextView) row;
+            View row = base.GetView (position, convertView, parent);
+            if (row is TextView) {
+                TextView textRow = (TextView)row;
                 textRow.Typeface = typeface;
-                textRow.SetTextColor(Context.Resources.GetColor(Resource.Color.default_text));
+                textRow.SetTextColor (Context.Resources.GetColor (Resource.Color.default_text));
                 textRow.TextSize = 18;
             }
             return row;
@@ -59,120 +56,114 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private TextView postCodeTitleText;
         private TextView avsMsgText;
         private View postCodeContainer;
-       // private string[] countries;
+        // private string[] countries;
         private string[] postcodeText;
         private bool ignoreFocus;
 
-        public AVSEntryView(Context context) : base(context)
+        public AVSEntryView (Context context) : base (context)
         {
-            Init();
+            Init ();
         }
 
-        public AVSEntryView(Context context, IAttributeSet attrs) : base(context, attrs)
+        public AVSEntryView (Context context, IAttributeSet attrs) : base (context, attrs)
         {
-            Init();
+            Init ();
         }
 
-        private void Init()
+        private void Init ()
         {
-            base.RemoveAllViews();
+            base.RemoveAllViews ();
 
             Orientation = Orientation.Vertical;
 
-            View view = Inflate(Context, Resource.Layout.avs, null);
-            AddView(view);
+            View view = Inflate (Context, Resource.Layout.avs, null);
+            AddView (view);
 
             //get the arrays of values from Strings
             //countries = Resources.GetStringArray(Resource.Array.avs_countries);
-            postcodeText = Resources.GetStringArray(Resource.Array.avs_countries_postcode_label_text);
+            postcodeText = Resources.GetStringArray (Resource.Array.avs_countries_postcode_label_text);
 
-            countrySpinner = view.FindViewById<Spinner>(Resource.Id.countrySpinner);
-            postCodeContainer = view.FindViewById(Resource.Id.postCodeContainer);
-            postCodeEditText = view.FindViewById<EditText>(Resource.Id.postCodeEditText);
-            postCodeTitleText = view.FindViewById<TextView>(Resource.Id.postCodeTitleText);
-            avsMsgText = view.FindViewById<TextView>(Resource.Id.avsMsgText);
+            countrySpinner = view.FindViewById<Spinner> (Resource.Id.countrySpinner);
+            postCodeContainer = view.FindViewById (Resource.Id.postCodeContainer);
+            postCodeEditText = view.FindViewById<EditText> (Resource.Id.postCodeEditText);
+            postCodeTitleText = view.FindViewById<TextView> (Resource.Id.postCodeTitleText);
+            avsMsgText = view.FindViewById<TextView> (Resource.Id.avsMsgText);
 
-            Typeface type = Typefaces.LoadTypefaceFromRaw(Context, Resource.Raw.courier);
+            Typeface type = Typefaces.LoadTypefaceFromRaw (Context, Resource.Raw.courier);
             postCodeEditText.Typeface = type;
 
-			List<string> countries = new List<string> ();
-			foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
-				countries.Add(option.ToDescriptionString());
-			}
+            List<string> countries = new List<string> ();
+            foreach (BillingCountryOptions option in Enum.GetValues(typeof(BillingCountryOptions))) {
+                countries.Add (option.ToDescriptionString ());
+            }
 
             // Populate country spinner
-            ArrayAdapter<string> dataAdapter = new CountryArrayAdapter(Context,
-				Android.Resource.Layout.SimpleSpinnerItem, countries.ToArray(), type);
+            ArrayAdapter<string> dataAdapter = new CountryArrayAdapter (Context,
+                                                   Android.Resource.Layout.SimpleSpinnerItem, countries.ToArray (), type);
 
-            dataAdapter.SetDropDownViewResource(Resource.Layout.country_spinner_dropdown_item);
+            dataAdapter.SetDropDownViewResource (Resource.Layout.country_spinner_dropdown_item);
             countrySpinner.Adapter = dataAdapter;
 
-            countrySpinner.ItemSelected += (sender, args) =>
-            {
-                postCodeTitleText.Text = postcodeText[args.Position];
-                postCodeEditText.Hint = postcodeText[args.Position];
-                if (args.Position == 3)
-                {
+            countrySpinner.ItemSelected += (sender, args) => {
+                postCodeTitleText.Text = postcodeText [args.Position];
+                postCodeEditText.Hint = postcodeText [args.Position];
+                if (args.Position == 3) {
                     postCodeContainer.Visibility = ViewStates.Invisible;
                     avsMsgText.Visibility = ViewStates.Visible;
-                    avsMsgText.BringToFront();
-                }
-                else
-                {
+                    avsMsgText.BringToFront ();
+                } else {
                     postCodeContainer.Visibility = ViewStates.Visible;
-                    postCodeContainer.BringToFront();
+                    postCodeContainer.BringToFront ();
                     avsMsgText.Visibility = ViewStates.Invisible;
-                    if (!Volatile.Read(ref ignoreFocus))
-                    {
-                        postCodeEditText.RequestFocus();   
+                    if (!Volatile.Read (ref ignoreFocus)) {
+                        postCodeEditText.RequestFocus ();   
                     }
                 }
             };
         }
 
-		public BillingCountryOptions GetCountry()
+        public BillingCountryOptions GetCountry ()
         {
-			switch ((Int32)countrySpinner.SelectedItem ) {
-			case (int) BillingCountryOptions.BillingCountryOptionUK:
-				return BillingCountryOptions.BillingCountryOptionUK;
+            switch ((Int32)countrySpinner.SelectedItem) {
+            case (int) BillingCountryOptions.BillingCountryOptionUK:
+                return BillingCountryOptions.BillingCountryOptionUK;
 
-				break;
-			case (int)BillingCountryOptions.BillingCountryOptionUSA:
-				return BillingCountryOptions.BillingCountryOptionUSA;
+                break;
+            case (int)BillingCountryOptions.BillingCountryOptionUSA:
+                return BillingCountryOptions.BillingCountryOptionUSA;
 
-				break;
-			case (int)BillingCountryOptions.BillingCountryOptionCanada:
-				return BillingCountryOptions.BillingCountryOptionCanada;
+                break;
+            case (int)BillingCountryOptions.BillingCountryOptionCanada:
+                return BillingCountryOptions.BillingCountryOptionCanada;
 
-				break;
-			case (int)BillingCountryOptions.BillingCountryOptionOther:
-				return BillingCountryOptions.BillingCountryOptionOther;
+                break;
+            case (int)BillingCountryOptions.BillingCountryOptionOther:
+                return BillingCountryOptions.BillingCountryOptionOther;
 
-				break;
-			default:
-				return BillingCountryOptions.BillingCountryOptionUK;
-				break;
+                break;
+            default:
+                return BillingCountryOptions.BillingCountryOptionUK;
+                break;
 
-			}
+            }
         }
 
-        public string GetPostCode()
+        public string GetPostCode ()
         {
 			
             return postCodeEditText.Text;
         }
 
-        public void FocusPostCode()
+        public void FocusPostCode ()
         {
-            if (postCodeEditText != null)
-            {
-                postCodeEditText.RequestFocus();
+            if (postCodeEditText != null) {
+                postCodeEditText.RequestFocus ();
             }
         }
 
-        public void InhibitFocusOnFirstShowOfCountrySpinner()
+        public void InhibitFocusOnFirstShowOfCountrySpinner ()
         {
-            Volatile.Write(ref ignoreFocus, true);
+            Volatile.Write (ref ignoreFocus, true);
         }
     }
 }

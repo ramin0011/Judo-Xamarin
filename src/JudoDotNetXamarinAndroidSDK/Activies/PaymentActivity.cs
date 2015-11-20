@@ -11,8 +11,6 @@ using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
-using JudoDotNetXamarin.Models;
-using JudoDotNetXamarin.Enum;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {

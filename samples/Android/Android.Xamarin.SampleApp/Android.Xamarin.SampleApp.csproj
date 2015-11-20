@@ -56,9 +56,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="JudoDotNetXamarin">
-      <HintPath>..\..\..\src\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WithUIActivity.cs" />
@@ -93,6 +90,10 @@
     <ProjectReference Include="..\..\..\src\JudoDotNetXamarinAndroidSDK\JudoDotNetXamarinAndroidSDK.csproj">
       <Project>{0D9E85D5-FEA8-4D3D-AE96-233DFD4E8EDF}</Project>
       <Name>JudoDotNetXamarinAndroidSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
+      <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
+      <Name>JudoDotNetXamarin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

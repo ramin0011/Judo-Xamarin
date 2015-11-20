@@ -7,7 +7,6 @@ using Android.Widget;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK;
-using JudoDotNetXamarin.Models;
 using Android.Content;
 
 namespace Android.Xamarin.SampleApp

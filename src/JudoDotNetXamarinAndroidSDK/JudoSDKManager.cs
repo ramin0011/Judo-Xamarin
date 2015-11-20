@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System.Drawing;
 
 using System.Diagnostics;
-using JudoDotNetXamarin.Models;
 using JudoDotNetXamarinAndroidSDK;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Clients;

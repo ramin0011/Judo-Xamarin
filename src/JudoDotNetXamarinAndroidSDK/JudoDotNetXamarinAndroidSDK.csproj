@@ -15,6 +15,7 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+    <ReleaseVersion>2.1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,9 +56,6 @@
     </Reference>
     <Reference Include="Serilog">
       <HintPath>..\..\samples\Android\packages\Serilog.1.5.12\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="JudoDotNetXamarin">
-      <HintPath>..\JudoDotNetXamarin\bin\Release\JudoDotNetXamarin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +100,9 @@
     <Compile Include="JudoSDKManagerA.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
-    <Compile Include="Models\JudoDroidError.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Clients\JudoAndroidSDKAPI.cs" />
+    <Compile Include="Models\JudoSerialisationError.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -349,5 +347,11 @@
   -->
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
+      <Project>{5B807A92-C93B-41E2-A48C-B94D61363EFC}</Project>
+      <Name>JudoDotNetXamarin</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Android.OS;
 using Android.Widget;
 using JudoPayDotNet.Models;
-using JudoDotNetXamarin.Enum;
 using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies

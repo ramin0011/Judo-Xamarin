@@ -284,7 +284,7 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
 
                     string newText = newTextOrig.Replace (" ", String.Empty);
                     int len = newText.Length;
-                    if (len < JudoDotNetXamarin.Models.Card.CC_LEN_FOR_TYPE) {
+                    if (len < JudoDotNetXamarin.Card.CC_LEN_FOR_TYPE) {
                         updateText = true;
                         formattedText = newTextOrig;
 
@@ -312,7 +312,7 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
                             break;
                         }
 
-                        if (len == JudoDotNetXamarin.Models.Card.CC_LEN_FOR_TYPE) {
+                        if (len == JudoDotNetXamarin.Card.CC_LEN_FOR_TYPE) {
                             ccPlaceHolder.Text = cardHelper.PromptStringForType (Type, true);
                             cvTwoPlaceHolder.Text = cardHelper.CVTwoPromptForType (Type, true);
                             cvTwoPlaceHolder.SetShowTextOffSet (Math.Min (0, 0));

@@ -303,7 +303,7 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent intent = new Intent ();
             intent.PutExtra (JUDO_ERROR_MESSAGE, message);
-            intent.PutExtra (JUDO_ERROR_EXCEPTION, new JudoDroidError (exception, apiErrorModel));
+            intent.PutExtra (JUDO_ERROR_EXCEPTION, new JudoSerialisationError (exception, apiErrorModel));
 
             return intent;
         }
