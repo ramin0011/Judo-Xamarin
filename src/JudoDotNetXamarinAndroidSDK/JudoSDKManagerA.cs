@@ -26,9 +26,6 @@ namespace JudoDotNetXamarinAndroidSDK
         public static string JUDO_CURRENCY = "JudoPay-currency";
         public static string JUDO_META_DATA = "JudoPay-yourPaymentMetaData";
 
-        //        public static string SUCCESS_CALLBACK = "JudoPay-successCallback";
-        //        public static string FAILURE_CALLBACK = "JudoPay-failureCallback";
-
         public static string JUDO_RECEIPT = "JudoPay-receipt";
 
         public static string JUDO_CARD_DETAILS = "JudoPay-CardToken";
@@ -231,82 +228,7 @@ namespace JudoDotNetXamarinAndroidSDK
         //            }
         //        }
 
-        internal static string DEBUG_TAG = "com.judopay.android";
 
-        internal static string CardHintFormat (CardType cardType)
-        {
-            switch (cardType) {
-            case CardType.AMEX:
-                return AMEX_CARD_FORMAT_HINT;
-            default:
-                return REGULAR_CARD_FORMAT_HINT;
-            }
-        }
-
-        internal static int GetCardResourceId (Context context, CardType cardType, bool showFront)
-        {
-            if (showFront) {
-                switch (cardType) {
-                case CardType.VISA:
-                    return Resource.Drawable.ic_card_visa;
-                case CardType.MASTERCARD:
-                    return Resource.Drawable.ic_card_mastercard;
-                case CardType.AMEX:
-                    return Resource.Drawable.ic_card_amex;
-                case CardType.MAESTRO:
-                    return Resource.Drawable.ic_card_maestro;
-                case CardType.UNKNOWN:
-                default:
-                    return Resource.Drawable.ic_card_unknown;
-                }
-            } else {
-                switch (cardType) {
-                case CardType.AMEX:
-                    return Resource.Drawable.ic_card_cv2_amex;
-                default:
-                    return Resource.Drawable.ic_card_cv2;
-                }
-            }
-        }
-
-        internal static string GetCardHintFormat (CardType cardType)
-        {
-            switch (cardType) {
-            case CardType.AMEX:
-                return AMEX_CARD_FORMAT_HINT;
-            default:
-                return REGULAR_CARD_FORMAT_HINT;
-            }
-        }
-
-        internal static string GetExpiryAndValidationHintFormat (CardType cardType)
-        {
-            switch (cardType) {
-            case CardType.AMEX:
-                return AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT;
-            default:
-                return REGULAR_EXPIRY_AND_VALIDATION_FORMAT_HINT;
-            }
-        }
-
-        internal static string GetExpiryAndValidationErrorMessage (CardType cardType)
-        {
-            switch (cardType) {
-            case CardType.AMEX:
-                return AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE;
-            default:
-                return REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE;
-            }
-        }
-
-        internal static Intent CreateErrorIntent (string message, Exception exception, JudoApiErrorModel apiErrorModel)
-        {
-            Intent intent = new Intent ();
-            intent.PutExtra (JUDO_ERROR_MESSAGE, message);
-            intent.PutExtra (JUDO_ERROR_EXCEPTION, new JudoSerialisationError (exception, apiErrorModel));
-
-            return intent;
-        }
 
         internal static JObject GetClientDetails (Context context)
         {

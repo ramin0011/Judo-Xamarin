@@ -52,7 +52,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             Orientation = Orientation.Vertical;
 
             cardImageView = new CardImageView (Context);
-            cardImageView.SetCardImageWithoutAnimation (JudoSDKManagerA.GetCardResourceId (Context, currentCard, true));
+            cardImageView.SetCardImageWithoutAnimation (JudoSDKManager.GetCardResourceId (Context, currentCard, true));
 
             LinearLayout layoutHolder = new LinearLayout (Context);
             layoutHolder.Orientation = Orientation.Horizontal;
@@ -98,15 +98,15 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 currentCardType = ValidationHelper.GetCardType (cardNumber);
 
                 if (currentCardType != currentCard) {
-                    if (currentCard == CardType.AMEX && !JudoSDKManagerA.Instance.AVSEnabled) {
+                    if (currentCard == CardType.AMEX && !JudoSDKManager.AVSEnabled) {
                         cardNumberTextView.ShowInvalid ("AmEx not accepted");
-                    } else if (currentCard == CardType.MAESTRO && !JudoSDKManagerA.Instance.MaestroAccepted) {
+                    } else if (currentCard == CardType.MAESTRO && !JudoSDKManager.MaestroAccepted) {
                         cardNumberTextView.ShowInvalid ("Maestro not accepted");
                     } else {
-                        cardImageView.SetCardImage (JudoSDKManagerA.GetCardResourceId (Context, currentCardType, true), false);
-                        cardNumberTextView.SetHintText (JudoSDKManagerA.GetCardHintFormat (currentCardType));
-                        cardExpiryCv2TextView.SetHintText (JudoSDKManagerA.GetExpiryAndValidationHintFormat (currentCardType));
-                        cardExpiryCv2TextView.SetErrorText (JudoSDKManagerA.GetExpiryAndValidationErrorMessage (currentCardType));
+                        cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCardType, true), false);
+                        cardNumberTextView.SetHintText (JudoSDKManager.GetCardHintFormat (currentCardType));
+                        cardExpiryCv2TextView.SetHintText (JudoSDKManager.GetExpiryAndValidationHintFormat (currentCardType));
+                        cardExpiryCv2TextView.SetErrorText (JudoSDKManager.GetExpiryAndValidationErrorMessage (currentCardType));
                     }
 
                     currentCard = currentCardType;
@@ -133,7 +133,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 cardExpiryCv2TextView.ValidatePartialInput ();
 
                 if (position > 4) {
-                    cardImageView.SetCardImage (JudoSDKManagerA.GetCardResourceId (Context, currentCard, false), true);
+                    cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, false), true);
                     if (HintTextView != null) {
                         HintTextView.SetText (Resource.String.enter_card_cv2);
                     }
@@ -146,7 +146,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                         }
                     }
                 } else {
-                    cardImageView.SetCardImage (JudoSDKManagerA.GetCardResourceId (Context, currentCard, true), true);
+                    cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, true), true);
                     if (HintTextView != null) {
                         HintTextView.SetText (Resource.String.enter_card_expiry);
                     }
@@ -166,7 +166,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             cardNumberTextView.GetEditText ().Text = "";
             cardExpiryCv2TextView.GetEditText ().Text = "";
             currentCard = CardType.UNKNOWN;
-            cardImageView.SetCardImage (JudoSDKManagerA.GetCardResourceId (Context, currentCard, true), false);
+            cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, true), false);
 
             if (HintTextView != null) {
                 HintTextView.SetText (Resource.String.enter_card_no);
@@ -266,7 +266,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         }
 
         private void animateAlphaTranslate (View view, float alphaFrom, float alphaTo, float xFrom, float xTo,
-                                           bool requestFocus)
+                                            bool requestFocus)
         {
             AnimationSet animationSet = new AnimationSet (true);
 

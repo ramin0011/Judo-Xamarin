@@ -9,11 +9,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
     [Activity (Label = "PreAuthTokenActivity")]
     public class PreAuthTokenActivity : PaymentTokenActivity
     {
+        private ClientService clientService;
+
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
             SetTitle (Resource.String.title_pre_auth_token);
             FindViewById<Button> (Resource.Id.payButton).Text = Resources.GetString (Resource.String.token_preauth);
+            clientService = new ClientService ();
         }
 
         public override void MakeTokenPayment ()
@@ -28,13 +31,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2 (),
-                ClientDetails = JudoSDKManagerA.GetClientDetails (this),
-                UserAgent = JudoSDKManagerA.GetSDKVersion ()
+                ClientDetails = clientService.GetClientDetails (),
+                UserAgent = clientService.GetSDKVersion ()
             };
 
             ShowLoadingSpinner (true);
 
-            //   JudoSDKManagerA.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+            //   JudoSDKManager.JudoClient.PreAuths.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

@@ -32,7 +32,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private void Init ()
         {
             // Set our hint text
-            SetHintText (JudoSDKManagerA.GetExpiryAndValidationHintFormat (CardType.UNKNOWN));
+            SetHintText (JudoSDKManager.GetExpiryAndValidationHintFormat (CardType.UNKNOWN));
             // Set error text
             SetErrorText ("Invalid CV2");
             // Set additional chars to skip

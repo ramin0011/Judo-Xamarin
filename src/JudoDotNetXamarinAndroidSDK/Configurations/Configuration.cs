@@ -36,7 +36,7 @@ namespace JudoDotNetXamarinAndroidSDK.Configurations
             configInstance.ApiToken = apiToken; //retrieve from JudoPortal
             configInstance.ApiSecret = apiSecret; //retrieve from JudoPortal
 
-//            var judoSDKManager = JudoSDKManagerA.Instance;
+//            var judoSDKManager = JudoSDKManager.Instance;
 //            judoSDKManager. (environment);
 //            judoSDKManager.SetJudoClient(JudoPaymentsFactory.Create(judoSDKManager.Environment, apiToken, apiSecret));
         }

@@ -122,7 +122,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             if (cancelButton != null) {
                 cancelButton.Click += (sender, args) => {
-                    SetResult (JudoSDKManagerA.JUDO_CANCELLED);
+                    SetResult (JudoSDKManager.JUDO_CANCELLED);
                     Finish ();
                 };
             }
@@ -135,9 +135,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             try {
                 DoTransaction ();
             } catch (Exception e) {
-                Log.Error (JudoSDKManagerA.DEBUG_TAG, "Exception", e);
-                SetResult (JudoSDKManagerA.JUDO_ERROR,
-                    JudoSDKManagerA.CreateErrorIntent (e.Message, e, null));
+                Log.Error (JudoSDKManager.DEBUG_TAG, "Exception", e);
+                SetResult (JudoSDKManager.JUDO_ERROR,
+                    JudoSDKManager.CreateErrorIntent (e.Message, e, null));
                 Finish ();
             }
         }
@@ -152,8 +152,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                         ? t.Result.Error.ErrorMessage
                         : t.Exception.ToString ();
                     Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
-                    SetResult (JudoSDKManagerA.JUDO_ERROR,
-                        JudoSDKManagerA.CreateErrorIntent (errorMessage, t.Exception,
+                    SetResult (JudoSDKManager.JUDO_ERROR,
+                        JudoSDKManager.CreateErrorIntent (errorMessage, t.Exception,
                             !t.IsFaulted && t.Result != null ? t.Result.Error : null));
                     Finish ();
                     return;
@@ -162,8 +162,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 var receipt = t.Result.Response;
 
                 Intent intent = new Intent ();
-                intent.PutExtra (JudoSDKManagerA.JUDO_RECEIPT, new Receipt (receipt));
-                SetResult (JudoSDKManagerA.JUDO_SUCCESS, intent);
+                intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new Receipt (receipt));
+                SetResult (JudoSDKManager.JUDO_SUCCESS, intent);
                 Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
                 Finish ();
             }
@@ -171,8 +171,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             catch (Exception e) {
                 var errorMessage = e.ToString ();
                 Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
-                SetResult (JudoSDKManagerA.JUDO_ERROR,
-                    JudoSDKManagerA.CreateErrorIntent (errorMessage, e, null));
+                SetResult (JudoSDKManager.JUDO_ERROR,
+                    JudoSDKManager.CreateErrorIntent (errorMessage, e, null));
                 Finish ();
                 return;
             }

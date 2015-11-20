@@ -25,7 +25,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected CardToken judoCardToken;
         protected Models.Consumer judoConsumer;
         protected CV2EntryView cv2EntryView;
-
+        private ClientService clientService;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -37,13 +37,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             SetHelpText (Resource.String.help_info, Resource.String.help_cv2_text);
             SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManagerA.JUDO_PAYMENT_REF);
+            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
 
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManagerA.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManagerA.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManagerA.JUDO_CURRENCY);
-            judoCardToken = Intent.GetParcelableExtra (JudoSDKManagerA.JUDO_CARD_DETAILS).JavaCast<CardToken> ();
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
+            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
+            judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<CardToken> ();
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
 
             if (judoPaymentRef == null) {
                 throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
@@ -66,17 +66,18 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             cv2EntryView.SetCardDetails (judoCardToken);
 
-            judoMetaData = Intent.GetParcelableExtra (JudoSDKManagerA.JUDO_META_DATA).JavaCast<MetaData> ();
+            judoMetaData = Intent.GetParcelableExtra (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
 
             var payButton = FindViewById<Button> (Resource.Id.payButton);
 
             payButton.Text = Resources.GetString (Resource.String.token_payment);
             payButton.Click += (sender, args) => TransactClickHandler (MakeTokenPayment);
+            clientService = new ClientService ();
         }
 
         public override void OnBackPressed ()
         {
-            SetResult (JudoSDKManagerA.JUDO_CANCELLED);
+            SetResult (JudoSDKManager.JUDO_CANCELLED);
             base.OnBackPressed ();
         }
 
@@ -92,13 +93,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 YourPaymentMetaData = judoMetaData.Metadata,
                 CardToken = judoCardToken.Token,
                 CV2 = cv2EntryView.GetCV2 (),
-                ClientDetails = JudoSDKManagerA.GetClientDetails (this),
-                UserAgent = JudoSDKManagerA.GetSDKVersion ()
+                ClientDetails = clientService.GetClientDetails (),
+                UserAgent = clientService.GetSDKVersion ()
             };
 
             ShowLoadingSpinner (true);
 
-            // JudoSDKManagerA.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+            // JudoSDKManager.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void ShowLoadingSpinner (bool show)

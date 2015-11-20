@@ -224,7 +224,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                         } 
                         return;
                     } catch (Exception exception) {
-                        Log.Error (JudoSDKManagerA.DEBUG_TAG, exception.Message, exception);
+                        Log.Error (JudoSDKManager.DEBUG_TAG, exception.Message, exception);
                     }
 
                     ShowInvalid ();

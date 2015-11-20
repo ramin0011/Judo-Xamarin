@@ -11,6 +11,7 @@ using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using System;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -19,7 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public JObject GetClientDetails ()
         {
-            if (!JudoSDKManagerA.Instance.RiskSignals) {
+            if (!JudoSDKManager.RiskSignals) {
                 return null;
             }
             var context = Android.App.Application.Context;
@@ -50,14 +51,18 @@ namespace JudoDotNetXamarinAndroidSDK
             RootCheck rootCheck = new RootCheck (context);
             clientDetails.Rooted = rootCheck.IsRooted ();
 
-            clientDetails.SslPinningEnabled = JudoSDKManagerA.Instance.SSLPinningEnabled;
+            clientDetails.SslPinningEnabled = JudoSDKManager.SSLPinningEnabled;
 
-            return new JObject (clientDetails);
+            return  JObject.FromObject (clientDetails);
         }
 
         public string GetSDKVersion ()
         {
-            throw new NotImplementedException ();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly ();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
+            string version = fvi.FileVersion;
+
+            return "Xamarin-Android-" + version;
         }
 			
     }

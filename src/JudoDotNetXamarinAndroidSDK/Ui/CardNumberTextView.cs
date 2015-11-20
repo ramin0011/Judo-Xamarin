@@ -27,7 +27,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         private void Init ()
         {
-            SetHintText (JudoSDKManagerA.CardHintFormat (CardType.UNKNOWN));
+            SetHintText (JudoSDKManager.CardHintFormat (CardType.UNKNOWN));
             SetErrorText ("Please recheck number");
             //Set additional chars to skip
             SetText (" ");

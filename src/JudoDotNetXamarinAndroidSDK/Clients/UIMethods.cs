@@ -3,6 +3,7 @@ using Android.Content;
 using Android.App;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Activies;
+using System;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -14,21 +15,31 @@ namespace JudoDotNetXamarinAndroidSDK
         private const int ACTION_PREAUTH = 201;
         private const int ACTION_TOKEN_PREAUTH = 202;
 
+        private static Lazy<JudoSuccessCallback> _judoSuccessCallback;
+        /*
+        public static JudoSuccessCallback _judoSuccessCallbackInstance {
+            get { return _judoSuccessCallbackInstance; }
+        }*/
+
+        private static Lazy<JudoFailureCallback> _judoFailureCallback;
+        /*
+        public static JudoSuccessCallback _judoFailureCallbackInstance {
+            get { return _judoSuccessCallbackInstance; }
+        }*/
+
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
             Intent test = new Intent (context, typeof(UIMethods));
             test.PutExtra ("requestCode", ACTION_CARD_PAYMENT);
             Intent i = new Intent (context, typeof(PaymentActivity));
-            i.PutExtra (JudoSDKManagerA.JUDO_PAYMENT_REF, payment.PaymentReference);
-            i.PutExtra (JudoSDKManagerA.JUDO_CONSUMER, new Consumer (payment.ConsumerReference));
-            i.PutExtra (JudoSDKManagerA.JUDO_AMOUNT, payment.Amount.ToString ());
-            i.PutExtra (JudoSDKManagerA.JUDO_ID, JudoConfiguration.Instance.JudoId);
-            i.PutExtra (JudoSDKManagerA.JUDO_CURRENCY, payment.Currency);
-            //i.PutExtra (JudoSDKManagerA.SUCCESS_CALLBACK, success);
-            //i.PutExtra (JudoSDKManagerA.FAILURE_CALLBACK, failure);
-
-
-            //  intent.PutExtra (JudoSDKManagerA.JUDO_META_DATA, new MetaData (payment.YourPaymentMetaData));
+            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
+            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new Consumer (payment.ConsumerReference));
+            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
+            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
+            _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
+            _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
+            //  intent.PutExtra (JudoSDKManager.JUDO_META_DATA, new MetaData (payment.YourPaymentMetaData));
             //PaymentActivity pa = new PaymentActivity ();
 
             context.StartActivityForResult (test, ACTION_CARD_PAYMENT);
@@ -43,13 +54,13 @@ namespace JudoDotNetXamarinAndroidSDK
             var reqCode = Intent.GetStringExtra ("requestCode");
             // if (reqCode == ACTION_CARD_PAYMENT.ToString ()) {
             Intent i = new Intent (this, typeof(PaymentActivity));
-            i.PutExtra (JudoSDKManagerA.JUDO_PAYMENT_REF, "1.01");
-            i.PutExtra (JudoSDKManagerA.JUDO_CONSUMER, new Consumer ("1.01"));
-            i.PutExtra (JudoSDKManagerA.JUDO_AMOUNT, "1.01");
-            i.PutExtra (JudoSDKManagerA.JUDO_ID, "1.01");
-            i.PutExtra (JudoSDKManagerA.JUDO_CURRENCY, "GBP");
-            //i.PutExtra (JudoSDKManagerA.SUCCESS_CALLBACK, success);
-            //i.PutExtra (JudoSDKManagerA.FAILURE_CALLBACK, failure);
+            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, "1.01");
+            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new Consumer ("1.01"));
+            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, "1.01");
+            i.PutExtra (JudoSDKManager.JUDO_ID, "1.01");
+            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, "GBP");
+            //i.PutExtra (JudoSDKManager.SUCCESS_CALLBACK, success);
+            //i.PutExtra (JudoSDKManager.FAILURE_CALLBACK, failure);
                
 
             this.StartActivityForResult (i, ACTION_CARD_PAYMENT);
@@ -89,14 +100,14 @@ namespace JudoDotNetXamarinAndroidSDK
         //            string paymentReference, string consumerReference, Dictionary<string, string> metaData)
         //        {
         //            Intent intent = new Intent(Application.Context, typeof(PaymentActivity));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_PAYMENT_REF, paymentReference);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CONSUMER, new Consumer(consumerReference));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_AMOUNT, amount);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_ID, judoId);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CURRENCY, currency);
+        //            intent.PutExtra(JudoSDKManager.JUDO_PAYMENT_REF, paymentReference);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CONSUMER, new Consumer(consumerReference));
+        //            intent.PutExtra(JudoSDKManager.JUDO_AMOUNT, amount);
+        //            intent.PutExtra(JudoSDKManager.JUDO_ID, judoId);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CURRENCY, currency);
         //
         //
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
+        //            intent.PutExtra(JudoSDKManager.JUDO_META_DATA, new MetaData(metaData));
         //			PaymentActivity pa = new PaymentActivity ();
         //			pa.StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         //        }
@@ -105,14 +116,14 @@ namespace JudoDotNetXamarinAndroidSDK
         //            string paymentReference, string consumerReference, Dictionary<string, string> metaData)
         //        {
         //            Intent intent = new Intent(context, typeof(PreAuthActivity));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_PAYMENT_REF, paymentReference);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CONSUMER, new Consumer(consumerReference));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_AMOUNT, amount);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_ID, judoId);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CURRENCY, currency);
+        //            intent.PutExtra(JudoSDKManager.JUDO_PAYMENT_REF, paymentReference);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CONSUMER, new Consumer(consumerReference));
+        //            intent.PutExtra(JudoSDKManager.JUDO_AMOUNT, amount);
+        //            intent.PutExtra(JudoSDKManager.JUDO_ID, judoId);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CURRENCY, currency);
         //
         //
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
+        //            intent.PutExtra(JudoSDKManager.JUDO_META_DATA, new MetaData(metaData));
         //
         //            return intent;
         //        }
@@ -121,15 +132,15 @@ namespace JudoDotNetXamarinAndroidSDK
         //            string paymentReference, string consumerReference, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
         //        {
         //            Intent intent = new Intent(context, typeof(PaymentTokenActivity));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_PAYMENT_REF, paymentReference);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CONSUMER, new Consumer(consumerReference, consumerToken));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_AMOUNT, amount);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_ID, judoId);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CURRENCY, currency);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CARD_DETAILS, cardToken);
+        //            intent.PutExtra(JudoSDKManager.JUDO_PAYMENT_REF, paymentReference);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CONSUMER, new Consumer(consumerReference, consumerToken));
+        //            intent.PutExtra(JudoSDKManager.JUDO_AMOUNT, amount);
+        //            intent.PutExtra(JudoSDKManager.JUDO_ID, judoId);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CURRENCY, currency);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CARD_DETAILS, cardToken);
         //
         //
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
+        //            intent.PutExtra(JudoSDKManager.JUDO_META_DATA, new MetaData(metaData));
         //
         //            return intent;
         //        }
@@ -138,15 +149,15 @@ namespace JudoDotNetXamarinAndroidSDK
         //            string paymentReference, string consumerReference, CardToken cardToken, Dictionary<string, string> metaData, string consumerToken = null)
         //        {
         //            Intent intent = new Intent(context, typeof(PreAuthTokenActivity));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_PAYMENT_REF, paymentReference);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CONSUMER, new Consumer(consumerReference, consumerToken));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_AMOUNT, amount);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_ID, judoId);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CURRENCY, currency);
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CARD_DETAILS, cardToken);
+        //            intent.PutExtra(JudoSDKManager.JUDO_PAYMENT_REF, paymentReference);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CONSUMER, new Consumer(consumerReference, consumerToken));
+        //            intent.PutExtra(JudoSDKManager.JUDO_AMOUNT, amount);
+        //            intent.PutExtra(JudoSDKManager.JUDO_ID, judoId);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CURRENCY, currency);
+        //            intent.PutExtra(JudoSDKManager.JUDO_CARD_DETAILS, cardToken);
         //
         //
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_META_DATA, new MetaData(metaData));
+        //            intent.PutExtra(JudoSDKManager.JUDO_META_DATA, new MetaData(metaData));
         //
         //            return intent;
         //        }
@@ -154,7 +165,7 @@ namespace JudoDotNetXamarinAndroidSDK
         //        public Intent RegisterCard(Context context, string consumerReference)
         //        {
         //            Intent intent = new Intent(context, typeof(RegisterCardActivity));
-        //            intent.PutExtra(JudoSDKManagerA.JUDO_CONSUMER, new Consumer(consumerReference));
+        //            intent.PutExtra(JudoSDKManager.JUDO_CONSUMER, new Consumer(consumerReference));
         //
         //            return intent;
         //        }
@@ -168,19 +179,19 @@ namespace JudoDotNetXamarinAndroidSDK
             //            if (resultCode == Result.Canceled) {
             //                Toast.MakeText (this, "Payment Canceled.", ToastLength.Long).Show ();
             //                return;
-            //            } else if (resultCode == JudoSDKManagerA.JUDO_ERROR) {
-            //                Error err = data.GetParcelableExtra (JudoSDKManagerA.JUDO_ERROR_EXCEPTION) as Error;
+            //            } else if (resultCode == JudoSDKManager.JUDO_ERROR) {
+            //                Error err = data.GetParcelableExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION) as Error;
             //        
-            //                Toast.MakeText (this, string.Format ("Error: {0} {1}", data.GetStringExtra (JudoSDKManagerA.JUDO_ERROR_MESSAGE),
+            //                Toast.MakeText (this, string.Format ("Error: {0} {1}", data.GetStringExtra (JudoSDKManager.JUDO_ERROR_MESSAGE),
             //                   // err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show ();
             //                return;
             //            }
             //        
             //            if (data != null)
-            //                receipt = data.GetParcelableExtra (JudoSDKManagerA.JUDO_RECEIPT) as Receipt;
+            //                receipt = data.GetParcelableExtra (JudoSDKManager.JUDO_RECEIPT) as Receipt;
             //        
             //            if (receipt == null) {
-            //                Toast.MakeText (this, string.Format ("Error: {0}", data.GetStringExtra (JudoSDKManagerA.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show ();
+            //                Toast.MakeText (this, string.Format ("Error: {0}", data.GetStringExtra (JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show ();
             //                return;
             //            }
             //        

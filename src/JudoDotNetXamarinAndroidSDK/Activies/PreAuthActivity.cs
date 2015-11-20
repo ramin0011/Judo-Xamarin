@@ -8,12 +8,15 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 {
     public class PreAuthActivity : PaymentActivity
     {
+        private ClientService clientService;
+
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
 
             SetTitle (Resource.String.title_pre_auth);
             FindViewById<Button> (Resource.Id.payButton).Text = Resources.GetString (Resource.String.preauth);
+            clientService = new ClientService ();
             // Create your application here
         }
 
@@ -25,7 +28,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             CardAddressModel cardAddress = new CardAddressModel ();
 
-            if (JudoSDKManagerA.Instance.AVSEnabled) {
+            if (JudoSDKManager.AVSEnabled) {
                 var country = avsEntryView.GetCountry ();
                 cardAddress.PostCode = avsEntryView.GetPostCode ();
             }
@@ -33,7 +36,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManagerA.Instance.MaestroAccepted) {
+            if (JudoSDKManager.MaestroAccepted) {
                 issueNumber = startDateEntryView.GetIssueNumber ();
                 startDate = startDateEntryView.GetStartDate ();
             }
@@ -50,8 +53,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 StartDate = startDate,
                 ExpiryDate = expiryDate,
                 CV2 = cv2,
-                ClientDetails = JudoSDKManagerA.GetClientDetails (this),
-                UserAgent = JudoSDKManagerA.GetSDKVersion ()
+                ClientDetails = clientService.GetClientDetails (),
+                UserAgent = clientService.GetSDKVersion ()
             };
 
             ShowLoadingSpinner (true);
@@ -70,7 +73,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
             CardAddressModel cardAddress = new CardAddressModel ();
 
-            if (JudoSDKManagerA.Instance.MaestroAccepted) {
+            if (JudoSDKManager.MaestroAccepted) {
                 country = avsEntryView.GetCountry ();
                 cardAddress.PostCode = avsEntryView.GetPostCode ();
             }
@@ -78,7 +81,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManagerA.Instance.MaestroAccepted) {
+            if (JudoSDKManager.MaestroAccepted) {
                 issueNumber = startDateEntryView.GetIssueNumber ();
                 startDate = startDateEntryView.GetStartDate ();
             }

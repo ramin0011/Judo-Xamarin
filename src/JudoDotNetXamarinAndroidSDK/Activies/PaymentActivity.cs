@@ -26,9 +26,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
-        //		protected JudoSuccessCallback successCallback;
-        //		protected JudoFailureCallback failureCallback;
         IPaymentService _paymentService;
+        ServiceFactory factory;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -48,12 +47,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text,
                 Resource.Id.postCodeHelpButton);
 
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManagerA.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManagerA.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
+            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
 
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManagerA.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManagerA.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManagerA.JUDO_CURRENCY);
+            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
 
             if (judoPaymentRef == null) {
                 throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
@@ -71,7 +70,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 throw new ArgumentException ("JUDO_CURRENCY must be supplied");
             }
 
-            judoMetaData = Intent.Extras.GetParcelable (JudoSDKManagerA.JUDO_META_DATA).JavaCast<MetaData> ();
+            judoMetaData = Intent.Extras.GetParcelable (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
 
             var payButton = FindViewById<Button> (Resource.Id.payButton);
 
@@ -92,13 +91,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                     Console.Error.Write (e.StackTrace);
                 }
 
-                if (ValidationHelper.IsStartDateRequiredForCardNumber (cardNumber) && JudoSDKManagerA.Instance.MaestroAccepted) {
+                if (ValidationHelper.IsStartDateRequiredForCardNumber (cardNumber) && JudoSDKManager.MaestroAccepted) {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus ();
                     avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner ();
                 }
 
-                if (JudoSDKManagerA.Instance.AVSEnabled && avsEntryView != null) {
+                if (JudoSDKManager.AVSEnabled && avsEntryView != null) {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
             };
@@ -106,11 +105,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cardEntryView.OnReturnToCreditCardNumberEntry += () => {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
             };
+
+            factory = new ServiceFactory ();
+            _paymentService = factory.GetPaymentService (); 
         }
 
         public override void OnBackPressed ()
         {
-            SetResult (JudoSDKManagerA.JUDO_CANCELLED);
+            SetResult (JudoSDKManager.JUDO_CANCELLED);
             base.OnBackPressed ();
         }
 
@@ -122,54 +124,58 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-            cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
+            if (judoMetaData != null) {
+                cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
+            }
+           
 
 
             ShowLoadingSpinner (true);
 
-            _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (reponse => {
-                var result = reponse.Result;
-
-                if (result != null && !result.HasError && result.Response.Result != "Declined") {
-                    var paymentreceipt = result.Response as PaymentReceiptModel;
-
-                    if (paymentreceipt != null) {
-                        // call success callback
-//                        if (successCallback != null)
-//                            successCallback (paymentreceipt);
-                    } else {
-                        var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
-                        if (threedDSecureReceipt != null) {
-//                            failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-//                                    ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
-//                                    ErrorType = JudoApiError.General_Error,
-//                                    ModelErrors = null
-//                                } });
-                        } else {
-                            throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-                        }
-                    }
-
-                } else {
-//                    // Failure callback
-//                    if (failureCallback != null) {
-//                        var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-//                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+           
+            _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
+//                var result = reponse.Result;
 //
-//                        if (paymentreceipt != null) {
-//                            // send receipt even we got card declined
+//                if (result != null && !result.HasError && result.Response.Result != "Declined") {
+//                    var paymentreceipt = result.Response as PaymentReceiptModel;
 //
-//                            failureCallback (judoError, paymentreceipt);
+//                    if (paymentreceipt != null) {
+//                        // call success callback
+////                        if (successCallback != null)
+////                            successCallback (paymentreceipt);
+//                    } else {
+//                        var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+//                        if (threedDSecureReceipt != null) {
+////                            failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
+////                                    ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
+////                                    ErrorType = JudoApiError.General_Error,
+////                                    ModelErrors = null
+////                                } });
 //                        } else {
-//
-//                            failureCallback (judoError);
+//                            throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
 //                        }
-                    //  }
-                }
-
-                ShowLoadingSpinner (false);
-            });
-            //var judoPay = JudoSDKManagerA.JudoClient;
+//                    }
+//
+//                } else {
+////                    // Failure callback
+////                    if (failureCallback != null) {
+////                        var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+////                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+////
+////                        if (paymentreceipt != null) {
+////                            // send receipt even we got card declined
+////
+////                            failureCallback (judoError, paymentreceipt);
+////                        } else {
+////
+////                            failureCallback (judoError);
+////                        }
+//                    //  }
+//                }
+//
+//                ShowLoadingSpinner (false);
+//            });
+            //var judoPay = JudoSDKManager.JudoClient;
             //judoPay.Payments.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -191,7 +197,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
             CardAddressModel cardAddress = new CardAddressModel ();
 
-            if (JudoSDKManagerA.Instance.MaestroAccepted) {
+            if (JudoSDKManager.MaestroAccepted) {
                 country = avsEntryView.GetCountry ();
                 cardAddress.PostCode = avsEntryView.GetPostCode ();
             }
@@ -199,7 +205,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManagerA.Instance.MaestroAccepted) {
+            if (JudoSDKManager.MaestroAccepted) {
                 issueNumber = startDateEntryView.GetIssueNumber ();
                 startDate = startDateEntryView.GetStartDate ();
             }

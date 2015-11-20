@@ -64,11 +64,11 @@ namespace JudoDotNetXamarinAndroidSDK
         //                StartDate = startDate,
         //                ExpiryDate = expiryDate,
         //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManagerA.GetClientDetails(Application.Context),
-        //				UserAgent = JudoSDKManagerA.GetSDKVersion()
+        //                ClientDetails = JudoSDKManager.GetClientDetails(Application.Context),
+        //				UserAgent = JudoSDKManager.GetSDKVersion()
         //            };
         //
-        //			return null; //JudoSDKManagerA.JudoClient.Payments.Create(cardPayment);
+        //			return null; //JudoSDKManager.JudoClient.Payments.Create(cardPayment);
         //        }
         //
         //        public Task<IResult<ITransactionResult>> TokenPayment(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -86,11 +86,11 @@ namespace JudoDotNetXamarinAndroidSDK
         //                YourPaymentMetaData = metaData,
         //                CardToken = cardToken,
         //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
-        //				UserAgent = JudoSDKManagerA.GetSDKVersion()
+        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
+        //				UserAgent = JudoSDKManager.GetSDKVersion()
         //            };
         //
-        //			return null;// JudoSDKManagerA.JudoClient.Payments.Create(payment);
+        //			return null;// JudoSDKManager.JudoClient.Payments.Create(payment);
         //        }
         //
         //        public Task<IResult<ITransactionResult>> PreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -110,11 +110,11 @@ namespace JudoDotNetXamarinAndroidSDK
         //                StartDate = startDate,
         //                ExpiryDate = expiryDate,
         //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
-        //				UserAgent = JudoSDKManagerA.GetSDKVersion()
+        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
+        //				UserAgent = JudoSDKManager.GetSDKVersion()
         //            };
         //
-        //			return null;// JudoSDKManagerA.JudoClient.PreAuths.Create(cardPayment);
+        //			return null;// JudoSDKManager.JudoClient.PreAuths.Create(cardPayment);
         //        }
         //
         //        public Task<IResult<ITransactionResult>> TokenPreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
@@ -132,11 +132,11 @@ namespace JudoDotNetXamarinAndroidSDK
         //                YourPaymentMetaData = metaData,
         //                CardToken = cardToken,
         //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManagerA.GetClientDetails(context),
-        //				UserAgent = JudoSDKManagerA.GetSDKVersion()
+        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
+        //				UserAgent = JudoSDKManager.GetSDKVersion()
         //            };
         //
-        //			return null;//  JudoSDKManagerA.JudoClient.PreAuths.Create(payment);
+        //			return null;//  JudoSDKManager.JudoClient.PreAuths.Create(payment);
         //        }
         //
         //        public Task<IResult<ITransactionResult>> RegisterCard(string cardNumber, string cv2, string expiryDate, string consumerReference, string postCode)
@@ -153,7 +153,7 @@ namespace JudoDotNetXamarinAndroidSDK
         //                YourConsumerReference = consumerReference
         //            };
         //
-        //			return null;//  JudoSDKManagerA.JudoClient.RegisterCards.Create(registerCard);
+        //			return null;//  JudoSDKManager.JudoClient.RegisterCards.Create(registerCard);
         //        }
     }
 }

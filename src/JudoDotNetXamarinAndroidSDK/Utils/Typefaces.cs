@@ -20,7 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
                         Typeface t = Typeface.CreateFromAsset (context.Assets, assetPath);
                         cache [assetPath] = t;
                     } catch (Exception e) {
-                        Log.Error (JudoSDKManagerA.DEBUG_TAG,
+                        Log.Error (JudoSDKManager.DEBUG_TAG,
                             "Could not get typeface '" + assetPath + "' because " + e.Message);
                         return null;
                     }

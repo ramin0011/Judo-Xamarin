@@ -9,6 +9,9 @@ using JudoDotNetXamarinAndroidSDK;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Clients;
 using Android.App;
+using Android.Content;
+using JudoDotNetXamarinAndroidSDK.Models;
+using JudoPayDotNet.Errors;
 
 
 namespace JudoDotNetXamarinAndroidSDK
@@ -20,6 +23,32 @@ namespace JudoDotNetXamarinAndroidSDK
     public class JudoSDKManager
     {
 
+        public static readonly Android.App.Result JUDO_SUCCESS = Android.App.Result.Ok;
+        public static readonly Android.App.Result JUDO_CANCELLED = Android.App.Result.Canceled;
+        public static readonly Android.App.Result JUDO_ERROR = Android.App.Result.FirstUser;
+
+
+        public static string JUDO_PAYMENT_REF = "JudoPay-yourPaymentReference";
+        public static string JUDO_AMOUNT = "JudoPay-amount";
+        public static string JUDO_ID = "JudoPay-judoId";
+        public static string JUDO_CURRENCY = "JudoPay-currency";
+        public static string JUDO_META_DATA = "JudoPay-yourPaymentMetaData";
+
+        public static string JUDO_RECEIPT = "JudoPay-receipt";
+
+        public static string JUDO_CARD_DETAILS = "JudoPay-CardToken";
+        public static string JUDO_CONSUMER = "JudoPay-consumer";
+
+        public static string JUDO_ERROR_MESSAGE = "ERROR_MESSAGE";
+        public static string JUDO_ERROR_EXCEPTION = "ERROR_EXCEPTION";
+
+        private static string REGULAR_CARD_FORMAT_HINT = "0000 0000 0000 0000";
+        private static string AMEX_CARD_FORMAT_HINT = "0000 000000 00000";
+        private static string REGULAR_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CV2";
+        private static string AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT = "MM/YY CIDV";
+        private static string REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
+        private static string AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
+            
         private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager> (() => new JudoSDKManager ());
 
         public static JudoSDKManager Instance {
@@ -126,6 +155,83 @@ namespace JudoDotNetXamarinAndroidSDK
 //                uiMethod.Payment (innerModel, success, failure);
         }
 
+        internal static string DEBUG_TAG = "com.judopay.android";
+
+        internal static string CardHintFormat (CardType cardType)
+        {
+            switch (cardType) {
+            case CardType.AMEX:
+                return AMEX_CARD_FORMAT_HINT;
+            default:
+                return REGULAR_CARD_FORMAT_HINT;
+            }
+        }
+
+        internal static int GetCardResourceId (Context context, CardType cardType, bool showFront)
+        {
+            if (showFront) {
+                switch (cardType) {
+                case CardType.VISA:
+                    return Resource.Drawable.ic_card_visa;
+                case CardType.MASTERCARD:
+                    return Resource.Drawable.ic_card_mastercard;
+                case CardType.AMEX:
+                    return Resource.Drawable.ic_card_amex;
+                case CardType.MAESTRO:
+                    return Resource.Drawable.ic_card_maestro;
+                case CardType.UNKNOWN:
+                default:
+                    return Resource.Drawable.ic_card_unknown;
+                }
+            } else {
+                switch (cardType) {
+                case CardType.AMEX:
+                    return Resource.Drawable.ic_card_cv2_amex;
+                default:
+                    return Resource.Drawable.ic_card_cv2;
+                }
+            }
+        }
+
+        internal static string GetCardHintFormat (CardType cardType)
+        {
+            switch (cardType) {
+            case CardType.AMEX:
+                return AMEX_CARD_FORMAT_HINT;
+            default:
+                return REGULAR_CARD_FORMAT_HINT;
+            }
+        }
+
+        internal static string GetExpiryAndValidationHintFormat (CardType cardType)
+        {
+            switch (cardType) {
+            case CardType.AMEX:
+                return AMEX_EXPIRY_AND_VALIDATION_FORMAT_HINT;
+            default:
+                return REGULAR_EXPIRY_AND_VALIDATION_FORMAT_HINT;
+            }
+        }
+
+        internal static string GetExpiryAndValidationErrorMessage (CardType cardType)
+        {
+            switch (cardType) {
+            case CardType.AMEX:
+                return AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE;
+            default:
+                return REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE;
+            }
+        }
+
+        internal static Intent CreateErrorIntent (string message, Exception exception, JudoApiErrorModel apiErrorModel)
+        {
+            Intent intent = new Intent ();
+            intent.PutExtra (JUDO_ERROR_MESSAGE, message);
+            intent.PutExtra (JUDO_ERROR_EXCEPTION, new JudoSerialisationError (exception, apiErrorModel));
+
+            return intent;
+        }
+
 
 
 
@@ -204,4 +310,6 @@ namespace JudoDotNetXamarinAndroidSDK
         //			}
         //		}
     }
+
+
 }
