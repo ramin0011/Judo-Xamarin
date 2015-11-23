@@ -20,7 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
     {
         private Bundle judoMetaData;
         private CardEntryView cardEntryView;
-        private Models.Consumer judoConsumer;
+        private Models.SConsumer judoConsumer;
         private EditText addressLine1;
         private EditText addressLine2;
         private EditText addressLine3;
@@ -54,7 +54,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             SetHelpText (Resource.String.help_info, Resource.String.help_card_text);
             SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
 
             if (judoConsumer == null) {
                 throw new IllegalArgumentException ("JUDO_CONSUMER must be supplied");

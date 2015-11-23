@@ -114,7 +114,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView (cv2TextView);
         }
 
-        public void SetCardDetails (CardToken cardToken)
+        public void SetCardDetails (SCardToken cardToken)
         {
             SetLast4CCNosText (cardToken.CardLastFour);
             SetCardType (cardToken.CardType);

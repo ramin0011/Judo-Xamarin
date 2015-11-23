@@ -13,13 +13,13 @@ using Exception = System.Exception;
 
 namespace JudoDotNetXamarinAndroidSDK.Models
 {
-    public class JudoSerialisationError : Object, IParcelable
+    public class SJudoError : Object, IParcelable
     {
         public Exception Exception { get; set; }
 
         public JudoApiErrorModel ApiError { get; set; }
 
-        public JudoSerialisationError (Parcel parcel)
+        public SJudoError (Parcel parcel)
         {
             var exceptionByteLength = parcel.ReadInt ();
             if (exceptionByteLength > 0) {
@@ -46,7 +46,7 @@ namespace JudoDotNetXamarinAndroidSDK.Models
             return new ExceptionCreator ();
         }
 
-        public JudoSerialisationError (Exception exception, JudoApiErrorModel apiError)
+        public SJudoError (Exception exception, JudoApiErrorModel apiError)
         {
             //ToDo : format the exception 
             Exception = exception;
@@ -94,12 +94,12 @@ namespace JudoDotNetXamarinAndroidSDK.Models
     {
         public Object CreateFromParcel (Parcel source)
         {
-            return new JudoSerialisationError (source);
+            return new SJudoError (source);
         }
 
         public Object[] NewArray (int size)
         {
-            return new JudoSerialisationError[size];
+            return new SJudoError[size];
         }
     }
 }

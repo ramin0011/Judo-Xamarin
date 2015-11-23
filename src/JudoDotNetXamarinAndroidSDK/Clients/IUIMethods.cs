@@ -51,7 +51,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
         /// <param name="consumerToken">The consumer token.</param>
         /// <returns>The transaction result of the operation.</returns>
         Intent TokenPayment(Context context, string judoId, string currency, string amount,
-            string paymentReference, string consumerReference, CardToken cardToken, Dictionary<string, string> metaData,
+            string paymentReference, string consumerReference, SCardToken cardToken, Dictionary<string, string> metaData,
             string consumerToken = null);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace JudoDotNetXamarinAndroidSDK.Clients
         /// <param name="consumerToken">The consumer token.</param>
         /// <returns>The transaction result of the operation.</returns>
         Intent TokenPreAuth(Context context, string judoId, string currency, string amount,
-            string paymentReference, string consumerReference, CardToken cardToken, Dictionary<string, string> metaData,
+            string paymentReference, string consumerReference, SCardToken cardToken, Dictionary<string, string> metaData,
             string consumerToken = null);
 
         /// <summary>

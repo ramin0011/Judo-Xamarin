@@ -101,45 +101,115 @@ namespace Android.Xamarin.SampleApp
 
         private void SuccessPayment (PaymentReceiptModel receipt)
         {
-//			cardToken = receipt.CardDetails.CardToken;
-//			consumerToken = receipt.Consumer.ConsumerToken;
-//			lastFour = receipt.CardDetails.CardLastfour;
-//			cardType = receipt.CardDetails.CardType;
-//			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-//				// move back to home screen
-//				CloseView ();
-//
-//
-//				// show receipt
-//				ShowMessage ("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
-//
-//				// store token to further use
-//			});
+            cardToken = receipt.CardDetails.CardToken;
+            consumerToken = receipt.Consumer.ConsumerToken;
+            lastFour = receipt.CardDetails.CardLastfour;
+            cardType = receipt.CardDetails.CardType;
+            //set alert for executing the task
+            AlertDialog.Builder alert = new AlertDialog.Builder (this);
+            alert.SetTitle ("Transaction Successful, Receipt ID - " + receipt.ReceiptId);
+            alert.SetPositiveButton ("OK", (senderAlert, args) => {
+                //change value write your own set of instructions
+                //you can also create an event for the same in xamarin
+                //instead of writing things here
+            });
+
+            RunOnUiThread (() => {
+                alert.Show ();
+            });
         }
 
         private void FailurePayment (JudoError error, PaymentReceiptModel receipt)
         {
-//			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-//				// move back to home screen
-//				CloseView ();
-//				// show receipt
-//				string message = "";
-//				if (error != null && error.ApiError != null)
-//					message += error.ApiError.ErrorMessage + Environment.NewLine;
+            //set alert for executing the task
+            AlertDialog.Builder alert = new AlertDialog.Builder (this);
+
+         
+            var message = "Error";
+            if (error != null && error.ApiError != null)
+                message += error.ApiError.ErrorMessage + System.Environment.NewLine;
+
+            if (error != null && error.Exception != null)
+                message += error.Exception.Message + System.Environment.NewLine;
+
+            if (receipt != null) {
+                message += "Transaction : " + receipt.Result + System.Environment.NewLine;
+                message += receipt.Message + System.Environment.NewLine;
+                message += "Receipt ID - " + receipt.ReceiptId;
+            }
+            alert.SetTitle (message);
+            alert.SetPositiveButton ("OK", (senderAlert, args) => {
+            });
+                
+            RunOnUiThread (() => {
+                alert.Show ();
+            });
+
+
+//            //////////
+//            DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+//                // move back to home screen
+//                CloseView ();
+//                // show receipt
+//             
+//                if (error != null && error.ApiError != null)
+//                    message += error.ApiError.ErrorMessage + Environment.NewLine;
 //
-//				if (error != null && error.Exception != null)
-//					message += error.Exception.Message + Environment.NewLine;
+//                if (error != null && error.Exception != null)
+//                    message += error.Exception.Message + Environment.NewLine;
 //
-//				if (receipt != null) {
-//					message += "Transaction : " + receipt.Result + Environment.NewLine;
-//					message += receipt.Message + Environment.NewLine;
-//					message += "Receipt ID - " + receipt.ReceiptId;
-//				}
+//                if (receipt != null) {
+//                    message += "Transaction : " + receipt.Result + Environment.NewLine;
+//                    message += receipt.Message + Environment.NewLine;
+//                    message += "Receipt ID - " + receipt.ReceiptId;
+//                }
 //
-//				ShowMessage ("Transaction Failed: ", message);
-//				// store token to further use
-//			});
+//                ShowMessage ("Transaction Failed: ", message);
+//                // store token to further use
+//            });
         }
+
+        //        private void SuccessPayment (PaymentReceiptModel receipt)
+        //        {
+        ////			cardToken = receipt.CardDetails.CardToken;
+        ////			consumerToken = receipt.Consumer.ConsumerToken;
+        ////			lastFour = receipt.CardDetails.CardLastfour;
+        ////			cardType = receipt.CardDetails.CardType;
+        ////			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+        ////				// move back to home screen
+        ////				CloseView ();
+        ////
+        ////
+        ////				// show receipt
+        ////				ShowMessage ("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
+        ////
+        ////				// store token to further use
+        ////			});
+        //        }
+        //
+        //        private void FailurePayment (JudoError error, PaymentReceiptModel receipt)
+        //        {
+        ////			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+        ////				// move back to home screen
+        ////				CloseView ();
+        ////				// show receipt
+        ////				string message = "";
+        ////				if (error != null && error.ApiError != null)
+        ////					message += error.ApiError.ErrorMessage + Environment.NewLine;
+        ////
+        ////				if (error != null && error.Exception != null)
+        ////					message += error.Exception.Message + Environment.NewLine;
+        ////
+        ////				if (receipt != null) {
+        ////					message += "Transaction : " + receipt.Result + Environment.NewLine;
+        ////					message += receipt.Message + Environment.NewLine;
+        ////					message += "Receipt ID - " + receipt.ReceiptId;
+        ////				}
+        ////
+        ////				ShowMessage ("Transaction Failed: ", message);
+        ////				// store token to further use
+        ////			});
+        //        }
 
         private void payCard_Click (object sender, EventArgs e)
         {
@@ -178,7 +248,7 @@ namespace Android.Xamarin.SampleApp
             }
 
             var consumerReference = rcp_consumerRef;
-            var token = new CardToken () {
+            var token = new SCardToken () {
                 CardLastFour = lastFour,
                 Token = cardToken,
                 ConsumerToken = consumerToken,
@@ -203,7 +273,7 @@ namespace Android.Xamarin.SampleApp
             }
 
             var consumerReference = preAuth_rcp_consumerRef;
-            var token = new CardToken () {
+            var token = new SCardToken () {
                 CardLastFour = preAuth_lastFour,
                 Token = preAuth_cardToken,
                 ConsumerToken = preAuth_consumerToken,

@@ -22,8 +22,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected string judoId;
         protected string judoCurrency;
         protected MetaData judoMetaData;
-        protected CardToken judoCardToken;
-        protected Models.Consumer judoConsumer;
+        protected SCardToken judoCardToken;
+        protected Models.SConsumer judoConsumer;
         protected CV2EntryView cv2EntryView;
         private ClientService clientService;
 
@@ -42,8 +42,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<CardToken> ();
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
+            judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<SCardToken> ();
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
 
             if (judoPaymentRef == null) {
                 throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");

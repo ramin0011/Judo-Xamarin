@@ -227,7 +227,7 @@ namespace Android.Xamarin.SampleApp
 
         private void dealWithResult (int requestCode, Result resultCode, IResult<ITransactionResult> data)
         {
-            Receipt receipt = null;
+            SReceipt receipt = null;
             string msg_prefix = "";
 
             if (resultCode == Result.Canceled) {
@@ -239,7 +239,7 @@ namespace Android.Xamarin.SampleApp
             }
 
             if (data != null) {
-                receipt = new Receipt (data.Response);
+                receipt = new SReceipt (data.Response);
             }
 
             if (receipt == null) {

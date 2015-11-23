@@ -22,7 +22,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected string judoCurrency;
         protected MetaData judoMetaData;
         protected CardEntryView cardEntryView;
-        protected Models.Consumer judoConsumer;
+        protected Models.SConsumer judoConsumer;
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
@@ -48,7 +48,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 Resource.Id.postCodeHelpButton);
 
             judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.Consumer> ();
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
 
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
