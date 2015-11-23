@@ -64,7 +64,7 @@ namespace Android.Xamarin.SampleApp
 
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
-
+            JudoSDKManager.UIMode = true;
 
             /*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
@@ -97,6 +97,17 @@ namespace Android.Xamarin.SampleApp
             nonUiExamples.Click += new EventHandler (nonUiExamples_Click);
 
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
+
+            Switch switchbutton = FindViewById<Switch> (Resource.Id.switch1);
+            switchbutton.Checked = JudoSDKManager.UIMode; 
+            switchbutton.Click += (o, e) => {
+                JudoSDKManager.UIMode = switchbutton.Checked;
+                // Perform action on clicks
+                if (switchbutton.Checked)
+                    Toast.MakeText (this, "UI Mode on", ToastLength.Short).Show ();
+                else
+                    Toast.MakeText (this, "You are about to use non UI Mode so please look at the source code to understand the usage of Non-UI APIs.", ToastLength.Short).Show ();
+            };
         }
 
         private void SuccessPayment (PaymentReceiptModel receipt)

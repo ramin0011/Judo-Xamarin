@@ -862,8 +862,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0020
 			public const int registerCard = 2131492896;
 			
-			// aapt resource value: 0x7f0c0024
-			public const int sdk_version_label = 2131492900;
+			// aapt resource value: 0x7f0c0025
+			public const int sdk_version_label = 2131492901;
 			
 			// aapt resource value: 0x7f0c0014
 			public const int startDateContainer = 2131492884;
@@ -876,6 +876,9 @@ namespace Android.Xamarin.SampleApp
 			
 			// aapt resource value: 0x7f0c0015
 			public const int startDateTitleText = 2131492885;
+			
+			// aapt resource value: 0x7f0c0024
+			public const int switch1 = 2131492900;
 			
 			// aapt resource value: 0x7f0c001c
 			public const int threeDsecure = 2131492892;

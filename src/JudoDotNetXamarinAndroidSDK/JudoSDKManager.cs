@@ -94,8 +94,8 @@ namespace JudoDotNetXamarinAndroidSDK
         public JudoSDKManager ()
         {
             // setting up UI mode by default
-            UIMode = true;
-            RiskSignals = true;
+//            UIMode = true;
+//            RiskSignals = true;
         }
 
 
@@ -116,7 +116,7 @@ namespace JudoDotNetXamarinAndroidSDK
         //			return "Xamarin-Android-" + version;
         //		}
 
-        private static JudoAndroidSDKAPI _judoSdkApi;
+        private static Lazy<JudoAndroidSDKAPI> _judoSdkApi;
         //		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
         //		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
 
@@ -131,12 +131,13 @@ namespace JudoDotNetXamarinAndroidSDK
             get { return _uiMode; }
             set {
                 if (value) {
-                    _judoSdkApi = new UIMethods ();
+                    _judoSdkApi = new Lazy<JudoAndroidSDKAPI> (() => new UIMethods ());
                 } else {
-                    _judoSdkApi = new NonUIMethods ();
+                    _judoSdkApi = new Lazy<JudoAndroidSDKAPI> (() => new NonUIMethods ());
 
-                    _uiMode = value;
+                  
                 }
+                _uiMode = value;
             }
         }
 
@@ -149,7 +150,7 @@ namespace JudoDotNetXamarinAndroidSDK
 //                //failure (error);
 //            } else {
             //   TestInterface test = new UiService ();
-            _judoSdkApi.Payment (innerModel, success, failure, context);
+            _judoSdkApi.Value.Payment (innerModel, success, failure, context);
 //                var uiMethod = new UIMethods ();
 //
 //                uiMethod.Payment (innerModel, success, failure);
