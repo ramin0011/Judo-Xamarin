@@ -6,6 +6,8 @@ using JudoDotNetXamarinAndroidSDK.Activies;
 using System;
 using Result = Android.App.Result;
 using JudoPayDotNet.Models;
+using Java.Interop;
+using Java.Net;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -16,25 +18,18 @@ namespace JudoDotNetXamarinAndroidSDK
         private const int ACTION_TOKEN_PAYMENT = 102;
         private const int ACTION_PREAUTH = 201;
         private const int ACTION_TOKEN_PREAUTH = 202;
+        private const int ACTION_REGISTER_CARD = 301;
 
         private static Lazy<JudoSuccessCallback> _judoSuccessCallback;
 
-        /*
-        public static JudoSuccessCallback _judoSuccessCallbackInstance {
-            get { return _judoSuccessCallbackInstance; }
-        }*/
-
         private static Lazy<JudoFailureCallback> _judoFailureCallback;
-        /*
-        public static JudoSuccessCallback _judoFailureCallbackInstance {
-            get { return _judoSuccessCallbackInstance; }
-        }*/
+
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            Intent test = new Intent (context, typeof(UIMethods));
-            test.PutExtra ("requestCode", ACTION_CARD_PAYMENT);
-            Intent i = new Intent (context, typeof(PaymentActivity));
+            Intent i = new Intent (context, typeof(UIMethods));
+            i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_CARD_PAYMENT.ToString ());
+          
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
@@ -42,57 +37,99 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
             _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
             _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
-            //  intent.PutExtra (JudoSDKManager.JUDO_META_DATA, new MetaData (payment.YourPaymentMetaData));
-            //PaymentActivity pa = new PaymentActivity ();
+        
+            context.StartActivityForResult (i, ACTION_CARD_PAYMENT);
 
-            context.StartActivityForResult (test, ACTION_CARD_PAYMENT);
-
-            // context.StartActivityForResult (i, ACTION_CARD_PAYMENT);
+           
 
         }
 
         protected override void OnCreate (Android.OS.Bundle savedInstanceState)
         {
             base.OnCreate (savedInstanceState);
-            var reqCode = Intent.GetStringExtra ("requestCode");
-            // if (reqCode == ACTION_CARD_PAYMENT.ToString ()) {
-            Intent i = new Intent (this, typeof(PaymentActivity));
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, "1.01");
-            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer ("1.01"));
-            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, "1.01");
-            i.PutExtra (JudoSDKManager.JUDO_ID, "1.01");
-            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, "GBP");
-            //i.PutExtra (JudoSDKManager.SUCCESS_CALLBACK, success);
-            //i.PutExtra (JudoSDKManager.FAILURE_CALLBACK, failure);
-               
 
+          
+
+            // var reqCode = Intent.GetStringExtra ("requestCode");
+            Intent i; //= new Intent (this, typeof(PaymentActivity));
+
+            PopulateIntent (out i);
+//
+//            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, judoPaymentRef);
+//            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, judoConsumer);
+//            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, judoAmount);
+//            i.PutExtra (JudoSDKManager.JUDO_ID, judoId);
+//            i.PutExtra (JudoSDKManager.JUDO_CURRENCY,judoCurrency);
+
+           
             this.StartActivityForResult (i, ACTION_CARD_PAYMENT);
-            // }
-
-            //
+  
         }
 
-        public void PreAuth (JudoDotNetXamarin.PaymentViewModel preAuthorisation, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void PreAuth (JudoDotNetXamarin.PaymentViewModel preAuthorisation, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure, Activity context)
         {
             throw new System.NotImplementedException ();
         }
 
 
-        public void TokenPayment (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void TokenPayment (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure, Activity context)
         {
             throw new System.NotImplementedException ();
         }
 
 
-        public void TokenPreAuth (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void TokenPreAuth (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure, Activity context)
         {
             throw new System.NotImplementedException ();
         }
 
 
-        public void RegisterCard (JudoDotNetXamarin.PaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void RegisterCard (JudoDotNetXamarin.PaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure, Activity context)
         {
             throw new System.NotImplementedException ();
+        }
+
+        void PopulateIntent (out Intent i)
+        {
+
+            var requestCode = Intent.GetStringExtra (JudoSDKManager.REQUEST_CODE);
+            var judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
+            var judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
+            var judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
+
+            var judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
+            var judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
+
+            i = GetIntentForRequestCode (requestCode);
+            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, judoPaymentRef);
+            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, judoConsumer);
+            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, judoAmount.ToString ());
+            i.PutExtra (JudoSDKManager.JUDO_ID, judoId);
+            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, judoCurrency);
+        }
+
+        Intent GetIntentForRequestCode (string requestCode)
+        {
+            Intent i = new Intent ();
+            switch (Int32.Parse (requestCode)) {
+            case ACTION_CARD_PAYMENT:
+                i = new Intent (this, typeof(PaymentActivity));
+                break;
+            case ACTION_PREAUTH:
+                i = new Intent (this, typeof(PreAuthActivity));
+                break;
+            case ACTION_TOKEN_PAYMENT:
+                i = new Intent (this, typeof(PaymentTokenActivity));
+                break;
+            case ACTION_TOKEN_PREAUTH:
+                i = new Intent (this, typeof(PreAuthTokenActivity));
+                break;
+            case ACTION_REGISTER_CARD:
+                i = new Intent (this, typeof(RegisterCardActivity));
+                break;
+
+            }
+            return i;
         }
 
         protected override void OnActivityResult (int requestCode, Result resultCode, Intent data)

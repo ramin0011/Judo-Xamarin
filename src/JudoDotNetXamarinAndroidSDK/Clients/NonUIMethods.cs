@@ -10,10 +10,7 @@ namespace JudoDotNetXamarinAndroidSDK
 {
     internal class NonUIMethods : JudoAndroidSDKAPI //INonUIMethods
     {
-        #region IJudoSDKApi implementation
-
-        #region JudoAndroidSDKAPI implementation
-
+     
         IPaymentService _paymentService;
         ServiceFactory factory;
 
@@ -33,31 +30,44 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-        #endregion
-
-        public void Payment (JudoDotNetXamarin.PaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void PreAuth (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            throw new System.NotImplementedException ();
+            try {
+                _paymentService.PreAuthoriseCard (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
+            } catch (Exception ex) {
+                // Failure
+                HandleFailure (failure, ex);
+            }
         }
 
-        public void PreAuth (JudoDotNetXamarin.PaymentViewModel preAuthorisation, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            throw new System.NotImplementedException ();
+            try {
+                _paymentService.MakeTokenPayment (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
+            } catch (Exception ex) {
+                // Failure
+                HandleFailure (failure, ex);
+            }
         }
 
-        public void TokenPayment (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            throw new System.NotImplementedException ();
+            try {
+                _paymentService.MakeTokenPreAuthorisation (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
+            } catch (Exception ex) {
+                // Failure
+                HandleFailure (failure, ex);
+            }
         }
 
-        public void TokenPreAuth (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
+        public void RegisterCard (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            throw new System.NotImplementedException ();
-        }
-
-        public void RegisterCard (JudoDotNetXamarin.PaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure)
-        {
-            throw new System.NotImplementedException ();
+            try {
+                _paymentService.RegisterCard (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
+            } catch (Exception ex) {
+                // Failure
+                HandleFailure (failure, ex);
+            }
         }
 
         private void HandleFailure (JudoFailureCallback failure, Exception ex)
@@ -109,116 +119,5 @@ namespace JudoDotNetXamarinAndroidSDK
                 }
             }
         }
-
-        #endregion
-
-        //        public Task<IResult<ITransactionResult>> Payment( string judoId, string currency, decimal amount, string paymentReference,
-        //            string consumerReference, IDictionary<string, string> metaData,
-        //			string cardNumber,string postCode, string startDate, string expiryDate, string cv2)
-        //        {
-        //            var cardPayment = new CardPaymentModel()
-        //            {
-        //                JudoId = judoId,
-        //                Currency = currency,
-        //                Amount = amount,
-        //                YourPaymentReference = paymentReference,
-        //                YourConsumerReference = consumerReference,
-        //                YourPaymentMetaData = metaData,
-        //                CardNumber = cardNumber,
-        //                CardAddress = new CardAddressModel { PostCode = postCode },
-        //                StartDate = startDate,
-        //                ExpiryDate = expiryDate,
-        //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManager.GetClientDetails(Application.Context),
-        //				UserAgent = JudoSDKManager.GetSDKVersion()
-        //            };
-        //
-        //			return null; //JudoSDKManager.JudoClient.Payments.Create(cardPayment);
-        //        }
-        //
-        //        public Task<IResult<ITransactionResult>> TokenPayment(Context context, string judoId, string currency, decimal amount, string paymentReference,
-        //            string consumerToken, string consumerReference, IDictionary<string, string> metaData,
-        //            string cardToken, string cv2)
-        //        {
-        //            TokenPaymentModel payment = new TokenPaymentModel()
-        //            {
-        //                JudoId = judoId,
-        //                Currency = currency,
-        //                Amount = amount,
-        //                YourPaymentReference = paymentReference,
-        //                ConsumerToken = consumerToken,
-        //                YourConsumerReference = consumerReference,
-        //                YourPaymentMetaData = metaData,
-        //                CardToken = cardToken,
-        //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
-        //				UserAgent = JudoSDKManager.GetSDKVersion()
-        //            };
-        //
-        //			return null;// JudoSDKManager.JudoClient.Payments.Create(payment);
-        //        }
-        //
-        //        public Task<IResult<ITransactionResult>> PreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
-        //            string consumerReference, IDictionary<string, string> metaData, string cardNumber,
-        //            string postCode, string startDate, string expiryDate, string cv2)
-        //        {
-        //            var cardPayment = new CardPaymentModel()
-        //            {
-        //                JudoId = judoId,
-        //                Currency = currency,
-        //                Amount = amount,
-        //                YourPaymentReference = paymentReference,
-        //                YourConsumerReference = consumerReference,
-        //                YourPaymentMetaData = metaData,
-        //                CardNumber = cardNumber,
-        //                CardAddress = new CardAddressModel { PostCode = postCode },
-        //                StartDate = startDate,
-        //                ExpiryDate = expiryDate,
-        //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
-        //				UserAgent = JudoSDKManager.GetSDKVersion()
-        //            };
-        //
-        //			return null;// JudoSDKManager.JudoClient.PreAuths.Create(cardPayment);
-        //        }
-        //
-        //        public Task<IResult<ITransactionResult>> TokenPreAuth(Context context, string judoId, string currency, decimal amount, string paymentReference,
-        //            string consumerToken, string consumerReference, IDictionary<string, string> metaData,
-        //            string cardToken, string cv2)
-        //        {
-        //            TokenPaymentModel payment = new TokenPaymentModel()
-        //            {
-        //                JudoId = judoId,
-        //                Currency = currency,
-        //                Amount = amount,
-        //                YourPaymentReference = paymentReference,
-        //                ConsumerToken = consumerToken,
-        //                YourConsumerReference = consumerReference,
-        //                YourPaymentMetaData = metaData,
-        //                CardToken = cardToken,
-        //                CV2 = cv2,
-        //                ClientDetails = JudoSDKManager.GetClientDetails(context),
-        //				UserAgent = JudoSDKManager.GetSDKVersion()
-        //            };
-        //
-        //			return null;//  JudoSDKManager.JudoClient.PreAuths.Create(payment);
-        //        }
-        //
-        //        public Task<IResult<ITransactionResult>> RegisterCard(string cardNumber, string cv2, string expiryDate, string consumerReference, string postCode)
-        //        {
-        //            var registerCard = new RegisterCardModel()
-        //            {
-        //                CardAddress = new CardAddressModel()
-        //                {
-        //                    PostCode = postCode
-        //                },
-        //                CardNumber = cardNumber,
-        //                CV2 = cv2,
-        //                ExpiryDate = expiryDate,
-        //                YourConsumerReference = consumerReference
-        //            };
-        //
-        //			return null;//  JudoSDKManager.JudoClient.RegisterCards.Create(registerCard);
-        //        }
     }
 }

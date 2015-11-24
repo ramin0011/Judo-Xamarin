@@ -33,6 +33,7 @@ namespace JudoDotNetXamarinAndroidSDK
         public static string JUDO_ID = "JudoPay-judoId";
         public static string JUDO_CURRENCY = "JudoPay-currency";
         public static string JUDO_META_DATA = "JudoPay-yourPaymentMetaData";
+        public static string REQUEST_CODE = "requestCode";
 
         public static string JUDO_RECEIPT = "JudoPay-receipt";
 
@@ -131,16 +132,34 @@ namespace JudoDotNetXamarinAndroidSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            var innerModel = payment.Clone ();
-//            if (!UIMode) {
-//                //var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
-//                //failure (error);
-//            } else {
-            //   TestInterface test = new UiService ();
+            var innerModel = payment.Clone ();         
             _judoSdkApi.Payment (innerModel, success, failure, context);
-//                var uiMethod = new UIMethods ();
-//
-//                uiMethod.Payment (innerModel, success, failure);
+
+        }
+
+        public void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
+        {
+            var innerModel = preAuthorisation.Clone ();
+            _judoSdkApi.PreAuth (innerModel, success, failure, context);
+          
+        }
+
+        public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
+        {
+            var innerModel = payment.Clone ();         
+            _judoSdkApi.TokenPayment (innerModel, success, failure, context);
+        }
+
+
+
+        public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
+        {
+            
+        }
+
+        public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
+        {
+            
         }
 
         internal static string DEBUG_TAG = "com.judopay.android";

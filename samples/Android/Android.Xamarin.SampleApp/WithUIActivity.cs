@@ -120,9 +120,6 @@ namespace Android.Xamarin.SampleApp
             AlertDialog.Builder alert = new AlertDialog.Builder (this);
             alert.SetTitle ("Transaction Successful, Receipt ID - " + receipt.ReceiptId);
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
-                //change value write your own set of instructions
-                //you can also create an event for the same in xamarin
-                //instead of writing things here
             });
 
             RunOnUiThread (() => {
@@ -155,87 +152,15 @@ namespace Android.Xamarin.SampleApp
             RunOnUiThread (() => {
                 alert.Show ();
             });
-
-
-//            //////////
-//            DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-//                // move back to home screen
-//                CloseView ();
-//                // show receipt
-//             
-//                if (error != null && error.ApiError != null)
-//                    message += error.ApiError.ErrorMessage + Environment.NewLine;
-//
-//                if (error != null && error.Exception != null)
-//                    message += error.Exception.Message + Environment.NewLine;
-//
-//                if (receipt != null) {
-//                    message += "Transaction : " + receipt.Result + Environment.NewLine;
-//                    message += receipt.Message + Environment.NewLine;
-//                    message += "Receipt ID - " + receipt.ReceiptId;
-//                }
-//
-//                ShowMessage ("Transaction Failed: ", message);
-//                // store token to further use
-//            });
         }
-
-        //        private void SuccessPayment (PaymentReceiptModel receipt)
-        //        {
-        ////			cardToken = receipt.CardDetails.CardToken;
-        ////			consumerToken = receipt.Consumer.ConsumerToken;
-        ////			lastFour = receipt.CardDetails.CardLastfour;
-        ////			cardType = receipt.CardDetails.CardType;
-        ////			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-        ////				// move back to home screen
-        ////				CloseView ();
-        ////
-        ////
-        ////				// show receipt
-        ////				ShowMessage ("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
-        ////
-        ////				// store token to further use
-        ////			});
-        //        }
-        //
-        //        private void FailurePayment (JudoError error, PaymentReceiptModel receipt)
-        //        {
-        ////			DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-        ////				// move back to home screen
-        ////				CloseView ();
-        ////				// show receipt
-        ////				string message = "";
-        ////				if (error != null && error.ApiError != null)
-        ////					message += error.ApiError.ErrorMessage + Environment.NewLine;
-        ////
-        ////				if (error != null && error.Exception != null)
-        ////					message += error.Exception.Message + Environment.NewLine;
-        ////
-        ////				if (receipt != null) {
-        ////					message += "Transaction : " + receipt.Result + Environment.NewLine;
-        ////					message += receipt.Message + Environment.NewLine;
-        ////					message += "Receipt ID - " + receipt.ReceiptId;
-        ////				}
-        ////
-        ////				ShowMessage ("Transaction Failed: ", message);
-        ////				// store token to further use
-        ////			});
-        //        }
 
         private void payCard_Click (object sender, EventArgs e)
         {
             var cardModel = GetCardViewModel ();
 
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            // Dictionary<string, string> metaData = new Dictionary<string, string>{{"test1", "test2"}};
-
             JudoSDKManager.AmExAccepted = true;
             JudoSDKManager.Instance.Payment (cardModel, SuccessPayment, FailurePayment, this);
 
-
-            //var intent = JudoSDKManager.UIMethods.Payment( MY_JUDO_ID, currency, amount, paymentReference, consumerRef, metaData);
-
-            //StartActivityForResult(intent, ACTION_CARD_PAYMENT);
         }
 
         private void payPreAuth_Click (object sender, EventArgs e)
