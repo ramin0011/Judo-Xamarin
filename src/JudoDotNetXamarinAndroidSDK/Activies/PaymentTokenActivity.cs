@@ -10,6 +10,7 @@ using Android.Widget;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -26,6 +27,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         protected Models.SConsumer judoConsumer;
         protected CV2EntryView cv2EntryView;
         private ClientService clientService;
+        IPaymentService _paymentService;
+        ServiceFactory factory;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -73,6 +76,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             payButton.Text = Resources.GetString (Resource.String.token_payment);
             payButton.Click += (sender, args) => TransactClickHandler (MakeTokenPayment);
             clientService = new ClientService ();
+            factory = new ServiceFactory ();
+            _paymentService = factory.GetPaymentService (); 
         }
 
         public override void OnBackPressed ()
@@ -83,22 +88,18 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         public virtual void MakeTokenPayment ()
         {
-            TokenPaymentModel payment = new TokenPaymentModel () {
-                JudoId = judoId,
+            TokenPaymentViewModel payment = new TokenPaymentViewModel () {
                 Currency = judoCurrency,
                 Amount = judoAmount,
-                YourPaymentReference = judoPaymentRef,
                 ConsumerToken = judoConsumer.ConsumerToken,
-                YourConsumerReference = judoConsumer.YourConsumerReference,
-                YourPaymentMetaData = judoMetaData.Metadata,
-                CardToken = judoCardToken.Token,
-                CV2 = cv2EntryView.GetCV2 (),
-                ClientDetails = clientService.GetClientDetails (),
-                UserAgent = clientService.GetSDKVersion ()
+                CardType = judoCardToken.CardType,
+                Token = judoCardToken.Token,
+                CV2 = cv2EntryView.GetCV2 ()
             };
 
             ShowLoadingSpinner (true);
-
+          
+            _paymentService.MakeTokenPayment (payment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
             // JudoSDKManager.JudoClient.Payments.Create(payment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

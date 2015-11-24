@@ -181,9 +181,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 if (receipt != null) {
                     intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new SReceipt (receipt));
                 } 
-                intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (result.Response.Message), new JudoApiErrorModel (){ ErrorMessage = result.Response.Message }));
+                var error = result.Error as JudoApiErrorModel;
+                if (error != null) {
+                    intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (error.ErrorMessage), error));
+                }
+                //intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (result.Response.Message), new JudoApiErrorModel (){ ErrorMessage = result.Response.Message }));
                 SetResult (JudoSDKManager.JUDO_ERROR, intent);
-                Log.Debug ("com.judopay.android", "Failure: " + receipt.Result);
                 Finish ();
 
             }

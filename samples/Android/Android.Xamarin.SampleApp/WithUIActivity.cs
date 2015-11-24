@@ -165,7 +165,7 @@ namespace Android.Xamarin.SampleApp
 
         private void payPreAuth_Click (object sender, EventArgs e)
         {
-            JudoSDKManager.Instance.Payment (GetCardViewModel (), SuccessPayment, FailurePayment, this);
+            JudoSDKManager.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
 
             // Optional: Supply meta data about this transaction, pass as last argument instead of null.
             //  Intent intent = JudoSDKManager.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
@@ -175,26 +175,21 @@ namespace Android.Xamarin.SampleApp
 
         private void payToken_Click (object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace (consumerToken) || string.IsNullOrWhiteSpace (cardToken)
-                || string.IsNullOrWhiteSpace (rcp_consumerRef) || string.IsNullOrWhiteSpace (lastFour)) {
+            if (string.IsNullOrWhiteSpace (cardToken) || string.IsNullOrWhiteSpace (lastFour)) {
                 Toast.MakeText (this,
                     "Can't make a token payment before making a full card payment to save card token",
                     ToastLength.Short).Show ();
                 return;
             }
 
-            var consumerReference = rcp_consumerRef;
-            var token = new SCardToken () {
-                CardLastFour = lastFour,
-                Token = cardToken,
-                ConsumerToken = consumerToken,
-                CardType = cardType
-            };
-
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            // var intent = JudoSDKManager.UIMethods.TokenPayment(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, consumerToken);
-
-            // StartActivityForResult(intent, ACTION_TOKEN_PAYMENT);
+//            var consumerReference = rcp_consumerRef;
+//            var token = new SCardToken () {
+//                CardLastFour = lastFour,
+//                Token = cardToken,
+//                ConsumerToken = consumerToken,
+//                CardType = cardType
+//            };
+            JudoSDKManager.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
         }
 
@@ -378,6 +373,22 @@ namespace Android.Xamarin.SampleApp
                 }
             };
             return cardPayment;
+        }
+
+        TokenPaymentViewModel GetTokenCardViewModel ()
+        {
+            var tokenPayment = new TokenPaymentViewModel () {
+                Amount = 3.5m,
+                ConsumerReference = consumerRef,
+                PaymentReference = paymentReference,
+                Currency = "GBP",
+                CV2 = cv2,
+                Token = cardToken,
+                ConsumerToken = consumerToken,
+                LastFour = lastFour,
+                CardType = cardType
+            };
+            return tokenPayment;
         }
     }
 }

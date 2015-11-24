@@ -127,12 +127,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             if (judoMetaData != null) {
                 cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
             }
-           
-
 
             ShowLoadingSpinner (true);
 
-           
             _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 //                var result = reponse.Result;
 //
