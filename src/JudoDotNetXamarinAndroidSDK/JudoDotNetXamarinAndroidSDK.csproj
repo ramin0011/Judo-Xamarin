@@ -93,7 +93,6 @@
     <Compile Include="Utils\Typefaces.cs" />
     <Compile Include="Utils\UiUtils.cs" />
     <Compile Include="Utils\ValidationHelper.cs" />
-    <Compile Include="JudoSDKManagerA.cs" />
     <Compile Include="Services\ClientService.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
     <Compile Include="JudoSDKManager.cs" />

@@ -98,27 +98,12 @@ namespace JudoDotNetXamarinAndroidSDK
 //            RiskSignals = true;
         }
 
+       
 
-        //		internal static JObject GetClientDetails()
-        //		{
-        //			if(RiskSignals)
-        //				return JObject.FromObject(ClientService.GetClientDetails());
-        //
-        //			return null;
-        //		}
+        //private static Lazy<JudoAndroidSDKAPI> _judoSdkApi;
+        private static JudoAndroidSDKAPI _judoSdkApi;
 
-        //		public static string GetSDKVersion ()
-        //		{
-        //			System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-        //			FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-        //			string version = fvi.FileVersion;
-        //
-        //			return "Xamarin-Android-" + version;
-        //		}
-
-        private static Lazy<JudoAndroidSDKAPI> _judoSdkApi;
-        //		private static readonly ServiceFactory ServiceFactory = new ServiceFactory ();
-        //		private static readonly IPaymentService PaymentService = ServiceFactory.GetPaymentService ();
+       
 
 
         private static bool _uiMode { get; set; }
@@ -131,9 +116,11 @@ namespace JudoDotNetXamarinAndroidSDK
             get { return _uiMode; }
             set {
                 if (value) {
-                    _judoSdkApi = new Lazy<JudoAndroidSDKAPI> (() => new UIMethods ());
+                    _judoSdkApi = new UIMethods ();
+
                 } else {
-                    _judoSdkApi = new Lazy<JudoAndroidSDKAPI> (() => new NonUIMethods ());
+                    _judoSdkApi = new NonUIMethods ();
+
 
                   
                 }
@@ -150,7 +137,7 @@ namespace JudoDotNetXamarinAndroidSDK
 //                //failure (error);
 //            } else {
             //   TestInterface test = new UiService ();
-            _judoSdkApi.Value.Payment (innerModel, success, failure, context);
+            _judoSdkApi.Payment (innerModel, success, failure, context);
 //                var uiMethod = new UIMethods ();
 //
 //                uiMethod.Payment (innerModel, success, failure);

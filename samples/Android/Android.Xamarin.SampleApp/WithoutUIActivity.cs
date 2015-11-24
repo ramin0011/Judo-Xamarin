@@ -165,7 +165,7 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             if (string.IsNullOrWhiteSpace (consumerToken) || string.IsNullOrWhiteSpace (cardToken)
-            || string.IsNullOrWhiteSpace (rcp_consumerRef) || string.IsNullOrWhiteSpace (lastFour)) {
+                || string.IsNullOrWhiteSpace (rcp_consumerRef) || string.IsNullOrWhiteSpace (lastFour)) {
                 Toast.MakeText (this,
                     "Can't make a token payment before making a full card payment to save card token",
                     ToastLength.Short).Show ();
@@ -196,7 +196,7 @@ namespace Android.Xamarin.SampleApp
             MsgText.Text = "";
 
             if (string.IsNullOrWhiteSpace (preAuth_consumerToken) || string.IsNullOrWhiteSpace (preAuth_cardToken)
-            || string.IsNullOrWhiteSpace (preAuth_rcp_consumerRef) || string.IsNullOrWhiteSpace (preAuth_lastFour)) {
+                || string.IsNullOrWhiteSpace (preAuth_rcp_consumerRef) || string.IsNullOrWhiteSpace (preAuth_lastFour)) {
                 Toast.MakeText (this,
                     "Can't make a Preauth token payment before making a full preauth card payment to save card token",
                     ToastLength.Short).Show ();
@@ -233,7 +233,7 @@ namespace Android.Xamarin.SampleApp
             if (resultCode == Result.Canceled) {
                 ResponseText = "Payment Canceled.";
                 return;
-            } else if (resultCode == JudoSDKManagerA.JUDO_ERROR) {
+            } else if (resultCode == JudoSDKManager.JUDO_ERROR) {
                 ResponseText = string.Format ("Error: {0}", data.Error.ErrorMessage);
                 return;
             }
