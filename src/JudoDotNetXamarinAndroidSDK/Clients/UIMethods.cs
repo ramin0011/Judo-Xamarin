@@ -194,16 +194,16 @@ namespace JudoDotNetXamarinAndroidSDK
                     if (receipt != null) {
                         paymentReceipt = receipt.FullReceipt as PaymentReceiptModel;
                     }
-                  
-                    _judoFailureCallback.Value (new JudoError () {
+                    var innerError = new JudoError () {
                         Exception = error.Exception,
                         ApiError = error.ApiError
-                    },
-                        paymentReceipt);
+                    };
+                    _judoFailureCallback.Value (innerError, paymentReceipt);
          
                     Finish ();
+                } else {
+                    HandleRequestCode (requestCode, resultCode, receipt);
                 }
-                HandleRequestCode (requestCode, resultCode, receipt);
 //                       
 //                        if (receipt != null) {
 //                            Toast.MakeText (this, string.Format ("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show ();

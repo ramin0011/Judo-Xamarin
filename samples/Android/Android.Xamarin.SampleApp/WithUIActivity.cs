@@ -8,6 +8,7 @@ using JudoPayDotNet.Models;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK;
 using Android.Content;
+using JudoPayDotNet.Errors;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -132,20 +133,23 @@ namespace Android.Xamarin.SampleApp
             //set alert for executing the task
             AlertDialog.Builder alert = new AlertDialog.Builder (this);
 
-         
-            var message = "Error";
+            string title = "Error";
+            string message = "";
             if (error != null && error.ApiError != null)
-                message += error.ApiError.ErrorMessage + System.Environment.NewLine;
+                title = (error.ApiError.ErrorMessage);
 
             if (error != null && error.Exception != null)
-                message += error.Exception.Message + System.Environment.NewLine;
+                foreach (JudoModelError model in error.ApiError.ModelErrors) {
+                    message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                }
 
             if (receipt != null) {
                 message += "Transaction : " + receipt.Result + System.Environment.NewLine;
                 message += receipt.Message + System.Environment.NewLine;
                 message += "Receipt ID - " + receipt.ReceiptId;
             }
-            alert.SetTitle (message);
+            alert.SetTitle (title);
+            alert.SetMessage (message);
             alert.SetPositiveButton ("OK", (senderAlert, args) => {
             });
                 
