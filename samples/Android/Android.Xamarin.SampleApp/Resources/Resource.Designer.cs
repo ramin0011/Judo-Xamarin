@@ -769,9 +769,6 @@ namespace Android.Xamarin.SampleApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c0022
-			public const int MsgText = 2131492898;
-			
 			// aapt resource value: 0x7f0c000f
 			public const int addressLine1 = 2131492879;
 			
@@ -805,9 +802,6 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c001a
 			public const int cv2EntryView = 2131492890;
 			
-			// aapt resource value: 0x7f0c0021
-			public const int getTransactions = 2131492897;
-			
 			// aapt resource value: 0x7f0c0007
 			public const int hintTextView = 2131492871;
 			
@@ -826,23 +820,20 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c000e
 			public const int loadingLayout = 2131492878;
 			
-			// aapt resource value: 0x7f0c0023
-			public const int nonUiExamples = 2131492899;
-			
 			// aapt resource value: 0x7f0c000c
 			public const int payButton = 2131492876;
 			
 			// aapt resource value: 0x7f0c001b
 			public const int payCard = 2131492891;
 			
-			// aapt resource value: 0x7f0c001e
-			public const int payPreAuth = 2131492894;
-			
 			// aapt resource value: 0x7f0c001d
-			public const int payToken = 2131492893;
+			public const int payPreAuth = 2131492893;
 			
-			// aapt resource value: 0x7f0c001f
-			public const int payTokenPreAuth = 2131492895;
+			// aapt resource value: 0x7f0c001c
+			public const int payToken = 2131492892;
+			
+			// aapt resource value: 0x7f0c001e
+			public const int payTokenPreAuth = 2131492894;
 			
 			// aapt resource value: 0x7f0c0002
 			public const int postCodeContainer = 2131492866;
@@ -859,11 +850,11 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0001
 			public const int postCode_Msg = 2131492865;
 			
-			// aapt resource value: 0x7f0c0020
-			public const int registerCard = 2131492896;
+			// aapt resource value: 0x7f0c001f
+			public const int registerCard = 2131492895;
 			
-			// aapt resource value: 0x7f0c0025
-			public const int sdk_version_label = 2131492901;
+			// aapt resource value: 0x7f0c0021
+			public const int sdk_version_label = 2131492897;
 			
 			// aapt resource value: 0x7f0c0014
 			public const int startDateContainer = 2131492884;
@@ -877,11 +868,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0015
 			public const int startDateTitleText = 2131492885;
 			
-			// aapt resource value: 0x7f0c0024
-			public const int switch1 = 2131492900;
-			
-			// aapt resource value: 0x7f0c001c
-			public const int threeDsecure = 2131492892;
+			// aapt resource value: 0x7f0c0020
+			public const int switch1 = 2131492896;
 			
 			static Id()
 			{
@@ -937,10 +925,7 @@ namespace Android.Xamarin.SampleApp
 			public const int token_payment = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int withoutui = 2130903048;
-			
-			// aapt resource value: 0x7f030009
-			public const int withui = 2130903049;
+			public const int withui = 2130903048;
 			
 			static Layout()
 			{

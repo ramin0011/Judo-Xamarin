@@ -85,7 +85,6 @@ namespace Android.Xamarin.SampleApp
             Button payPreAuth = FindViewById<Button> (Resource.Id.payPreAuth);
             Button payTokenPreAuth = FindViewById<Button> (Resource.Id.payTokenPreAuth);
             Button registerCard = FindViewById<Button> (Resource.Id.registerCard);
-            Button nonUiExamples = FindViewById<Button> (Resource.Id.nonUiExamples);
 
             // Assigning click delegates
             payCard.Click += new EventHandler (payCard_Click);
@@ -93,7 +92,6 @@ namespace Android.Xamarin.SampleApp
             payPreAuth.Click += new EventHandler (payPreAuth_Click);
             payTokenPreAuth.Click += new EventHandler (payTokenPreAuth_Click);
             registerCard.Click += new EventHandler (registerCard_Click);
-            nonUiExamples.Click += new EventHandler (nonUiExamples_Click);
 
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
 
@@ -201,11 +199,6 @@ namespace Android.Xamarin.SampleApp
         private void registerCard_Click (object sender, EventArgs e)
         {
             JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), SuccessPayment, FailurePayment, this);
-        }
-
-        private void nonUiExamples_Click (object sender, EventArgs e)
-        {
-            StartActivity (typeof(WithoutUIActivity));
         }
 
         private void UpdateCount ()

@@ -38,23 +38,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+        <Switch
+            android:text="UI Mode"
+            android:id="@+id/switch1"
+            android:textOn="UI on"
+            android:textOff="UI off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="0.0dp"
+            android:paddingRight="250dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
-            <Button
-                android:id="@+id/nonUiExamples"
-                style="@style/judo_payments_Button.Secondary"
-                android:text="Non UI Examples"
-                android:layout_width="200dp" />
-            <Switch
-                android:text="UI Mode"
-                android:layout_width="155.0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/switch1"
-                android:textOn="UI on"
-                android:textOff="UI off" />
             <TextView
                 android:id="@+id/sdk_version_label"
                 android:layout_width="0dp"
