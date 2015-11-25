@@ -136,7 +136,7 @@ namespace Android.Xamarin.SampleApp
             if (error != null && error.ApiError != null)
                 title = (error.ApiError.ErrorMessage);
 
-            if (error != null && error.Exception != null)
+            if (error != null && error.ApiError != null)
                 foreach (JudoModelError model in error.ApiError.ModelErrors) {
                     message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
                 }
@@ -168,11 +168,6 @@ namespace Android.Xamarin.SampleApp
         private void payPreAuth_Click (object sender, EventArgs e)
         {
             JudoSDKManager.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
-
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            //  Intent intent = JudoSDKManager.UIMethods.PreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerRef, null);
-
-            //  StartActivityForResult(intent, ACTION_PREAUTH);
         }
 
         private void payToken_Click (object sender, EventArgs e)
@@ -205,9 +200,7 @@ namespace Android.Xamarin.SampleApp
 
         private void registerCard_Click (object sender, EventArgs e)
         {
-            // var intent = JudoSDKManager.UIMethods.RegisterCard(this, consumerRef);
-
-            //   StartActivityForResult(intent, ACTION_REGISTER_CARD);
+            JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), SuccessPayment, FailurePayment, this);
         }
 
         private void nonUiExamples_Click (object sender, EventArgs e)

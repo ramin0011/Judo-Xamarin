@@ -160,7 +160,8 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            
+            var innerModel = registerCard.Clone ();         
+            _judoSdkApi.RegisterCard (innerModel, success, failure, context); 
         }
 
         internal static string DEBUG_TAG = "com.judopay.android";

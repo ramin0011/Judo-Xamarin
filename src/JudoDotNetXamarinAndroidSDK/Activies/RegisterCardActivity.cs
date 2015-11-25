@@ -12,6 +12,7 @@ using Java.Lang;
 using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -31,11 +32,20 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         private HelpButton cv2ExpiryHelpInfoButton;
 
+        private ClientService clientService;
+        IPaymentService _paymentService;
+        ServiceFactory factory;
+
+
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
             SetContentView (Resource.Layout.register_card);
             SetTitle (Resource.String.title_register_card);
+
+            clientService = new ClientService ();
+            factory = new ServiceFactory ();
+            _paymentService = factory.GetPaymentService (); 
 
             cardEntryView = FindViewById<CardEntryView> (Resource.Id.cardEntryView);
             TextView hintTextView = FindViewById<TextView> (Resource.Id.hintTextView);
@@ -110,23 +120,65 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         public void RegisterCard ()
         {
-            var registerCard = new RegisterCardModel () {
-                CardAddress = new CardAddressModel () {
-                    Line1 = addressLine1.Text,
-                    Line2 = addressLine2.Text,
-                    Line3 = addressLine3.Text,
-                    Town = addressTown.Text,
-                    PostCode = addressPostCode.Text
-                },
-                CardNumber = cardEntryView.GetCardNumber (),
-                CV2 = cardEntryView.GetCardCV2 (),
-                ExpiryDate = cardEntryView.GetCardExpiry (),
-                YourConsumerReference = judoConsumer.YourConsumerReference
-            };
-            
+//            var registerCard = new RegisterCardModel () {
+//                CardAddress = new CardAddressModel () {
+//                    Line1 = addressLine1.Text,
+//                    Line2 = addressLine2.Text,
+//                    Line3 = addressLine3.Text,
+//                    Town = addressTown.Text,
+//                    PostCode = addressPostCode.Text
+//                },
+//                CardNumber = cardEntryView.GetCardNumber (),
+//                CV2 = cardEntryView.GetCardCV2 (),
+//                ExpiryDate = cardEntryView.GetCardExpiry (),
+//                YourConsumerReference = judoConsumer.YourConsumerReference
+//            };
+//            
+//            ShowLoadingSpinner (true);
+
             ShowLoadingSpinner (true);
+            PaymentViewModel cardPayment = new PaymentViewModel ();
+            cardPayment.Card = GatherCardDetails ();
+ 
+            cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
+
+
+            _paymentService.RegisterCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 
             // JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        CardViewModel GatherCardDetails ()
+        {
+            var cardNumber = cardEntryView.GetCardNumber ();
+            var expiryDate = cardEntryView.GetCardExpiry ();
+            var cv2 = cardEntryView.GetCardCV2 ();
+            BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
+            CardAddressModel cardAddress = new CardAddressModel ();
+  
+            if (JudoSDKManager.MaestroAccepted) {
+                cardAddress.PostCode = addressPostCode.Text;
+            }
+
+            string startDate = null;
+            string issueNumber = null;
+
+            if (JudoSDKManager.MaestroAccepted) {
+                issueNumber = startDateEntryView.GetIssueNumber ();
+                startDate = startDateEntryView.GetStartDate ();
+            }
+
+            var cardPayment = new CardViewModel () {
+                CardNumber = cardNumber,
+                CountryCode = country.GetISOCode (),
+                CV2 = cv2,
+                ExpireDate = expiryDate,
+                IssueNumber = issueNumber,
+                StartDate = startDate,
+                PostCode = cardAddress.PostCode,
+            };
+
+            return cardPayment;
         }
 
         protected override void ShowLoadingSpinner (bool show)
