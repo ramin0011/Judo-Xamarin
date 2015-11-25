@@ -94,7 +94,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 ConsumerToken = judoConsumer.ConsumerToken,
                 CardType = judoCardToken.CardType,
                 Token = judoCardToken.Token,
+                ConsumerReference = judoConsumer.YourConsumerReference,
+                PaymentReference = judoPaymentRef,
                 CV2 = cv2EntryView.GetCV2 ()
+
             };
 
             ShowLoadingSpinner (true);

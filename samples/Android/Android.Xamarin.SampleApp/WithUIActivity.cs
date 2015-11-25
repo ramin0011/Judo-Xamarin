@@ -24,8 +24,6 @@ namespace Android.Xamarin.SampleApp
         //Received when registering an account with Judo
         private string currency = "GBP";
         private string amount = "1.99";
-        //        private string paymentReference = "payment101010102";
-        //        private string consumerRef      = "consumer1010102";
 
         private string paymentReference = "payment101010102";
         private string consumerRef = "consumer1010102";

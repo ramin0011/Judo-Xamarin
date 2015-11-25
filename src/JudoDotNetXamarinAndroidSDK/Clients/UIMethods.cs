@@ -186,7 +186,7 @@ namespace JudoDotNetXamarinAndroidSDK
              
 
                 if (resultCode == Result.Canceled) {
-                    _judoFailureCallback.Value (new JudoError (){ Exception = new Exception ("Action was cancelled") });
+                    //_judoFailureCallback.Value (new JudoError (){ Exception = new Exception ("Action was cancelled") });
                     Finish ();
                 } else if (resultCode == JudoSDKManager.JUDO_ERROR) {
                     var error = data.GetParcelableExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION) as SJudoError;
@@ -210,6 +210,7 @@ namespace JudoDotNetXamarinAndroidSDK
 //                        }
 //
             }
+            Finish ();
         }
 
        
