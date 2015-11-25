@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Diagnostics;
 using JudoDotNetXamarinAndroidSDK;
 using JudoDotNetXamarin;
-using JudoDotNetXamarinAndroidSDK.Clients;
 using Android.App;
 using Android.Content;
 using JudoDotNetXamarinAndroidSDK.Models;

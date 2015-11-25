@@ -66,10 +66,6 @@
     <Compile Include="Activies\RegisterCardActivity.cs" />
     <Compile Include="Clients\NonUIMethods.cs" />
     <Compile Include="Clients\UIMethods.cs" />
-    <Compile Include="Configurations\Configuration.cs" />
-    <Compile Include="Configurations\IConfiguration.cs" />
-    <Compile Include="Clients\INonUIMethods.cs" />
-    <Compile Include="Clients\IUIMethods.cs" />
     <Compile Include="Models\MetaData.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,7 +82,6 @@
     <Compile Include="Ui\NoCursorMovingEditText.cs" />
     <Compile Include="Ui\StartDateEditText.cs" />
     <Compile Include="Ui\StartDateIssueNumberEntryView.cs" />
-    <Compile Include="Utils\ClientDetailsProvider.cs" />
     <Compile Include="Utils\CompatibilityAnimation.cs" />
     <Compile Include="Utils\DeviceUuidFactory.cs" />
     <Compile Include="Utils\RootCheck.cs" />

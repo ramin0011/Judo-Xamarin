@@ -8,7 +8,7 @@ using System;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
-    internal class NonUIMethods : JudoAndroidSDKAPI //INonUIMethods
+    internal class NonUIMethods : JudoAndroidSDKAPI
     {
      
         IPaymentService _paymentService;
