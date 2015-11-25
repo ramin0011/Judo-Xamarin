@@ -112,7 +112,25 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void TokenPreAuth (JudoDotNetXamarin.TokenPaymentViewModel payment, JudoDotNetXamarin.JudoSuccessCallback success, JudoDotNetXamarin.JudoFailureCallback failure, Activity context)
         {
-            throw new System.NotImplementedException ();
+            Intent i = new Intent (context, typeof(UIMethods));
+            i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_TOKEN_PREAUTH.ToString ());
+
+            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
+            i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference, payment.ConsumerToken));   
+            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
+            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
+            i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, payment.Token);
+            i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, new SCardToken () {
+                CardLastFour = payment.LastFour,
+                CardType = payment.CardType,
+                Token = payment.Token,
+                ConsumerToken = payment.ConsumerToken
+            });   
+            _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
+            _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
+
+            context.StartActivityForResult (i, ACTION_TOKEN_PREAUTH);
         }
 
 
@@ -176,14 +194,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
             if (data != null) {
                 
-//                
-//                if(error==null)
-//                {
-//                    
-//                }
                 receipt = data.GetParcelableExtra (JudoSDKManager.JUDO_RECEIPT) as SReceipt;
-              
-             
 
                 if (resultCode == Result.Canceled) {
                     //_judoFailureCallback.Value (new JudoError (){ Exception = new Exception ("Action was cancelled") });
@@ -204,11 +215,6 @@ namespace JudoDotNetXamarinAndroidSDK
                 } else {
                     HandleRequestCode (requestCode, resultCode, receipt);
                 }
-//                       
-//                        if (receipt != null) {
-//                            Toast.MakeText (this, string.Format ("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show ();
-//                        }
-//
             }
             Finish ();
         }

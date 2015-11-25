@@ -154,7 +154,8 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
-            
+            var innerModel = payment.Clone ();         
+            _judoSdkApi.TokenPreAuth (innerModel, success, failure, context);
         }
 
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)

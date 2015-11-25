@@ -183,40 +183,24 @@ namespace Android.Xamarin.SampleApp
                     ToastLength.Short).Show ();
                 return;
             }
-
-//            var consumerReference = rcp_consumerRef;
-//            var token = new SCardToken () {
-//                CardLastFour = lastFour,
-//                Token = cardToken,
-//                ConsumerToken = consumerToken,
-//                CardType = cardType
-//            };
+                
             JudoSDKManager.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
         }
 
         private void payTokenPreAuth_Click (object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace (preAuth_consumerToken) || string.IsNullOrWhiteSpace (preAuth_cardToken)
-                || string.IsNullOrWhiteSpace (preAuth_rcp_consumerRef) || string.IsNullOrWhiteSpace (preAuth_lastFour)) {
+
+            if (string.IsNullOrWhiteSpace (cardToken) || string.IsNullOrWhiteSpace (lastFour)) {
                 Toast.MakeText (this,
                     "Can't make a Preauth token payment before making a full preauth card payment to save card token",
                     ToastLength.Short).Show ();
                 return;
             }
 
-            var consumerReference = preAuth_rcp_consumerRef;
-            var token = new SCardToken () {
-                CardLastFour = preAuth_lastFour,
-                Token = preAuth_cardToken,
-                ConsumerToken = preAuth_consumerToken,
-                CardType = preAuth_cardType
-            };
+            JudoSDKManager.Instance.TokenPreAuth (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
-            // Optional: Supply meta data about this transaction, pass as last argument instead of null.
-            //  var intent = JudoSDKManager.UIMethods.TokenPreAuth(this, MY_JUDO_ID, currency, amount, paymentReference, consumerReference, token, null, preAuth_consumerToken);
-
-            //  StartActivityForResult(intent, ACTION_TOKEN_PREAUTH);
+         
         }
 
         private void registerCard_Click (object sender, EventArgs e)
