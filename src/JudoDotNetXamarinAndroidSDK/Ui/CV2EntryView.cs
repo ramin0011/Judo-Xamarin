@@ -23,6 +23,9 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public event Action<string> OnCreditCardEntered;
         public event Action<string, string> OnExpiryAndCV2Entered;
+        public event Action CV2Deleted;
+
+        private bool Complete;
 
         public EditText GetCV2EditText ()
         {
@@ -89,6 +92,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             cv2TextView.LayoutParameters = parameters;
 
             cv2TextView.OnEntryComplete += cardNumber => {
+                Complete = true;
                 if (OnCreditCardEntered != null) {
                     OnCreditCardEntered (cardNumber);
                 }

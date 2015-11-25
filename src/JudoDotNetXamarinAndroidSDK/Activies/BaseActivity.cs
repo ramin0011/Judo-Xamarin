@@ -173,7 +173,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 }
 
             } else {
-                // Failure callback
 
                 Intent intent = new Intent ();
                 var receipt = result.Response;
@@ -185,46 +184,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 if (error != null) {
                     intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (error.ErrorMessage), error));
                 }
-                //intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (result.Response.Message), new JudoApiErrorModel (){ ErrorMessage = result.Response.Message }));
+            
                 SetResult (JudoSDKManager.JUDO_ERROR, intent);
                 Finish ();
 
             }
 
 
-//
-//            try {
-//                ShowLoadingSpinner (false);
-//
-//                    if (result.IsFaulted || result.Result == null || result.Result.HasError) {
-//                        var errorMessage = !result.IsFaulted && result.Result != null
-//                            ? result.Result.Error.ErrorMessage
-//                            : result.Exception.ToString ();
-//                    Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
-//                    SetResult (JudoSDKManager.JUDO_ERROR,
-//                            JudoSDKManager.CreateErrorIntent (errorMessage, result.Exception,
-//                                !result.IsFaulted && result.Result != null ? result.Result.Error : null));
-//                    Finish ();
-//                    return;
-//                }
-//
-//                    var receipt = result.Result.Response;
-//
-//                Intent intent = new Intent ();
-//                intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new Receipt (receipt));
-//                SetResult (JudoSDKManager.JUDO_SUCCESS, intent);
-//                Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
-//                Finish ();
-//            }
-//            //Prevent being locked in a payment screen without being notified of an error
-//            catch (Exception e) {
-//                var errorMessage = e.ToString ();
-//                Log.Error ("com.judopay.android", "ERROR: " + errorMessage);
-//                SetResult (JudoSDKManager.JUDO_ERROR,
-//                JudoSDKManager.CreateErrorIntent (errorMessage, e, null));
-//                Finish ();
-//                return;
-//            }
         }
     }
 }

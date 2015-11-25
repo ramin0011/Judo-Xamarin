@@ -77,8 +77,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             payButton.Text = Resources.GetString (Resource.String.payment);
 
             payButton.Click += (sender, args) => TransactClickHandler (MakeCardPayment);
+            payButton.Enabled = false;
 
             cardEntryView.OnCreditCardEntered += cardNumber => {
+               
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Visible;
             };
 
@@ -100,11 +102,18 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 if (JudoSDKManager.AVSEnabled && avsEntryView != null) {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
+                payButton.Enabled = true;
             };
 
             cardEntryView.OnReturnToCreditCardNumberEntry += () => {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
             };
+
+            cardEntryView.NoLongerComplete += () => {
+                payButton.Enabled = false;
+            };
+
+         
 
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 

@@ -34,6 +34,23 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         public event Action<string> OnCreditCardEntered;
         public event Action<string, string> OnExpireAndCV2Entered;
         public event Action OnReturnToCreditCardNumberEntry;
+        public event Action NoLongerComplete;
+
+        int NeededCVTwoLength;
+
+        public bool CVTwoComplete;
+
+        private bool _complete;
+
+        bool Complete {
+            get{ return _complete; }
+            set { 
+                if (value == false) {
+                    NoLongerComplete ();
+                }
+                _complete = value;
+            }
+        }
 
         public CardEntryView (Context context) : base (context)
         {
@@ -88,6 +105,12 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 }
                 SetStage (Stage.STAGE_CC_EXP);
             };
+            cardExpiryCv2TextView.OnProgress += position => {
+                if (position < (NeededCVTwoLength + 6)) {
+                    if (Complete)
+                        Complete = false;
+                }
+            };
 
             cardNumberTextView.OnProgress += position => {
                 if (position == 0) {
@@ -110,6 +133,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                     }
 
                     currentCard = currentCardType;
+                    NeededCVTwoLength = (currentCard != CardType.AMEX ? 3 : 4);
                 }
                 lastPos = position;
             };
@@ -123,11 +147,14 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
                 var expiry = temp [0];
                 var cv2 = temp [1];
+                Complete = true;
 
                 if (OnExpireAndCV2Entered != null) {
                     OnExpireAndCV2Entered (expiry, cv2);
                 }
             };
+
+    
 
             cardExpiryCv2TextView.OnProgress += position => {
                 cardExpiryCv2TextView.ValidatePartialInput ();
@@ -237,6 +264,8 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 if (HintTextView != null) {
                     HintTextView.SetText (Resource.String.enter_card_no);
                 }
+                if (Complete)
+                    Complete = false;
                 if (OnReturnToCreditCardNumberEntry != null) {
                     OnReturnToCreditCardNumberEntry ();
                 }

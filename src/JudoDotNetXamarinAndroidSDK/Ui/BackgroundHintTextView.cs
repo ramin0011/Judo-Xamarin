@@ -316,7 +316,10 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         public virtual void SetInputFilter (string filter)
         {
             filterString = " " + filter;
-            textTextView.SetFilters (new IInputFilter[]{ new InputFilterLengthFilter (hintText.Length), new Filter (this) });
+            textTextView.SetFilters (new IInputFilter[] {
+                new InputFilterLengthFilter (hintText.Length),
+                new Filter (this)
+            });
 
             skipCharsAtPositions.Clear ();
             for (int i = 0; i < hintText.Length; ++i) {

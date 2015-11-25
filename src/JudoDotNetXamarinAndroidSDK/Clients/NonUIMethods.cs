@@ -5,10 +5,12 @@ using Android.Content;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using System;
+using Android.Views.InputMethods;
+using Android.Views;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
-    internal class NonUIMethods : JudoAndroidSDKAPI
+    internal class NonUIMethods : Activity, JudoAndroidSDKAPI
     {
      
         IPaymentService _paymentService;
@@ -22,6 +24,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            
             try {
                 _paymentService.MakePayment (payment, new ClientService ()).ContinueWith (reponse => HandleResponse (success, failure, reponse));
             } catch (Exception ex) {
@@ -80,7 +83,7 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-        private static void HandleResponse (JudoSuccessCallback success, JudoFailureCallback failure, Task<IResult<ITransactionResult>> reponse)
+        private void HandleResponse (JudoSuccessCallback success, JudoFailureCallback failure, Task<IResult<ITransactionResult>> reponse)
         {
             var result = reponse.Result;
             if (result != null && !result.HasError && result.Response.Result != "Declined") {
@@ -119,5 +122,9 @@ namespace JudoDotNetXamarinAndroidSDK
                 }
             }
         }
+
+
+
+
     }
 }

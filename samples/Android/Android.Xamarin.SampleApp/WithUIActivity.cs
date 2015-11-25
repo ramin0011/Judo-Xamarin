@@ -9,6 +9,8 @@ using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK;
 using Android.Content;
 using JudoPayDotNet.Errors;
+using Android.Views.InputMethods;
+using Android.Views;
 
 namespace Android.Xamarin.SampleApp
 {
@@ -205,128 +207,8 @@ namespace Android.Xamarin.SampleApp
         {
         }
 
-        protected override void OnActivityResult (int requestCode, Android.App.Result resultCode, Intent data)
-        {
-            
-        }
+      
 
-        //        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        //        {
-        //            Receipt receipt = null;
-        //            string msg_prefix = "";
-        //
-        //            if (resultCode == Result.Canceled)
-        //            {
-        //                Toast.MakeText(this, "Payment Canceled.", ToastLength.Long).Show();
-        //                return;
-        //            }
-        //            else if (resultCode == JudoSDKManager.JUDO_ERROR)
-        //            {
-        //                Error err =  data.GetParcelableExtra(JudoSDKManager.JUDO_ERROR_EXCEPTION) as Error;
-        //
-        //                Toast.MakeText(this, string.Format("Error: {0} {1}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE),
-        //                    err != null && err.Exception != null ? "\r\nException: " + err.Exception.Message : ""), ToastLength.Long).Show();
-        //                return;
-        //            }
-        //
-        //            if(data != null)
-        //                receipt = data.GetParcelableExtra(JudoSDKManager.JUDO_RECEIPT) as Receipt;
-        //
-        //            if (receipt == null)
-        //            {
-        //                Toast.MakeText(this, string.Format("Error: {0}", data.GetStringExtra(JudoSDKManager.JUDO_ERROR_MESSAGE)), ToastLength.Long).Show();
-        //                return;
-        //            }
-        //
-        //            switch (requestCode)
-        //            {
-        //                case ACTION_CARD_PAYMENT:
-        //                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-        //                    {
-        //                        PaymentReceiptModel paymentReceipt;
-        //                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-        //                        {
-        //                            cardToken = paymentReceipt.CardDetails.CardToken;
-        //                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
-        //                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-        //                            lastFour = paymentReceipt.CardDetails.CardLastfour;
-        //                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
-        //                        }
-        //                        msg_prefix = "Payment succeeded";
-        //                    }
-        //                    else
-        //                    {
-        //                        msg_prefix = "Payment failed";
-        //                    }
-        //                    break;
-        //                case ACTION_PREAUTH:
-        //                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-        //                    {
-        //                        PaymentReceiptModel paymentReceipt;
-        //                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-        //                        {
-        //                            preAuth_cardToken = paymentReceipt.CardDetails.CardToken;
-        //                            preAuth_consumerToken = paymentReceipt.Consumer.ConsumerToken;
-        //                            preAuth_rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-        //                            preAuth_lastFour = paymentReceipt.CardDetails.CardLastfour;
-        //                            preAuth_cardType = (CardType)paymentReceipt.CardDetails.CardType;
-        //                        }
-        //
-        //                        msg_prefix = "PreAuth card payment succeeded";
-        //                    }
-        //                    else
-        //                    {
-        //                        msg_prefix = "PreAuth card payment failed";
-        //                    }
-        //                    break;
-        //                case ACTION_TOKEN_PAYMENT:
-        //                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-        //                    {
-        //                        msg_prefix = "Token payment succeeded";
-        //                    }
-        //                    else
-        //                    {
-        //                        msg_prefix = "Token payment failed";
-        //                    }
-        //                    break;
-        //                case ACTION_TOKEN_PREAUTH:
-        //                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-        //                    {
-        //                        msg_prefix = "PreAuth Token payment succeeded";
-        //                    }
-        //                    else
-        //                    {
-        //                        msg_prefix = "PreAuth Token payment failed";
-        //                    }
-        //                    break;
-        //                case ACTION_REGISTER_CARD:
-        //                    if (resultCode == Result.Ok && receipt.Result != "Declined")
-        //                    {
-        //                        PaymentReceiptModel paymentReceipt;
-        //                        if ((paymentReceipt = receipt.FullReceipt as PaymentReceiptModel) != null)
-        //                        {
-        //                            cardToken = paymentReceipt.CardDetails.CardToken;
-        //                            consumerToken = paymentReceipt.Consumer.ConsumerToken;
-        //                            rcp_consumerRef = paymentReceipt.Consumer.YourConsumerReference;
-        //                            lastFour = paymentReceipt.CardDetails.CardLastfour;
-        //                            cardType = (CardType)paymentReceipt.CardDetails.CardType;
-        //                        }
-        //
-        //                        msg_prefix = "Register card succeeded";
-        //                    }
-        //                    else
-        //                    {
-        //                        msg_prefix = "Register card failed";
-        //                    }
-        //                    break;
-        //            }
-        //
-        //            if (receipt != null)
-        //            {
-        //                Toast.MakeText(this, string.Format("{0}: id: {1},\r\nMessage: {2},\r\nresult: {3}", msg_prefix, receipt.ReceiptId, receipt.Message, receipt.Result), ToastLength.Long).Show();
-        //            }
-        //
-        //        }
 
         private PaymentViewModel GetCardViewModel ()
         {
@@ -362,6 +244,7 @@ namespace Android.Xamarin.SampleApp
             };
             return tokenPayment;
         }
+     
     }
 }
 
