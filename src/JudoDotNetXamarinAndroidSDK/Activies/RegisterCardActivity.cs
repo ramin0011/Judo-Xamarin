@@ -163,7 +163,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
             CardAddressModel cardAddress = new CardAddressModel ();
   
-            if (JudoSDKManager.MaestroAccepted) {
+            if (JudoSDKManager.AVSEnabled) {
                 cardAddress.PostCode = addressPostCode.Text;
             }
 
