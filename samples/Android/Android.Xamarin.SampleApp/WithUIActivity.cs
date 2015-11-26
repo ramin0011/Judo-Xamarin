@@ -63,10 +63,13 @@ namespace Android.Xamarin.SampleApp
             // setting up API token/secret 
             var configInstance = JudoConfiguration.Instance;
 
+
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             JudoSDKManager.UIMode = true;
-
+            JudoSDKManager.AmExAccepted = true;
+            JudoSDKManager.AVSEnabled = true;
+            JudoSDKManager.MaestroAccepted = true;
             /*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal

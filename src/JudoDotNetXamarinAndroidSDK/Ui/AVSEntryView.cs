@@ -9,6 +9,7 @@ using Orientation = Android.Widget.Orientation;
 using System;
 using System.Collections.Generic;
 using JudoDotNetXamarin;
+using System.ComponentModel;
 
 namespace JudoDotNetXamarinAndroidSDK.Ui
 {
@@ -124,28 +125,28 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public BillingCountryOptions GetCountry ()
         {
-            switch ((Int32)countrySpinner.SelectedItem) {
-            case (int) BillingCountryOptions.BillingCountryOptionUK:
-                return BillingCountryOptions.BillingCountryOptionUK;
+
+            var country = BillingCountryOptions.BillingCountryOptionUK;
+            switch (countrySpinner.SelectedItem.ToString ()) {
+            case "UK":
+                country = BillingCountryOptions.BillingCountryOptionUK;
+                break;
+            case"USA":
+                country = BillingCountryOptions.BillingCountryOptionUSA;
 
                 break;
-            case (int)BillingCountryOptions.BillingCountryOptionUSA:
-                return BillingCountryOptions.BillingCountryOptionUSA;
+            case "Can":
+                country = BillingCountryOptions.BillingCountryOptionCanada;
 
                 break;
-            case (int)BillingCountryOptions.BillingCountryOptionCanada:
-                return BillingCountryOptions.BillingCountryOptionCanada;
-
+            case "other":
+                country = BillingCountryOptions.BillingCountryOptionOther;
+ 
                 break;
-            case (int)BillingCountryOptions.BillingCountryOptionOther:
-                return BillingCountryOptions.BillingCountryOptionOther;
-
-                break;
-            default:
-                return BillingCountryOptions.BillingCountryOptionUK;
-                break;
-
+         
+               
             }
+            return country;
         }
 
         public string GetPostCode ()
