@@ -188,9 +188,8 @@ namespace JudoDotNetXamariniOSSDK.Views
                 if (JudoSDKManager.Instance.AVSEnabled) {
                     if (!CellsToShow.Contains (avsCell)) {
                         TableView.BeginUpdates ();
-                        //int row = CellsToShow.IndexOf (reassuringCell);
                         CellsToShow.Insert (row, avsCell);
-                        row++;// icrementing the row incase an avs cell is also needed;
+                        row++;
                         insertedCells.Add (avsCell);
                         avsCell.PostcodeTextFieldOutlet.BecomeFirstResponder ();
                         ccIsFirstResponder = false;
@@ -338,7 +337,8 @@ namespace JudoDotNetXamariniOSSDK.Views
                                             ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
                                             ErrorType = JudoApiError.General_Error,
                                             ModelErrors = null
-                                        } });
+                                        }
+                                    });
                                 } else {
                                     throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                                 }
