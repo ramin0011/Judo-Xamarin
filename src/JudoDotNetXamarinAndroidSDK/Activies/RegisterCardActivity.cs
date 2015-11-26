@@ -127,22 +127,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         public void RegisterCard ()
         {
-//            var registerCard = new RegisterCardModel () {
-//                CardAddress = new CardAddressModel () {
-//                    Line1 = addressLine1.Text,
-//                    Line2 = addressLine2.Text,
-//                    Line3 = addressLine3.Text,
-//                    Town = addressTown.Text,
-//                    PostCode = addressPostCode.Text
-//                },
-//                CardNumber = cardEntryView.GetCardNumber (),
-//                CV2 = cardEntryView.GetCardCV2 (),
-//                ExpiryDate = cardEntryView.GetCardExpiry (),
-//                YourConsumerReference = judoConsumer.YourConsumerReference
-//            };
-//            
-//            ShowLoadingSpinner (true);
-
             ShowLoadingSpinner (true);
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.Card = GatherCardDetails ();
@@ -152,7 +136,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             _paymentService.RegisterCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 
-            // JudoSDKManager.JudoClient.RegisterCards.Create(registerCard).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         CardViewModel GatherCardDetails ()

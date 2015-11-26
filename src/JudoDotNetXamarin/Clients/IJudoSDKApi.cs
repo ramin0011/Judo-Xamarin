@@ -1,8 +1,5 @@
-﻿
-using JudoDotNetXamarin;
+﻿using JudoDotNetXamarin;
 
-//[assembly: InternalsVisibleTo("JudoDotNetXamariniOSSDK")]
-//[assembly: InternalsVisibleTo("JudoDotNetXamarinAndroidSDK")]
 namespace JudoDotNetXamarin
 {
 	

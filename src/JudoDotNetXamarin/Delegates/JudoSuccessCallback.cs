@@ -2,8 +2,7 @@
 
 namespace JudoDotNetXamarin
 {
-	
-	public delegate void JudoSuccessCallback(PaymentReceiptModel receipt);
+    public delegate void JudoSuccessCallback (PaymentReceiptModel receipt);
 
 }
 

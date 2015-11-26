@@ -26,7 +26,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private CardImageView cardImageView;
 
         public TextView HintTextView { get; set; }
-        // TODO: CHECK IF WE CAN'T USE THE JUDODOTNETSDK CARDTYPE
+
         private CardType currentCard = CardType.UNKNOWN;
 
         private Stage currentStage = Stage.STAGE_CC_NO;

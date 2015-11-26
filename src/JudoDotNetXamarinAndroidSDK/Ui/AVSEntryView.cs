@@ -57,7 +57,6 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         private TextView postCodeTitleText;
         private TextView avsMsgText;
         private View postCodeContainer;
-        // private string[] countries;
         private string[] postcodeText;
         private bool ignoreFocus;
 
@@ -81,7 +80,6 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView (view);
 
             //get the arrays of values from Strings
-            //countries = Resources.GetStringArray(Resource.Array.avs_countries);
             postcodeText = Resources.GetStringArray (Resource.Array.avs_countries_postcode_label_text);
 
             countrySpinner = view.FindViewById<Spinner> (Resource.Id.countrySpinner);

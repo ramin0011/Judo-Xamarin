@@ -134,9 +134,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
             //set courier font
             Typeface type = Typefaces.LoadTypefaceFromRaw (Context, Resource.Raw.courier);
-            //hintTextView.Typeface = type;
             hintTextView.SetTypeface (Typeface.Monospace, TypefaceStyle.Normal);
-            //textTextView.Typeface = type;
             textTextView.SetTypeface (Typeface.Monospace, TypefaceStyle.Normal);
             textErrorView.Typeface = type;
 

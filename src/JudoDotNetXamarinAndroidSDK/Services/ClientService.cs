@@ -42,8 +42,6 @@ namespace JudoDotNetXamarinAndroidSDK
                 Log.Warn ("Not enough permissions to read ActiveNetworkInfo", e);
             }
 
-
-
             if (telephonyManager != null) {
                 clientDetails.NetworkName = telephonyManager.NetworkOperatorName != System.String.Empty ? telephonyManager.NetworkOperatorName : telephonyManager.SimOperatorName;
             }

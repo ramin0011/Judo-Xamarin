@@ -158,8 +158,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 } else {
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                     if (threedDSecureReceipt != null) {
-                        //, result.Exception,
-                        // !result.IsFaulted && result.Result != null ? result.Result.Error : null)
                         SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent ("Account requires 3D Secure but application is not configured to accept it", new Exception ("Account requires 3D Secure but application is not configured to accept it"), new JudoApiErrorModel ()));
                             
                         Finish ();
