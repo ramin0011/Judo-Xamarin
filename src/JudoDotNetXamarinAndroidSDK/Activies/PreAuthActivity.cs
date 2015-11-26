@@ -21,46 +21,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             clientService = new ClientService ();
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 
-            // Create your application here
+
         }
 
         public override void MakeCardPayment ()
         {
-//            var cardNumber = cardEntryView.GetCardNumber ();
-//            var expiryDate = cardEntryView.GetCardExpiry ();
-//            var cv2 = cardEntryView.GetCardCV2 ();
-//
-//            CardAddressModel cardAddress = new CardAddressModel ();
-//
-//            if (JudoSDKManager.AVSEnabled) {
-//                var country = avsEntryView.GetCountry ();
-//                cardAddress.PostCode = avsEntryView.GetPostCode ();
-//            }
-//
-//            string startDate = null;
-//            string issueNumber = null;
-//
-//            if (JudoSDKManager.MaestroAccepted) {
-//                issueNumber = startDateEntryView.GetIssueNumber ();
-//                startDate = startDateEntryView.GetStartDate ();
-//            }
-//
-//            var cardPayment = new CardPaymentModel () {
-//                JudoId = judoId,
-//                Currency = judoCurrency,
-//                Amount = judoAmount,
-//                YourPaymentReference = judoPaymentRef,
-//                YourConsumerReference = judoConsumer.YourConsumerReference,
-//                YourPaymentMetaData = judoMetaData.Metadata,
-//                CardNumber = cardNumber,
-//                CardAddress = cardAddress,
-//                StartDate = startDate,
-//                ExpiryDate = expiryDate,
-//                CV2 = cv2,
-//                ClientDetails = clientService.GetClientDetails (),
-//                UserAgent = clientService.GetSDKVersion ()
-//            };
-//
+
             ShowLoadingSpinner (true);
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.Card = GatherCardDetails ();
@@ -72,11 +38,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
             }
 
-
-
             _paymentService.PreAuthoriseCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
-            //                var result = reponse.Result;
-            //judoPay.PreAuths.Create(cardPayment).ContinueWith(HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         CardViewModel GatherCardDetails ()

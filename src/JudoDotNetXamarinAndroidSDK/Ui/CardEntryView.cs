@@ -36,6 +36,8 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         public event Action OnReturnToCreditCardNumberEntry;
         public event Action NoLongerComplete;
 
+    
+
         int NeededCVTwoLength;
 
         public bool CVTwoComplete;

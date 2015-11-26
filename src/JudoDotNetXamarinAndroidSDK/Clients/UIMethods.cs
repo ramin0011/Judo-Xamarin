@@ -8,6 +8,8 @@ using Result = Android.App.Result;
 using JudoPayDotNet.Models;
 using Java.Interop;
 using Java.Net;
+using JudoPayDotNet.Errors;
+using Java.Security;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -206,7 +208,7 @@ namespace JudoDotNetXamarinAndroidSDK
                 receipt = data.GetParcelableExtra (JudoSDKManager.JUDO_RECEIPT) as SReceipt;
 
                 if (resultCode == Result.Canceled) {
-                    //_judoFailureCallback.Value (new JudoError (){ Exception = new Exception ("Action was cancelled") });
+           
                     Finish ();
                 } else if (resultCode == JudoSDKManager.JUDO_ERROR) {
                     var error = data.GetParcelableExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION) as SJudoError;
@@ -214,10 +216,18 @@ namespace JudoDotNetXamarinAndroidSDK
                     if (receipt != null) {
                         paymentReceipt = receipt.FullReceipt as PaymentReceiptModel;
                     }
+                 
                     var innerError = new JudoError () {
-                        Exception = error.Exception,
-                        ApiError = error.ApiError
+                        Exception = new Exception ("Unknown Error"),
+                        ApiError = null
                     };
+                    if (error != null) {
+
+                        innerError = new JudoError () {
+                            Exception = error.Exception,
+                            ApiError = error.ApiError
+                        };
+                    }
                     _judoFailureCallback.Value (innerError, paymentReceipt);
          
                     Finish ();

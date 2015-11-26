@@ -15,7 +15,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 {
     public class CV2EntryView : LinearLayout
     {
-        private CardType currentCard = CardType.UNKNOWN;
+        public CardType CurrentCard = CardType.UNKNOWN;
 
         private CV2TextView cv2TextView;
         private FrameLayout cardImageLayout;
@@ -23,9 +23,21 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public event Action<string> OnCreditCardEntered;
         public event Action<string, string> OnExpiryAndCV2Entered;
-        public event Action CV2Deleted;
+        public event Action NoLongerComplete;
 
-        private bool Complete;
+        int NeededCVTwoLength;
+
+        private bool _complete;
+
+        bool Complete {
+            get{ return _complete; }
+            set { 
+                if (value == false) {
+                    NoLongerComplete ();
+                }
+                _complete = value;
+            }
+        }
 
         public EditText GetCV2EditText ()
         {
@@ -89,12 +101,22 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             parameters.Weight = 1;
             parameters.Gravity = GravityFlags.Center;
 
+
+            NeededCVTwoLength = (CurrentCard != CardType.AMEX ? 3 : 4);
+
             cv2TextView.LayoutParameters = parameters;
 
             cv2TextView.OnEntryComplete += cardNumber => {
                 Complete = true;
                 if (OnCreditCardEntered != null) {
                     OnCreditCardEntered (cardNumber);
+                }
+            };
+
+            cv2TextView.OnProgress += position => {
+                if (position < (NeededCVTwoLength + 6)) {
+                    if (Complete)
+                        Complete = false;
                 }
             };
 

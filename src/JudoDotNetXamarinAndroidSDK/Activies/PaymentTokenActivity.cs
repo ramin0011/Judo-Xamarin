@@ -47,7 +47,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
             judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<SCardToken> ();
             judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
-
+            if (judoCardToken.CardType != null) {
+                cv2EntryView.CurrentCard = judoCardToken.CardType;  
+            }
             if (judoPaymentRef == null) {
                 throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
             }
@@ -72,12 +74,20 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             judoMetaData = Intent.GetParcelableExtra (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
 
             var payButton = FindViewById<Button> (Resource.Id.payButton);
+            payButton.Enabled = false;
 
             payButton.Text = Resources.GetString (Resource.String.token_payment);
             payButton.Click += (sender, args) => TransactClickHandler (MakeTokenPayment);
             clientService = new ClientService ();
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 
+
+            cv2EntryView.NoLongerComplete += () => {
+                payButton.Enabled = false;
+            };
+            cv2EntryView.OnCreditCardEntered += (creditCardNumber) => {
+                payButton.Enabled = true;
+            };
         }
 
         public override void OnBackPressed ()

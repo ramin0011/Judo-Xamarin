@@ -78,6 +78,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             payButton.Click += (sender, args) => TransactClickHandler (RegisterCard);
 
+            payButton.Enabled = false;
+
             cardEntryView.OnCreditCardEntered += cardNumber => {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Visible;
             };
@@ -105,10 +107,15 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                         aVsEntryView.FocusPostCode ();
                     }
                 }
+                payButton.Enabled = true;
             };
 
             cardEntryView.OnReturnToCreditCardNumberEntry += () => {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Gone;
+            };
+
+            cardEntryView.NoLongerComplete += () => {
+                payButton.Enabled = false;
             };
         }
 
