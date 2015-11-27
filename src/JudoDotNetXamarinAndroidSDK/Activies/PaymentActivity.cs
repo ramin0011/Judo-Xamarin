@@ -228,8 +228,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         void RestoreState (Bundle bundle)
         {
-          
-
 
             var cardNumber = bundle.GetString ("CARDNUMBER", "");
             var expiry = bundle.GetString ("EXPIRYDATE", "");

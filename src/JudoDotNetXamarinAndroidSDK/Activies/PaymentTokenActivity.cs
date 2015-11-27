@@ -88,6 +88,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cv2EntryView.OnCreditCardEntered += (creditCardNumber) => {
                 payButton.Enabled = true;
             };
+
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
         }
 
         public override void OnBackPressed ()
@@ -123,6 +127,29 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 FindViewById (Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
 
             });
+        }
+
+
+        protected override void OnSaveInstanceState (Bundle outState)
+        {
+            var expiryDate = cv2EntryView.GetExpiry ();
+            var cv2 = cv2EntryView.GetCV2 ();
+          
+            outState.PutString ("EXPIRYDATE", expiryDate);
+            outState.PutString ("CV2", cv2);
+
+            base.OnSaveInstanceState (outState);    
+        }
+
+        void RestoreState (Bundle bundle)
+        {
+
+          
+            var expiry = bundle.GetString ("EXPIRYDATE", "");
+            var cv2 = bundle.GetString ("CV2", "");
+
+            cv2EntryView.RestoreState (expiry, cv2);
+
         }
     }
 }

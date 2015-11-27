@@ -48,16 +48,26 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         {
             string expiryAndCV2 = cv2TextView.GetEditText ().Text;
             string[] temp = expiryAndCV2.Split (' ');
-
-            if (temp.Length < 2) {
-                Log.Error (this.ToString (), "Error: Invalid expiry and/or cv2");
-                throw new InvalidDataException ("Expiry date and/or cv2");
+       
+            var cv2 = "";
+            if (temp.Length > 1) {
+                cv2 = temp [1];
             }
 
-            string expiry = temp [0];
-            string cv2 = temp [1];
-
             return cv2;
+        }
+
+        public String GetExpiry ()
+        {
+            string expiryAndCV2 = cv2TextView.GetEditText ().Text;
+            string[] temp = expiryAndCV2.Split (' ');
+
+         
+
+            string expiry = temp [0];
+           
+
+            return expiry;
         }
 
         public IEditable GetText ()
@@ -144,6 +154,11 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
         {
             SetLast4CCNosText (cardToken.CardLastFour);
             SetCardType (cardToken.CardType);
+        }
+
+        public void RestoreState (string expiry, string cv2)
+        {
+            cv2TextView.SetText (expiry + " " + cv2);
         }
 
         public void SetLast4CCNosText (string text)
