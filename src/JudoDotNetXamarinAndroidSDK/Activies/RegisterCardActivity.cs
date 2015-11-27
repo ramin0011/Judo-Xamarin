@@ -13,6 +13,7 @@ using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
+using System;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -27,7 +28,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         private EditText addressLine3;
         private EditText addressTown;
         private EditText addressPostCode;
-        private AVSEntryView aVsEntryView;
+        private AVSEntryView avsEntryView;
         private StartDateIssueNumberEntryView startDateEntryView;
 
         private HelpButton cv2ExpiryHelpInfoButton;
@@ -50,7 +51,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cardEntryView = FindViewById<CardEntryView> (Resource.Id.cardEntryView);
             TextView hintTextView = FindViewById<TextView> (Resource.Id.hintTextView);
             cardEntryView.HintTextView = hintTextView;
-            aVsEntryView = FindViewById<AVSEntryView> (Resource.Id.avsEntryView);
+            avsEntryView = FindViewById<AVSEntryView> (Resource.Id.avsEntryView);
             startDateEntryView = FindViewById<StartDateIssueNumberEntryView> (Resource.Id.startDateEntryView);
 
             cv2ExpiryHelpInfoButton = FindViewById<HelpButton> (Resource.Id.infoButtonID);
@@ -97,14 +98,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus ();
                     startDateFocus = true;
-                    aVsEntryView.InhibitFocusOnFirstShowOfCountrySpinner ();
+                    avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner ();
                 }
 
-                if (JudoSDKManager.AVSEnabled && aVsEntryView != null) {
-                    aVsEntryView.Visibility = ViewStates.Visible;
+                if (JudoSDKManager.AVSEnabled && avsEntryView != null) {
+                    avsEntryView.Visibility = ViewStates.Visible;
 
                     if (!startDateFocus) {
-                        aVsEntryView.FocusPostCode ();
+                        avsEntryView.FocusPostCode ();
                     }
                 }
                 payButton.Enabled = true;
@@ -117,6 +118,11 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cardEntryView.NoLongerComplete += () => {
                 payButton.Enabled = false;
             };
+
+
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
         }
 
         public override void OnBackPressed ()
@@ -179,6 +185,66 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 FindViewById (Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
 
             });
+        }
+
+        protected override void OnSaveInstanceState (Bundle outState)
+        {
+
+            var cardNumber = cardEntryView.GetCardNumber (false);
+            var expiryDate = cardEntryView.GetCardExpiry (false);
+            var cv2 = cardEntryView.GetCardCV2 (false);
+            var stage = cardEntryView.CurrentStage;
+            outState.PutString ("CARDNUMBER", cardNumber);
+            outState.PutString ("EXPIRYDATE", expiryDate);
+            outState.PutString ("CV2", cv2);
+            outState.PutInt ("STAGE", (int)stage);
+
+            if (JudoSDKManager.AVSEnabled) {
+                var country = avsEntryView.GetCountry ();
+                var PostCode = avsEntryView.GetPostCode ();
+                outState.PutInt ("COUNTRY", (Int32)country);
+                outState.PutString ("POSTCODE", PostCode);
+            }
+
+            if (JudoSDKManager.MaestroAccepted) {
+                string startDate = null;
+                string issueNumber = null;
+                issueNumber = startDateEntryView.GetIssueNumber ();
+                startDate = startDateEntryView.GetStartDate ();
+                outState.PutString ("ISSUENUMBER", issueNumber);
+                outState.PutString ("STARTDATE", startDate);
+            }
+
+            // always call the base implementation!
+            base.OnSaveInstanceState (outState);    
+        }
+
+        void RestoreState (Bundle bundle)
+        {
+
+            var cardNumber = bundle.GetString ("CARDNUMBER", "");
+            var expiry = bundle.GetString ("EXPIRYDATE", "");
+            var cv2 = bundle.GetString ("CV2", "");
+            var stage = bundle.GetInt ("STAGE", (int)Stage.STAGE_CC_NO);
+            cardEntryView.RestoreState (cardNumber, expiry, cv2, (Stage)stage);
+
+            if (JudoSDKManager.AVSEnabled) {
+
+                //var country = avsEntryView.GetCountry ();
+                //var PostCode = avsEntryView.GetPostCode ();
+                var country = bundle.GetInt ("COUNTRY", 0);
+                var PostCode = bundle.GetString ("POSTCODE", "");
+                avsEntryView.RestoreState (country, PostCode);
+            }
+
+            if (JudoSDKManager.MaestroAccepted) {
+                string startDate = bundle.GetString ("STARTDATE", "");
+                string issueNumber = bundle.GetString ("ISSUENUMBER", "");
+                startDateEntryView.RestoreState (startDate, issueNumber);
+
+
+            }
+
         }
     }
 }

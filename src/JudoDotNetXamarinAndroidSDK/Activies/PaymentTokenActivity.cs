@@ -143,11 +143,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         void RestoreState (Bundle bundle)
         {
-
-          
             var expiry = bundle.GetString ("EXPIRYDATE", "");
             var cv2 = bundle.GetString ("CV2", "");
-
             cv2EntryView.RestoreState (expiry, cv2);
 
         }
