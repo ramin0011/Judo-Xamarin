@@ -10,21 +10,10 @@ using JudoDotNetXamariniOSSDK.ViewModels;
 using JudoPayDotNet.Models;
 using Newtonsoft.Json.Linq;
 using UIKit;
+using JudoShieldXamarin;
 
 namespace JudoDotNetXamariniOSSDK
 {
-    /// <summary>
-    /// Callback for success transaction, this should be known blocking call
-    /// </summary>
-    /// 
-    /// 
-    //public delegate void SuccessCallback(PaymentReceiptModel receipt);
-
-    /// <summary>
-    /// Callback for fail transaction, this should be known blocking call
-    /// </summary>
-    // public delegate void FailureCallback(JudoError error, PaymentReceiptModel receipt = null);
-
 
     public class JudoSDKManager : IJudoSDKManager
     {
@@ -61,6 +50,9 @@ namespace JudoDotNetXamariniOSSDK
         /// SSLPinningEnabled
         /// </summary>
         public bool SSLPinningEnabled { get; set; }
+
+        public bool AllowRooted { get; set; }
+
 
        
 
@@ -112,6 +104,16 @@ namespace JudoDotNetXamariniOSSDK
             }
         }
 
+        void RootCheck (JudoFailureCallback failure)
+        {
+            if (!AllowRooted && JudoShield.IsiOSRooted ()) {
+                failure (new JudoError () {
+                    Exception = new Exception ("Users Device is rooted and app is configured to block calls from rooted Device"),
+                    ApiError = null
+                });
+            }
+        }
+
         /// <summary>
         /// Process a card payment
         /// </summary>
@@ -121,7 +123,8 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
-			
+            RootCheck (failure);
+
             var innerModel = payment.Clone ();
 
             _judoSdkApi.Payment (innerModel, success, failure);
@@ -137,6 +140,8 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public  void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure)
         {
+            RootCheck (failure);
+
             var innerModel = preAuthorisation.Clone ();
             _judoSdkApi.PreAuth (innerModel, success, failure);
         }
@@ -150,6 +155,7 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
+            RootCheck (failure);
 
             var innerModel = payment.Clone ();
             _judoSdkApi.TokenPayment (innerModel, success, failure);
@@ -165,7 +171,8 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
-			
+            RootCheck (failure);
+
             var innerModel = payment.Clone ();
             _judoSdkApi.TokenPreAuth (innerModel, success, failure);
 
@@ -181,6 +188,8 @@ namespace JudoDotNetXamariniOSSDK
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure)
         {
 
+            RootCheck (failure);
+
             var innerModel = registerCard.Clone ();
 
             _judoSdkApi.RegisterCard (innerModel, success, failure);
@@ -189,6 +198,7 @@ namespace JudoDotNetXamariniOSSDK
 
         public void MakeApplePayment (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
+            RootCheck (failure);
 
             _applePayMethods.ApplePayment (payment, success, failure, ApplePaymentType.Payment);
 		
@@ -196,6 +206,8 @@ namespace JudoDotNetXamariniOSSDK
 
         public void MakeApplePreAuth (ApplePayViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
         {
+            RootCheck (failure);
+
             _applePayMethods.ApplePayment (payment, success, failure, ApplePaymentType.PreAuth);
 
         }
