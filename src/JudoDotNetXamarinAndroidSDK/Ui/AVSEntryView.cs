@@ -123,7 +123,9 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public BillingCountryOptions GetCountry ()
         {
-
+            if (countrySpinner.SelectedItem == null) {
+                return BillingCountryOptions.BillingCountryOptionUK;
+            }
             var country = BillingCountryOptions.BillingCountryOptionUK;
             switch (countrySpinner.SelectedItem.ToString ()) {
             case "UK":
@@ -145,6 +147,12 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                
             }
             return country;
+        }
+
+        public void RestoreState (int country, string postCode)
+        {
+            countrySpinner.SetSelection (country);
+            postCodeEditText.Text = postCode;
         }
 
         public string GetPostCode ()

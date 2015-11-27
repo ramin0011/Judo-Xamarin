@@ -117,7 +117,13 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 
+
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
         }
+
+      
 
         public override void OnBackPressed ()
         {
@@ -186,6 +192,68 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             };
 
             return cardPayment;
+        }
+
+        protected override void OnSaveInstanceState (Bundle outState)
+        {
+
+            var cardNumber = cardEntryView.GetCardNumber (false);
+            var expiryDate = cardEntryView.GetCardExpiry (false);
+            var cv2 = cardEntryView.GetCardCV2 (false);
+            var stage = cardEntryView.CurrentStage;
+            outState.PutString ("CARDNUMBER", cardNumber);
+            outState.PutString ("EXPIRYDATE", expiryDate);
+            outState.PutString ("CV2", cv2);
+            outState.PutInt ("STAGE", (int)stage);
+
+            if (JudoSDKManager.AVSEnabled) {
+                var country = avsEntryView.GetCountry ();
+                var PostCode = avsEntryView.GetPostCode ();
+                outState.PutInt ("COUNTRY", (Int32)country);
+                outState.PutString ("POSTCODE", PostCode);
+            }
+                
+            if (JudoSDKManager.MaestroAccepted) {
+                string startDate = null;
+                string issueNumber = null;
+                issueNumber = startDateEntryView.GetIssueNumber ();
+                startDate = startDateEntryView.GetStartDate ();
+                outState.PutString ("ISSUENUMBER", issueNumber);
+                outState.PutString ("STARTDATE", startDate);
+            }
+
+            // always call the base implementation!
+            base.OnSaveInstanceState (outState);    
+        }
+
+        void RestoreState (Bundle bundle)
+        {
+          
+
+
+            var cardNumber = bundle.GetString ("CARDNUMBER", "");
+            var expiry = bundle.GetString ("EXPIRYDATE", "");
+            var cv2 = bundle.GetString ("CV2", "");
+            var stage = bundle.GetInt ("STAGE", (int)Stage.STAGE_CC_NO);
+            cardEntryView.RestoreState (cardNumber, expiry, cv2, (Stage)stage);
+
+            if (JudoSDKManager.AVSEnabled) {
+              
+                //var country = avsEntryView.GetCountry ();
+                //var PostCode = avsEntryView.GetPostCode ();
+                var country = bundle.GetInt ("COUNTRY", 0);
+                var PostCode = bundle.GetString ("POSTCODE", "");
+                avsEntryView.RestoreState (country, PostCode);
+            }
+
+            if (JudoSDKManager.MaestroAccepted) {
+                string startDate = bundle.GetString ("STARTDATE", "");
+                string issueNumber = bundle.GetString ("ISSUENUMBER", "");
+                startDateEntryView.RestoreState (startDate, issueNumber);
+               
+
+            }
+
         }
     }
 }

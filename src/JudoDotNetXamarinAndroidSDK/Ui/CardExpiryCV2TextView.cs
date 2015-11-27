@@ -94,33 +94,33 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             }
         }
 
-        public string GetCardCV2 ()
+        public string GetCardCV2 (bool validation = true)
         {
             string expiryAndCV2 = GetEditText ().Text;
             string[] temp = expiryAndCV2.Split (' ');
 
-            if (temp.Length < 2) {
+            if (temp.Length < 2 && validation == true) {
                 Log.Error (this.ToString (), "Error: Invalid expiry and/or cv2");
                 throw new InvalidDataException ("Expiry date and/or cv2");
             }
-
-            string expiry = temp [0];
-            string cv2 = temp [1];
+            var cv2 = "";
+            if (temp.Length > 1) {
+                cv2 = temp [1];
+            }
 
             return cv2;
         }
 
-        public string GetCardExpiry ()
+        public string GetCardExpiry (bool validation = true)
         {
             string expiryAndCV2 = GetEditText ().Text;
             var temp = expiryAndCV2.Split (' ');
-            if (temp.Length < 2) {
+            if (temp.Length < 2 && validation == true) {
                 Log.Error (ToString (), "Error: Invalid expiry and/or cv2");
                 throw new ArgumentException ("Expiry date and/or cv2");
             }
 
             var expiry = temp [0];
-            var cv2 = temp [1];
 
             return expiry;
         }
@@ -136,6 +136,12 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             string expiry = temp [0];
 
             ValidateExpiryDate (expiry);
+        }
+
+        public void SetExpiryCV2Text (string expiry, string cv2)
+        {
+            var textView = GetEditText ();
+            textView.Text = expiry + " " + cv2;
         }
 
         public override void BackKeyPressed ()

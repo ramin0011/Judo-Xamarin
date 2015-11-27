@@ -29,7 +29,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         private CardType currentCard = CardType.UNKNOWN;
 
-        private Stage currentStage = Stage.STAGE_CC_NO;
+        public Stage CurrentStage = Stage.STAGE_CC_NO;
 
         public event Action<string> OnCreditCardEntered;
         public event Action<string, string> OnExpireAndCV2Entered;
@@ -209,29 +209,39 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             imm.ToggleSoftInput (ShowFlags.Forced, 0);
         }
 
-        public string GetCardNumber ()
+        public string GetCardNumber (bool validation = true)
         {
             var cardNumber = cardNumberTextView.GetText ().Replace (" ", "");
-            if (!ValidationHelper.CanProcess (cardNumber)) {
+
+            if (!ValidationHelper.CanProcess (cardNumber) && validation == true) {
                 throw new ArgumentException ("Credit card number");
             } else {
                 return cardNumber;
             }
         }
 
-        public string GetCardExpiry ()
+        public string GetCardExpiry (bool validation = true)
         {
-            return cardExpiryCv2TextView.GetCardExpiry ();
+            return cardExpiryCv2TextView.GetCardExpiry (validation);
         }
 
-        public string GetCardCV2 ()
+        public string GetCardCV2 (bool validation = true)
         {
-            return cardExpiryCv2TextView.GetCardCV2 ();
+            return cardExpiryCv2TextView.GetCardCV2 (validation);
+        }
+
+        public void RestoreState (String cardNumber, String expiry, String cv2, Stage stage)
+        {
+            
+            cardNumberTextView.SetText (cardNumber);
+            SetStage (stage);
+            cardExpiryCv2TextView.SetExpiryCV2Text (expiry, cv2);
+          
         }
 
         public void SetStage (Stage stage)
         {
-            bool animate = stage != currentStage;
+            bool animate = stage != CurrentStage;
 
             if (stage == Stage.STAGE_CC_EXP || stage == Stage.STAGE_CC_CV2) {
                 cardNumberTextView.Enabled = false;
@@ -273,8 +283,10 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 }
             }
 
-            currentStage = stage;
+            CurrentStage = stage;
         }
+
+
 
         private void animateOutLeft (View view)
         {
