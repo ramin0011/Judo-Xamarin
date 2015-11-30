@@ -11,6 +11,7 @@ using Android.App;
 using Android.Content;
 using JudoDotNetXamarinAndroidSDK.Models;
 using JudoPayDotNet.Errors;
+using JudoDotNetXamarinAndroidSDK.Utils;
 
 
 namespace JudoDotNetXamarinAndroidSDK
@@ -83,9 +84,16 @@ namespace JudoDotNetXamarinAndroidSDK
         /// </summary>
         public static bool SSLPinningEnabled { get; set; }
 
+        public bool AllowRooted { get; set; }
+
+        private bool isRooted;
+        private RootCheck _rootCheck;
+
         public JudoSDKManager ()
         {
 
+            _rootCheck = new RootCheck ();
+            isRooted = _rootCheck.IsRooted ();
         }
 
         private static JudoAndroidSDKAPI _judoSdkApi;
@@ -114,6 +122,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            EvaluateRootCheck (failure);
             var innerModel = payment.Clone ();         
             _judoSdkApi.Payment (innerModel, success, failure, context);
 
@@ -121,6 +130,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void PreAuth (PaymentViewModel preAuthorisation, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            EvaluateRootCheck (failure);
             var innerModel = preAuthorisation.Clone ();
             _judoSdkApi.PreAuth (innerModel, success, failure, context);
           
@@ -128,6 +138,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void TokenPayment (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            EvaluateRootCheck (failure);
             var innerModel = payment.Clone ();         
             _judoSdkApi.TokenPayment (innerModel, success, failure, context);
         }
@@ -136,12 +147,14 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void TokenPreAuth (TokenPaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            EvaluateRootCheck (failure);
             var innerModel = payment.Clone ();         
             _judoSdkApi.TokenPreAuth (innerModel, success, failure, context);
         }
 
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            EvaluateRootCheck (failure);
             var innerModel = registerCard.Clone ();         
             _judoSdkApi.RegisterCard (innerModel, success, failure, context); 
         }
@@ -222,6 +235,17 @@ namespace JudoDotNetXamarinAndroidSDK
 
             return intent;
         }
+
+        void EvaluateRootCheck (JudoFailureCallback failure)
+        {
+            if (!AllowRooted && isRooted) {
+                failure (new JudoError () {
+                    Exception = new Exception ("Users Device is rooted and app is configured to block calls from rooted Device"),
+                    ApiError = null
+                });
+            }
+        }
+            
     }
 
 

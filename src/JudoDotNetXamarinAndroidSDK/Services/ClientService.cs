@@ -46,7 +46,7 @@ namespace JudoDotNetXamarinAndroidSDK
                 clientDetails.NetworkName = telephonyManager.NetworkOperatorName != System.String.Empty ? telephonyManager.NetworkOperatorName : telephonyManager.SimOperatorName;
             }
 
-            RootCheck rootCheck = new RootCheck (context);
+            RootCheck rootCheck = new RootCheck ();
             clientDetails.Rooted = rootCheck.IsRooted ();
 
             clientDetails.SslPinningEnabled = JudoSDKManager.SSLPinningEnabled;
