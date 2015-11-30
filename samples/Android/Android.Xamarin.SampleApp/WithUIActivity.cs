@@ -17,16 +17,6 @@ namespace Android.Xamarin.SampleApp
     [Activity (Label = "@string/app_name_ui", MainLauncher = true, Icon = "@drawable/ic_app_icon")]
     public class WithUIActivity : Activity
     {
-        // Configure your JudoID and payment detail
-        private const string ApiToken = "[Application ApiToken]";
-        //retrieve from JudoPortal
-        private const string ApiSecret = "[Application ApiSecret]";
-        //retrieve from JudoPortal
-        private string MY_JUDO_ID = "[Judo ID]";
-        //Received when registering an account with Judo
-        private string currency = "GBP";
-        private string amount = "1.99";
-
         private string paymentReference = "payment101010102";
         private string consumerRef = "consumer1010102";
         private const string cardNumber = "4976000000003436";
@@ -35,23 +25,11 @@ namespace Android.Xamarin.SampleApp
         private  const string expiryDate = "12/15";
         private const string cv2 = "452";
 
-        private const int ACTION_CARD_PAYMENT = 101;
-        private const int ACTION_TOKEN_PAYMENT = 102;
-        private const int ACTION_PREAUTH = 201;
-        private const int ACTION_TOKEN_PREAUTH = 202;
-        private const int ACTION_REGISTER_CARD = 301;
-
         private volatile string cardToken;
         private volatile string consumerToken;
-        private volatile string rcp_consumerRef;
+   
         private volatile string lastFour;
-        private volatile JudoPayDotNet.Models.CardType cardType;
-
-        private volatile string preAuth_cardToken;
-        private volatile string preAuth_consumerToken;
-        private volatile string preAuth_rcp_consumerRef;
-        private volatile string preAuth_lastFour;
-        private volatile JudoPayDotNet.Models.CardType preAuth_cardType;
+        private volatile CardType cardType;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -60,29 +38,7 @@ namespace Android.Xamarin.SampleApp
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.withui);
 
-            // setting up API token/secret 
-            var configInstance = JudoConfiguration.Instance;
-
-
-            //setting for Sandnox
-            configInstance.Environment = JudoEnvironment.Live;
-            JudoSDKManager.UIMode = true;
-            JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.AVSEnabled = true;
-            JudoSDKManager.MaestroAccepted = true;
-            JudoSDKManager.RiskSignals = true;
-            /*
-			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
-			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
-			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
-			*/
-            // //Salatha
-            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-            configInstance.JudoId = "100915867";
-            if (configInstance.ApiToken == null) {
-                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
-            }
+            ConfigureJudoSDK ();
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -209,13 +165,6 @@ namespace Android.Xamarin.SampleApp
             JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), SuccessPayment, FailurePayment, this);
         }
 
-        private void UpdateCount ()
-        {
-        }
-
-      
-
-
         private PaymentViewModel GetCardViewModel ()
         {
             var cardPayment = new PaymentViewModel {
@@ -250,7 +199,35 @@ namespace Android.Xamarin.SampleApp
             };
             return tokenPayment;
         }
-     
+
+        void ConfigureJudoSDK ()
+        {
+            // setting up API token/secret 
+            var configInstance = JudoConfiguration.Instance;
+
+
+            //setting for Sandnox
+            configInstance.Environment = JudoEnvironment.Live;
+            JudoSDKManager.UIMode = true;
+            JudoSDKManager.AmExAccepted = true;
+            JudoSDKManager.AVSEnabled = true;
+            JudoSDKManager.MaestroAccepted = true;
+            JudoSDKManager.RiskSignals = true;
+
+            /*
+            configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
+            configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
+            configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
+            */
+
+            // //Salatha
+            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.JudoId = "100915867";
+            if (configInstance.ApiToken == null) {
+                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+            }
+        }
     }
 }
 
