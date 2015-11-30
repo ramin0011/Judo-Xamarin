@@ -17,6 +17,9 @@ To start using the judoPay library you'll first need to configure your SDK to se
 You can do this with the following code:
 
 ### Configuring judoPay APIs
+Add the following code snippet to your project upon start up or before making your transaction call.
+This is best done within the AppDelegates FinishedLaunching method (iOS) or within the apps initial activity's OnCreate() method (Android).
+Specifying your ApiToken, ApiSecret and Judo ID which you can find in the Dashboard (this code snippet is configured to operate in Sandbox environment. 
 
 ``` csharp
 var configInstance = JudoConfiguration.Instance;
