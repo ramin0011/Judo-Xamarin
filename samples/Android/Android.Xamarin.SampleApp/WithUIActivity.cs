@@ -213,9 +213,9 @@ namespace Android.Xamarin.SampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             JudoSDKManager.UIMode = true;
-            JudoSDKManager.AmExAccepted = false;
-            JudoSDKManager.AVSEnabled = false;
-            JudoSDKManager.MaestroAccepted = false;
+            JudoSDKManager.AmExAccepted = true;
+            JudoSDKManager.AVSEnabled = true;
+            JudoSDKManager.MaestroAccepted = true;
             JudoSDKManager.RiskSignals = true;
 
             /*
@@ -223,16 +223,6 @@ namespace Android.Xamarin.SampleApp
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
-
-            configInstance.ApiToken = "fMIH8rj64w4QXmjN";//live iridium
-            configInstance.ApiSecret = "f2bd75ae4f5fdcab7c6759f1e2e2c3dd94de05a03cc60b0cc621982dcf884f47";
-            configInstance.JudoId = "100915867";
-
-//            configInstance.ApiToken = "ebc5LgITYv11DC3R";//tns live
-//            configInstance.ApiSecret = "51ad73358dc654d82616e3bb35b881045d53a0cce52a93224a0d48298b2c0ede";
-//            configInstance.JudoId = "100224351";
-//
-
 
 
             if (configInstance.ApiToken == null) {

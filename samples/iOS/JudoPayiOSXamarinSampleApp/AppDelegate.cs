@@ -66,17 +66,6 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
 
-//            configInstance.ApiToken = "KgM0c9MEPhULMQbS"; //iridum live
-//            configInstance.ApiSecret = "1778bc3f6514e7a574a7d05eeb2e95be7e07ce2139c4e538037c82201f9a8992"; //retrieve from JudoPortal
-//            configInstance.JudoId = "100915867"; //Received when registering an account with Judo
-
-            configInstance.ApiToken = "bqqAHqFsrqbyPVtr"; //tns live
-            configInstance.ApiSecret = "146f554a0fb11f44e6e38ad1cb4681907c138bb31d5d15dab0ba46036ab5c3f9"; //retrieve from JudoPortal
-            configInstance.JudoId = "100224351"; //Received when registering an account with Judo
-
-//			//configInstance.JudoId = "100915867"; iridum
-            //          //configInstance.JudoId = "100224351"; tns
-
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
