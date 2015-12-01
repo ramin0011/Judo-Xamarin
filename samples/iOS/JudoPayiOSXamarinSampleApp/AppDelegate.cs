@@ -7,71 +7,79 @@ using JudoDotNetXamarin;
 
 namespace JudoPayiOSXamarinSampleApp
 {
-	// The UIApplicationDelegate for the application. This class is responsible for launching the
-	// User Interface of the application, as well as listening (and optionally responding) to
-	// application events from iOS.
-	[Register ("AppDelegate")]
-	public partial class AppDelegate : UIApplicationDelegate
-	{
-		// class-level declarations
-		public override UIWindow Window {
-			get;
-			set;
-		}
+    // The UIApplicationDelegate for the application. This class is responsible for launching the
+    // User Interface of the application, as well as listening (and optionally responding) to
+    // application events from iOS.
+    [Register ("AppDelegate")]
+    public partial class AppDelegate : UIApplicationDelegate
+    {
+        // class-level declarations
+        public override UIWindow Window {
+            get;
+            set;
+        }
 
 
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
-		{  
-			Window = new UIWindow (UIScreen.MainScreen.Bounds); 
-			RootView root = new RootView ();
-			Window.RootViewController = new UINavigationController (root);
-			Window.TintColor = UIColor.Black;
-			Window.MakeKeyAndVisible ();
-			ConfigureJudoSettings ();
-			return true;   
-		}
+        public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+        {  
+            Window = new UIWindow (UIScreen.MainScreen.Bounds); 
+            RootView root = new RootView ();
+            Window.RootViewController = new UINavigationController (root);
+            Window.TintColor = UIColor.Black;
+            Window.MakeKeyAndVisible ();
+            ConfigureJudoSettings ();
+            return true;   
+        }
 			
-		// This method is invoked when the application is about to move from active to inactive state.
-		// OpenGL applications should use this method to pause.
-		public override void OnResignActivation (UIApplication application)
-		{
-		}
-		// This method should be used to release shared resources and it should store the application state.
-		// If your application supports background exection this method is called instead of WillTerminate
-		// when the user quits.
-		public override void DidEnterBackground (UIApplication application)
-		{
-		}
-		// This method is called as part of the transiton from background to active state.
-		public override void WillEnterForeground (UIApplication application)
-		{
-		}
-		// This method is called when the application is about to terminate. Save data, if needed.
-		public override void WillTerminate (UIApplication application)
-		{
-		}
+        // This method is invoked when the application is about to move from active to inactive state.
+        // OpenGL applications should use this method to pause.
+        public override void OnResignActivation (UIApplication application)
+        {
+        }
+        // This method should be used to release shared resources and it should store the application state.
+        // If your application supports background exection this method is called instead of WillTerminate
+        // when the user quits.
+        public override void DidEnterBackground (UIApplication application)
+        {
+        }
+        // This method is called as part of the transiton from background to active state.
+        public override void WillEnterForeground (UIApplication application)
+        {
+        }
+        // This method is called when the application is about to terminate. Save data, if needed.
+        public override void WillTerminate (UIApplication application)
+        {
+        }
 
-		void ConfigureJudoSettings ()
-		{
-			//Configure JudoPay app here
-			var configInstance = JudoConfiguration.Instance;
+        void ConfigureJudoSettings ()
+        {
+            //Configure JudoPay app here
+            var configInstance = JudoConfiguration.Instance;
 
-			//setting for Sandnox
+            //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
 
 
-			/*
+            /*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
-			// //Salatha
-			configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-			configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-			configInstance.JudoId = "100915867";
-			if (configInstance.ApiToken == null) {
-				throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
-			}
+
+//            configInstance.ApiToken = "KgM0c9MEPhULMQbS"; //iridum live
+//            configInstance.ApiSecret = "1778bc3f6514e7a574a7d05eeb2e95be7e07ce2139c4e538037c82201f9a8992"; //retrieve from JudoPortal
+//            configInstance.JudoId = "100915867"; //Received when registering an account with Judo
+
+            configInstance.ApiToken = "bqqAHqFsrqbyPVtr"; //tns live
+            configInstance.ApiSecret = "146f554a0fb11f44e6e38ad1cb4681907c138bb31d5d15dab0ba46036ab5c3f9"; //retrieve from JudoPortal
+            configInstance.JudoId = "100224351"; //Received when registering an account with Judo
+
+//			//configInstance.JudoId = "100915867"; iridum
+            //          //configInstance.JudoId = "100224351"; tns
+
+            if (configInstance.ApiToken == null) {
+                throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
+            }
 
 
 
@@ -86,8 +94,8 @@ namespace JudoPayiOSXamarinSampleApp
             // this will turn off UI mode and you can use same judo APIs to link with your own UI
 		    //JudoSDKManager.UIMode = false;
             */
-		}
-	}
+        }
+    }
 
 
 }

@@ -99,9 +99,13 @@ namespace Android.Xamarin.SampleApp
                 title = (error.ApiError.ErrorMessage);
 
             if (error != null && error.ApiError != null)
+            if (error.ApiError.ModelErrors != null) {
                 foreach (JudoModelError model in error.ApiError.ModelErrors) {
                     message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
                 }
+            } else {
+                message += error.ApiError.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+            }
 
             if (receipt != null) {
                 message += "Transaction : " + receipt.Result + System.Environment.NewLine;
@@ -209,9 +213,9 @@ namespace Android.Xamarin.SampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
             JudoSDKManager.UIMode = true;
-            JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.AVSEnabled = true;
-            JudoSDKManager.MaestroAccepted = true;
+            JudoSDKManager.AmExAccepted = false;
+            JudoSDKManager.AVSEnabled = false;
+            JudoSDKManager.MaestroAccepted = false;
             JudoSDKManager.RiskSignals = true;
 
             /*
@@ -220,10 +224,17 @@ namespace Android.Xamarin.SampleApp
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
 
-            // //Salatha
-            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.ApiToken = "fMIH8rj64w4QXmjN";//live iridium
+            configInstance.ApiSecret = "f2bd75ae4f5fdcab7c6759f1e2e2c3dd94de05a03cc60b0cc621982dcf884f47";
             configInstance.JudoId = "100915867";
+
+//            configInstance.ApiToken = "ebc5LgITYv11DC3R";//tns live
+//            configInstance.ApiSecret = "51ad73358dc654d82616e3bb35b881045d53a0cce52a93224a0d48298b2c0ede";
+//            configInstance.JudoId = "100224351";
+//
+
+
+
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }

@@ -150,26 +150,27 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 var receipt = result.Response;
 
                 if (receipt != null) {
-                    Intent intent = new Intent ();
-                    intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new SReceipt (receipt));
-                    SetResult (JudoSDKManager.JUDO_SUCCESS, intent);
-                    Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
-                    Finish ();
-                } else {
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                     if (threedDSecureReceipt != null) {
                         SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent ("Account requires 3D Secure but application is not configured to accept it", new Exception ("Account requires 3D Secure but application is not configured to accept it"), new JudoApiErrorModel ()));
-                            
+
                         Finish ();
                     } else {
 
-                        SetResult (JudoSDKManager.JUDO_ERROR,
-                            JudoSDKManager.CreateErrorIntent ("JudoXamarinSDK: unable to find the receipt in response.", new Exception ("JudoXamarinSDK: unable to find the receipt in response."), new JudoApiErrorModel ()));
+                        Intent intent = new Intent ();
+                        intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new SReceipt (receipt));
+                        SetResult (JudoSDKManager.JUDO_SUCCESS, intent);
+                        Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
                         Finish ();
-                        throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                     }
-                }
 
+                } else {
+
+                    SetResult (JudoSDKManager.JUDO_ERROR,
+                        JudoSDKManager.CreateErrorIntent ("JudoXamarinSDK: unable to find the receipt in response.", new Exception ("JudoXamarinSDK: unable to find the receipt in response."), new JudoApiErrorModel ()));
+                    Finish ();
+                    throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+                }
             } else {
 
                 Intent intent = new Intent ();

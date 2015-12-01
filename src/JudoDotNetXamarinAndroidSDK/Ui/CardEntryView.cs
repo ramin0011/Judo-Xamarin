@@ -121,11 +121,11 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
                 string cardNumber = cardNumberTextView.GetText ();
                 currentCardType = ValidationHelper.GetCardType (cardNumber);
-
-                if (currentCardType != currentCard) {
-                    if (currentCard == CardType.AMEX && !JudoSDKManager.AVSEnabled) {
+                if (currentCardType != CardType.UNKNOWN) {
+                    //if (currentCardType != currentCard) {
+                    if (currentCardType == CardType.AMEX && !JudoSDKManager.AVSEnabled) {
                         cardNumberTextView.ShowInvalid ("AmEx not accepted");
-                    } else if (currentCard == CardType.MAESTRO && !JudoSDKManager.MaestroAccepted) {
+                    } else if (currentCardType == CardType.MAESTRO && !JudoSDKManager.MaestroAccepted) {
                         cardNumberTextView.ShowInvalid ("Maestro not accepted");
                     } else {
                         cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCardType, true), false);
