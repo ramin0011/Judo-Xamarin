@@ -2,17 +2,17 @@
 
 namespace JudoDotNetXamarin
 {
-	public class PaymentViewModel :BasePaymentViewModel
-	{
+    public class PaymentViewModel :BasePaymentViewModel
+    {
         /// <summary>
         /// Card Detail
         /// </summary>
-		public CardViewModel Card { get; set; }
+        public CardViewModel Card { get; set; }
 
         /// <summary>
         /// Amount
         /// </summary>
-		public decimal Amount { get; set; }
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// Currency 
@@ -29,23 +29,26 @@ namespace JudoDotNetXamarin
         /// </summary>
         public string ConsumerReference { get; set; }
 
+
+
         /// <summary>
         /// your meta data 
         /// </summary>
         public IDictionary<string, string> YourPaymentMetaData { get; set; }
 
-		public PaymentViewModel Clone()
-		{
-			return new PaymentViewModel
-			{
-				Card = this.Card.Clone(),
-				Amount = this.Amount,
-				Currency = this.Currency,
-				PaymentReference = this.PaymentReference,
-				ConsumerReference = this.ConsumerReference,
-				YourPaymentMetaData = this.YourPaymentMetaData
-			}; 
-		}
-	}
+        public PaymentViewModel Clone ()
+        {
+            return new PaymentViewModel {
+                Card = this.Card.Clone (),
+                Amount = this.Amount,
+                Currency = this.Currency,
+                PaymentReference = this.PaymentReference,
+                ConsumerReference = this.ConsumerReference,
+                YourPaymentMetaData = this.YourPaymentMetaData,
+                JudoID = this.JudoID
+                    
+            }; 
+        }
+    }
 }
 

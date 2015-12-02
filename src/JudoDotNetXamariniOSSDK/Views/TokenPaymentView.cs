@@ -174,33 +174,40 @@ namespace JudoDotNetXamariniOSSDK.Views
                 PaymentButton.Disable ();
 
                 _paymentService.MakeTokenPayment (tokenPayment, new ClientService ()).ContinueWith (reponse => {
-                    var result = reponse.Result;
-                    if (result != null && !result.HasError && result.Response.Result != "Declined") {
-                        PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                      
-                        // call success callback
-                        if (successCallback != null)
-                            successCallback (paymentreceipt);
 
+                    if (reponse.Exception != null) {
+                        LoadingScreen.HideLoading ();
+                        reponse.Exception.FlattenToJudoFailure (failureCallback);
                     } else {
-                        // Failure callback
-                        if (failureCallback != null) {
-                            var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                            var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+                        var result = reponse.Result;
+                        if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                            PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                      
+                            // call success callback
+                            if (successCallback != null)
+                                successCallback (paymentreceipt);
 
-                            if (paymentreceipt != null) {
-                                // send receipt even we got card declined
-                                failureCallback (judoError, paymentreceipt);
-                            } else {
-                                failureCallback (judoError);
+                        } else {
+                            // Failure callback
+                            if (failureCallback != null) {
+                                var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                                var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+                                if (paymentreceipt != null) {
+                                    // send receipt even we got card declined
+                                    failureCallback (judoError, paymentreceipt);
+                                } else {
+                                    failureCallback (judoError);
+                                }
                             }
+
+
                         }
-
-
                     }
                     LoadingScreen.HideLoading ();
+                    
                 });
-
+                
             } catch (Exception ex) {
                 LoadingScreen.HideLoading ();
                 // Failure callback

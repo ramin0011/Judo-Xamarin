@@ -15,6 +15,7 @@ using JudoPayDotNet.Models;
 using PassKit;
 
 using UIKit;
+using JudoPayDotNet.Errors;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -94,22 +95,30 @@ namespace JudoPayiOSXamarinSampleApp
                 // move back to home screen
                 CloseView ();
                 // show receipt
+                string title = "Error";
                 string message = "";
                 if (error != null && error.ApiError != null)
-                    message += error.ApiError.ErrorMessage + Environment.NewLine;
+                    title = (error.ApiError == null ? error.ApiError.ErrorMessage : "");
 
-                if (error != null && error.Exception != null)
-                    message += error.Exception.Message + Environment.NewLine;
+                if (error != null && error.ApiError != null)
+                if (error.ApiError.ModelErrors != null) {
+                    foreach (JudoModelError model in error.ApiError.ModelErrors) {
+                        message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                    }
+                } else {
+                    message += error.ApiError.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                }
 
                 if (receipt != null) {
-                    message += "Transaction : " + receipt.Result + Environment.NewLine;
-                    message += receipt.Message + Environment.NewLine;
+                    message += "Transaction : " + receipt.Result + System.Environment.NewLine;
+                    message += receipt.Message + System.Environment.NewLine;
                     message += "Receipt ID - " + receipt.ReceiptId;
                 }
 
-                ShowMessage ("Transaction Failed: ", message);
+                ShowMessage (title, message);
                 // store token to further use
             });
+                
         }
 
         void SetUpTableView ()

@@ -4,18 +4,18 @@ using JudoPayDotNet.Enums;
 
 namespace JudoDotNetXamarin
 {
-	public class JudoConfiguration
-	{
-		private static readonly Lazy<JudoConfiguration> _singleton = new Lazy<JudoConfiguration> (() => new JudoConfiguration ());
+    public class JudoConfiguration
+    {
+        private static readonly Lazy<JudoConfiguration> _singleton = new Lazy<JudoConfiguration> (() => new JudoConfiguration ());
 
-		public static JudoConfiguration Instance {
-			get { return _singleton.Value; }
-		}
+        public static JudoConfiguration Instance {
+            get { return _singleton.Value; }
+        }
 
-	    /// <summary>
+        /// <summary>
         /// Api Token must be set before calling API
         /// </summary>
-		public  string ApiToken { get; set; }
+        public  string ApiToken { get; set; }
 
         /// <summary>
         /// Api Secret must be set before calling API
@@ -31,6 +31,20 @@ namespace JudoDotNetXamarin
         /// Environment SANDBOX or LIVE
         /// </summary>
         public JudoEnvironment Environment { get; set; }
-	}
+
+        public void Validate ()
+        {
+            if (String.IsNullOrWhiteSpace (JudoId) || String.IsNullOrWhiteSpace (ApiToken) || String.IsNullOrWhiteSpace (ApiSecret)) {
+              
+                Exception e = new Exception ("SDK configuration variables invalid");
+                   
+                //e.InnerException = "SDK configuration variables invalid";
+
+                   
+                throw e;
+             
+            }
+        }
+    }
 }
 

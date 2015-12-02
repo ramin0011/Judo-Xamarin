@@ -21,48 +21,52 @@ namespace JudoDotNetXamarin
 
         public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel, IClientService clientService)
         {
-            try {
-                CardPaymentModel payment = new CardPaymentModel {
-                    JudoId = JudoConfiguration.Instance.JudoId,
-                    YourPaymentReference = paymentViewModel.PaymentReference,
-                    YourConsumerReference = paymentViewModel.ConsumerReference,
-                    Amount = paymentViewModel.Amount,
-                    CardNumber = paymentViewModel.Card.CardNumber,
-                    CV2 = paymentViewModel.Card.CV2,
-                    ExpiryDate = paymentViewModel.Card.ExpireDate,
-                    CardAddress = new CardAddressModel () {
-                        PostCode = paymentViewModel.Card.PostCode,
-                        CountryCode = (int)paymentViewModel.Card.CountryCode
-                    },
-                    StartDate = paymentViewModel.Card.StartDate,
-                    IssueNumber = paymentViewModel.Card.IssueNumber,
-                    YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
-                    ClientDetails = clientService.GetClientDetails (),
-                    Currency = paymentViewModel.Currency,
-                    UserAgent = clientService.GetSDKVersion ()
-                };
+            //  try {
+            JudoConfiguration.Instance.Validate ();
+            CardPaymentModel payment = new CardPaymentModel {
+                JudoId = (String.IsNullOrWhiteSpace (paymentViewModel.JudoID) ? JudoConfiguration.Instance.JudoId : paymentViewModel.JudoID),
+                YourPaymentReference = paymentViewModel.PaymentReference,
+                YourConsumerReference = paymentViewModel.ConsumerReference,
+                Amount = paymentViewModel.Amount,
+                CardNumber = paymentViewModel.Card.CardNumber,
+                CV2 = paymentViewModel.Card.CV2,
+                ExpiryDate = paymentViewModel.Card.ExpireDate,
+                CardAddress = new CardAddressModel () {
+                    PostCode = paymentViewModel.Card.PostCode,
+                    CountryCode = (int)paymentViewModel.Card.CountryCode
+                },
+                StartDate = paymentViewModel.Card.StartDate,
+                IssueNumber = paymentViewModel.Card.IssueNumber,
+                YourPaymentMetaData = paymentViewModel.YourPaymentMetaData,
+                ClientDetails = clientService.GetClientDetails (),
+                Currency = paymentViewModel.Currency,
+                UserAgent = clientService.GetSDKVersion ()
+            };
 
-                Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
+            Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
 
-                return await task;
-            } catch (Exception e) {
-                var error = new JudoError () { 
-                    Exception = e,
-                    ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel () {
-                        ErrorMessage = e.InnerException.ToString ()
-                    }
-                };
-                throw error;
-                return null;
-            }
+            return await task;
+//            } catch (Exception e) {
+//                var error = new JudoError () { 
+//                    Exception = e,
+//                    ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel () {
+//                        ErrorMessage = (e.InnerException != null ? e.InnerException.ToString () : e.Message)
+//                    }
+//                };
+//                throw error;
+//               
+//             
+//
+//            }
 
         }
 
         public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation, IClientService clientService)
         {
             try {
+                JudoConfiguration.Instance.Validate ();
                 CardPaymentModel payment = new CardPaymentModel {
-                    JudoId = JudoConfiguration.Instance.JudoId,
+                    JudoId = (String.IsNullOrWhiteSpace (authorisation.JudoID) ? JudoConfiguration.Instance.JudoId : authorisation.JudoID),
                     YourPaymentReference = authorisation.PaymentReference,
                     YourConsumerReference = authorisation.ConsumerReference,
                     Amount = authorisation.Amount,
@@ -99,8 +103,9 @@ namespace JudoDotNetXamarin
         public async Task<IResult<ITransactionResult>> MakeTokenPayment (TokenPaymentViewModel tokenPayment, IClientService clientService)
         {
             try {
+                JudoConfiguration.Instance.Validate ();
                 TokenPaymentModel payment = new TokenPaymentModel {
-                    JudoId = JudoConfiguration.Instance.JudoId,
+                    JudoId = (String.IsNullOrWhiteSpace (tokenPayment.JudoID) ? JudoConfiguration.Instance.JudoId : tokenPayment.JudoID),
                     YourPaymentReference = tokenPayment.PaymentReference,
                     YourConsumerReference = tokenPayment.ConsumerReference,
                     Amount = tokenPayment.Amount,
@@ -128,19 +133,21 @@ namespace JudoDotNetXamarin
 
         public async Task<IResult<ITransactionResult>> MakeTokenPreAuthorisation (TokenPaymentViewModel tokenPayment, IClientService clientService)
         {
-            TokenPaymentModel payment = new TokenPaymentModel {
-                JudoId = JudoConfiguration.Instance.JudoId,
-                YourPaymentReference = tokenPayment.PaymentReference,
-                YourConsumerReference = tokenPayment.ConsumerReference,
-                Amount = tokenPayment.Amount,
-                CardToken = tokenPayment.Token,
-                CV2 = tokenPayment.CV2,
-                ConsumerToken = tokenPayment.ConsumerToken,
-                YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
-                ClientDetails = clientService.GetClientDetails (),
-                UserAgent = clientService.GetSDKVersion ()
-            };
             try {
+                JudoConfiguration.Instance.Validate ();
+                TokenPaymentModel payment = new TokenPaymentModel {
+                    JudoId = (String.IsNullOrWhiteSpace (tokenPayment.JudoID) ? JudoConfiguration.Instance.JudoId : tokenPayment.JudoID),
+                    YourPaymentReference = tokenPayment.PaymentReference,
+                    YourConsumerReference = tokenPayment.ConsumerReference,
+                    Amount = tokenPayment.Amount,
+                    CardToken = tokenPayment.Token,
+                    CV2 = tokenPayment.CV2,
+                    ConsumerToken = tokenPayment.ConsumerToken,
+                    YourPaymentMetaData = tokenPayment.YourPaymentMetaData,
+                    ClientDetails = clientService.GetClientDetails (),
+                    UserAgent = clientService.GetSDKVersion ()
+                };
+           
                 Task<IResult<ITransactionResult>> task = _judoAPI.PreAuths.Create (payment);
                 return await task;
             } catch (Exception e) {
@@ -158,27 +165,28 @@ namespace JudoDotNetXamarin
         public async Task<IResult<ITransactionResult>> RegisterCard (PaymentViewModel payment, IClientService clientService)
         {
 
-
-            var registerCard = new CardPaymentModel () {
-                JudoId = JudoConfiguration.Instance.JudoId,
-                YourPaymentReference = payment.PaymentReference,
-                YourConsumerReference = payment.ConsumerReference,
-                Amount = payment.Amount,
-                CardNumber = payment.Card.CardNumber,
-                CV2 = payment.Card.CV2,
-                ExpiryDate = payment.Card.ExpireDate,
-                CardAddress = new CardAddressModel () {
-                    PostCode = payment.Card.PostCode,
-                    CountryCode = (int)payment.Card.CountryCode
-                },
-                StartDate = payment.Card.StartDate,
-                IssueNumber = payment.Card.IssueNumber,
-                YourPaymentMetaData = payment.YourPaymentMetaData,
-                ClientDetails = clientService.GetClientDetails (),
-                UserAgent = clientService.GetSDKVersion (),
-                Currency = payment.Currency
-            };
             try {
+                JudoConfiguration.Instance.Validate ();
+                var registerCard = new CardPaymentModel () {                 
+                    JudoId = (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID),
+                    YourPaymentReference = payment.PaymentReference,
+                    YourConsumerReference = payment.ConsumerReference,
+                    Amount = payment.Amount,
+                    CardNumber = payment.Card.CardNumber,
+                    CV2 = payment.Card.CV2,
+                    ExpiryDate = payment.Card.ExpireDate,
+                    CardAddress = new CardAddressModel () {
+                        PostCode = payment.Card.PostCode,
+                        CountryCode = (int)payment.Card.CountryCode
+                    },
+                    StartDate = payment.Card.StartDate,
+                    IssueNumber = payment.Card.IssueNumber,
+                    YourPaymentMetaData = payment.YourPaymentMetaData,
+                    ClientDetails = clientService.GetClientDetails (),
+                    UserAgent = clientService.GetSDKVersion (),
+                    Currency = payment.Currency
+                };
+
                 Task<IResult<ITransactionResult>> task = _judoAPI.RegisterCards.Create (registerCard);
                 return await task;
             } catch (Exception e) {
@@ -211,5 +219,7 @@ namespace JudoDotNetXamarin
                 return null;
             }
         }
+       
+
     }
 }
