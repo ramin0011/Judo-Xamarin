@@ -187,6 +187,9 @@ namespace JudoDotNetXamariniOSSDK
         /// <param name="navigationController">Navigation controller from UI this can be Null for non-UI Mode API</param>
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure)
         {
+            if (registerCard.Amount == 0) {
+                registerCard.Amount = 1.01m;
+            }
 
             RootCheck (failure);
 

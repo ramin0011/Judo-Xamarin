@@ -166,7 +166,9 @@ namespace Android.Xamarin.SampleApp
 
         private void registerCard_Click (object sender, EventArgs e)
         {
-            JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), SuccessPayment, FailurePayment, this);
+            var payment = GetCardViewModel ();
+            payment.Amount = 1.01m;
+            JudoSDKManager.Instance.RegisterCard (payment, SuccessPayment, FailurePayment, this);
         }
 
         private PaymentViewModel GetCardViewModel ()
@@ -223,6 +225,10 @@ namespace Android.Xamarin.SampleApp
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
+
+            configInstance.ApiToken = "fMIH8rj64w4QXmjN";//live iridium
+            configInstance.ApiSecret = "f2bd75ae4f5fdcab7c6759f1e2e2c3dd94de05a03cc60b0cc621982dcf884f47";
+            configInstance.JudoId = "100915867";
 
 
             if (configInstance.ApiToken == null) {

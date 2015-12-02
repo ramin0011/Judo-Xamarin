@@ -154,6 +154,9 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void RegisterCard (PaymentViewModel registerCard, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
         {
+            if (registerCard.Amount == 0) {
+                registerCard.Amount = 1.01m;
+            }
             EvaluateRootCheck (failure);
             var innerModel = registerCard.Clone ();         
             _judoSdkApi.RegisterCard (innerModel, success, failure, context); 

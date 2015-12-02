@@ -155,7 +155,10 @@ namespace JudoPayiOSXamarinSampleApp
             });
 
             buttonDictionary.Add ("Register a Card", delegate {
-                JudoSDKManager.Instance.RegisterCard (GetCardViewModel (), successCallback, failureCallback);
+                var payment = GetCardViewModel ();
+                payment.Amount = 1.01m; //Minimum amount Gateways accept without question
+
+                JudoSDKManager.Instance.RegisterCard (payment, successCallback, failureCallback);
             });
             if (_clientService.ApplePayAvailable) {
 
@@ -225,7 +228,11 @@ namespace JudoPayiOSXamarinSampleApp
 				
                 CurrencyCode = new NSString ("GBP"),
                 CountryCode = new NSString (@"GB"),
-                SupportedNetworks = new NSString[3]{ new NSString ("Visa"), new NSString ("MasterCard"), new NSString ("Amex") },
+                SupportedNetworks = new NSString[3] {
+                    new NSString ("Visa"),
+                    new NSString ("MasterCard"),
+                    new NSString ("Amex")
+                },
                 SummaryItems = summaryItems,
                 TotalSummaryItem = new PKPaymentSummaryItem () {
                     Amount = new NSDecimalNumber ("1.00"),

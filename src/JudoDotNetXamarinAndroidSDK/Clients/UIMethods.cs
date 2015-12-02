@@ -118,7 +118,13 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_REGISTER_CARD.ToString ());
+            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference));
+            i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
+            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
+
+
             _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
             _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
 

@@ -22,7 +22,15 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
     {
         private Bundle judoMetaData;
         private CardEntryView cardEntryView;
+
         private Models.SConsumer judoConsumer;
+
+        protected string judoPaymentRef;
+        protected decimal judoAmount;
+        protected string judoId;
+        protected string judoCurrency;
+       
+
         private EditText addressLine1;
         private EditText addressLine2;
         private EditText addressLine3;
@@ -65,11 +73,30 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             SetHelpText (Resource.String.help_info, Resource.String.help_card_text);
             SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
 
+
+            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
             judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
 
-            if (judoConsumer == null) {
-                throw new IllegalArgumentException ("JUDO_CONSUMER must be supplied");
+            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
+
+            if (judoPaymentRef == null) {
+                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
             }
+            if (judoConsumer == null) {
+                throw new ArgumentException ("JUDO_CONSUMER must be supplied");
+            }
+            if (judoAmount == null) {
+                throw new ArgumentException ("JUDO_AMOUNT must be supplied");
+            } 
+            if (judoId == null) {
+                throw new ArgumentException ("JUDO_ID must be supplied");
+            }
+            if (judoCurrency == null) {
+                throw new ArgumentException ("JUDO_CURRENCY must be supplied");
+            }
+
 
             judoMetaData = Intent.GetBundleExtra (JudoSDKManager.JUDO_META_DATA);
 
@@ -136,9 +163,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             ShowLoadingSpinner (true);
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.Card = GatherCardDetails ();
- 
+            cardPayment.Currency = judoCurrency;
+            cardPayment.Amount = judoAmount;
+            cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-
 
             _paymentService.RegisterCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 

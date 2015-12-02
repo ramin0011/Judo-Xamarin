@@ -157,16 +157,26 @@ namespace JudoDotNetXamarin
 
         public async Task<IResult<ITransactionResult>> RegisterCard (PaymentViewModel payment, IClientService clientService)
         {
-            var registerCard = new RegisterCardModel () {
-                CardAddress = new CardAddressModel () {
-                    PostCode = payment.Card.PostCode
-                },
+
+
+            var registerCard = new CardPaymentModel () {
+                JudoId = JudoConfiguration.Instance.JudoId,
+                YourPaymentReference = payment.PaymentReference,
+                YourConsumerReference = payment.ConsumerReference,
+                Amount = payment.Amount,
                 CardNumber = payment.Card.CardNumber,
                 CV2 = payment.Card.CV2,
                 ExpiryDate = payment.Card.ExpireDate,
+                CardAddress = new CardAddressModel () {
+                    PostCode = payment.Card.PostCode,
+                    CountryCode = (int)payment.Card.CountryCode
+                },
                 StartDate = payment.Card.StartDate,
                 IssueNumber = payment.Card.IssueNumber,
-                YourConsumerReference = payment.ConsumerReference
+                YourPaymentMetaData = payment.YourPaymentMetaData,
+                ClientDetails = clientService.GetClientDetails (),
+                UserAgent = clientService.GetSDKVersion (),
+                Currency = payment.Currency
             };
             try {
                 Task<IResult<ITransactionResult>> task = _judoAPI.RegisterCards.Create (registerCard);
