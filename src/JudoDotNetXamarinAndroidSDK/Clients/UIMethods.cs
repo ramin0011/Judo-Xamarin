@@ -43,7 +43,7 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
             _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
             _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
@@ -59,7 +59,7 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, preAuthorisation.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (preAuthorisation.ConsumerReference));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, preAuthorisation.Amount.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (preAuthorisation.JudoID) ? JudoConfiguration.Instance.JudoId : preAuthorisation.JudoID));
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, preAuthorisation.Currency);
             _judoSuccessCallback = new Lazy<JudoSuccessCallback> (() => success);
             _judoFailureCallback = new Lazy<JudoFailureCallback> (() => failure);
@@ -75,7 +75,7 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference, payment.ConsumerToken));   
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
             i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, payment.Token);
             i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, new SCardToken () {
@@ -98,7 +98,7 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference, payment.ConsumerToken));   
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
             i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, payment.Token);
             i.PutExtra (JudoSDKManager.JUDO_CARD_DETAILS, new SCardToken () {
@@ -121,7 +121,7 @@ namespace JudoDotNetXamarinAndroidSDK
             i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, new SConsumer (payment.ConsumerReference));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_ID, JudoConfiguration.Instance.JudoId);
+            i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
             i.PutExtra (JudoSDKManager.JUDO_CURRENCY, payment.Currency);
 
 

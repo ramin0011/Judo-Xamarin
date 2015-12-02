@@ -175,6 +175,7 @@ namespace Android.Xamarin.SampleApp
         {
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
+                JudoID = "100915862",
                 ConsumerReference = consumerRef,
                 PaymentReference = paymentReference,
                 Currency = "GBP",
@@ -194,6 +195,7 @@ namespace Android.Xamarin.SampleApp
         {
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
+            
                 ConsumerReference = consumerRef,
                 PaymentReference = paymentReference,
                 Currency = "GBP",

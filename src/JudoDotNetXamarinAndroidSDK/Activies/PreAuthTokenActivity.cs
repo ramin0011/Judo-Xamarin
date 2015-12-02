@@ -31,6 +31,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 Amount = judoAmount,
                 ConsumerToken = judoConsumer.ConsumerToken,
                 CardType = judoCardToken.CardType,
+                JudoID = judoId,
                 Token = judoCardToken.Token,
                 ConsumerReference = judoConsumer.YourConsumerReference,
                 PaymentReference = judoPaymentRef,

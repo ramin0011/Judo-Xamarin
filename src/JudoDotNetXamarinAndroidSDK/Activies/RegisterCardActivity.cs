@@ -164,6 +164,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.Card = GatherCardDetails ();
             cardPayment.Currency = judoCurrency;
+            cardPayment.JudoID = judoId;
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;

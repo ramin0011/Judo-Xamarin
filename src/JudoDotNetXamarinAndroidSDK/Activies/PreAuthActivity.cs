@@ -30,6 +30,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             ShowLoadingSpinner (true);
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.Card = GatherCardDetails ();
+            cardPayment.JudoID = judoId;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;

@@ -21,6 +21,22 @@ namespace JudoDotNetXamarin
                 failureCallback (judoError);
             }
         }
+
+        public static JudoError FlattenToJudoError (this AggregateException errors)
+        {
+          
+            List<JudoModelError> models = new List<JudoModelError> (); 
+            foreach (Exception em in errors.InnerExceptions) {
+                models.Add (new JudoModelError (){ ErrorMessage = em.Message });
+            }
+            var judoError = new JudoError () {
+                Exception = errors.InnerException,
+                ApiError = new JudoApiErrorModel (){ ModelErrors = models }
+            };
+
+            return judoError;
+
+        }
     }
 }
 
