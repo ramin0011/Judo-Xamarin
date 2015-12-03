@@ -34,12 +34,7 @@ namespace JudoDotNetXamariniOSSDK
     [Register ("SecureWebView")]
     internal partial class SecureWebView :UIWebView
     {
-        public string TargetUrl {
-            get;
-            set;
-        }
 
-		
         public SecureWebView (IntPtr p) : base (p)
         {
             this.LoadFinished += delegate {

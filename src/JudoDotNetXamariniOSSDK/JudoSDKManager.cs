@@ -323,7 +323,7 @@ namespace JudoDotNetXamariniOSSDK
 
             try {
                 DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                    secureWebView.TargetUrl = req.Url.ToString ();
+                  
                     secureWebView.LoadRequest (req);
 
                     JudoSDKManager.HideLoading ();
