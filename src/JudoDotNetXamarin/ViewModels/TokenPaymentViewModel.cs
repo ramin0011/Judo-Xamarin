@@ -3,17 +3,17 @@ using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarin
 {
-	public class TokenPaymentViewModel :BasePaymentViewModel
-	{
+    public class TokenPaymentViewModel :BasePaymentViewModel
+    {
         /// <summary>
         /// Card Token
         /// </summary>
-		public string Token { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// Card Token
         /// </summary>
-		public string CV2 { get; set; }
+        public string CV2 { get; set; }
 
         /// <summary>
         /// your consumer token
@@ -55,22 +55,22 @@ namespace JudoDotNetXamarin
         /// </summary>
         public CardType CardType { get; set; }
 
-		public TokenPaymentViewModel Clone()
-		{
-			return new TokenPaymentViewModel
-			{
-				Token = this.Token,
-				CV2 = this.CV2,
-				CardType = this.CardType,
-				ConsumerToken = this.ConsumerToken,
-				Amount = this.Amount,
-				PaymentReference = this.PaymentReference,
-				Currency = this.Currency,
-				LastFour = this.LastFour,
-				ConsumerReference = this.ConsumerReference,
-				YourPaymentMetaData = this.YourPaymentMetaData,
-			}; 
-		}
+        public TokenPaymentViewModel Clone ()
+        {
+            return new TokenPaymentViewModel {
+                Token = this.Token,
+                CV2 = this.CV2,
+                JudoID = this.JudoID,
+                CardType = this.CardType,
+                ConsumerToken = this.ConsumerToken,
+                Amount = this.Amount,
+                PaymentReference = this.PaymentReference,
+                Currency = this.Currency,
+                LastFour = this.LastFour,
+                ConsumerReference = this.ConsumerReference,
+                YourPaymentMetaData = this.YourPaymentMetaData,
+            }; 
+        }
     }
 }
 

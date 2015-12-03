@@ -175,7 +175,6 @@ namespace Android.Xamarin.SampleApp
         {
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
-                JudoID = "100915862",
                 ConsumerReference = consumerRef,
                 PaymentReference = paymentReference,
                 Currency = "GBP",
@@ -195,7 +194,6 @@ namespace Android.Xamarin.SampleApp
         {
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
-            
                 ConsumerReference = consumerRef,
                 PaymentReference = paymentReference,
                 Currency = "GBP",
@@ -227,11 +225,6 @@ namespace Android.Xamarin.SampleApp
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
-
-            configInstance.ApiToken = "fMIH8rj64w4QXmjN";//live iridium
-            configInstance.ApiSecret = "f2bd75ae4f5fdcab7c6759f1e2e2c3dd94de05a03cc60b0cc621982dcf884f47";
-            configInstance.JudoId = "100915867";
-
 
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
