@@ -12,10 +12,12 @@ using Foundation;
 using UIKit;
 using CoreFoundation;
 using CoreGraphics;
+
 // Mappings Unified CoreGraphic classes to MonoTouch classes
 using RectangleF = global::CoreGraphics.CGRect;
 using SizeF = global::CoreGraphics.CGSize;
 using PointF = global::CoreGraphics.CGPoint;
+
 #else
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
@@ -29,97 +31,108 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK
 {
-	[Register("SecureWebView")]
-	internal partial class SecureWebView :UIWebView
-	{
+    [Register ("SecureWebView")]
+    internal partial class SecureWebView :UIWebView
+    {
+        public string TargetUrl {
+            get;
+            set;
+        }
+
 		
-		public SecureWebView(IntPtr p) : base(p)
-		{
-			this.LoadFinished+= delegate {
-				this.ScrollView.SetZoomScale(2.0f,true);
-			};
-			this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
+        public SecureWebView (IntPtr p) : base (p)
+        {
+            this.LoadFinished += delegate {
+                this.ScrollView.SetZoomScale (2.0f, true);
+            };
+            this.ShouldStartLoad = (UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType) => {
 				
-				if(request.Url.ToString().Contains("threedsecurecallback") && ReceiptID !=null)
-				{
-					Dictionary<string,string> queryStringDictionary = new Dictionary<string,string>();
+                if (request.Url.ToString ().Contains ("threedsecurecallback") && ReceiptID != null) {
+                    Dictionary<string,string> queryStringDictionary = new Dictionary<string,string> ();
 
-					var TrackTraceDataArray = request.Body.ToString().Split (new char[] { '&' });
+                    var TrackTraceDataArray = request.Body.ToString ().Split (new char[] { '&' });
 
-					foreach (string keyValuePair in TrackTraceDataArray)
-					{
-						var pairComponents = keyValuePair.Split (new char[] { '=' });
-						string key =pairComponents.First();
-						string value =pairComponents.Last();
-						queryStringDictionary.Add(key,value);
-					}
+                    foreach (string keyValuePair in TrackTraceDataArray) {
+                        var pairComponents = keyValuePair.Split (new char[] { '=' });
+                        string key = pairComponents.First ();
+                        string value = pairComponents.Last ();
+                        queryStringDictionary.Add (key, value);
+                    }
 
-					_paymentService.CompleteDSecure (ReceiptID,queryStringDictionary["PaRes"],queryStringDictionary["MD"]).ContinueWith (reponse => {
-						var result = reponse.Result;
-						if (result != null && !result.HasError && result.Response.Result != "Declined") {
-							var paymentreceipt = result.Response as PaymentReceiptModel;
+                    NSString paRes = new NSString (queryStringDictionary ["PaRes"]);
+                    var paResUnEncoded = paRes.CreateStringByRemovingPercentEncoding ().ToString ();
+                    paResUnEncoded = paResUnEncoded.Replace ("\r\n", string.Empty);
 
-							if (paymentreceipt != null) {
-								// call success callback
-								if (_successCallback != null)
+                    NSString md = new NSString (queryStringDictionary ["MD"]);
+                    var mdUnEncoded = md.CreateStringByRemovingPercentEncoding ().ToString ();
+                    mdUnEncoded = mdUnEncoded.Replace ("\r\n", string.Empty);
+                    _paymentService.CompleteDSecure (ReceiptID, paResUnEncoded, mdUnEncoded).ContinueWith (reponse => {
+                        var result = reponse.Result;
+                        if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                            var paymentreceipt = result.Response as PaymentReceiptModel;
 
-									_successCallback (paymentreceipt);
+                            if (paymentreceipt != null) {
+                                // call success callback
+                                if (_successCallback != null)
+                                    _successCallback (paymentreceipt);
 								
-							} else {
-								throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-							}
+                            } else {
+                                throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+                            }
 
-						} else {
-							// Failure callback
-							if (_failureCallback != null) {
-								var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-								var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+                        } else {
+                            // Failure callback
+                            if (_failureCallback != null) {
+                                var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                                var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
 
-								if (paymentreceipt != null) {
-									// send receipt even we got card declined
+                                if (paymentreceipt != null) {
+                                    // send receipt even we got card declined
 
-									_failureCallback (judoError, paymentreceipt);
+                                    _failureCallback (judoError, paymentreceipt);
 
-								} else {
+                                } else {
 
-									_failureCallback (judoError);
+                                    _failureCallback (judoError);
 
-								}
-							}
-						}
-					});
+                                }
+                            }
+                        }
+                    });
 
-				}
+                }
 
-				return true;
-		};
-		}
-
-
+                return true;
+            };
+        }
 
 
 
-		private IPaymentService _paymentService;
-		public string ReceiptID;
-		public SuccessCallback _successCallback {  get; set; }
-		public FailureCallback _failureCallback {  get; set; }
 
 
-		public void SetupWebView(IPaymentService paymentService,SuccessCallback successCallback,FailureCallback failureCallback)
-		{
-			_paymentService = paymentService;
-			_successCallback = successCallback;
-			_failureCallback = failureCallback;
-		}
+        private IPaymentService _paymentService;
+        public string ReceiptID;
 
-		public override void LoadRequest (NSUrlRequest r)
-		{
-			base.LoadRequest (r);
-		}
+        public SuccessCallback _successCallback { get; set; }
+
+        public FailureCallback _failureCallback { get; set; }
+
+
+        public void SetupWebView (IPaymentService paymentService, SuccessCallback successCallback, FailureCallback failureCallback)
+        {
+            _paymentService = paymentService;
+            _successCallback = successCallback;
+            _failureCallback = failureCallback;
+        }
+
+        public override void LoadRequest (NSUrlRequest r)
+        {
+            base.LoadRequest (r);
+        }
 
 
 	
 
-	}
+    }
 }
 
