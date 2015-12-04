@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Widget;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
+using JudoDotNetXamarinAndroidSDK.Utils;
 
 namespace JudoDotNetXamarinAndroidSDK.Activies
 {
@@ -29,7 +30,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
             ShowLoadingSpinner (true);
             PaymentViewModel cardPayment = new PaymentViewModel ();
-            cardPayment.Card = GatherCardDetails ();
+            CardViewModel card;
+            UiUtils.GatherCardDetails (cardEntryView, avsEntryView, startDateEntryView, out card);
+            cardPayment.Card = card;
             cardPayment.JudoID = judoId;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
@@ -42,38 +45,38 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             _paymentService.PreAuthoriseCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }
 
-        CardViewModel GatherCardDetails ()
-        {
-            var cardNumber = cardEntryView.GetCardNumber ();
-            var expiryDate = cardEntryView.GetCardExpiry ();
-            var cv2 = cardEntryView.GetCardCV2 ();
-            BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
-            CardAddressModel cardAddress = new CardAddressModel ();
-
-            if (JudoSDKManager.AVSEnabled) {
-                country = avsEntryView.GetCountry ();
-                cardAddress.PostCode = avsEntryView.GetPostCode ();
-            }
-
-            string startDate = null;
-            string issueNumber = null;
-
-            if (JudoSDKManager.MaestroAccepted) {
-                issueNumber = startDateEntryView.GetIssueNumber ();
-                startDate = startDateEntryView.GetStartDate ();
-            }
-
-            var cardPayment = new CardViewModel () {
-                CardNumber = cardNumber,
-                CountryCode = country.GetISOCode (),
-                CV2 = cv2,
-                ExpireDate = expiryDate,
-                IssueNumber = issueNumber,
-                StartDate = startDate,
-                PostCode = cardAddress.PostCode,
-            };
-
-            return cardPayment;
-        }
+        //        CardViewModel GatherCardDetails ()
+        //        {
+        //            var cardNumber = cardEntryView.GetCardNumber ();
+        //            var expiryDate = cardEntryView.GetCardExpiry ();
+        //            var cv2 = cardEntryView.GetCardCV2 ();
+        //            BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
+        //            CardAddressModel cardAddress = new CardAddressModel ();
+        //
+        //            if (JudoSDKManager.AVSEnabled) {
+        //                country = avsEntryView.GetCountry ();
+        //                cardAddress.PostCode = avsEntryView.GetPostCode ();
+        //            }
+        //
+        //            string startDate = null;
+        //            string issueNumber = null;
+        //
+        //            if (JudoSDKManager.MaestroAccepted) {
+        //                issueNumber = startDateEntryView.GetIssueNumber ();
+        //                startDate = startDateEntryView.GetStartDate ();
+        //            }
+        //
+        //            var cardPayment = new CardViewModel () {
+        //                CardNumber = cardNumber,
+        //                CountryCode = country.GetISOCode (),
+        //                CV2 = cv2,
+        //                ExpireDate = expiryDate,
+        //                IssueNumber = issueNumber,
+        //                StartDate = startDate,
+        //                PostCode = cardAddress.PostCode,
+        //            };
+        //
+        //            return cardPayment;
+        //        }
     }
 }

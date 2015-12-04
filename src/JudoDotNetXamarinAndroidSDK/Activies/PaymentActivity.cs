@@ -142,7 +142,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         {
             PaymentViewModel cardPayment = new PaymentViewModel ();
             cardPayment.JudoID = judoId;
-            cardPayment.Card = GatherCardDetails ();
+            CardViewModel card;
+            UiUtils.GatherCardDetails (cardEntryView, avsEntryView, startDateEntryView, out card);
+            cardPayment.Card = card;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;
@@ -165,41 +167,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
                 FindViewById (Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
 
             });
-        }
-
-        CardViewModel GatherCardDetails ()
-        {
-            var cardNumber = cardEntryView.GetCardNumber ();
-            var expiryDate = cardEntryView.GetCardExpiry ();
-            var cv2 = cardEntryView.GetCardCV2 ();
-            BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
-            CardAddressModel cardAddress = new CardAddressModel ();
-
-            if (JudoSDKManager.AVSEnabled) {
-                country = avsEntryView.GetCountry ();
-                cardAddress.PostCode = avsEntryView.GetPostCode ();
-            }
-
-            string startDate = null;
-            string issueNumber = null;
-
-            if (JudoSDKManager.MaestroAccepted) {
-                issueNumber = startDateEntryView.GetIssueNumber ();
-                startDate = startDateEntryView.GetStartDate ();
-            }
-
-		
-            var cardPayment = new CardViewModel () {
-                CardNumber = cardNumber,
-                CountryCode = country.GetISOCode (),
-                CV2 = cv2,
-                ExpireDate = expiryDate,
-                IssueNumber = issueNumber,
-                StartDate = startDate,
-                PostCode = cardAddress.PostCode,	
-            };
-
-            return cardPayment;
         }
 
         protected override void OnSaveInstanceState (Bundle outState)
