@@ -197,39 +197,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
 
         }
 
-        //        CardViewModel GatherCardDetails ()
-        //        {
-        //            var cardNumber = cardEntryView.GetCardNumber ();
-        //            var expiryDate = cardEntryView.GetCardExpiry ();
-        //            var cv2 = cardEntryView.GetCardCV2 ();
-        //            BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
-        //            CardAddressModel cardAddress = new CardAddressModel ();
-        //
-        //            if (JudoSDKManager.AVSEnabled) {
-        //                cardAddress.PostCode = addressPostCode.Text;
-        //            }
-        //
-        //            string startDate = null;
-        //            string issueNumber = null;
-        //
-        //            if (JudoSDKManager.MaestroAccepted) {
-        //                issueNumber = startDateEntryView.GetIssueNumber ();
-        //                startDate = startDateEntryView.GetStartDate ();
-        //            }
-        //
-        //            var cardPayment = new CardViewModel () {
-        //                CardNumber = cardNumber,
-        //                CountryCode = country.GetISOCode (),
-        //                CV2 = cv2,
-        //                ExpireDate = expiryDate,
-        //                IssueNumber = issueNumber,
-        //                StartDate = startDate,
-        //                PostCode = cardAddress.PostCode,
-        //            };
-        //
-        //            return cardPayment;
-        //        }
-
         protected override void ShowLoadingSpinner (bool show)
         {
             RunOnUiThread (() => {
