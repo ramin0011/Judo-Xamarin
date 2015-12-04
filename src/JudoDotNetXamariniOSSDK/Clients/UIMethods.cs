@@ -120,6 +120,10 @@ namespace JudoDotNetXamariniOSSDK.Clients
             while (vc.PresentedViewController != null) {
                 vc = vc.PresentedViewController;
             }
+            if (vc is UISplitViewController) {
+                var splitView = vc as UISplitViewController;
+                return splitView.ViewControllers [0];
+            }
             return vc;
         }
     }

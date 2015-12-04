@@ -6,6 +6,7 @@ using JudoDotNetXamarin;
 using JudoDotNetXamariniOSSDK.Services;
 using JudoPayDotNet.Models;
 using UIKit;
+using CoreFoundation;
 
 #if __UNIFIED__
 
@@ -63,7 +64,9 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                             if (paymentreceipt != null) {
                                 // call success callback
                                 if (_successCallback != null)
-                                    _successCallback (paymentreceipt);
+                                    CloseView ();
+                                _successCallback (paymentreceipt);
+                                
 								
                             } else {
                                 throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
@@ -77,12 +80,13 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
                                 if (paymentreceipt != null) {
                                     // send receipt even we got card declined
-
+                                    CloseView ();
                                     _failureCallback (judoError, paymentreceipt);
-
+                                   
                                 } else {
-
+                                    CloseView ();
                                     _failureCallback (judoError);
+
 
                                 }
                             }
@@ -95,14 +99,27 @@ namespace JudoDotNetXamariniOSSDK.Controllers
             };
         }
 
+        void CloseView ()
+        {
+            DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                var window = UIApplication.SharedApplication.KeyWindow;
+                var vc = window.RootViewController;
+                while (vc.PresentedViewController != null) {
+                    vc = vc.PresentedViewController;
 
+                }
+                if (vc is UISplitViewController) {
+                    var splitView = vc as UISplitViewController;
+                    vc = splitView.ViewControllers [0];
+                }
 
+                vc.DismissViewController (true, null);
+            });
 
+        }
 
         private IPaymentService _paymentService;
         public string ReceiptID;
-
-
 
         public JudoSuccessCallback _successCallback { get; set; }
 
@@ -120,9 +137,6 @@ namespace JudoDotNetXamariniOSSDK.Controllers
         {
             base.LoadRequest (r);
         }
-
-
-	
 
     }
 }

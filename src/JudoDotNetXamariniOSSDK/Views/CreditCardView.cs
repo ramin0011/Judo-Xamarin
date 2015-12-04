@@ -11,6 +11,7 @@ using JudoDotNetXamariniOSSDK.Views.TableCells.Card;
 using JudoPayDotNet.Models;
 using UIKit;
 using JudoPayDotNet.Errors;
+using CoreFoundation;
 
 
 #if __UNIFIED__
@@ -73,8 +74,6 @@ namespace JudoDotNetXamariniOSSDK.Views
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 this.View.Superview.RepositionFormSheetForiPad ();
             }
-
-
 
         }
 
@@ -333,17 +332,22 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                                 if (paymentreceipt != null) {
                                     // call success callback
-                                    if (successCallback != null)
+                                    if (successCallback != null) {
+                                        this.CloseView ();
                                         successCallback (paymentreceipt);
+                                    }
+                                   
                                 } else {
                                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                                     if (threedDSecureReceipt != null) {
+                                        this.CloseView ();
                                         failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
                                                 ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
                                                 ErrorType = JudoApiError.General_Error,
                                                 ModelErrors = null
                                             }
                                         });
+                                       
                                     } else {
                                         throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                                     }
@@ -357,11 +361,13 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                                     if (paymentreceipt != null) {
                                         // send receipt even we got card declined
-
+                                        this.CloseView ();
                                         failureCallback (judoError, paymentreceipt);
-                                    } else {
 
+                                    } else {
+                                        this.CloseView ();
                                         failureCallback (judoError);
+                                       
                                     }
                                 }
                             }
@@ -375,7 +381,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                 // Failure callback
                 if (failureCallback != null) {
                     var judoError = new JudoError { Exception = ex };
+                    this.CloseView ();
                     failureCallback (judoError);
+
                 }
             } 
 	
@@ -412,7 +420,6 @@ namespace JudoDotNetXamariniOSSDK.Views
 
             return cardViewModel;
         }
-			
 
     }
 

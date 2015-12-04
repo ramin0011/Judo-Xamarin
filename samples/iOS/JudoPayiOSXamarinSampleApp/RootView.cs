@@ -79,7 +79,7 @@ namespace JudoPayiOSXamarinSampleApp
             cardType = receipt.CardDetails.CardType;
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 // move back to home screen
-                CloseView ();
+                //  CloseView ();
 
   
                 // show receipt
@@ -93,7 +93,7 @@ namespace JudoPayiOSXamarinSampleApp
         {
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 // move back to home screen
-                CloseView ();
+                // CloseView ();
                 // show receipt
                 string title = "Error";
                 string message = "";

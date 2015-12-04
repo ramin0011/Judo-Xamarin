@@ -177,15 +177,19 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                     if (reponse.Exception != null) {
                         LoadingScreen.HideLoading ();
+                        this.CloseView ();
                         reponse.Exception.FlattenToJudoFailure (failureCallback);
+                      
                     } else {
                         var result = reponse.Result;
                         if (result != null && !result.HasError && result.Response.Result != "Declined") {
                             PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
                       
                             // call success callback
-                            if (successCallback != null)
+                            if (successCallback != null) {
+                                this.CloseView ();
                                 successCallback (paymentreceipt);
+                            }
 
                         } else {
                             // Failure callback
@@ -195,8 +199,10 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                                 if (paymentreceipt != null) {
                                     // send receipt even we got card declined
+                                    this.CloseView ();
                                     failureCallback (judoError, paymentreceipt);
                                 } else {
+                                    this.CloseView ();
                                     failureCallback (judoError);
                                 }
                             }
@@ -213,6 +219,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 // Failure callback
                 if (failureCallback != null) {
                     var judoError = new JudoError { Exception = ex };
+                    this.CloseView ();
                     failureCallback (judoError);
                 }
             }
