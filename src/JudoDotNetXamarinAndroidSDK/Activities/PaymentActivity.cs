@@ -12,7 +12,7 @@ using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     public class PaymentActivity : BaseActivity
     {

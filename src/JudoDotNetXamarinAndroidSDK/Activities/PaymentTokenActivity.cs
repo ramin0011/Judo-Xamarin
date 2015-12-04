@@ -12,7 +12,7 @@ using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     [Activity (Label = "PaymentTokenActivity")]
     public class PaymentTokenActivity : BaseActivity

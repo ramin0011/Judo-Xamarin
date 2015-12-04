@@ -5,7 +5,7 @@ using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Utils;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     public class PreAuthActivity : PaymentActivity
     {

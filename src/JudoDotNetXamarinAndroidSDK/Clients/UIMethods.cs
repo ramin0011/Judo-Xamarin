@@ -2,7 +2,7 @@ using JudoDotNetXamarin;
 using Android.Content;
 using Android.App;
 using JudoDotNetXamarinAndroidSDK.Models;
-using JudoDotNetXamarinAndroidSDK.Activies;
+using JudoDotNetXamarinAndroidSDK.Activities;
 using System;
 using Result = Android.App.Result;
 using JudoPayDotNet.Models;

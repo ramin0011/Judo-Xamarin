@@ -15,7 +15,7 @@ using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using System;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     [Activity (Label = "RegisterCardActivity")]
     public class RegisterCardActivity : BaseActivity

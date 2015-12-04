@@ -11,7 +11,7 @@ using JudoPayDotNet.Models;
 using JudoPayDotNet.Errors;
 using JudoDotNetXamarin;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     public static class BuildConfig
     {

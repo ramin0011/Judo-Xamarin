@@ -59,12 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activies\BaseActivity.cs" />
-    <Compile Include="Activies\PaymentActivity.cs" />
-    <Compile Include="Activies\PaymentTokenActivity.cs" />
-    <Compile Include="Activies\PreAuthActivity.cs" />
-    <Compile Include="Activies\PreAuthTokenActivity.cs" />
-    <Compile Include="Activies\RegisterCardActivity.cs" />
     <Compile Include="Clients\NonUIMethods.cs" />
     <Compile Include="Clients\UIMethods.cs" />
     <Compile Include="Models\MetaData.cs" />
@@ -97,6 +91,12 @@
     <Compile Include="Models\SJudoError.cs" />
     <Compile Include="Models\SCardToken.cs" />
     <Compile Include="Models\SReceipt.cs" />
+    <Compile Include="Activities\BaseActivity.cs" />
+    <Compile Include="Activities\PaymentActivity.cs" />
+    <Compile Include="Activities\PaymentTokenActivity.cs" />
+    <Compile Include="Activities\PreAuthActivity.cs" />
+    <Compile Include="Activities\PreAuthTokenActivity.cs" />
+    <Compile Include="Activities\RegisterCardActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -5,7 +5,7 @@ using Android.Widget;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 
-namespace JudoDotNetXamarinAndroidSDK.Activies
+namespace JudoDotNetXamarinAndroidSDK.Activities
 {
     [Activity (Label = "PreAuthTokenActivity")]
     public class PreAuthTokenActivity : PaymentTokenActivity
