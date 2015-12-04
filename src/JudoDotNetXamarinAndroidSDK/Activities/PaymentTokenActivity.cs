@@ -45,14 +45,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
             SetUpDelegates ();
 
-           
-
-
-
-
             cv2EntryView.SetCardDetails (judoCardToken);
-
-
 
             clientService = new ClientService ();
             factory = new ServiceFactory ();
