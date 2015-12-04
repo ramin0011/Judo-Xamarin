@@ -30,16 +30,63 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         IPaymentService _paymentService;
         ServiceFactory factory;
 
+        Button payButton;
+
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
             SetContentView (Resource.Layout.token_payment);
-            SetTitle (Resource.String.title_payment_token);
-            cv2EntryView = FindViewById<CV2EntryView> (Resource.Id.cv2EntryView);
 
-            SetHelpText (Resource.String.help_info, Resource.String.help_cv2_text);
-            SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
+            SetResources ();
 
+            UnbundleIntent ();
+
+            WireUpUI ();
+
+            SetUpDelegates ();
+
+           
+
+
+
+
+            cv2EntryView.SetCardDetails (judoCardToken);
+
+
+
+            clientService = new ClientService ();
+            factory = new ServiceFactory ();
+            _paymentService = factory.GetPaymentService (); 
+
+           
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
+        }
+
+        void SetUpDelegates ()
+        {
+            cv2EntryView.NoLongerComplete += () => {
+                payButton.Enabled = false;
+            };
+            cv2EntryView.OnCreditCardEntered += (creditCardNumber) => {
+                payButton.Enabled = true;
+            };
+
+        }
+
+        void WireUpUI ()
+        {
+
+            payButton = FindViewById<Button> (Resource.Id.payButton);
+            payButton.Enabled = false;
+
+            payButton.Text = Resources.GetString (Resource.String.token_payment);
+            payButton.Click += (sender, args) => TransactClickHandler (MakeTokenPayment);
+        }
+
+        void UnbundleIntent ()
+        {
             judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
 
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
@@ -47,6 +94,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
             judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<SCardToken> ();
             judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
+            judoMetaData = Intent.GetParcelableExtra (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
             if (judoCardToken.CardType != null) {
                 cv2EntryView.CurrentCard = judoCardToken.CardType;  
             }
@@ -68,30 +116,15 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             if (judoCardToken == null) {
                 throw new ArgumentException ("JUDO_CARD_DETAILS must be supplied");
             }
+        }
 
-            cv2EntryView.SetCardDetails (judoCardToken);
+        void SetResources ()
+        {
+            SetTitle (Resource.String.title_payment_token);
+            cv2EntryView = FindViewById<CV2EntryView> (Resource.Id.cv2EntryView);
 
-            judoMetaData = Intent.GetParcelableExtra (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
-
-            var payButton = FindViewById<Button> (Resource.Id.payButton);
-            payButton.Enabled = false;
-
-            payButton.Text = Resources.GetString (Resource.String.token_payment);
-            payButton.Click += (sender, args) => TransactClickHandler (MakeTokenPayment);
-            clientService = new ClientService ();
-            factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
-
-            cv2EntryView.NoLongerComplete += () => {
-                payButton.Enabled = false;
-            };
-            cv2EntryView.OnCreditCardEntered += (creditCardNumber) => {
-                payButton.Enabled = true;
-            };
-
-            if (bundle != null) {
-                RestoreState (bundle);
-            }
+            SetHelpText (Resource.String.help_info, Resource.String.help_cv2_text);
+            SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
         }
 
         public override void OnBackPressed ()

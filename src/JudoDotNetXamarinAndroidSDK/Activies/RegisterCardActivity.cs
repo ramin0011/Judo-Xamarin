@@ -45,69 +45,35 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
         IPaymentService _paymentService;
         ServiceFactory factory;
 
+        Button payButton;
 
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
             SetContentView (Resource.Layout.register_card);
-            SetTitle (Resource.String.title_register_card);
+
+
+            SetResources ();
+
+            UnbundleIntent ();
+
+            WireUpButtons ();
+
+            SetUpDelegates ();
+
+           
 
             clientService = new ClientService ();
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 
 
-            cardEntryView = FindViewById<CardEntryView> (Resource.Id.cardEntryView);
-            TextView hintTextView = FindViewById<TextView> (Resource.Id.hintTextView);
-            cardEntryView.HintTextView = hintTextView;
-            avsEntryView = FindViewById<AVSEntryView> (Resource.Id.avsEntryView);
-            startDateEntryView = FindViewById<StartDateIssueNumberEntryView> (Resource.Id.startDateEntryView);
-
-            cv2ExpiryHelpInfoButton = FindViewById<HelpButton> (Resource.Id.infoButtonID);
-
-            addressLine1 = FindViewById<EditText> (Resource.Id.addressLine1);
-            addressLine2 = FindViewById<EditText> (Resource.Id.addressLine2);
-            addressLine3 = FindViewById<EditText> (Resource.Id.addressLine3);
-            addressTown = FindViewById<EditText> (Resource.Id.addressTown);
-            addressPostCode = FindViewById<EditText> (Resource.Id.addressPostCode);
-            
-            SetHelpText (Resource.String.help_info, Resource.String.help_card_text);
-            SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
-
-
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
-
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-
-            if (judoPaymentRef == null) {
-                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
+            if (bundle != null) {
+                RestoreState (bundle);
             }
-            if (judoConsumer == null) {
-                throw new ArgumentException ("JUDO_CONSUMER must be supplied");
-            }
-            if (judoAmount == null) {
-                throw new ArgumentException ("JUDO_AMOUNT must be supplied");
-            } 
-            if (judoId == null) {
-                throw new ArgumentException ("JUDO_ID must be supplied");
-            }
-            if (judoCurrency == null) {
-                throw new ArgumentException ("JUDO_CURRENCY must be supplied");
-            }
+        }
 
-
-            judoMetaData = Intent.GetBundleExtra (JudoSDKManager.JUDO_META_DATA);
-
-            var payButton = FindViewById<Button> (Resource.Id.payButton);
-
-            payButton.SetText (Resource.String.register_card);
-
-            payButton.Click += (sender, args) => TransactClickHandler (RegisterCard);
-
-            payButton.Enabled = false;
-
+        void SetUpDelegates ()
+        {
             cardEntryView.OnCreditCardEntered += cardNumber => {
                 cv2ExpiryHelpInfoButton.Visibility = ViewStates.Visible;
             };
@@ -145,11 +111,67 @@ namespace JudoDotNetXamarinAndroidSDK.Activies
             cardEntryView.NoLongerComplete += () => {
                 payButton.Enabled = false;
             };
+        }
 
+        void WireUpButtons ()
+        {
+            payButton = FindViewById<Button> (Resource.Id.payButton);
 
-            if (bundle != null) {
-                RestoreState (bundle);
+            payButton.SetText (Resource.String.register_card);
+
+            payButton.Click += (sender, args) => TransactClickHandler (RegisterCard);
+
+            payButton.Enabled = false;
+        }
+
+        void UnbundleIntent ()
+        {
+            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
+            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
+
+            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
+
+            if (judoPaymentRef == null) {
+                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
             }
+            if (judoConsumer == null) {
+                throw new ArgumentException ("JUDO_CONSUMER must be supplied");
+            }
+            if (judoAmount == null) {
+                throw new ArgumentException ("JUDO_AMOUNT must be supplied");
+            } 
+            if (judoId == null) {
+                throw new ArgumentException ("JUDO_ID must be supplied");
+            }
+            if (judoCurrency == null) {
+                throw new ArgumentException ("JUDO_CURRENCY must be supplied");
+            }
+
+
+            judoMetaData = Intent.GetBundleExtra (JudoSDKManager.JUDO_META_DATA);
+        }
+
+        void SetResources ()
+        {
+            SetTitle (Resource.String.title_register_card);
+            cardEntryView = FindViewById<CardEntryView> (Resource.Id.cardEntryView);
+            TextView hintTextView = FindViewById<TextView> (Resource.Id.hintTextView);
+            cardEntryView.HintTextView = hintTextView;
+            avsEntryView = FindViewById<AVSEntryView> (Resource.Id.avsEntryView);
+            startDateEntryView = FindViewById<StartDateIssueNumberEntryView> (Resource.Id.startDateEntryView);
+
+            cv2ExpiryHelpInfoButton = FindViewById<HelpButton> (Resource.Id.infoButtonID);
+
+            addressLine1 = FindViewById<EditText> (Resource.Id.addressLine1);
+            addressLine2 = FindViewById<EditText> (Resource.Id.addressLine2);
+            addressLine3 = FindViewById<EditText> (Resource.Id.addressLine3);
+            addressTown = FindViewById<EditText> (Resource.Id.addressTown);
+            addressPostCode = FindViewById<EditText> (Resource.Id.addressPostCode);
+
+            SetHelpText (Resource.String.help_info, Resource.String.help_card_text);
+            SetHelpText (Resource.String.help_postcode_title, Resource.String.help_postcode_text, Resource.Id.postCodeHelpButton);
         }
 
         public override void OnBackPressed ()
