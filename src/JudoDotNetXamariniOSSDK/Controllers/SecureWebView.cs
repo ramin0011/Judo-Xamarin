@@ -8,7 +8,9 @@ using JudoPayDotNet.Models;
 using UIKit;
 
 #if __UNIFIED__
+
 // Mappings Unified CoreGraphic classes to MonoTouch classes
+
 
 #else
 using MonoTouch.UIKit;
@@ -26,7 +28,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
     [Register ("SecureWebView")]
     internal partial class SecureWebView :UIWebView
     {
-		
+
         public SecureWebView (IntPtr p) : base (p)
         {
             this.LoadFinished += delegate {
@@ -46,7 +48,14 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                         queryStringDictionary.Add (key, value);
                     }
 
-                    _paymentService.CompleteDSecure (ReceiptID, queryStringDictionary ["PaRes"], queryStringDictionary ["MD"]).ContinueWith (reponse => {
+                    NSString paRes = new NSString (queryStringDictionary ["PaRes"]);
+                    var paResUnEncoded = paRes.CreateStringByRemovingPercentEncoding ().ToString ();
+                    paResUnEncoded = paResUnEncoded.Replace ("\r\n", string.Empty);
+
+                    NSString md = new NSString (queryStringDictionary ["MD"]);
+                    var mdUnEncoded = md.CreateStringByRemovingPercentEncoding ().ToString ();
+                    mdUnEncoded = mdUnEncoded.Replace ("\r\n", string.Empty);
+                    _paymentService.CompleteDSecure (ReceiptID, paResUnEncoded, mdUnEncoded).ContinueWith (reponse => {
                         var result = reponse.Result;
                         if (result != null && !result.HasError && result.Response.Result != "Declined") {
                             var paymentreceipt = result.Response as PaymentReceiptModel;
@@ -92,6 +101,8 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
         private IPaymentService _paymentService;
         public string ReceiptID;
+
+
 
         public JudoSuccessCallback _successCallback { get; set; }
 
