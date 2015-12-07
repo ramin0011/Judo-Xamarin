@@ -49,7 +49,7 @@ namespace JudoDotNetXamariniOSSDK.Helpers
                 if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                     controller.DismissViewController (true, null);
                 } else {
-                    controller.PopToRootViewController (true);
+                    controller.PopViewController (true);
                 }
             });
 

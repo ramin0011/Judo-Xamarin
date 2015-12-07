@@ -272,7 +272,7 @@ namespace JudoPayiOSXamarinSampleApp
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 NavigationController.DismissViewController (true, null);
             } else {
-                NavigationController.PopToRootViewController (true);
+                NavigationController.PopViewController (true);
             }
         }
     }

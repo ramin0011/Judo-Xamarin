@@ -115,7 +115,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
                 if (vc is UINavigationController) {
                     var navC = vc as UINavigationController;
-                    navC.PopToRootViewController (true);
+                    navC.PopViewController (true);
                 }
 
               

@@ -80,7 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                             this.DismissViewController (true, null);
                         } else {
-                            this.NavigationController.PopToRootViewController (true);
+                            this.NavigationController.PopViewController (true);
                         }
                     };
 
