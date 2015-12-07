@@ -16,6 +16,7 @@ using PassKit;
 
 using UIKit;
 using JudoPayDotNet.Errors;
+using System.Text;
 
 namespace JudoPayiOSXamarinSampleApp
 {
@@ -78,10 +79,7 @@ namespace JudoPayiOSXamarinSampleApp
             lastFour = receipt.CardDetails.CardLastfour;
             cardType = receipt.CardDetails.CardType;
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                // move back to home screen
-                //  CloseView ();
 
-  
                 // show receipt
                 ShowMessage ("Transaction Successful", "Receipt ID - " + receipt.ReceiptId);
 
@@ -93,32 +91,33 @@ namespace JudoPayiOSXamarinSampleApp
         {
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 // move back to home screen
-                // CloseView ();
                 // show receipt
                 string title = "Error";
                 string message = "";
+                StringBuilder builder = new StringBuilder ();
+
                 if (error != null && error.ApiError != null)
                     title = (error.ApiError != null ? error.ApiError.ErrorMessage : "");
 
                 if (error != null && error.ApiError != null) {
                     if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
                         foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                            message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                            builder.AppendLine (model.ErrorMessage);
+                     
                         }
                     } else {
-                        title = "ERROR";
-                        message += error.ApiError.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                        title = "Error";
+                        builder.AppendLine (error.ApiError.ErrorMessage);
                     }
                 }
 
                 if (receipt != null) {
-                    message += "Transaction : " + receipt.Result + System.Environment.NewLine;
-                    message += receipt.Message + System.Environment.NewLine;
-                    message += "Receipt ID - " + receipt.ReceiptId;
+                    builder.AppendLine ("Transaction : ");
+                    builder.AppendLine (receipt.Message);
+                    builder.AppendLine ("Receipt ID - " + receipt.ReceiptId);
                 }
 
-                ShowMessage (title, message);
-                // store token to further use
+                ShowMessage (title, builder.ToString ());
             });
                 
         }
