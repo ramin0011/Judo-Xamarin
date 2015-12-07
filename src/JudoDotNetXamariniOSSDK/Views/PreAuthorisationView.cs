@@ -12,6 +12,7 @@ using JudoDotNetXamariniOSSDK.Views.TableCells.Card;
 using JudoPayDotNet.Models;
 using UIKit;
 using JudoPayDotNet.Errors;
+using CoreFoundation;
 
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
@@ -306,7 +307,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                 // Failure callback
                 if (failureCallback != null) {
                     var judoError = new JudoError { Exception = ex };
-                    this.CloseView ();
+                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                        NavigationController.CloseView ();
+                    });
                     failureCallback (judoError);
 
                 }
@@ -319,7 +322,9 @@ namespace JudoDotNetXamariniOSSDK.Views
         {
             if (reponse.Exception != null) {
                 LoadingScreen.HideLoading ();
-                this.CloseView ();
+                DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                    NavigationController.CloseView ();
+                });
                 reponse.Exception.FlattenToJudoFailure (failureCallback);
                
             } else {
@@ -338,14 +343,18 @@ namespace JudoDotNetXamariniOSSDK.Views
                             if (paymentreceipt != null) {
                                 // call success callback
                                 if (successCallback != null) {
-                                    this.CloseView ();
+                                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                        NavigationController.CloseView ();
+                                    });
                                     successCallback (paymentreceipt);
                                 }
                                 
                             } else {
                                 var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                                 if (threedDSecureReceipt != null) {
-                                    this.CloseView ();
+                                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                        NavigationController.CloseView ();
+                                    });
                                     failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
                                             ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
                                             ErrorType = JudoApiError.General_Error,
@@ -366,11 +375,15 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                                 if (paymentreceipt != null) {
                                     // send receipt even we got card declined
-                                    this.CloseView ();
+                                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                        NavigationController.CloseView ();
+                                    });
                                     failureCallback (judoError, paymentreceipt);
 
                                 } else {
-                                    this.CloseView ();
+                                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                        NavigationController.CloseView ();
+                                    });
                                     failureCallback (judoError);
 
                                 }
@@ -383,7 +396,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                         // Failure callback
                         if (failureCallback != null) {
                             var judoError = new JudoError { Exception = ex };
-                            this.CloseView ();
+                            DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                NavigationController.CloseView ();
+                            });
                             failureCallback (judoError);
 
                         }

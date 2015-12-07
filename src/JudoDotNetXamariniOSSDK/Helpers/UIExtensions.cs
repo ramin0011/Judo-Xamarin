@@ -43,10 +43,14 @@ namespace JudoDotNetXamariniOSSDK.Helpers
             superview.Frame = frame;
         }
 
-        public static void CloseView (this UIViewController controller)
+        public static void CloseView (this UINavigationController controller)
         {
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                controller.DismissViewController (true, null);
+                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
+                    controller.DismissViewController (true, null);
+                } else {
+                    controller.PopToRootViewController (true);
+                }
             });
 
         }

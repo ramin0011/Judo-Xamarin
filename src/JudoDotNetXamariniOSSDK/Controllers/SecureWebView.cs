@@ -7,6 +7,7 @@ using JudoDotNetXamariniOSSDK.Services;
 using JudoPayDotNet.Models;
 using UIKit;
 using CoreFoundation;
+using AVFoundation;
 
 #if __UNIFIED__
 
@@ -112,7 +113,14 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                     vc = splitView.ViewControllers [0];
                 }
 
+                if (vc is UINavigationController) {
+                    var navC = vc as UINavigationController;
+                    navC.PopToRootViewController (true);
+                }
+
+              
                 vc.DismissViewController (true, null);
+             
             });
 
         }
