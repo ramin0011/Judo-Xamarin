@@ -45,14 +45,33 @@ namespace JudoDotNetXamariniOSSDK.Helpers
 
         public static void CloseView (this UINavigationController controller)
         {
-            DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
-                    controller.DismissViewController (true, null);
-                } else {
-                    controller.PopViewController (true);
-                }
-            });
 
+            if (controller == null) {
+                DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                    var window = UIApplication.SharedApplication.KeyWindow;
+                    var vc = window.RootViewController;
+                    while (vc.PresentedViewController != null) {
+                        vc = vc.PresentedViewController;
+
+                    }
+                    if (vc is UISplitViewController) {
+                        var splitView = vc as UISplitViewController;
+                        vc = splitView.ViewControllers [0];
+                    }
+
+                    if (vc is UINavigationController) {
+                        var navC = vc as UINavigationController;
+                        navC.PopViewController (true);
+                    }
+
+
+                    vc.DismissViewController (true, null);
+                });
+            } else {
+                controller.PopViewController (true);
+                controller.DismissViewController (true, null);
+            }
+            
         }
     }
 }

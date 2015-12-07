@@ -181,8 +181,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
+                        
+                            reponse.Exception.FlattenToJudoFailure (failureCallback);
                         });
-                        reponse.Exception.FlattenToJudoFailure (failureCallback);
                     } else {
                         var result = reponse.Result;
                         if (result != null && !result.HasError && result.Response.Result != "Declined") {
@@ -191,8 +192,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                             if (successCallback != null) {
                                 DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                     NavigationController.CloseView ();
+                                
+                                    successCallback (paymentreceipt);
                                 });
-                                successCallback (paymentreceipt);
                             }
                         } else {
                             // Failure callback
@@ -204,13 +206,15 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     // send receipt even we got card declined
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
+                                    
+                                        failureCallback (judoError, paymentreceipt);
                                     });
-                                    failureCallback (judoError, paymentreceipt);
                                 } else {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
+                                    
+                                        failureCallback (judoError);
                                     });
-                                    failureCallback (judoError);
                                 }
                             }
 
@@ -226,8 +230,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                     var judoError = new JudoError { Exception = ex };
                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                         NavigationController.CloseView ();
+                   
+                        failureCallback (judoError);
                     });
-                    failureCallback (judoError);
                 }
             }
 

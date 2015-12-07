@@ -318,8 +318,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
+                        
+                            reponse.Exception.FlattenToJudoFailure (failureCallback);
                         });
-                        reponse.Exception.FlattenToJudoFailure (failureCallback);
                     } else {
                         var result = reponse.Result;
                         if (JudoSDKManager.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
@@ -339,8 +340,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
 
                                             NavigationController.CloseView ();
+                                            successCallback (paymentreceipt);
                                         });
-                                        successCallback (paymentreceipt);
+
                                     }
                                    
                                 } else {
@@ -348,14 +350,14 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     if (threedDSecureReceipt != null) {
                                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                             NavigationController.CloseView ();
+                                      
+                                            failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
+                                                    ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
+                                                    ErrorType = JudoApiError.General_Error,
+                                                    ModelErrors = null
+                                                }
+                                            });
                                         });
-                                        failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-                                                ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
-                                                ErrorType = JudoApiError.General_Error,
-                                                ModelErrors = null
-                                            }
-                                        });
-                                       
                                     } else {
                                         throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                                     }
@@ -371,14 +373,15 @@ namespace JudoDotNetXamariniOSSDK.Views
                                         // send receipt even we got card declined
                                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                             NavigationController.CloseView ();
+                                        
+                                            failureCallback (judoError, paymentreceipt);
                                         });
-                                        failureCallback (judoError, paymentreceipt);
-
                                     } else {
                                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                             NavigationController.CloseView ();
+                                        
+                                            failureCallback (judoError);
                                         });
-                                        failureCallback (judoError);
                                        
                                     }
                                 }
@@ -395,9 +398,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                     var judoError = new JudoError { Exception = ex };
                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                         NavigationController.CloseView ();
+                    
+                        failureCallback (judoError);
                     });
-                    failureCallback (judoError);
-
                 }
             } 
 	
