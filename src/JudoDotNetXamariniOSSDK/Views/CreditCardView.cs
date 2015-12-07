@@ -316,6 +316,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (reponse => {
                     if (reponse.Exception != null) {
                         LoadingScreen.HideLoading ();
+                        this.CloseView ();
                         reponse.Exception.FlattenToJudoFailure (failureCallback);
                     } else {
                         var result = reponse.Result;

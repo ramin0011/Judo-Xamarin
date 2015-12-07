@@ -98,15 +98,17 @@ namespace JudoPayiOSXamarinSampleApp
                 string title = "Error";
                 string message = "";
                 if (error != null && error.ApiError != null)
-                    title = (error.ApiError == null ? error.ApiError.ErrorMessage : "");
+                    title = (error.ApiError != null ? error.ApiError.ErrorMessage : "");
 
-                if (error != null && error.ApiError != null)
-                if (error.ApiError.ModelErrors != null) {
-                    foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                        message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                if (error != null && error.ApiError != null) {
+                    if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
+                        foreach (JudoModelError model in error.ApiError.ModelErrors) {
+                            message += model.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
+                        }
+                    } else {
+                        title = "ERROR";
+                        message += error.ApiError.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
                     }
-                } else {
-                    message += error.ApiError.ErrorMessage + System.Environment.NewLine + System.Environment.NewLine;
                 }
 
                 if (receipt != null) {

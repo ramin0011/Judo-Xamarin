@@ -40,6 +40,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
             } catch (Exception e) {
                 if (secureWebView._failureCallback != null) {
                     var judoError = new JudoError { Exception = e };
+                    secureWebView.CloseView ();
                     secureWebView._failureCallback (judoError);
                 }
             }

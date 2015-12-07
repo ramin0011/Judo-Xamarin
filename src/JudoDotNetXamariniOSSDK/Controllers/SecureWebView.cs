@@ -63,11 +63,10 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
                             if (paymentreceipt != null) {
                                 // call success callback
-                                if (_successCallback != null)
+                                if (_successCallback != null) {
                                     CloseView ();
-                                _successCallback (paymentreceipt);
-                                
-								
+                                    _successCallback (paymentreceipt);
+                                }	
                             } else {
                                 throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
                             }
@@ -99,7 +98,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
             };
         }
 
-        void CloseView ()
+        internal void CloseView ()
         {
             DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                 var window = UIApplication.SharedApplication.KeyWindow;

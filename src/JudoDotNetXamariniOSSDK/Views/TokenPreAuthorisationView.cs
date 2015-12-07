@@ -179,6 +179,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                     if (reponse.Exception != null) {
                         LoadingScreen.HideLoading ();
+                        this.CloseView ();
                         reponse.Exception.FlattenToJudoFailure (failureCallback);
                     } else {
                         var result = reponse.Result;

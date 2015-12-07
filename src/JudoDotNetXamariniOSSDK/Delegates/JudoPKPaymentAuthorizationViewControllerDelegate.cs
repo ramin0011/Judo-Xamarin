@@ -30,8 +30,8 @@ namespace JudoDotNetXamariniOSSDK.Delegates
 
         public void DidAuthorizePayment (PKPaymentAuthorizationViewController controller, PKPayment payment, Action<PKPaymentAuthorizationStatus> completion)
         {
-
             ClearPaymentWithJudo (payment, _customerRef, completion);
+
         }
 
 
@@ -47,34 +47,39 @@ namespace JudoDotNetXamariniOSSDK.Delegates
 
         async Task ClearPaymentWithJudo (PKPayment payment, string customerRef, Action<PKPaymentAuthorizationStatus> completion)
         {
-            IResult res;
-            var result = await _applePayService.HandlePKPayment (payment, customerRef, _runningTotal, _paymentAction, _failureCallback);
-            if (result != null && !result.HasError && result.Response.Result != "Declined") {
+
+            try {
+                var result = await _applePayService.HandlePKPayment (payment, customerRef, _runningTotal, _paymentAction, _failureCallback);
+           
+                if (result != null && !result.HasError && result.Response.Result != "Declined") {
 				
-                var paymentreceipt = result.Response as PaymentReceiptModel;
-
-                if (paymentreceipt != null) {
-                    if (_successCallBack != null) {
-						
-                        completion (PKPaymentAuthorizationStatus.Success);
-                        _successCallBack (paymentreceipt);
-                    }
-                }
-            } else {
-
-                if (_failureCallback != null) {
-                    var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                    var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+                    var paymentreceipt = result.Response as PaymentReceiptModel;
 
                     if (paymentreceipt != null) {
-                        // send receipt even we got card declined
-                        completion (PKPaymentAuthorizationStatus.Failure);
-                        _failureCallback (judoError, paymentreceipt);
-                    } else {
-                        completion (PKPaymentAuthorizationStatus.Failure);
-                        _failureCallback (judoError);
+                        if (_successCallBack != null) {
+						
+                            completion (PKPaymentAuthorizationStatus.Success);
+                            _successCallBack (paymentreceipt);
+                        }
+                    }
+                } else {
+
+                    if (_failureCallback != null) {
+                        var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+                        if (paymentreceipt != null) {
+                            // send receipt even we got card declined
+                            completion (PKPaymentAuthorizationStatus.Failure);
+                            _failureCallback (judoError, paymentreceipt);
+                        } else {
+                            completion (PKPaymentAuthorizationStatus.Failure);
+                            _failureCallback (judoError);
+                        }
                     }
                 }
+            } catch (Exception e) {
+
             }
 				
         }
