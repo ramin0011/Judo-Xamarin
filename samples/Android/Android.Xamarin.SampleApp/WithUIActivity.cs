@@ -97,19 +97,18 @@ namespace Android.Xamarin.SampleApp
             string title = "Error";
             StringBuilder builder = new StringBuilder ();
 
-            if (error != null && error.ApiError != null)
+            if (error != null && error.ApiError != null) {
                 title = (error.ApiError.ErrorMessage);
+                if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
+                    foreach (JudoModelError model in error.ApiError.ModelErrors) {
+                        builder.AppendLine (model.ErrorMessage);
+                    }
+                } else {
+                    title = ("Error");
+                    builder.AppendLine (error.ApiError.ErrorMessage);
 
-            if (error != null && error.ApiError != null)
-            if (error.ApiError.ModelErrors != null) {
-                foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                    builder.AppendLine (model.ErrorMessage);
                 }
-            } else {
-             
-                builder.AppendLine (error.ApiError.ErrorMessage);
-
-            }  
+            }
             if (receipt != null) {
                 builder.AppendLine ("Transaction : " + receipt.Result);
                 builder.AppendLine (receipt.Message);
@@ -228,11 +227,6 @@ namespace Android.Xamarin.SampleApp
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
-
-            // //Salatha
-            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-            configInstance.JudoId = "100915867";
 
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
