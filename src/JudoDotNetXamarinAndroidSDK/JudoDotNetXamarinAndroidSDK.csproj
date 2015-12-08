@@ -103,6 +103,8 @@
     <AndroidResource Include="Resources\Drawable-xhdpi\.directory" />
     <AndroidResource Include="Resources\Raw\courier.ttf" />
     <None Include="packages.config" />
+    <AndroidResource Include="Resources\Drawable\gold_button_bg.xml" />
+    <AndroidResource Include="Resources\Drawable\grey_button_bg.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
@@ -195,8 +197,6 @@
     <AndroidResource Include="Resources\Drawable-mdpi\spinner_list_pressed_holo_light.9.png" />
     <AndroidResource Include="Resources\Drawable-mdpi\spinner_list_selector_disabled_holo_light.9.png" />
     <AndroidResource Include="Resources\Drawable-mdpi\spinner_pressed.9.png" />
-    <AndroidResource Include="Resources\Drawable-v21\gold_button_bg.xml" />
-    <AndroidResource Include="Resources\Drawable-v21\grey_button_bg.xml" />
     <AndroidResource Include="Resources\Drawable-xhdpi\ab_solid_judo_payments.9.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\btn_default_disabled_focused_holo_light.9.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\btn_default_disabled_holo_light.9.png" />
@@ -341,6 +341,7 @@
   -->
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="Resources\Drawable-v21\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">
