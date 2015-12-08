@@ -4,9 +4,11 @@ using Android.Widget;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using JudoDotNetXamarinAndroidSDK.Utils;
+using Android.App;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
+    [Activity]
     public class PreAuthActivity : PaymentActivity
     {
         private ClientService clientService;
@@ -38,9 +40,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-            if (judoMetaData != null) {
-                cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
-            }
 
             _paymentService.PreAuthoriseCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }

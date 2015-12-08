@@ -5,7 +5,6 @@ using JudoPayDotNet.Enums;
 using System;
 using Android.Widget;
 using JudoPayDotNet.Models;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK;
 using Android.Content;
 using JudoPayDotNet.Errors;
@@ -218,7 +217,7 @@ namespace Android.Xamarin.SampleApp
             configInstance.Environment = JudoEnvironment.Live;
             JudoSDKManager.UIMode = true;
             JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.AVSEnabled = true;
+            JudoSDKManager.AVSEnabled = false;
             JudoSDKManager.MaestroAccepted = true;
             JudoSDKManager.RiskSignals = true;
 

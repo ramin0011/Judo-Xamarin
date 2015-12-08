@@ -63,6 +63,7 @@
     <Compile Include="Helpers\BillingCountryOptionsExtensions.cs" />
     <Compile Include="Factories\ServiceFactory.cs" />
     <Compile Include="Helpers\ErrorExtensions.cs" />
+    <Compile Include="Models\judoReceipt.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />

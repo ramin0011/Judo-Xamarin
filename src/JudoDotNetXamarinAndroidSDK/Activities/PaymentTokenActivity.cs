@@ -7,10 +7,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
+using Newtonsoft.Json;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -22,9 +22,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
-        protected MetaData judoMetaData;
-        protected SCardToken judoCardToken;
-        protected Models.SConsumer judoConsumer;
+        protected CardToken judoCardToken;
+        protected Consumer judoConsumer;
         protected CV2EntryView cv2EntryView;
         private ClientService clientService;
         IPaymentService _paymentService;
@@ -85,9 +84,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            judoCardToken = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CARD_DETAILS).JavaCast<SCardToken> ();
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
-            judoMetaData = Intent.GetParcelableExtra (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
+            judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (JudoSDKManager.JUDO_CARD_DETAILS));
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
+     
             if (judoCardToken.CardType != null) {
                 cv2EntryView.CurrentCard = judoCardToken.CardType;  
             }

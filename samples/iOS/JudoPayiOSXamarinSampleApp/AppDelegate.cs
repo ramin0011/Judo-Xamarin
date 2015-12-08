@@ -66,7 +66,6 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
 
-
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
@@ -76,8 +75,6 @@ namespace JudoPayiOSXamarinSampleApp
 		    JudoSDKManager.AVSEnabled = true;
 		    JudoSDKManager.AmExAccepted = true;
 		    JudoSDKManager.MaestroAccepted = true;
-
-
             
             // this will turn off UI mode and you can use same judo APIs to link with your own UI
 		    //JudoSDKManager.UIMode = false;

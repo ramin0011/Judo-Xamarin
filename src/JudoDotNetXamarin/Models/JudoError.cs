@@ -8,5 +8,15 @@ namespace JudoDotNetXamarin
         public Exception Exception { get; set; }
 
         public JudoApiErrorModel ApiError { get; set; }
+
+        public JudoError (Exception exception, JudoApiErrorModel apiError)
+        {
+            Exception = exception;
+            ApiError = apiError;
+        }
+
+        public JudoError ()
+        {
+        }
     }
 }

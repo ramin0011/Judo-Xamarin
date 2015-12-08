@@ -6,23 +6,24 @@ using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
+using Android.App;
+using Newtonsoft.Json;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
+    [Activity]
     public class PaymentActivity : BaseActivity
     {
         protected string judoPaymentRef;
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
-        protected MetaData judoMetaData;
         protected CardEntryView cardEntryView;
-        protected Models.SConsumer judoConsumer;
+        protected Consumer judoConsumer;
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
@@ -94,7 +95,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         void UnbundleIntent ()
         {
             judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
@@ -113,7 +114,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             if (judoCurrency == null) {
                 throw new ArgumentException ("JUDO_CURRENCY must be supplied");
             }
-            judoMetaData = Intent.Extras.GetParcelable (JudoSDKManager.JUDO_META_DATA).JavaCast<MetaData> ();
         }
 
         void SetResources ()
@@ -149,9 +149,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.Amount = judoAmount;
             cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-            if (judoMetaData != null) {
-                cardPayment.YourPaymentMetaData = judoMetaData.Metadata;
-            }
 
             ShowLoadingSpinner (true);
 

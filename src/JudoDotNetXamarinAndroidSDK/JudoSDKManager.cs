@@ -9,9 +9,9 @@ using JudoDotNetXamarinAndroidSDK;
 using JudoDotNetXamarin;
 using Android.App;
 using Android.Content;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoPayDotNet.Errors;
 using JudoDotNetXamarinAndroidSDK.Utils;
+using Newtonsoft.Json;
 
 
 namespace JudoDotNetXamarinAndroidSDK
@@ -234,7 +234,7 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent intent = new Intent ();
             intent.PutExtra (JUDO_ERROR_MESSAGE, message);
-            intent.PutExtra (JUDO_ERROR_EXCEPTION, new SJudoError (exception, apiErrorModel));
+            intent.PutExtra (JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (exception, apiErrorModel)));
 
             return intent;
         }

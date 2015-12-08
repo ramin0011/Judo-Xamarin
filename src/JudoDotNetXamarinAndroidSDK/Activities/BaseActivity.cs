@@ -5,11 +5,12 @@ using Android.Content;
 using Android.OS;
 using Android.Util;
 using Android.Views;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Ui;
 using JudoPayDotNet.Models;
 using JudoPayDotNet.Errors;
 using JudoDotNetXamarin;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -159,24 +160,31 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     if (receipt != null) {
                         var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                         if (threedDSecureReceipt != null) {
-                            SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent ("Account requires 3D Secure but application is not configured to accept it", new Exception ("Account requires 3D Secure but application is not configured to accept it"), new JudoApiErrorModel ()));
+                            var message = "Account requires 3D Secure but application is not configured to accept it";
+                            SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent (message, new Exception (message), new JudoApiErrorModel () {
+                                ErrorMessage = message,
+                                ErrorType = JudoApiError.AuthenticationFailure
+                            }));
 
                             Finish ();
                         } else {
 
                             Intent intent = new Intent ();
-                            intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new SReceipt (receipt));
+                            intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
                             SetResult (JudoSDKManager.JUDO_SUCCESS, intent);
                             Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
                             Finish ();
                         }
 
                     } else {
-
+                        var message = "JudoXamarinSDK: unable to find the receipt in response.";
                         SetResult (JudoSDKManager.JUDO_ERROR,
-                            JudoSDKManager.CreateErrorIntent ("JudoXamarinSDK: unable to find the receipt in response.", new Exception ("JudoXamarinSDK: unable to find the receipt in response."), new JudoApiErrorModel ()));
+                            JudoSDKManager.CreateErrorIntent ("message", new Exception (message), new JudoApiErrorModel () {
+                                ErrorMessage = message,
+                                ErrorType = JudoApiError.AuthenticationFailure
+                            }));
                         Finish ();
-                        throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
+                        throw new Exception (message);
                     }
                 } else {
 
@@ -184,11 +192,11 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     var receipt = result.Response;
 
                     if (receipt != null) {
-                        intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, new SReceipt (receipt));
+                        intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
                     } 
                     var error = result.Error as JudoApiErrorModel;
                     if (error != null) {
-                        intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, new SJudoError (new Exception (error.ErrorMessage), error));
+                        intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.ErrorMessage), error)));
                     }
             
                     SetResult (JudoSDKManager.JUDO_ERROR, intent);

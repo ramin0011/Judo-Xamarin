@@ -14,6 +14,7 @@ using JudoDotNetXamarinAndroidSDK.Utils;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using System;
+using Newtonsoft.Json;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -23,7 +24,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         private Bundle judoMetaData;
         private CardEntryView cardEntryView;
 
-        private Models.SConsumer judoConsumer;
+        private Consumer judoConsumer;
 
         protected string judoPaymentRef;
         protected decimal judoAmount;
@@ -127,8 +128,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         void UnbundleIntent ()
         {
             judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = Intent.GetParcelableExtra (JudoSDKManager.JUDO_CONSUMER).JavaCast<Models.SConsumer> ();
-
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);

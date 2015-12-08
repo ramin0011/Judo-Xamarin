@@ -6,7 +6,6 @@ using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using JudoDotNetXamarinAndroidSDK.Models;
 using JudoDotNetXamarinAndroidSDK.Utils;
 using Orientation = Android.Widget.Orientation;
 using JudoPayDotNet.Models;
@@ -150,7 +149,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             AddView (cv2TextView);
         }
 
-        public void SetCardDetails (SCardToken cardToken)
+        public void SetCardDetails (CardToken cardToken)
         {
             SetLast4CCNosText (cardToken.CardLastFour);
             SetCardType (cardToken.CardType);

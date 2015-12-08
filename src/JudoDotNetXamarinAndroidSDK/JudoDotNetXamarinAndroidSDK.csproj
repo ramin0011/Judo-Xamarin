@@ -38,7 +38,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
-    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,7 +60,6 @@
   <ItemGroup>
     <Compile Include="Clients\NonUIMethods.cs" />
     <Compile Include="Clients\UIMethods.cs" />
-    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ui\AVSEntryView.cs" />
@@ -87,16 +85,13 @@
     <Compile Include="Utils\EnumExtensions.cs" />
     <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Clients\JudoAndroidSDKAPI.cs" />
-    <Compile Include="Models\SConsumer.cs" />
-    <Compile Include="Models\SJudoError.cs" />
-    <Compile Include="Models\SCardToken.cs" />
-    <Compile Include="Models\SReceipt.cs" />
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\PaymentActivity.cs" />
     <Compile Include="Activities\PaymentTokenActivity.cs" />
     <Compile Include="Activities\PreAuthActivity.cs" />
     <Compile Include="Activities\PreAuthTokenActivity.cs" />
     <Compile Include="Activities\RegisterCardActivity.cs" />
+    <Compile Include="Models\CardToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
