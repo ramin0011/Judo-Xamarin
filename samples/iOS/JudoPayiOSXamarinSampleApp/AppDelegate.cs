@@ -65,7 +65,6 @@ namespace JudoPayiOSXamarinSampleApp
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
-
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
