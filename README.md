@@ -1,20 +1,15 @@
 <p>
   <img  align="right" src="https://github.com/JudoPay/Judo-Xamarin/blob/master/resources/judo_logo.png?raw=true" alt="Judo"/>
 </p>
-#Judo-Xamarin
-
-Secure in-app payments SDK for Xamarin.
-
+#judoNative SDK for Xamarin
 
 The judoPay library lets you integrate card payments into your Xamarin project. It is built to be mobile first with ease of integration in mind. Judo's SDK enables a faster, simpler and more secure payment experience within your app. Build trust and user loyalty in your app with our secure and intuitive UX.
-
-####Sell more. Risk less.
 
 ## Requirements
 
 Xamarin developer licence
 
-[JudoPay Account]( https://www.judopay.com/docs/ "JudoPay") (click get started)
+[Judo Account]( https://www.judopay.com/docs/ "JudoPay") (click get started)
 
 Thats it!
 
@@ -32,9 +27,9 @@ Thats it!
 -  Again download the component .xam from this page component/judopay-xamarin-sdk-2.0.xam
 
 ####Nuget
--  Coming Soon
+-  Coming soon
 
-####Getting Started
+####Getting started
 
 Ready to start integrating? This tutorial will help you get started with integrating judo with your Xamarin Mobile Application.
 
@@ -76,7 +71,7 @@ var configInstance = JudoConfiguration.Instance;
 **Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `Environment.Sandbox` to `Environment.live`
 
 
-### Card payment
+### Card payments
 
 Now that you've configured your SDK with your API Tokens and Secrets, you're ready to use the JudoSDKManager to process payments. 
 
@@ -117,11 +112,11 @@ This callback should be non-blocking
 
 ### Apple Pay
 
-The iOS Implementation supports Apple Pay on payments and PreAuthorisations.
+The iOS implementation supports Apple Pay on payments and pre-authorizations.
 
-To integrate ApplePay with your app, you must set it up at the Judo Account level ([guide here](https://www.judopay.com/docs/v4_6/apple-pay/quickstart/)), as well as make some changes to your applications settings.
+To integrate Apple Pay within your app, you must set it up at the judo Account level ([guide here](https://www.judopay.com/docs/v4_6/apple-pay/quickstart/)), as well as make some changes to your application's settings.
 
-Add this block of code in your applications Entitlements.Plist:
+Add this block of code in your application's Entitlements.Plist:
 ```
 <dict>
 <key>com.apple.developer.in-app-payments</key> 
@@ -131,11 +126,11 @@ Add this block of code in your applications Entitlements.Plist:
 </dict>
 ```
 
-After you are all set up making an Apple Pay transaction is just as easy as before
+After you are all set up, making an Apple Pay transaction is just as easy as before.
 
-#### Payment
+#### Payments
 
-ApplePay
+Apple Pay
 ```
 
 //Construct the viewModel
@@ -173,13 +168,13 @@ JudoSDKManager.Instance.MakeApplePayment (applePayViewModel payment, SuccessCall
 
 ```
 
-#### PreAuthorise
-ApplePay
+#### Pre-authorization
+Apple Pay
 ```
 JudoSDKManager.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure)
 ```
 
-## TroubleShooting
+## Troubleshooting
 
 -  For further SDK reference please visit our SDK [docs]( https://www.judopay.com/docs/ "Docs")
 -  Raise an issue here - if you're having problems let us know! This will be an active and evolving SDK, and helping you helps us.
@@ -215,23 +210,23 @@ Have your say, If you want a feature maybe we can work together on it?
 - Xamarin 4 support
 
 ####V2.1.0
-- Apple Pay Support for Judo Xamarin iOS: Payments and preauthorisations.
-- JudoShield Support.
-- Device DNA.
-- Improved Sample application UI.
+- Apple Pay support for judo Xamarin iOS: Payments and pre-authorizations
+- judoShield support
+- Device DNA
+- Improved sample application UI
 - Improved SDK Configuration
 
 ####V2.0 iOS support
 -  Full suite of judo services are now available to Xamarin iOS developers
   -  Payments
-  -  pre-Auth
-  -  Token Payments
-  -  Card Registry
+  -  Pre-authorizations
+  -  Token payments
+  -  Card registering
 -  3D Secure support for Xamarin iOS
 -  64bit component support
 -  iPad form factor support
 
-## Known Issues
+## Known issues
 
 -  Some implementations of 3D Secure require subsequent reloads of judoPay 3D Secure viewer, your application may block this,
 add the key below to the info.plist of your app if 3D Secure view does not load properly.
