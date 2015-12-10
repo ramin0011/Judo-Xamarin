@@ -48,57 +48,31 @@ Once registered, you will receive an email providing you with temporary login de
 
 ### Step 3 
 
-To start using the judoPay library you'll first need to configure your SDK to set your API credentials, which are used to authenticate your access with judo.
+Add the following code snippet to your project upon start up or before making your transaction call. This is best done within the appDelegates FinishedLaunching method (iOS) or within the apps initial activity's OnCreate() method (Android). Specifying your ApiToken, ApiSecret and Judo ID which you can find in the Dashboard (this code snippet is configured to operate in Sandbox environment. If you are planning to integrate in Live, please change the necessary information listed in the going live document):
 
 ## Configuration
 
-#####iOS
 ``` csharp
-public override bool FinishedLaunching (UIApplication a,NSDictionary o)
-{
 var configInstance = JudoConfiguration.Instance;
 
-	//setting for SandBox
-	configInstance.Environment = JudoPayDotNet.Enums.Environment.Sandbox;
+    //setting for SandBox
+    configInstance.Environment = JudoEnvironment.Sandbox;
 
-	configInstance.ApiToken =  "{ApiToken}";
-	configInstance.ApiSecret = "{ApiSecret}";
-	configInstance.JudoId =    "{JudoID}";
+    configInstance.ApiToken =  "{ApiToken}";
+    configInstance.ApiSecret = "{ApiSecret}";
+    configInstance.JudoId =    "{JudoID}";
 
- 
-    // setting up 3d secure, AVS, Amex and mestro card support
+
+    // setting up 3d secure, AVS, Amex and mestro card support (optional configuration)
     JudoSDKManager.AVSEnabled = true;
     JudoSDKManager.AmExAccepted = true;
     JudoSDKManager.MaestroAccepted = true;
-            
+
     // this will turn on UI mode which will hand over control to our out of 
     //the box UI solution
     JudoSDKManager.UIMode = true;
-            
-}
 ```
 
-#####Android
-``` csharp
-protected override void OnCreate( Bundle bundle )
-{
-	base.OnCreate (bundle);
-	
-	private const string ApiToken   = "{ApiToken}";
-	private const string ApiSecret	= "{ApiSecret}";
-	
-	JudoSDKManager.Configuration.SetApiTokenAndSecret(
-	ApiToken, 
-	ApiSecret,
-	JudoPayDotNet.Enums.Environment.Sandbox );
-	
-	JudoSDKManager.Configuration.IsAVSEnabled = true;
-	JudoSDKManager.Configuration.IsFraudMonitoringSignals = true;
-	JudoSDKManager.Configuration.IsMaestroEnabled = true;
-	
-	// your code
-}
-```
 **Please note:** You can configure judoPay library to use live environment by changing the third parameter in `SetApiTokenAndSecret ()`from `Environment.Sandbox` to `Environment.live`
 
 
@@ -108,25 +82,14 @@ Now that you've configured your SDK with your API Tokens and Secrets, you're rea
 
 By calling the following with the SDK Manager, you'll invoke judo's UI to enter card data and submit the payment request:
 
-#####Android
-```csharp
-
-var intent = JudoSDKManager.UIMethods.Payment ( Context context,  	judoId, currency, amount, paymentReference, consumerRef, metaData );
-
-StartActivityForResult ( intent, ACTION_CARD_PAYMENT );
-
-// your code ...
-```
-
-#####iOS
 ```csharp
 //Define a success block
-private void SuccessPayment(PaymentReceiptModel receipt)
+private void JudoSuccessPayment(PaymentReceiptModel receipt)
      {
      // handle receipt
      }
 //Define a Failure block
-private void FailurePayment(JudoError error, PaymentReceiptModel receipt)
+private void JudoFailurePayment(JudoError error, PaymentReceiptModel receipt)
      {
      // handle errors or Declined cards
      }
@@ -142,7 +105,11 @@ var paymentViewModel = new PaymentViewModel
      };
 
 //Let Judo do the rest
-JudoSDKManager.Payment(paymentViewModel, successCallback, failureCallback, this.NavigationController);
+ //iOS
+JudoSDKManager.Instance.Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure)
+
+//Android
+JudoSDKManager.Instance.Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context) 
 
 ```
 ####Note: 
@@ -202,14 +169,14 @@ var summaryItems = new PKPaymentSummaryItem[] {
 
 			};
 
-public static void MakeApplePayment (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+JudoSDKManager.Instance.MakeApplePayment (applePayViewModel payment, SuccessCallback success, FailureCallback failure)
 
 ```
 
 #### PreAuthorise
 ApplePay
 ```
-public static void MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure, UINavigationController navigationController)
+JudoSDKManager.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure)
 ```
 
 ## TroubleShooting
@@ -239,13 +206,21 @@ Have your say, If you want a feature maybe we can work together on it?
 
 ## Release Notes
 
+####V2.2.0
+- Unification of Android SDK with Core Library
+- Unified SDK Configuration and Library calls
+- Jailbroken/Rooted device detection
+- Improved Android UI
+- Smaller SDK footprint
+- Xamarin 4 support
+
 ####V2.1.0
 - Apple Pay Support for Judo Xamarin iOS: Payments and preauthorisations.
 - JudoShield Support.
 - Device DNA.
 - Improved Sample application UI.
 - Improved SDK Configuration
-- 
+
 ####V2.0 iOS support
 -  Full suite of judo services are now available to Xamarin iOS developers
   -  Payments
