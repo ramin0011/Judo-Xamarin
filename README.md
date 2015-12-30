@@ -59,9 +59,9 @@ var configInstance = JudoConfiguration.Instance;
 
 
     // setting up 3d secure, AVS, Amex and mestro card support (optional configuration)
-    JudoSDKManager.AVSEnabled = true;
-    JudoSDKManager.AmExAccepted = true;
-    JudoSDKManager.MaestroAccepted = true;
+    JudoSDKManager.Instance.AVSEnabled = true;
+    JudoSDKManager.Instance.AmExAccepted = true;
+    JudoSDKManager.Instance.MaestroAccepted = true;
 
     // this will turn on UI mode which will hand over control to our out of 
     //the box UI solution
