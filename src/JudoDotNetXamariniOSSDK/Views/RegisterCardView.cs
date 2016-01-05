@@ -32,7 +32,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class RegisterCardView : UIViewController
+    internal partial class RegisterCardView : JudoUIViewController
     {
 
         private UIView activeview;
@@ -57,7 +57,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         public PaymentViewModel registerCardModel { get; set; }
 
-        public RegisterCardView (IPaymentService paymentService) : base ("RegisterCardView", null)
+        public RegisterCardView (IPaymentService paymentService) : base ("RegisterCardView")
         {
             _paymentService = paymentService;
         }

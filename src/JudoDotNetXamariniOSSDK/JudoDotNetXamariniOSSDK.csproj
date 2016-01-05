@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Factories\AppleServiceFactory.cs" />
+    <Compile Include="Views\JudoUIViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

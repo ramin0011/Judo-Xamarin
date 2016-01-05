@@ -33,7 +33,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class CreditCardView : UIViewController
+    internal partial class CreditCardView : JudoUIViewController
     {
         private UIView _activeview;
         private bool _moveViewUp;
@@ -57,7 +57,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         public PaymentViewModel cardPayment { get; set; }
 
-        public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
+        public CreditCardView (IPaymentService paymentService) : base ("CreditCardView")
         {
             _paymentService = paymentService;
         }
@@ -80,6 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Views
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
+
             SetUpTableView ();
 
             this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
@@ -110,17 +111,26 @@ namespace JudoDotNetXamariniOSSDK.Views
                 MakePayment ();
             };
 
+           
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 FormClose.TouchUpInside += (sender, ev) => {
-                    this.DismissViewController (true, null);
+                    CloseView ();
                 };
             }
+
+
+           
             SubmitButton.Disable ();
             detailCell.ccTextOutlet.BecomeFirstResponder ();
 
 
             SecureWebView.SetupWebView (_paymentService, successCallback, failureCallback);
         }
+
+        //        private void CloseView ()
+        //        {
+        //            this.DismissViewController (true, null);
+        //        }
 
         private void OnKeyboardNotification (NSNotification notification)
         {

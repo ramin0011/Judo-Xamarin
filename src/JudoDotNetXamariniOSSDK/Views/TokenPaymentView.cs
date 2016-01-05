@@ -29,12 +29,12 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class TokenPaymentView : UIViewController
+    internal partial class TokenPaymentView : JudoUIViewController
     {
         IPaymentService _paymentService;
         bool KeyboardVisible = false;
 
-        public TokenPaymentView (IPaymentService paymentService) : base ("TokenPaymentView", null)
+        public TokenPaymentView (IPaymentService paymentService) : base ("TokenPaymentView")
         {
             _paymentService = paymentService;
         }
@@ -80,7 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                             this.DismissViewController (true, null);
                         } else {
-                            this.NavigationController.PopViewController (true);
+                            this.DismissViewController (true, null);
                         }
                     };
 

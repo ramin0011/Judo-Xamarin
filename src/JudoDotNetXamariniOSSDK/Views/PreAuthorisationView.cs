@@ -34,7 +34,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class PreAuthorisationView : UIViewController
+    internal partial class PreAuthorisationView : JudoUIViewController
     {
 
         private UIView activeview;
@@ -59,7 +59,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         public PaymentViewModel authorisationModel { get; set; }
 
-        public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView", null)
+        public PreAuthorisationView (IPaymentService paymentService) : base ("PreAuthorisationView")
         {
             _paymentService = paymentService;
         }
