@@ -127,11 +127,6 @@ namespace JudoDotNetXamariniOSSDK.Views
             SecureWebView.SetupWebView (_paymentService, successCallback, failureCallback);
         }
 
-        //        private void CloseView ()
-        //        {
-        //            this.DismissViewController (true, null);
-        //        }
-
         private void OnKeyboardNotification (NSNotification notification)
         {
             _keyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
