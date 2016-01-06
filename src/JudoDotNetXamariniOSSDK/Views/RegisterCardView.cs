@@ -12,6 +12,7 @@ using JudoDotNetXamariniOSSDK.Views.TableCells.Card;
 using JudoPayDotNet.Models;
 using UIKit;
 using CoreFoundation;
+using JudoPayDotNet.Errors;
 
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
@@ -358,9 +359,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
                                     
-                                        failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-                                                ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
-                                                ErrorType = JudoApiError.General_Error,
+                                        failureCallback (new JudoError { ApiError = new ModelError {
+                                                Message = "Account requires 3D Secure but application is not configured to accept it",
+                                                Code = (int)JudoApiError.General_Error,
                                                 ModelErrors = null
                                             }
                                         });

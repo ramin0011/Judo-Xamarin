@@ -97,17 +97,17 @@ namespace JudoPayiOSXamarinSampleApp
                 StringBuilder builder = new StringBuilder ();
 
                 if (error != null && error.ApiError != null)
-                    title = (error.ApiError != null ? error.ApiError.ErrorMessage : "");
+                    title = (error.ApiError != null ? error.ApiError.Message : "");
 
                 if (error != null && error.ApiError != null) {
                     if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                        foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                            builder.AppendLine (model.ErrorMessage);
+                        foreach (FieldError model in error.ApiError.ModelErrors) {
+                            builder.AppendLine (model.Message);
                      
                         }
                     } else {
                         title = "Error";
-                        builder.AppendLine (error.ApiError.ErrorMessage);
+                        builder.AppendLine (error.ApiError.Message);
                     }
                 }
 

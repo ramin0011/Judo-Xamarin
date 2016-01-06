@@ -44,7 +44,8 @@ namespace JudoDotNetXamarin
 
             Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
 
-            return await task;
+            var test = await task;
+            return test;
 
         }
 
@@ -146,18 +147,19 @@ namespace JudoDotNetXamarin
           
         }
 
-        public async Task<IResult<ITransactionResult>> CompleteDSecure (string receiptID, string paRes, string md)
+        public async Task<IResult<ITransactionResult>> CompleteDSecure (long receiptID, string paRes, string md)
         {
             try {
                 ThreeDResultModel model = new ThreeDResultModel ();
                 model.PaRes = paRes;
+
                 Task<IResult<PaymentReceiptModel>> task = _judoAPI.ThreeDs.Complete3DSecure (receiptID, model);
                 return await task;
             } catch (Exception e) {
                 var error = new JudoError () { 
                     Exception = e,
-                    ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel () {
-                        ErrorMessage = e.InnerException.ToString ()
+                    ApiError = new JudoPayDotNet.Errors.ModelError () {
+                        Message = e.InnerException.ToString ()
                     }
                 };
                 throw error;

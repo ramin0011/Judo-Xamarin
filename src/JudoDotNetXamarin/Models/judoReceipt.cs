@@ -18,7 +18,7 @@ namespace JudoDotNetXamarin
         }
 
         [JsonIgnoreAttribute]
-        public string ReceiptId {
+        public long ReceiptId {
             get { return receipt.ReceiptId; }
             set { receipt.ReceiptId = value; }
         }
