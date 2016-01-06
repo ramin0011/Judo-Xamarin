@@ -177,12 +177,17 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                 _paymentService.MakeTokenPreAuthorisation (tokenPayment, new ClientService ()).ContinueWith (reponse => {
 
-                    if (reponse.Exception != null) {
+                    if (reponse.Result.HasError) {
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
                         
-                            reponse.Exception.FlattenToJudoFailure (failureCallback);
+                            var error = reponse.Result.Error;
+                            var judoError = new JudoError () {
+                                ApiError = reponse.Result.Error
+                            };
+
+                            failureCallback (judoError);
                         });
                     } else {
                         var result = reponse.Result;

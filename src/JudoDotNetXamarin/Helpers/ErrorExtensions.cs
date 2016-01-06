@@ -6,19 +6,21 @@ namespace JudoDotNetXamarin
 {
     public static class ErrorExtensions
     {
-        public static void FlattenToJudoFailure (this AggregateException errors, JudoFailureCallback failureCallback)
+        public static void FlattenToJudoFailure (this ModelError error, JudoFailureCallback failureCallback)
         {
             if (failureCallback != null) {
-                List<FieldError> models = new List<FieldError> (); 
-                foreach (Exception em in errors.InnerExceptions) {
-                    models.Add (new FieldError (){ Message = em.Message, });
-                }
-                var judoError = new JudoError () {
-                    Exception = errors.InnerException,
-                    ApiError = new ModelError (){ ModelErrors = models }
-                };
 
-                failureCallback (judoError);
+////
+////                List<FieldError> models = new List<FieldError> (); 
+////                foreach (FieldError em in error.ModelErrors) {
+////                    models.Add (new FieldError (){ Message = em.Message,FieldName = em.FieldName, });
+////                }
+//                var judoError = new JudoError () {
+//                    Exception = error.Message,
+//                    ApiError = error
+//                };
+//
+//                failureCallback (judoError);
 
             }
         }

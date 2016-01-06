@@ -44,8 +44,8 @@ namespace JudoDotNetXamarin
 
             Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
 
-            var test = await task;
-            return test;
+            return await task;
+             
 
         }
 
