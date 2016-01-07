@@ -97,14 +97,14 @@ namespace Android.Xamarin.SampleApp
             StringBuilder builder = new StringBuilder ();
 
             if (error != null && error.ApiError != null) {
-                title = (error.ApiError.ErrorMessage);
+                title = (error.ApiError.Message);
                 if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                    foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                        builder.AppendLine (model.ErrorMessage);
+                    foreach (FieldError model in error.ApiError.ModelErrors) {
+                        builder.AppendLine (model.Message + (!String.IsNullOrWhiteSpace (model.FieldName) ? "(" + model.FieldName + ")" : ""));
                     }
                 } else {
                     title = ("Error");
-                    builder.AppendLine (error.ApiError.ErrorMessage);
+                    builder.AppendLine (error.ApiError.Message);
 
                 }
             }
@@ -217,9 +217,14 @@ namespace Android.Xamarin.SampleApp
             configInstance.Environment = JudoEnvironment.Live;
             JudoSDKManager.UIMode = true;
             JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.AVSEnabled = false;
+            JudoSDKManager.AVSEnabled = true;
             JudoSDKManager.MaestroAccepted = true;
             JudoSDKManager.RiskSignals = true;
+
+
+            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.JudoId = "100915867";
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal

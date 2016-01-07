@@ -18,9 +18,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     {
         #if DEBUG
         public const bool DEBUG = true;
+        
+
+
         #else
         public const bool DEBUG = false;
-#endif
+        #endif
     }
 
     public abstract class BaseActivity : Activity
@@ -161,9 +164,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                         var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                         if (threedDSecureReceipt != null) {
                             var message = "Account requires 3D Secure but application is not configured to accept it";
-                            SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent (message, new Exception (message), new JudoApiErrorModel () {
-                                ErrorMessage = message,
-                                ErrorType = JudoApiError.AuthenticationFailure
+                            SetResult (JudoSDKManager.JUDO_ERROR, JudoSDKManager.CreateErrorIntent (message, new Exception (message), new ModelError () {
+                                Message = message,
+                                Code = (int)JudoApiError.AuthenticationFailure
                             }));
 
                             Finish ();
@@ -179,9 +182,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     } else {
                         var message = "JudoXamarinSDK: unable to find the receipt in response.";
                         SetResult (JudoSDKManager.JUDO_ERROR,
-                            JudoSDKManager.CreateErrorIntent ("message", new Exception (message), new JudoApiErrorModel () {
-                                ErrorMessage = message,
-                                ErrorType = JudoApiError.AuthenticationFailure
+                            JudoSDKManager.CreateErrorIntent ("message", new Exception (message), new ModelError () {
+                                Message = message,
+                                Code = (int)JudoApiError.AuthenticationFailure
                             }));
                         Finish ();
                         throw new Exception (message);
@@ -194,9 +197,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     if (receipt != null) {
                         intent.PutExtra (JudoSDKManager.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
                     } 
-                    var error = result.Error as JudoApiErrorModel;
+                    var error = result.Error;
                     if (error != null) {
-                        intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.ErrorMessage), error)));
+                        intent.PutExtra (JudoSDKManager.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.Message), error)));
                     }
             
                     SetResult (JudoSDKManager.JUDO_ERROR, intent);

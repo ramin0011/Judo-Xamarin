@@ -230,7 +230,7 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-        internal static Intent CreateErrorIntent (string message, Exception exception, JudoApiErrorModel apiErrorModel)
+        internal static Intent CreateErrorIntent (string message, Exception exception, ModelError apiErrorModel)
         {
             Intent intent = new Intent ();
             intent.PutExtra (JUDO_ERROR_MESSAGE, message);
