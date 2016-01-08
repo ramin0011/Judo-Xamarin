@@ -40,7 +40,6 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_CARD_PAYMENT.ToString ());     
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, JsonConvert.SerializeObject (new Consumer (){ YourConsumerReference = payment.ConsumerReference }));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
             i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
@@ -56,7 +55,6 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_PREAUTH.ToString ());  
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, preAuthorisation.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, JsonConvert.SerializeObject (new Consumer (){ YourConsumerReference = preAuthorisation.ConsumerReference }));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, preAuthorisation.Amount.ToString ());
             i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (preAuthorisation.JudoID) ? JudoConfiguration.Instance.JudoId : preAuthorisation.JudoID));
@@ -72,7 +70,6 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_TOKEN_PAYMENT.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, JsonConvert.SerializeObject (new Consumer () {
                 YourConsumerReference = payment.ConsumerReference,
                 ConsumerToken = payment.ConsumerToken
@@ -97,7 +94,6 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_TOKEN_PREAUTH.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, JsonConvert.SerializeObject (new Consumer () {
                 YourConsumerReference = payment.ConsumerReference,
                 ConsumerToken = payment.ConsumerToken
@@ -123,7 +119,6 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             Intent i = new Intent (context, typeof(UIMethods));
             i.PutExtra (JudoSDKManager.REQUEST_CODE, ACTION_REGISTER_CARD.ToString ());
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, payment.PaymentReference);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, JsonConvert.SerializeObject (new Consumer (){ YourConsumerReference = payment.ConsumerReference }));
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, payment.Amount.ToString ());
             i.PutExtra (JudoSDKManager.JUDO_ID, (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID));
@@ -141,7 +136,6 @@ namespace JudoDotNetXamarinAndroidSDK
 
             var requestCode = Intent.GetStringExtra (JudoSDKManager.REQUEST_CODE);
             var judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            var judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
             var judoConsumer = Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER);
             string amount = Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT);
 
@@ -149,7 +143,6 @@ namespace JudoDotNetXamarinAndroidSDK
             var judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
 
             i = GetIntentForRequestCode (requestCode);
-            i.PutExtra (JudoSDKManager.JUDO_PAYMENT_REF, judoPaymentRef);
             i.PutExtra (JudoSDKManager.JUDO_CONSUMER, judoConsumer);
             i.PutExtra (JudoSDKManager.JUDO_AMOUNT, judoAmount.ToString ());
             i.PutExtra (JudoSDKManager.JUDO_ID, judoId);

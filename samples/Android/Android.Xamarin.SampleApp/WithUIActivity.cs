@@ -177,7 +177,6 @@ namespace Android.Xamarin.SampleApp
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
                 Card = new CardViewModel {
@@ -196,7 +195,6 @@ namespace Android.Xamarin.SampleApp
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 CV2 = cv2,
                 Token = cardToken,

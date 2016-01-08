@@ -25,7 +25,6 @@ namespace JudoDotNetXamarinAndroidSDK
         public static readonly Android.App.Result JUDO_ERROR = Android.App.Result.FirstUser;
 
 
-        public static string JUDO_PAYMENT_REF = "JudoPay-yourPaymentReference";
         public static string JUDO_AMOUNT = "JudoPay-amount";
         public static string JUDO_ID = "JudoPay-judoId";
         public static string JUDO_CURRENCY = "JudoPay-currency";

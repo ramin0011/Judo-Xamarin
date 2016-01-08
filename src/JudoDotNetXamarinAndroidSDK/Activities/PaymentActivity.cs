@@ -94,14 +94,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         void UnbundleIntent ()
         {
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
+            
             judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
             judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            if (judoPaymentRef == null) {
-                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
-            }
+           
             if (judoConsumer == null) {
                 throw new ArgumentException ("JUDO_CONSUMER must be supplied");
             }
@@ -147,7 +145,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.Card = card;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
-            cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
 
             ShowLoadingSpinner (true);

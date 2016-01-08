@@ -18,7 +18,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public class PaymentTokenActivity : BaseActivity
     {
 
-        protected string judoPaymentRef;
+       
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
@@ -79,7 +79,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         void UnbundleIntent ()
         {
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
 
             judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
             judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
@@ -90,9 +89,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             if (judoCardToken.CardType != null) {
                 cv2EntryView.CurrentCard = judoCardToken.CardType;  
             }
-            if (judoPaymentRef == null) {
-                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
-            }
+
             if (judoConsumer == null) {
                 throw new ArgumentException ("JUDO_CONSUMER must be supplied");
             }
@@ -135,7 +132,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 CardType = judoCardToken.CardType,
                 Token = judoCardToken.Token,
                 ConsumerReference = judoConsumer.YourConsumerReference,
-                PaymentReference = judoPaymentRef,
                 CV2 = cv2EntryView.GetCV2 ()
 
             };
