@@ -69,6 +69,10 @@ namespace Android.Xamarin.SampleApp
                     Toast.MakeText (this, "You are about to use non UI Mode so please look at the source code to understand the usage of Non-UI APIs.", ToastLength.Short).Show ();
             };
 
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
+
         }
 
         private void SuccessPayment (PaymentReceiptModel receipt)
@@ -233,6 +237,34 @@ namespace Android.Xamarin.SampleApp
             if (configInstance.ApiToken == null) { 
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
+        }
+
+        protected override void OnSaveInstanceState (Bundle outState)
+        {
+
+            if (!string.IsNullOrEmpty (cardToken)) {
+
+                outState.PutString ("CARDTOKEN", cardToken);
+                outState.PutString ("CONSUMERTOKEN", consumerToken);
+                outState.PutString ("LASTFOUR", lastFour);
+                outState.PutInt ("CARDTYPE", (int)cardType);
+
+                // always call the base implementation!
+                base.OnSaveInstanceState (outState);    
+            }
+
+        }
+
+        void RestoreState (Bundle bundle)
+        {
+
+            cardToken = bundle.GetString ("CARDTOKEN", "");
+            if (!string.IsNullOrEmpty (cardToken)) {
+                consumerToken = bundle.GetString ("CONSUMERTOKEN", "");
+                lastFour = bundle.GetString ("LASTFOUR", "");
+                cardType = (CardType)bundle.GetInt ("CARDTYPE", (int)CardType.UNKNOWN);
+            }
+
         }
     }
 }

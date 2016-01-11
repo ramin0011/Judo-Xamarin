@@ -130,8 +130,7 @@ namespace JudoPayiOSXamarinSampleApp
 
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
-                ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
+                ConsumerReference = consumerRef,  
                 CV2 = cv2
             };
 
@@ -205,7 +204,6 @@ namespace JudoPayiOSXamarinSampleApp
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
                 Card = new CardViewModel {
