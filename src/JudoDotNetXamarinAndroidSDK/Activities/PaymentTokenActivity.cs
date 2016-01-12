@@ -80,11 +80,11 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         void UnbundleIntent ()
         {
 
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (JudoSDKManager.JUDO_CARD_DETAILS));
-            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
+            judoAmount = decimal.Parse (Intent.GetStringExtra (Judo.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (Judo.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (Judo.JUDO_CURRENCY);
+            judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (Judo.JUDO_CARD_DETAILS));
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (Judo.JUDO_CONSUMER));
      
             if (judoCardToken.CardType != null) {
                 cv2EntryView.CurrentCard = judoCardToken.CardType;  
@@ -118,7 +118,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         public override void OnBackPressed ()
         {
-            SetResult (JudoSDKManager.JUDO_CANCELLED);
+            SetResult (Judo.JUDO_CANCELLED);
             base.OnBackPressed ();
         }
 

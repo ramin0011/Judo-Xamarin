@@ -34,9 +34,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
-    </Reference>
     <Reference Include="JudoPayDotNet">
       <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
     </Reference>
@@ -48,6 +45,9 @@
     </Reference>
     <Reference Include="JudoShieldXamarin">
       <HintPath>..\..\lib\JudoShieldXamarin.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.6.0.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +142,6 @@
     <Compile Include="Helpers\iOSConstants.cs" />
     <Compile Include="Controllers\LoadingScreen.cs" />
     <Compile Include="Controllers\SecureManager.cs" />
-    <Compile Include="JudoSDKManager.cs" />
     <Compile Include="Clients\IApplePayMethods.cs" />
     <Compile Include="Utils\ClientService.cs">
       <SubType>Code</SubType>
@@ -150,6 +149,7 @@
     <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="Factories\AppleServiceFactory.cs" />
     <Compile Include="Views\JudoUIViewController.cs" />
+    <Compile Include="Judo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

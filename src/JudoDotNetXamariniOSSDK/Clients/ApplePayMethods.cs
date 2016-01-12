@@ -34,7 +34,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
             try {
                 var vc = GetCurrentViewController ();
 
-                if (JudoSDKManager.UIMode && vc == null) {
+                if (Judo.UIMode && vc == null) {
                     var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                     failure (error);
                 } else {

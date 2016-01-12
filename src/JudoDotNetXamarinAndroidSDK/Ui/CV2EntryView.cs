@@ -167,10 +167,10 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public void SetCardType (CardType cardType)
         {
-            cv2TextView.SetHintText (JudoSDKManager.GetExpiryAndValidationHintFormat (cardType));
+            cv2TextView.SetHintText (Judo.GetExpiryAndValidationHintFormat (cardType));
             cv2TextView.SetInputFilter ("/");
-            cv2TextView.SetErrorText (JudoSDKManager.GetExpiryAndValidationErrorMessage (cardType));
-            SetCardImageWithoutAnimation (JudoSDKManager.GetCardResourceId (Context, cardType, false));
+            cv2TextView.SetErrorText (Judo.GetExpiryAndValidationErrorMessage (cardType));
+            SetCardImageWithoutAnimation (Judo.GetCardResourceId (Context, cardType, false));
         }
 
         public void SetCardImageWithoutAnimation (int drawableId)

@@ -136,13 +136,13 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
             RectangleF r = ccText.GetFirstRectForRange (range);
             SizeF frameRect = r.Size;
             frameRect.Width = (r.Size.Width / 24.0f);
-            ccText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            ccText.Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
             r.Size = frameRect;
             ccText.Text = "";
 
 
             RectangleF frame = ccPlaceHolder.Frame;
-            ccPlaceHolder.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            ccPlaceHolder.Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
             ccPlaceHolder.Text = "0000 0000 0000 0000";
 
             ccPlaceHolder.SetShowTextOffSet (0);
@@ -161,7 +161,7 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
             RectangleF exR = expiryText.GetFirstRectForRange (exRange);
             SizeF exFrameRect = exR.Size;
             exFrameRect.Width = (exR.Size.Width / 24.0f);
-            expiryText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            expiryText.Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
             exR.Size = exFrameRect;
             expiryText.Text = "";
 
@@ -187,7 +187,7 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
             RectangleF cvR = cvTwoText.GetFirstRectForRange (cvRange);
             SizeF cvFrameRect = cvR.Size;
             cvFrameRect.Width = (cvR.Size.Width / 24.0f);
-            cvTwoText.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            cvTwoText.Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
             cvR.Size = cvFrameRect;
             cvTwoText.Text = "";
 
@@ -297,14 +297,14 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
                             flashForError = true;
                             break;
                         case CardType.MAESTRO:
-                            if (!JudoSDKManager.Instance.MaestroAccepted) {
+                            if (!Judo.Instance.MaestroAccepted) {
 
                                 flashForError = true;
                                 return EndDelegate (ccPlaceHolder, ccText, formattedText);
                             }
                             break;
                         case CardType.AMEX:
-                            if (!JudoSDKManager.Instance.AmExAccepted) {
+                            if (!Judo.Instance.AmExAccepted) {
 
                                 flashForError = true; 
                                 return EndDelegate (ccPlaceHolder, ccText, formattedText);

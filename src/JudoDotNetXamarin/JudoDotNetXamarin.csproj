@@ -55,7 +55,6 @@
     <Compile Include="Delegates\JudoFailureCallback.cs" />
     <Compile Include="Delegates\JudoSuccessCallback.cs" />
     <Compile Include="Models\ClientDetails.cs" />
-    <Compile Include="IJudoSDKManager.cs" />
     <Compile Include="Clients\IJudoSDKApi.cs" />
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\PaymentService.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="Factories\ServiceFactory.cs" />
     <Compile Include="Helpers\ErrorExtensions.cs" />
     <Compile Include="Models\judoReceipt.cs" />
+    <Compile Include="IJudo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
@@ -77,14 +77,14 @@
     <Reference Include="JudoPayDotNet">
       <HintPath>..\..\lib\JudoPayDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Serilog">
       <HintPath>..\packages\Serilog.1.5.12\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.6.0.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

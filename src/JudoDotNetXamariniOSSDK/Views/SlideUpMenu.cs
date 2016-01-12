@@ -31,24 +31,24 @@ namespace JudoDotNetXamariniOSSDK.Views
 		{
 			
 			base.WillMoveToSuperview (newsuper);
-			SetUpToggle (AVSSwitch, JudoSDKManager.Instance.AVSEnabled, () => {
-				JudoSDKManager.Instance.AVSEnabled = !JudoSDKManager.Instance.AVSEnabled;
+			SetUpToggle (AVSSwitch, Judo.Instance.AVSEnabled, () => {
+				Judo.Instance.AVSEnabled = !Judo.Instance.AVSEnabled;
 			});
-			SetUpToggle (ThreeDSwitch, JudoSDKManager.Instance.ThreeDSecureEnabled, () => {
-				JudoSDKManager.Instance.ThreeDSecureEnabled = !JudoSDKManager.Instance.ThreeDSecureEnabled;
+			SetUpToggle (ThreeDSwitch, Judo.Instance.ThreeDSecureEnabled, () => {
+				Judo.Instance.ThreeDSecureEnabled = !Judo.Instance.ThreeDSecureEnabled;
 			});
-			SetUpToggle (RiskSwitch, JudoSDKManager.Instance.RiskSignals, () => {
-				JudoSDKManager.Instance.RiskSignals = !JudoSDKManager.Instance.RiskSignals;
+			SetUpToggle (RiskSwitch, Judo.Instance.RiskSignals, () => {
+				Judo.Instance.RiskSignals = !Judo.Instance.RiskSignals;
 			});
-			SetUpToggle (MaestroSwitch, JudoSDKManager.Instance.MaestroAccepted, () => {
-				JudoSDKManager.Instance.MaestroAccepted = !JudoSDKManager.Instance.MaestroAccepted;
+			SetUpToggle (MaestroSwitch, Judo.Instance.MaestroAccepted, () => {
+				Judo.Instance.MaestroAccepted = !Judo.Instance.MaestroAccepted;
 			});
-			SetUpToggle (AmexSwitch, JudoSDKManager.Instance.AmExAccepted, () => {
-				JudoSDKManager.Instance.AmExAccepted = !JudoSDKManager.Instance.AmExAccepted;
+			SetUpToggle (AmexSwitch, Judo.Instance.AmExAccepted, () => {
+				Judo.Instance.AmExAccepted = !Judo.Instance.AmExAccepted;
 			});
-			SetUpToggle (NoneUISwitch, !JudoSDKManager.UIMode, () => {
-				JudoSDKManager.UIMode = !JudoSDKManager.UIMode;
-				if (JudoSDKManager.UIMode)
+			SetUpToggle (NoneUISwitch, !Judo.UIMode, () => {
+				Judo.UIMode = !Judo.UIMode;
+				if (Judo.UIMode)
 					return;
 
 				UIAlertView nonUIWarning = new UIAlertView ("Non-UI Mode",

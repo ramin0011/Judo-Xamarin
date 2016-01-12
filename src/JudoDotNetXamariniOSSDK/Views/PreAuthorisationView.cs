@@ -183,7 +183,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
                 int row = CellsToShow.IndexOf (detailCell) + 1;
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (!CellsToShow.Contains (avsCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, avsCell);
@@ -198,7 +198,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     }
 
                 }
-                if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.Instance.MaestroAccepted) {
+                if (detailCell.Type == CardType.MAESTRO && Judo.Instance.MaestroAccepted) {
                     if (!CellsToShow.Contains (maestroCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, maestroCell);
@@ -223,13 +223,13 @@ namespace JudoDotNetXamariniOSSDK.Views
                 }
             } else {
                 TableView.BeginUpdates ();
-                if (JudoSDKManager.Instance.MaestroAccepted) {
+                if (Judo.Instance.MaestroAccepted) {
                     if (CellsToShow.Contains (maestroCell)) {
                         cellsToRemove.Add (maestroCell);
                     }
                 }
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (CellsToShow.Contains (avsCell)) {
                         cellsToRemove.Add (avsCell);
                     }
@@ -333,7 +333,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 });
             } else {
                 var result = reponse.Result;
-                if (JudoSDKManager.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
+                if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
@@ -416,11 +416,11 @@ namespace JudoDotNetXamariniOSSDK.Views
         {
             detailCell.CleanUp ();
 
-            if (JudoSDKManager.Instance.MaestroAccepted) {
+            if (Judo.Instance.MaestroAccepted) {
                 maestroCell.CleanUp ();
 
             }	
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.CleanUp ();
             }
         }
@@ -431,7 +431,7 @@ namespace JudoDotNetXamariniOSSDK.Views
             detailCell.GatherCardDetails (cardViewModel);
 
 
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.GatherCardDetails (cardViewModel);
 
             }

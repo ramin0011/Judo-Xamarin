@@ -34,7 +34,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
 
         public void SetCardType (CardType cardType)
         {
-            SetCardImageWithoutAnimation (JudoSDKManager.GetCardResourceId (Context, cardType, true));            
+            SetCardImageWithoutAnimation (Judo.GetCardResourceId (Context, cardType, true));            
         }
 
         public void SetCardImage (int drawbleId, bool vertical)

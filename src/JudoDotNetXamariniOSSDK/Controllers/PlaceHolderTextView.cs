@@ -72,7 +72,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
 
         public PlaceHolderTextView (IntPtr p) : base (p)
         {
-            Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
         }
 
         public void SetText (string newText)
@@ -144,7 +144,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                         context.BeginPath ();
                         context.MoveTo (box.GetMinX () + radius, box.GetMinY ());
                         var mask = "0";
-                        UIFont drawFont = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+                        UIFont drawFont = Judo.FIXED_WIDTH_FONT_SIZE_20;
                         mask.DrawString (box, drawFont);
                         r.Location = new PointF (r.Location.X + Offset.Size.Width, r.Location.Y);
                         continue;
@@ -155,7 +155,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
                 charsToDraw.Location += i;
                 charsToDraw.Length -= i;
                 if (charsToDraw.Length != 0) {					
-                    grayText.Substring ((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20);
+                    grayText.Substring ((int)charsToDraw.Location, (int)charsToDraw.Length).DrawString (r.Location, Judo.FIXED_WIDTH_FONT_SIZE_20);
                 }
             }
         }

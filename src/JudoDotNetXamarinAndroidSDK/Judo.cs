@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace JudoDotNetXamarinAndroidSDK
 {
 
-    public class JudoSDKManager
+    public class Judo
     {
 
         public static readonly Android.App.Result JUDO_SUCCESS = Android.App.Result.Ok;
@@ -46,9 +46,9 @@ namespace JudoDotNetXamarinAndroidSDK
         private static string REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
         private static string AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
             
-        private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager> (() => new JudoSDKManager ());
+        private static readonly Lazy<Judo> _singleton = new Lazy<Judo> (() => new Judo ());
 
-        public static JudoSDKManager Instance {
+        public static Judo Instance {
             get { return _singleton.Value; }
         }
 
@@ -88,7 +88,7 @@ namespace JudoDotNetXamarinAndroidSDK
         private bool isRooted;
         private RootCheck _rootCheck;
 
-        public JudoSDKManager ()
+        public Judo ()
         {
 
             _rootCheck = new RootCheck ();

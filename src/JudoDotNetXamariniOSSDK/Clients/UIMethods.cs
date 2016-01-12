@@ -17,7 +17,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 		
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -35,7 +35,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -55,7 +55,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -73,7 +73,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -90,7 +90,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
