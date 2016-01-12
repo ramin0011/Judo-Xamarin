@@ -47,7 +47,7 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             BillingCountryOptions country = BillingCountryOptions.BillingCountryOptionUK;
             CardAddressModel cardAddress = new CardAddressModel ();
 
-            if (JudoSDKManager.AVSEnabled) {
+            if (Judo.AVSEnabled) {
                 country = avsEntryView.GetCountry ();
                 cardAddress.PostCode = avsEntryView.GetPostCode ();
             }
@@ -55,7 +55,7 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
             string startDate = null;
             string issueNumber = null;
 
-            if (JudoSDKManager.MaestroAccepted) {
+            if (Judo.MaestroAccepted) {
                 issueNumber = startDateEntryView.GetIssueNumber ();
                 startDate = startDateEntryView.GetStartDate ();
             }

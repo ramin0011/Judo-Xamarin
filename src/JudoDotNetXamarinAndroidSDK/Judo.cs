@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace JudoDotNetXamarinAndroidSDK
 {
 
-    public class JudoSDKManager
+    public class Judo
     {
 
         public static readonly Android.App.Result JUDO_SUCCESS = Android.App.Result.Ok;
@@ -25,7 +25,6 @@ namespace JudoDotNetXamarinAndroidSDK
         public static readonly Android.App.Result JUDO_ERROR = Android.App.Result.FirstUser;
 
 
-        public static string JUDO_PAYMENT_REF = "JudoPay-yourPaymentReference";
         public static string JUDO_AMOUNT = "JudoPay-amount";
         public static string JUDO_ID = "JudoPay-judoId";
         public static string JUDO_CURRENCY = "JudoPay-currency";
@@ -47,9 +46,9 @@ namespace JudoDotNetXamarinAndroidSDK
         private static string REGULAR_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CV2";
         private static string AMEX_EXPIRY_AND_VALIDATION_ERROR_MESSAGE = "Invalid CIDV";
             
-        private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager> (() => new JudoSDKManager ());
+        private static readonly Lazy<Judo> _singleton = new Lazy<Judo> (() => new Judo ());
 
-        public static JudoSDKManager Instance {
+        public static Judo Instance {
             get { return _singleton.Value; }
         }
 
@@ -89,7 +88,7 @@ namespace JudoDotNetXamarinAndroidSDK
         private bool isRooted;
         private RootCheck _rootCheck;
 
-        public JudoSDKManager ()
+        public Judo ()
         {
 
             _rootCheck = new RootCheck ();
@@ -230,7 +229,7 @@ namespace JudoDotNetXamarinAndroidSDK
             }
         }
 
-        internal static Intent CreateErrorIntent (string message, Exception exception, JudoApiErrorModel apiErrorModel)
+        internal static Intent CreateErrorIntent (string message, Exception exception, ModelError apiErrorModel)
         {
             Intent intent = new Intent ();
             intent.PutExtra (JUDO_ERROR_MESSAGE, message);

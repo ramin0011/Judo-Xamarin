@@ -19,10 +19,6 @@ namespace JudoDotNetXamarin
         /// </summary>
         public string Currency { get; set; }
 
-        /// <summary>
-        /// your Payment reference 
-        /// </summary>
-        public string PaymentReference { get; set; }
 
         /// <summary>
         /// your consumer reference 
@@ -42,7 +38,6 @@ namespace JudoDotNetXamarin
                 Card = this.Card.Clone (),
                 Amount = this.Amount,
                 Currency = this.Currency,
-                PaymentReference = this.PaymentReference,
                 ConsumerReference = this.ConsumerReference,
                 YourPaymentMetaData = this.YourPaymentMetaData,
                 JudoID = this.JudoID

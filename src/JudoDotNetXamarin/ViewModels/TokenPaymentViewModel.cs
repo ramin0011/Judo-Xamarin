@@ -26,11 +26,6 @@ namespace JudoDotNetXamarin
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// your Payment reference 
-        /// </summary>
-        public string PaymentReference { get; set; }
-
-        /// <summary>
         /// Currency 
         /// </summary>
         public string Currency { get; set; }
@@ -64,7 +59,6 @@ namespace JudoDotNetXamarin
                 CardType = this.CardType,
                 ConsumerToken = this.ConsumerToken,
                 Amount = this.Amount,
-                PaymentReference = this.PaymentReference,
                 Currency = this.Currency,
                 LastFour = this.LastFour,
                 ConsumerReference = this.ConsumerReference,

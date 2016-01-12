@@ -18,7 +18,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public class PaymentTokenActivity : BaseActivity
     {
 
-        protected string judoPaymentRef;
+       
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
@@ -79,20 +79,17 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         void UnbundleIntent ()
         {
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
 
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (JudoSDKManager.JUDO_CARD_DETAILS));
-            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
+            judoAmount = decimal.Parse (Intent.GetStringExtra (Judo.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (Judo.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (Judo.JUDO_CURRENCY);
+            judoCardToken = JsonConvert.DeserializeObject<CardToken> (Intent.GetStringExtra (Judo.JUDO_CARD_DETAILS));
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (Judo.JUDO_CONSUMER));
      
             if (judoCardToken.CardType != null) {
                 cv2EntryView.CurrentCard = judoCardToken.CardType;  
             }
-            if (judoPaymentRef == null) {
-                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
-            }
+
             if (judoConsumer == null) {
                 throw new ArgumentException ("JUDO_CONSUMER must be supplied");
             }
@@ -121,7 +118,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         public override void OnBackPressed ()
         {
-            SetResult (JudoSDKManager.JUDO_CANCELLED);
+            SetResult (Judo.JUDO_CANCELLED);
             base.OnBackPressed ();
         }
 
@@ -135,7 +132,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 CardType = judoCardToken.CardType,
                 Token = judoCardToken.Token,
                 ConsumerReference = judoConsumer.YourConsumerReference,
-                PaymentReference = judoPaymentRef,
                 CV2 = cv2EntryView.GetCV2 ()
 
             };

@@ -30,12 +30,11 @@ namespace JudoPayiOSXamarinSampleApp
         private string lastFour;
         private CardType cardType;
 
-        private string paymentReference = "payment101010102";
-        private string consumerRef = "consumer1010102";
+        private string consumerRef = "consumer10101021";
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
         private const string startDate = "";
-        private  const string expiryDate = "12/15";
+        private  const string expiryDate = "12/20";
         private const string cv2 = "452";
 
         private ClientService _clientService;
@@ -97,17 +96,17 @@ namespace JudoPayiOSXamarinSampleApp
                 StringBuilder builder = new StringBuilder ();
 
                 if (error != null && error.ApiError != null)
-                    title = (error.ApiError != null ? error.ApiError.ErrorMessage : "");
+                    title = (error.ApiError != null ? error.ApiError.Message : "");
 
                 if (error != null && error.ApiError != null) {
                     if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                        foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                            builder.AppendLine (model.ErrorMessage);
+                        foreach (FieldError model in error.ApiError.ModelErrors) {
+                            builder.AppendLine (model.Message);
                      
                         }
                     } else {
                         title = "Error";
-                        builder.AppendLine (error.ApiError.ErrorMessage);
+                        builder.AppendLine (error.ApiError.Message);
                     }
                 }
 
@@ -130,19 +129,18 @@ namespace JudoPayiOSXamarinSampleApp
 
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
-                ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
+                ConsumerReference = consumerRef,  
                 CV2 = cv2
             };
 
             buttonDictionary.Add ("Make a Payment", delegate {
-                JudoSDKManager.Instance.Payment (GetCardViewModel (), successCallback, failureCallback);
+                Judo.Instance.Payment (GetCardViewModel (), successCallback, failureCallback);
             });
 
 
 
             buttonDictionary.Add ("PreAuthorise", delegate {
-                JudoSDKManager.Instance.PreAuth (GetCardViewModel (), successCallback, failureCallback);
+                Judo.Instance.PreAuth (GetCardViewModel (), successCallback, failureCallback);
             });
 
 
@@ -152,7 +150,7 @@ namespace JudoPayiOSXamarinSampleApp
                 tokenPayment.LastFour = lastFour;
                 tokenPayment.CardType = cardType;
 
-                JudoSDKManager.Instance.TokenPayment (tokenPayment, successCallback, failureCallback);
+                Judo.Instance.TokenPayment (tokenPayment, successCallback, failureCallback);
             });
 
             buttonDictionary.Add ("Token PreAuthorise", delegate {
@@ -161,23 +159,23 @@ namespace JudoPayiOSXamarinSampleApp
                 tokenPayment.LastFour = lastFour;
                 tokenPayment.CardType = cardType;
 
-                JudoSDKManager.Instance.TokenPreAuth (tokenPayment, successCallback, failureCallback);
+                Judo.Instance.TokenPreAuth (tokenPayment, successCallback, failureCallback);
             });
 
             buttonDictionary.Add ("Register a Card", delegate {
                 var payment = GetCardViewModel ();
                 payment.Amount = 1.01m; //Minimum amount Gateways accept without question
 
-                JudoSDKManager.Instance.RegisterCard (payment, successCallback, failureCallback);
+                Judo.Instance.RegisterCard (payment, successCallback, failureCallback);
             });
             if (_clientService.ApplePayAvailable) {
 
                 buttonDictionary.Add ("Make a ApplePay Payment", delegate {
-                    JudoSDKManager.Instance.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback);
+                    Judo.Instance.MakeApplePayment (GetApplePayViewModel (), successCallback, failureCallback);
                 });
 
                 buttonDictionary.Add ("Make a ApplePay PreAuthorise", delegate {
-                    JudoSDKManager.Instance.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback);
+                    Judo.Instance.MakeApplePreAuth (GetApplePayViewModel (), successCallback, failureCallback);
                 });
 
             }
@@ -205,7 +203,6 @@ namespace JudoPayiOSXamarinSampleApp
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
                 Card = new CardViewModel {

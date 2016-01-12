@@ -71,7 +71,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             Orientation = Orientation.Vertical;
 
             cardImageView = new CardImageView (Context);
-            cardImageView.SetCardImageWithoutAnimation (JudoSDKManager.GetCardResourceId (Context, currentCard, true));
+            cardImageView.SetCardImageWithoutAnimation (Judo.GetCardResourceId (Context, currentCard, true));
 
             LinearLayout layoutHolder = new LinearLayout (Context);
             layoutHolder.Orientation = Orientation.Horizontal;
@@ -123,15 +123,15 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 currentCardType = ValidationHelper.GetCardType (cardNumber);
                 if (currentCardType != CardType.UNKNOWN) {
                     //if (currentCardType != currentCard) {
-                    if (currentCardType == CardType.AMEX && !JudoSDKManager.AVSEnabled) {
+                    if (currentCardType == CardType.AMEX && !Judo.AVSEnabled) {
                         cardNumberTextView.ShowInvalid ("AmEx not accepted");
-                    } else if (currentCardType == CardType.MAESTRO && !JudoSDKManager.MaestroAccepted) {
+                    } else if (currentCardType == CardType.MAESTRO && !Judo.MaestroAccepted) {
                         cardNumberTextView.ShowInvalid ("Maestro not accepted");
                     } else {
-                        cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCardType, true), false);
-                        cardNumberTextView.SetHintText (JudoSDKManager.GetCardHintFormat (currentCardType));
-                        cardExpiryCv2TextView.SetHintText (JudoSDKManager.GetExpiryAndValidationHintFormat (currentCardType));
-                        cardExpiryCv2TextView.SetErrorText (JudoSDKManager.GetExpiryAndValidationErrorMessage (currentCardType));
+                        cardImageView.SetCardImage (Judo.GetCardResourceId (Context, currentCardType, true), false);
+                        cardNumberTextView.SetHintText (Judo.GetCardHintFormat (currentCardType));
+                        cardExpiryCv2TextView.SetHintText (Judo.GetExpiryAndValidationHintFormat (currentCardType));
+                        cardExpiryCv2TextView.SetErrorText (Judo.GetExpiryAndValidationErrorMessage (currentCardType));
                     }
 
                     currentCard = currentCardType;
@@ -162,7 +162,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 cardExpiryCv2TextView.ValidatePartialInput ();
 
                 if (position > 4) {
-                    cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, false), true);
+                    cardImageView.SetCardImage (Judo.GetCardResourceId (Context, currentCard, false), true);
                     if (HintTextView != null) {
                         HintTextView.SetText (Resource.String.enter_card_cv2);
                     }
@@ -175,7 +175,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                         }
                     }
                 } else {
-                    cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, true), true);
+                    cardImageView.SetCardImage (Judo.GetCardResourceId (Context, currentCard, true), true);
                     if (HintTextView != null) {
                         HintTextView.SetText (Resource.String.enter_card_expiry);
                     }
@@ -195,7 +195,7 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
             cardNumberTextView.GetEditText ().Text = "";
             cardExpiryCv2TextView.GetEditText ().Text = "";
             currentCard = CardType.UNKNOWN;
-            cardImageView.SetCardImage (JudoSDKManager.GetCardResourceId (Context, currentCard, true), false);
+            cardImageView.SetCardImage (Judo.GetCardResourceId (Context, currentCard, true), false);
 
             if (HintTextView != null) {
                 HintTextView.SetText (Resource.String.enter_card_no);

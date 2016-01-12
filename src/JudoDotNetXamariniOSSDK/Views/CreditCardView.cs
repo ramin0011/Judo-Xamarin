@@ -33,7 +33,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class CreditCardView : UIViewController
+    internal partial class CreditCardView : JudoUIViewController
     {
         private UIView _activeview;
         private bool _moveViewUp;
@@ -57,7 +57,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         public PaymentViewModel cardPayment { get; set; }
 
-        public CreditCardView (IPaymentService paymentService) : base ("CreditCardView", null)
+        public CreditCardView (IPaymentService paymentService) : base ("CreditCardView")
         {
             _paymentService = paymentService;
         }
@@ -80,6 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Views
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
+
             SetUpTableView ();
 
             this.View.BackgroundColor = UIColor.FromRGB (245f, 245f, 245f);
@@ -110,11 +111,15 @@ namespace JudoDotNetXamariniOSSDK.Views
                 MakePayment ();
             };
 
+           
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 FormClose.TouchUpInside += (sender, ev) => {
-                    this.DismissViewController (true, null);
+                    CloseView ();
                 };
             }
+
+
+           
             SubmitButton.Disable ();
             detailCell.ccTextOutlet.BecomeFirstResponder ();
 
@@ -185,7 +190,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
                 int row = CellsToShow.IndexOf (detailCell) + 1;
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (!CellsToShow.Contains (avsCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, avsCell);
@@ -200,7 +205,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     }
 
                 }
-                if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.Instance.MaestroAccepted) {
+                if (detailCell.Type == CardType.MAESTRO && Judo.Instance.MaestroAccepted) {
                     if (!CellsToShow.Contains (maestroCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, maestroCell);
@@ -225,13 +230,13 @@ namespace JudoDotNetXamariniOSSDK.Views
                 }
             } else {
                 TableView.BeginUpdates ();
-                if (JudoSDKManager.Instance.MaestroAccepted) {
+                if (Judo.Instance.MaestroAccepted) {
                     if (CellsToShow.Contains (maestroCell)) {
                         cellsToRemove.Add (maestroCell);
                     }
                 }
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (CellsToShow.Contains (avsCell)) {
                         cellsToRemove.Add (avsCell);
                     }
@@ -314,16 +319,21 @@ namespace JudoDotNetXamariniOSSDK.Views
                 SubmitButton.Disable ();
 
                 _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (reponse => {
-                    if (reponse.Exception != null) {
+                    if (reponse.Result.HasError) {
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
                         
-                            reponse.Exception.FlattenToJudoFailure (failureCallback);
+                            var error = reponse.Result.Error;
+                            var judoError = new JudoError () {
+                                ApiError = reponse.Result.Error
+                            };
+
+                            failureCallback (judoError);
                         });
                     } else {
                         var result = reponse.Result;
-                        if (JudoSDKManager.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
+                        if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
                             var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
@@ -351,9 +361,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                             NavigationController.CloseView ();
                                       
-                                            failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-                                                    ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
-                                                    ErrorType = JudoApiError.General_Error,
+                                            failureCallback (new JudoError { ApiError = new ModelError {
+                                                    Message = "Account requires 3D Secure but application is not configured to accept it",
+                                                    Code = (int)JudoApiError.General_Error,
                                                     ModelErrors = null
                                                 }
                                             });
@@ -410,11 +420,11 @@ namespace JudoDotNetXamariniOSSDK.Views
         {
             detailCell.CleanUp ();
 
-            if (JudoSDKManager.Instance.MaestroAccepted) {
+            if (Judo.Instance.MaestroAccepted) {
                 maestroCell.CleanUp ();
 
             }	
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.CleanUp ();
             }
         }
@@ -425,7 +435,7 @@ namespace JudoDotNetXamariniOSSDK.Views
             detailCell.GatherCardDetails (cardViewModel);
 
 
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.GatherCardDetails (cardViewModel);
 
             }

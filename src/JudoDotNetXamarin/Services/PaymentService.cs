@@ -24,7 +24,6 @@ namespace JudoDotNetXamarin
             JudoConfiguration.Instance.Validate ();
             CardPaymentModel payment = new CardPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (paymentViewModel.JudoID) ? JudoConfiguration.Instance.JudoId : paymentViewModel.JudoID),
-                YourPaymentReference = paymentViewModel.PaymentReference,
                 YourConsumerReference = paymentViewModel.ConsumerReference,
                 Amount = paymentViewModel.Amount,
                 CardNumber = paymentViewModel.Card.CardNumber,
@@ -53,7 +52,6 @@ namespace JudoDotNetXamarin
             JudoConfiguration.Instance.Validate ();
             CardPaymentModel payment = new CardPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (authorisation.JudoID) ? JudoConfiguration.Instance.JudoId : authorisation.JudoID),
-                YourPaymentReference = authorisation.PaymentReference,
                 YourConsumerReference = authorisation.ConsumerReference,
                 Amount = authorisation.Amount,
                 CardNumber = authorisation.Card.CardNumber,
@@ -80,7 +78,6 @@ namespace JudoDotNetXamarin
             JudoConfiguration.Instance.Validate ();
             TokenPaymentModel payment = new TokenPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (tokenPayment.JudoID) ? JudoConfiguration.Instance.JudoId : tokenPayment.JudoID),
-                YourPaymentReference = tokenPayment.PaymentReference,
                 YourConsumerReference = tokenPayment.ConsumerReference,
                 Amount = tokenPayment.Amount,
                 CardToken = tokenPayment.Token,
@@ -101,7 +98,6 @@ namespace JudoDotNetXamarin
             JudoConfiguration.Instance.Validate ();
             TokenPaymentModel payment = new TokenPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (tokenPayment.JudoID) ? JudoConfiguration.Instance.JudoId : tokenPayment.JudoID),
-                YourPaymentReference = tokenPayment.PaymentReference,
                 YourConsumerReference = tokenPayment.ConsumerReference,
                 Amount = tokenPayment.Amount,
                 CardToken = tokenPayment.Token,
@@ -123,7 +119,6 @@ namespace JudoDotNetXamarin
             JudoConfiguration.Instance.Validate ();
             var registerCard = new CardPaymentModel () {                 
                 JudoId = (String.IsNullOrWhiteSpace (payment.JudoID) ? JudoConfiguration.Instance.JudoId : payment.JudoID),
-                YourPaymentReference = payment.PaymentReference,
                 YourConsumerReference = payment.ConsumerReference,
                 Amount = payment.Amount,
                 CardNumber = payment.Card.CardNumber,
@@ -146,18 +141,19 @@ namespace JudoDotNetXamarin
           
         }
 
-        public async Task<IResult<ITransactionResult>> CompleteDSecure (string receiptID, string paRes, string md)
+        public async Task<IResult<ITransactionResult>> CompleteDSecure (long receiptID, string paRes, string md)
         {
             try {
                 ThreeDResultModel model = new ThreeDResultModel ();
                 model.PaRes = paRes;
+
                 Task<IResult<PaymentReceiptModel>> task = _judoAPI.ThreeDs.Complete3DSecure (receiptID, model);
                 return await task;
             } catch (Exception e) {
                 var error = new JudoError () { 
                     Exception = e,
-                    ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel () {
-                        ErrorMessage = e.InnerException.ToString ()
+                    ApiError = new JudoPayDotNet.Errors.ModelError () {
+                        Message = e.InnerException.ToString ()
                     }
                 };
                 throw error;

@@ -126,7 +126,7 @@ namespace JudoDotNetXamariniOSSDK.Controllers
         }
 
         private IPaymentService _paymentService;
-        public string ReceiptID;
+        public long ReceiptID;
 
         public JudoSuccessCallback _successCallback { get; set; }
 

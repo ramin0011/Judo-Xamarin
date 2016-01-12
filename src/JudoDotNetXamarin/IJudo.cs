@@ -4,7 +4,7 @@ using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarin
 {
-    public interface IJudoSDKManager
+    public interface IJudo
     {
 
         /// <summary>

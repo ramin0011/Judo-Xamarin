@@ -17,7 +17,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 		
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -26,7 +26,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 view.failureCallback = failure;
                 view.cardPayment = payment;
 
-                PresentView (vc as UINavigationController, view);
+                PresentView (vc, view);
             }
         }
 
@@ -35,7 +35,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -46,7 +46,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 view.successCallback = success;
                 view.failureCallback = failure;
                 view.authorisationModel = preAuthorisation;
-                PresentView (vc as UINavigationController, view);
+                PresentView (vc, view);
             }
         }
 
@@ -55,7 +55,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
 
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -64,7 +64,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 view.successCallback = success;
                 view.failureCallback = failure;
                 view.tokenPayment = payment;
-                PresentView (vc as UINavigationController, view);
+                PresentView (vc, view);
 			
             }
         }
@@ -73,7 +73,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -82,7 +82,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 view.successCallback = success;
                 view.failureCallback = failure;
                 view.tokenPayment = payment;
-                PresentView (vc as UINavigationController, view);
+                PresentView (vc, view);
             }
         }
 
@@ -90,7 +90,7 @@ namespace JudoDotNetXamariniOSSDK.Clients
         {
             var vc = GetCurrentViewController ();
 
-            if (JudoSDKManager.UIMode && vc == null) {
+            if (Judo.UIMode && vc == null) {
                 var error = new JudoError { Exception = new Exception ("Navigation controller cannot be null with UIMode enabled.") };
                 failure (error);
             } else {
@@ -98,18 +98,22 @@ namespace JudoDotNetXamariniOSSDK.Clients
                 view.successCallback = success;
                 view.failureCallback = failure;
                 view.registerCardModel = payment;
-                PresentView (vc as UINavigationController, view);
+                PresentView (vc, view);
             }
         }
 
-        private void PresentView (UINavigationController navigationController, UIViewController view)
+        private void PresentView (UIViewController rootView, UIViewController view)
         {
+            
+           
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 view.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
                 view.ModalTransitionStyle = UIModalTransitionStyle.CrossDissolve;
-                navigationController.PresentViewController (view, true, null);
+                rootView.PresentViewController (view, true, null);
             } else {
-                navigationController.PushViewController (view, true);
+                var nv = new UINavigationController (view);
+                nv.ModalPresentationStyle = UIModalPresentationStyle.FormSheet;
+                rootView.PresentViewController (nv, true, null);
             }
         }
 

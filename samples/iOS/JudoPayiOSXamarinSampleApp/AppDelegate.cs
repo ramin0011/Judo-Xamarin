@@ -59,24 +59,26 @@ namespace JudoPayiOSXamarinSampleApp
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
 
+           
 
             /*
 			configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
 			configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
 			configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
 			*/
+
+           
             if (configInstance.ApiToken == null) {
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
-
             /*
             // setting up 3d secure, AVS, Amex and mestro card support
-		    JudoSDKManager.AVSEnabled = true;
-		    JudoSDKManager.AmExAccepted = true;
-		    JudoSDKManager.MaestroAccepted = true;
+            Judo.Instance.AVSEnabled = true;
+            Judo.Instance.AmExAccepted = true;
+            Judo.Instance.MaestroAccepted = true;
             
             // this will turn off UI mode and you can use same judo APIs to link with your own UI
-		    //JudoSDKManager.UIMode = false;
+            // Judo.Instance.UIMode = false;
             */
         }
     }

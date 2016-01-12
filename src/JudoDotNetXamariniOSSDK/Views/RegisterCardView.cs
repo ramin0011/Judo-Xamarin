@@ -12,6 +12,7 @@ using JudoDotNetXamariniOSSDK.Views.TableCells.Card;
 using JudoPayDotNet.Models;
 using UIKit;
 using CoreFoundation;
+using JudoPayDotNet.Errors;
 
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
@@ -32,7 +33,7 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class RegisterCardView : UIViewController
+    internal partial class RegisterCardView : JudoUIViewController
     {
 
         private UIView activeview;
@@ -57,7 +58,7 @@ namespace JudoDotNetXamariniOSSDK.Views
 
         public PaymentViewModel registerCardModel { get; set; }
 
-        public RegisterCardView (IPaymentService paymentService) : base ("RegisterCardView", null)
+        public RegisterCardView (IPaymentService paymentService) : base ("RegisterCardView")
         {
             _paymentService = paymentService;
         }
@@ -181,7 +182,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                 bool ccIsFirstResponder = detailCell.ccTextOutlet.IsFirstResponder;
                 int row = CellsToShow.IndexOf (detailCell) + 1;
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (!CellsToShow.Contains (avsCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, avsCell);
@@ -196,7 +197,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     }
 
                 }
-                if (detailCell.Type == CardType.MAESTRO && JudoSDKManager.Instance.MaestroAccepted) {
+                if (detailCell.Type == CardType.MAESTRO && Judo.Instance.MaestroAccepted) {
                     if (!CellsToShow.Contains (maestroCell)) {
                         TableView.BeginUpdates ();
                         CellsToShow.Insert (row, maestroCell);
@@ -221,13 +222,13 @@ namespace JudoDotNetXamariniOSSDK.Views
                 }
             } else {
                 TableView.BeginUpdates ();
-                if (JudoSDKManager.Instance.MaestroAccepted) {
+                if (Judo.Instance.MaestroAccepted) {
                     if (CellsToShow.Contains (maestroCell)) {
                         cellsToRemove.Add (maestroCell);
                     }
                 }
 
-                if (JudoSDKManager.Instance.AVSEnabled) {
+                if (Judo.Instance.AVSEnabled) {
                     if (CellsToShow.Contains (avsCell)) {
                         cellsToRemove.Add (avsCell);
                     }
@@ -320,16 +321,20 @@ namespace JudoDotNetXamariniOSSDK.Views
         private void HandleResponse (Task<IResult<ITransactionResult>> reponse)
         {
 
-            if (reponse.Exception != null) {
+            if (reponse.Result.HasError) {
                 LoadingScreen.HideLoading ();
                 DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                     NavigationController.CloseView ();
-                
-                    reponse.Exception.FlattenToJudoFailure (failureCallback);
+                    var error = reponse.Result.Error;
+                    var judoError = new JudoError () {
+                        ApiError = reponse.Result.Error
+                    };
+
+                    failureCallback (judoError);
                 });
             } else {
                 var result = reponse.Result;
-                if (JudoSDKManager.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
+                if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
@@ -358,9 +363,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
                                     
-                                        failureCallback (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-                                                ErrorMessage = "Account requires 3D Secure but application is not configured to accept it",
-                                                ErrorType = JudoApiError.General_Error,
+                                        failureCallback (new JudoError { ApiError = new ModelError {
+                                                Message = "Account requires 3D Secure but application is not configured to accept it",
+                                                Code = (int)JudoApiError.General_Error,
                                                 ModelErrors = null
                                             }
                                         });
@@ -416,11 +421,11 @@ namespace JudoDotNetXamariniOSSDK.Views
         {
             detailCell.CleanUp ();
 
-            if (JudoSDKManager.Instance.MaestroAccepted) {
+            if (Judo.Instance.MaestroAccepted) {
                 maestroCell.CleanUp ();
 
             }	
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.CleanUp ();
             }
         }
@@ -431,7 +436,7 @@ namespace JudoDotNetXamariniOSSDK.Views
             detailCell.GatherCardDetails (cardViewModel);
 
 
-            if (JudoSDKManager.Instance.AVSEnabled) {
+            if (Judo.Instance.AVSEnabled) {
                 avsCell.GatherCardDetails (cardViewModel);
 
             }

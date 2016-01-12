@@ -29,12 +29,12 @@ using nuint = global::System.UInt32;
 
 namespace JudoDotNetXamariniOSSDK.Views
 {
-    internal partial class TokenPreAuthorisationView : UIViewController
+    internal partial class TokenPreAuthorisationView : JudoUIViewController
     {
         IPaymentService _paymentService;
         bool KeyboardVisible = false;
 
-        public TokenPreAuthorisationView (IPaymentService paymentService) : base ("TokenPreAuthorisationView", null)
+        public TokenPreAuthorisationView (IPaymentService paymentService) : base ("TokenPreAuthorisationView")
         {
             _paymentService = paymentService;
         }
@@ -80,7 +80,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                         if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                             this.DismissViewController (true, null);
                         } else {
-                            this.NavigationController.PopViewController (true);
+                            this.DismissViewController (true, null);
                         }
                     };
 
@@ -177,12 +177,17 @@ namespace JudoDotNetXamariniOSSDK.Views
 
                 _paymentService.MakeTokenPreAuthorisation (tokenPayment, new ClientService ()).ContinueWith (reponse => {
 
-                    if (reponse.Exception != null) {
+                    if (reponse.Result.HasError) {
                         LoadingScreen.HideLoading ();
                         DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                             NavigationController.CloseView ();
                         
-                            reponse.Exception.FlattenToJudoFailure (failureCallback);
+                            var error = reponse.Result.Error;
+                            var judoError = new JudoError () {
+                                ApiError = reponse.Result.Error
+                            };
+
+                            failureCallback (judoError);
                         });
                     } else {
                         var result = reponse.Result;

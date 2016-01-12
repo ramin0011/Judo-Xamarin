@@ -58,16 +58,20 @@ namespace Android.Xamarin.SampleApp
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
 
             Switch switchbutton = FindViewById<Switch> (Resource.Id.switch1);
-            switchbutton.Checked = JudoSDKManager.UIMode; 
+            switchbutton.Checked = Judo.UIMode; 
 
             switchbutton.CheckedChange += delegate(object sender, CompoundButton.CheckedChangeEventArgs e) {
-                JudoSDKManager.UIMode = switchbutton.Checked;
+                Judo.UIMode = switchbutton.Checked;
                 // Perform action on clicks
                 if (switchbutton.Checked)
                     Toast.MakeText (this, "UI Mode on", ToastLength.Short).Show ();
                 else
                     Toast.MakeText (this, "You are about to use non UI Mode so please look at the source code to understand the usage of Non-UI APIs.", ToastLength.Short).Show ();
             };
+
+            if (bundle != null) {
+                RestoreState (bundle);
+            }
 
         }
 
@@ -97,14 +101,14 @@ namespace Android.Xamarin.SampleApp
             StringBuilder builder = new StringBuilder ();
 
             if (error != null && error.ApiError != null) {
-                title = (error.ApiError.ErrorMessage);
+                title = (error.ApiError.Message);
                 if (error.ApiError.ModelErrors != null && error.ApiError.ModelErrors.Count > 0) {
-                    foreach (JudoModelError model in error.ApiError.ModelErrors) {
-                        builder.AppendLine (model.ErrorMessage);
+                    foreach (FieldError model in error.ApiError.ModelErrors) {
+                        builder.AppendLine (model.Message + (!String.IsNullOrWhiteSpace (model.FieldName) ? "(" + model.FieldName + ")" : ""));
                     }
                 } else {
                     title = ("Error");
-                    builder.AppendLine (error.ApiError.ErrorMessage);
+                    builder.AppendLine (error.ApiError.Message);
 
                 }
             }
@@ -127,14 +131,14 @@ namespace Android.Xamarin.SampleApp
         {
             var cardModel = GetCardViewModel ();
 
-            JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.Instance.Payment (cardModel, SuccessPayment, FailurePayment, this);
+            Judo.AmExAccepted = true;
+            Judo.Instance.Payment (cardModel, SuccessPayment, FailurePayment, this);
 
         }
 
         private void payPreAuth_Click (object sender, EventArgs e)
         {
-            JudoSDKManager.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
+            Judo.Instance.PreAuth (GetCardViewModel (), SuccessPayment, FailurePayment, this);
         }
 
         private void payToken_Click (object sender, EventArgs e)
@@ -146,7 +150,7 @@ namespace Android.Xamarin.SampleApp
                 return;
             }
                 
-            JudoSDKManager.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
+            Judo.Instance.TokenPayment (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
         }
 
@@ -160,7 +164,7 @@ namespace Android.Xamarin.SampleApp
                 return;
             }
 
-            JudoSDKManager.Instance.TokenPreAuth (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
+            Judo.Instance.TokenPreAuth (GetTokenCardViewModel (), SuccessPayment, FailurePayment, this);
 
          
         }
@@ -169,7 +173,7 @@ namespace Android.Xamarin.SampleApp
         {
             var payment = GetCardViewModel ();
             payment.Amount = 1.01m;
-            JudoSDKManager.Instance.RegisterCard (payment, SuccessPayment, FailurePayment, this);
+            Judo.Instance.RegisterCard (payment, SuccessPayment, FailurePayment, this);
         }
 
         private PaymentViewModel GetCardViewModel ()
@@ -177,7 +181,6 @@ namespace Android.Xamarin.SampleApp
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail
                 Card = new CardViewModel {
@@ -196,7 +199,6 @@ namespace Android.Xamarin.SampleApp
             var tokenPayment = new TokenPaymentViewModel () {
                 Amount = 3.5m,
                 ConsumerReference = consumerRef,
-                PaymentReference = paymentReference,
                 Currency = "GBP",
                 CV2 = cv2,
                 Token = cardToken,
@@ -215,11 +217,11 @@ namespace Android.Xamarin.SampleApp
 
             //setting for Sandnox
             configInstance.Environment = JudoEnvironment.Live;
-            JudoSDKManager.UIMode = true;
-            JudoSDKManager.AmExAccepted = true;
-            JudoSDKManager.AVSEnabled = false;
-            JudoSDKManager.MaestroAccepted = true;
-            JudoSDKManager.RiskSignals = true;
+            Judo.UIMode = true;
+            Judo.AmExAccepted = true;
+            Judo.AVSEnabled = true;
+            Judo.MaestroAccepted = true;
+            Judo.RiskSignals = true;
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
@@ -227,9 +229,38 @@ namespace Android.Xamarin.SampleApp
             configInstance.JudoId = "[Judo ID]"; //Received when registering an account with Judo
             */
 
+
             if (configInstance.ApiToken == null) { 
                 throw(new Exception ("Judo Configuration settings have not been set on the config Instance.i.e JudoID Token,Secret"));
             }
+        }
+
+        protected override void OnSaveInstanceState (Bundle outState)
+        {
+
+            if (!string.IsNullOrEmpty (cardToken)) {
+
+                outState.PutString ("CARDTOKEN", cardToken);
+                outState.PutString ("CONSUMERTOKEN", consumerToken);
+                outState.PutString ("LASTFOUR", lastFour);
+                outState.PutInt ("CARDTYPE", (int)cardType);
+
+                // always call the base implementation!
+                base.OnSaveInstanceState (outState);    
+            }
+
+        }
+
+        void RestoreState (Bundle bundle)
+        {
+
+            cardToken = bundle.GetString ("CARDTOKEN", "");
+            if (!string.IsNullOrEmpty (cardToken)) {
+                consumerToken = bundle.GetString ("CONSUMERTOKEN", "");
+                lastFour = bundle.GetString ("LASTFOUR", "");
+                cardType = (CardType)bundle.GetInt ("CARDTYPE", (int)CardType.UNKNOWN);
+            }
+
         }
     }
 }

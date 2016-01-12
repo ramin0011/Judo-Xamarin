@@ -20,7 +20,7 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public JObject GetClientDetails ()
         {
-            if (!JudoSDKManager.RiskSignals) {
+            if (!Judo.RiskSignals) {
                 return null;
             }
             var context = Android.App.Application.Context;
@@ -49,7 +49,7 @@ namespace JudoDotNetXamarinAndroidSDK
             RootCheck rootCheck = new RootCheck ();
             clientDetails.Rooted = rootCheck.IsRooted ();
 
-            clientDetails.SslPinningEnabled = JudoSDKManager.SSLPinningEnabled;
+            clientDetails.SslPinningEnabled = Judo.SSLPinningEnabled;
 
             return  JObject.FromObject (clientDetails);
         }

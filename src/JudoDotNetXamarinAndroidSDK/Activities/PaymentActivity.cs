@@ -63,12 +63,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 } catch (Exception e) {
                     Console.Error.Write (e.StackTrace);
                 }
-                if (ValidationHelper.IsStartDateRequiredForCardNumber (cardNumber) && JudoSDKManager.MaestroAccepted) {
+                if (ValidationHelper.IsStartDateRequiredForCardNumber (cardNumber) && Judo.MaestroAccepted) {
                     startDateEntryView.Visibility = ViewStates.Visible;
                     startDateEntryView.RequestFocus ();
                     avsEntryView.InhibitFocusOnFirstShowOfCountrySpinner ();
                 }
-                if (JudoSDKManager.AVSEnabled && avsEntryView != null) {
+                if (Judo.AVSEnabled && avsEntryView != null) {
                     avsEntryView.Visibility = ViewStates.Visible;
                 }
                 payButton.Enabled = true;
@@ -94,14 +94,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         void UnbundleIntent ()
         {
-            judoPaymentRef = Intent.GetStringExtra (JudoSDKManager.JUDO_PAYMENT_REF);
-            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (JudoSDKManager.JUDO_CONSUMER));
-            judoAmount = decimal.Parse (Intent.GetStringExtra (JudoSDKManager.JUDO_AMOUNT));
-            judoId = Intent.GetStringExtra (JudoSDKManager.JUDO_ID);
-            judoCurrency = Intent.GetStringExtra (JudoSDKManager.JUDO_CURRENCY);
-            if (judoPaymentRef == null) {
-                throw new ArgumentException ("JUDO_PAYMENT_REF must be supplied");
-            }
+            
+            judoConsumer = JsonConvert.DeserializeObject<Consumer> (Intent.GetStringExtra (Judo.JUDO_CONSUMER));
+            judoAmount = decimal.Parse (Intent.GetStringExtra (Judo.JUDO_AMOUNT));
+            judoId = Intent.GetStringExtra (Judo.JUDO_ID);
+            judoCurrency = Intent.GetStringExtra (Judo.JUDO_CURRENCY);
+           
             if (judoConsumer == null) {
                 throw new ArgumentException ("JUDO_CONSUMER must be supplied");
             }
@@ -134,7 +132,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         public override void OnBackPressed ()
         {
-            SetResult (JudoSDKManager.JUDO_CANCELLED);
+            SetResult (Judo.JUDO_CANCELLED);
             base.OnBackPressed ();
         }
 
@@ -147,7 +145,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.Card = card;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
-            cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
 
             ShowLoadingSpinner (true);
@@ -178,14 +175,14 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             outState.PutString ("CV2", cv2);
             outState.PutInt ("STAGE", (int)stage);
 
-            if (JudoSDKManager.AVSEnabled) {
+            if (Judo.AVSEnabled) {
                 var country = avsEntryView.GetCountry ();
                 var PostCode = avsEntryView.GetPostCode ();
                 outState.PutInt ("COUNTRY", (Int32)country);
                 outState.PutString ("POSTCODE", PostCode);
             }
                 
-            if (JudoSDKManager.MaestroAccepted) {
+            if (Judo.MaestroAccepted) {
                 string startDate = null;
                 string issueNumber = null;
                 issueNumber = startDateEntryView.GetIssueNumber ();
@@ -207,7 +204,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             var stage = bundle.GetInt ("STAGE", (int)Stage.STAGE_CC_NO);
             cardEntryView.RestoreState (cardNumber, expiry, cv2, (Stage)stage);
 
-            if (JudoSDKManager.AVSEnabled) {
+            if (Judo.AVSEnabled) {
               
                 //var country = avsEntryView.GetCountry ();
                 //var PostCode = avsEntryView.GetPostCode ();
@@ -216,7 +213,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 avsEntryView.RestoreState (country, PostCode);
             }
 
-            if (JudoSDKManager.MaestroAccepted) {
+            if (Judo.MaestroAccepted) {
                 string startDate = bundle.GetString ("STARTDATE", "");
                 string issueNumber = bundle.GetString ("ISSUENUMBER", "");
                 startDateEntryView.RestoreState (startDate, issueNumber);

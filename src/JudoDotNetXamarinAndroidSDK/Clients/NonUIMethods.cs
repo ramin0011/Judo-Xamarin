@@ -7,6 +7,7 @@ using JudoDotNetXamarin;
 using System;
 using Android.Views.InputMethods;
 using Android.Views;
+using JudoPayDotNet.Errors;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -90,9 +91,9 @@ namespace JudoDotNetXamarinAndroidSDK
                 var secureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
                 if (secureReceipt != null) {
                     var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                    failure (new JudoError { ApiError = new JudoPayDotNet.Errors.JudoApiErrorModel {
-                            ErrorMessage = "Account requires 3D Secure but non UI Mode does not support this",
-                            ErrorType = JudoApiError.General_Error,
+                    failure (new JudoError { ApiError = new ModelError {
+                            Message = "Account requires 3D Secure but non UI Mode does not support this",
+                            Code = (int)JudoApiError.General_Error,
                             ModelErrors = null
                         }
                     });

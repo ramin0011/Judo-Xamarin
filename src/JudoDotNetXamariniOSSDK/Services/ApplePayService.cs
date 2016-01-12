@@ -75,7 +75,6 @@ namespace JudoDotNetXamariniOSSDK.Services
                 JObject jo = JObject.Parse (test.ToString ());
                 PKPaymentModel pkModel = new PKPaymentModel () {
                     JudoId = JudoConfiguration.Instance.JudoId,
-                    YourPaymentReference = "paymentRef12343",
                     YourConsumerReference = customerRef,
                     Amount = amount.ToDecimal (),
                     ClientDetails = _clientService.GetClientDetails (),

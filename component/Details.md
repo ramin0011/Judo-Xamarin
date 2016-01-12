@@ -15,11 +15,10 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.2.0
+Version 2.3.0
 
-- Unification of Android SDK with Core Library
-- Unified SDK Configuration and Library calls
-- Jailbroken/Rooted device detection
-- Improved Android UI
-- Smaller SDK footprint
-- Xamarin 4 support
+- Judo API version 5.0
+- SHA 256 SSL/TLS Certificate upgrade - an industry-wide security update to protect you against man-in-the-middle attacks
+- Improved error handling
+- Bug fixes
+- Fraud prevention features

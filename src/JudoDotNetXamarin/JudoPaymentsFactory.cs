@@ -17,7 +17,7 @@ namespace JudoDotNetXamarin
         private static readonly string SANDBOX_URL = "https://GW1.judopay-sandbox.com/";
 
 
-        private static readonly string API_VERSION = "4.1.0.0";
+        private static readonly string API_VERSION = "5.0.0.0";
         private const string Apiversionheader = "api-version";
 
         private static JudoPayApi Create (Credentials credentials, JudoEnvironment environment)

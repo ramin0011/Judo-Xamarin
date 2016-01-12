@@ -96,7 +96,7 @@ namespace JudoDotNetXamariniOSSDK.Views.TableCells.Card
                 }
             };
             PostcodeTextField.Text = "";	
-            PostcodeTextField.Font = JudoSDKManager.FIXED_WIDTH_FONT_SIZE_20;
+            PostcodeTextField.Font = Judo.FIXED_WIDTH_FONT_SIZE_20;
             ;
             PostcodeTextField.TextColor = UIColor.Black;
 

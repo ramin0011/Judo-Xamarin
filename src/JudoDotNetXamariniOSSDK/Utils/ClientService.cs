@@ -30,7 +30,7 @@ namespace JudoDotNetXamariniOSSDK
     {
         public  JObject GetClientDetails ()
         {
-            if (!JudoSDKManager.Instance.RiskSignals) {
+            if (!Judo.Instance.RiskSignals) {
                 return null;
             }
 
@@ -40,7 +40,7 @@ namespace JudoDotNetXamariniOSSDK
                 DeviceModel = UIDevice.CurrentDevice.Model,
                 Serial = JudoShield.GetDeviceIdentifier (),
                 CultureLocale = NSLocale.CurrentLocale.CountryCode,
-                SslPinningEnabled = JudoSDKManager.Instance.SSLPinningEnabled
+                SslPinningEnabled = Judo.Instance.SSLPinningEnabled
             };
 
 

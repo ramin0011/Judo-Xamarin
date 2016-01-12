@@ -15,7 +15,7 @@ using JudoShieldXamarin;
 namespace JudoDotNetXamariniOSSDK
 {
 
-    public class JudoSDKManager : IJudoSDKManager
+    public class Judo : IJudo
     {
         internal static readonly UIFont FIXED_WIDTH_FONT_SIZE_20 = UIFont.FromName ("Courier", 17.0f);
 
@@ -56,13 +56,13 @@ namespace JudoDotNetXamariniOSSDK
 
        
 
-        private static readonly Lazy<JudoSDKManager> _singleton = new Lazy<JudoSDKManager> (() => new JudoSDKManager ());
+        private static readonly Lazy<Judo> _singleton = new Lazy<Judo> (() => new Judo ());
 
-        public static JudoSDKManager Instance {
+        public static Judo Instance {
             get { return _singleton.Value; }
         }
 
-        static JudoSDKManager ()
+        static Judo ()
         {
             // setting up UI mode by default
             UIMode = true;

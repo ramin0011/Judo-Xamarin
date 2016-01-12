@@ -38,7 +38,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.JudoID = judoId;
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
-            cardPayment.PaymentReference = judoPaymentRef;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
 
             _paymentService.PreAuthoriseCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
