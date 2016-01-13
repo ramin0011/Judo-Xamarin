@@ -1,3 +1,6 @@
+
+[<img src="https://github.com/JudoPay/Judo-Xamarin/blob/master/resources/webinarBanner.png?raw=true">](http://connect.judopay.com/xamarin-judo-webinar?)
+
 <p>
   <img  align="right" src="https://github.com/JudoPay/Judo-Xamarin/blob/master/resources/judo_logo.png?raw=true" alt="Judo"/>
 </p>
