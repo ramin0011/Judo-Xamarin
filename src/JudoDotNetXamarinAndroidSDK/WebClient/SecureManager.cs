@@ -52,8 +52,9 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public override void OnPageFinished (WebView view, string url)
         {
-            
+           
             base.OnPageFinished (view, url);
+            view.LoadUrl (String.Format ("javascript:window.JudoPay.parseJsonFromHtml(document.documentElement.innerHTML);", javaScriptNamespace));
         }
 
         public override WebResourceResponse ShouldInterceptRequest (WebView view, IWebResourceRequest request)
