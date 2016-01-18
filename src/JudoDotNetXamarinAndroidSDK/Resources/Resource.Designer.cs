@@ -501,59 +501,59 @@ namespace JudoDotNetXamarinAndroidSDK
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c000f
-			public static int addressLine1 = 2131492879;
-			
 			// aapt resource value: 0x7f0c0010
-			public static int addressLine2 = 2131492880;
+			public static int addressLine1 = 2131492880;
 			
 			// aapt resource value: 0x7f0c0011
-			public static int addressLine3 = 2131492881;
-			
-			// aapt resource value: 0x7f0c0013
-			public static int addressPostCode = 2131492883;
+			public static int addressLine2 = 2131492881;
 			
 			// aapt resource value: 0x7f0c0012
-			public static int addressTown = 2131492882;
+			public static int addressLine3 = 2131492882;
 			
-			// aapt resource value: 0x7f0c000b
-			public static int avsEntryView = 2131492875;
+			// aapt resource value: 0x7f0c0014
+			public static int addressPostCode = 2131492884;
+			
+			// aapt resource value: 0x7f0c0013
+			public static int addressTown = 2131492883;
+			
+			// aapt resource value: 0x7f0c000c
+			public static int avsEntryView = 2131492876;
 			
 			// aapt resource value: 0x7f0c0006
 			public static int avsMsgText = 2131492870;
 			
-			// aapt resource value: 0x7f0c000d
-			public static int cancelButton = 2131492877;
+			// aapt resource value: 0x7f0c000e
+			public static int cancelButton = 2131492878;
 			
-			// aapt resource value: 0x7f0c0008
-			public static int cardEntryView = 2131492872;
+			// aapt resource value: 0x7f0c0009
+			public static int cardEntryView = 2131492873;
 			
 			// aapt resource value: 0x7f0c0000
 			public static int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c001a
-			public static int cv2EntryView = 2131492890;
+			// aapt resource value: 0x7f0c001b
+			public static int cv2EntryView = 2131492891;
 			
 			// aapt resource value: 0x7f0c0007
 			public static int hintTextView = 2131492871;
 			
-			// aapt resource value: 0x7f0c0009
-			public static int infoButtonID = 2131492873;
-			
-			// aapt resource value: 0x7f0c0017
-			public static int issueNumberContainer = 2131492887;
-			
-			// aapt resource value: 0x7f0c0019
-			public static int issueNumberEditText = 2131492889;
+			// aapt resource value: 0x7f0c000a
+			public static int infoButtonID = 2131492874;
 			
 			// aapt resource value: 0x7f0c0018
-			public static int issueNumberTitleText = 2131492888;
+			public static int issueNumberContainer = 2131492888;
 			
-			// aapt resource value: 0x7f0c000e
-			public static int loadingLayout = 2131492878;
+			// aapt resource value: 0x7f0c001a
+			public static int issueNumberEditText = 2131492890;
 			
-			// aapt resource value: 0x7f0c000c
-			public static int payButton = 2131492876;
+			// aapt resource value: 0x7f0c0019
+			public static int issueNumberTitleText = 2131492889;
+			
+			// aapt resource value: 0x7f0c000f
+			public static int loadingLayout = 2131492879;
+			
+			// aapt resource value: 0x7f0c000d
+			public static int payButton = 2131492877;
 			
 			// aapt resource value: 0x7f0c0002
 			public static int postCodeContainer = 2131492866;
@@ -570,17 +570,20 @@ namespace JudoDotNetXamarinAndroidSDK
 			// aapt resource value: 0x7f0c0001
 			public static int postCode_Msg = 2131492865;
 			
-			// aapt resource value: 0x7f0c0014
-			public static int startDateContainer = 2131492884;
-			
-			// aapt resource value: 0x7f0c0016
-			public static int startDateEditText = 2131492886;
-			
-			// aapt resource value: 0x7f0c000a
-			public static int startDateEntryView = 2131492874;
+			// aapt resource value: 0x7f0c0008
+			public static int secureview = 2131492872;
 			
 			// aapt resource value: 0x7f0c0015
-			public static int startDateTitleText = 2131492885;
+			public static int startDateContainer = 2131492885;
+			
+			// aapt resource value: 0x7f0c0017
+			public static int startDateEditText = 2131492887;
+			
+			// aapt resource value: 0x7f0c000b
+			public static int startDateEntryView = 2131492875;
+			
+			// aapt resource value: 0x7f0c0016
+			public static int startDateTitleText = 2131492886;
 			
 			static Id()
 			{

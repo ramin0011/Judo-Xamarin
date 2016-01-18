@@ -222,7 +222,10 @@ namespace Android.Xamarin.SampleApp
             Judo.AVSEnabled = true;
             Judo.MaestroAccepted = true;
             Judo.RiskSignals = true;
-
+            Judo.ThreeDSecureEnabled = true; 
+            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
+            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
+            configInstance.JudoId = "100915867";
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal

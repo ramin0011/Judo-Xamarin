@@ -15,7 +15,7 @@
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
-    <ReleaseVersion>2.3.0</ReleaseVersion>
+    <ReleaseVersion>2.2.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +92,8 @@
     <Compile Include="Activities\RegisterCardActivity.cs" />
     <Compile Include="Models\CardToken.cs" />
     <Compile Include="Judo.cs" />
+    <Compile Include="WebClient\SecureManager.cs" />
+    <Compile Include="Delegates\SecureViewCallback.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -337,6 +339,8 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Resources\Drawable-v21\" />
+    <Folder Include="WebClient\" />
+    <Folder Include="Delegates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JudoDotNetXamarin\JudoDotNetXamarin.csproj">

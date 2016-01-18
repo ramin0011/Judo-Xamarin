@@ -12,6 +12,8 @@ using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using Android.App;
 using Newtonsoft.Json;
+using Android.Webkit;
+using Java.Security;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -29,7 +31,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected StartDateIssueNumberEntryView startDateEntryView;
         IPaymentService _paymentService;
         ServiceFactory factory;
+        SecureManager SecureManger = new SecureManager ();
 
+      
         Button payButton;
 
         protected override void OnCreate (Bundle bundle)
@@ -49,6 +53,17 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             if (bundle != null) {
                 RestoreState (bundle);
             }
+            SetUpSecureView ();
+        }
+
+        void SetUpSecureView ()
+        {
+            
+            _SecureView = FindViewById<WebView> (Resource.Id.secureview);
+            _SecureView.Settings.JavaScriptEnabled = true;
+            _SecureView.SetWebViewClient (SecureManger);
+            SecureManger.SetCallBack (SecureViewCallback);
+          
         }
 
         void SetUpDelegates ()

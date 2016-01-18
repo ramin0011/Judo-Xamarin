@@ -181,6 +181,7 @@ namespace Android.Xamarin.SampleApp
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.postCodeHelpButton = global::Android.Xamarin.SampleApp.Resource.Id.postCodeHelpButton;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.postCodeTitleText = global::Android.Xamarin.SampleApp.Resource.Id.postCodeTitleText;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.postCode_Msg = global::Android.Xamarin.SampleApp.Resource.Id.postCode_Msg;
+			global::JudoDotNetXamarinAndroidSDK.Resource.Id.secureview = global::Android.Xamarin.SampleApp.Resource.Id.secureview;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.startDateContainer = global::Android.Xamarin.SampleApp.Resource.Id.startDateContainer;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.startDateEditText = global::Android.Xamarin.SampleApp.Resource.Id.startDateEditText;
 			global::JudoDotNetXamarinAndroidSDK.Resource.Id.startDateEntryView = global::Android.Xamarin.SampleApp.Resource.Id.startDateEntryView;
@@ -769,71 +770,71 @@ namespace Android.Xamarin.SampleApp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c000f
-			public const int addressLine1 = 2131492879;
-			
 			// aapt resource value: 0x7f0c0010
-			public const int addressLine2 = 2131492880;
+			public const int addressLine1 = 2131492880;
 			
 			// aapt resource value: 0x7f0c0011
-			public const int addressLine3 = 2131492881;
-			
-			// aapt resource value: 0x7f0c0013
-			public const int addressPostCode = 2131492883;
+			public const int addressLine2 = 2131492881;
 			
 			// aapt resource value: 0x7f0c0012
-			public const int addressTown = 2131492882;
+			public const int addressLine3 = 2131492882;
 			
-			// aapt resource value: 0x7f0c000b
-			public const int avsEntryView = 2131492875;
+			// aapt resource value: 0x7f0c0014
+			public const int addressPostCode = 2131492884;
+			
+			// aapt resource value: 0x7f0c0013
+			public const int addressTown = 2131492883;
+			
+			// aapt resource value: 0x7f0c000c
+			public const int avsEntryView = 2131492876;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int avsMsgText = 2131492870;
 			
-			// aapt resource value: 0x7f0c000d
-			public const int cancelButton = 2131492877;
+			// aapt resource value: 0x7f0c000e
+			public const int cancelButton = 2131492878;
 			
-			// aapt resource value: 0x7f0c0008
-			public const int cardEntryView = 2131492872;
+			// aapt resource value: 0x7f0c0009
+			public const int cardEntryView = 2131492873;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int countrySpinner = 2131492864;
 			
-			// aapt resource value: 0x7f0c001a
-			public const int cv2EntryView = 2131492890;
+			// aapt resource value: 0x7f0c001b
+			public const int cv2EntryView = 2131492891;
 			
 			// aapt resource value: 0x7f0c0007
 			public const int hintTextView = 2131492871;
 			
-			// aapt resource value: 0x7f0c0009
-			public const int infoButtonID = 2131492873;
-			
-			// aapt resource value: 0x7f0c0017
-			public const int issueNumberContainer = 2131492887;
-			
-			// aapt resource value: 0x7f0c0019
-			public const int issueNumberEditText = 2131492889;
+			// aapt resource value: 0x7f0c000a
+			public const int infoButtonID = 2131492874;
 			
 			// aapt resource value: 0x7f0c0018
-			public const int issueNumberTitleText = 2131492888;
+			public const int issueNumberContainer = 2131492888;
 			
-			// aapt resource value: 0x7f0c000e
-			public const int loadingLayout = 2131492878;
+			// aapt resource value: 0x7f0c001a
+			public const int issueNumberEditText = 2131492890;
 			
-			// aapt resource value: 0x7f0c000c
-			public const int payButton = 2131492876;
+			// aapt resource value: 0x7f0c0019
+			public const int issueNumberTitleText = 2131492889;
 			
-			// aapt resource value: 0x7f0c001b
-			public const int payCard = 2131492891;
+			// aapt resource value: 0x7f0c000f
+			public const int loadingLayout = 2131492879;
 			
-			// aapt resource value: 0x7f0c001d
-			public const int payPreAuth = 2131492893;
+			// aapt resource value: 0x7f0c000d
+			public const int payButton = 2131492877;
 			
 			// aapt resource value: 0x7f0c001c
-			public const int payToken = 2131492892;
+			public const int payCard = 2131492892;
 			
 			// aapt resource value: 0x7f0c001e
-			public const int payTokenPreAuth = 2131492894;
+			public const int payPreAuth = 2131492894;
+			
+			// aapt resource value: 0x7f0c001d
+			public const int payToken = 2131492893;
+			
+			// aapt resource value: 0x7f0c001f
+			public const int payTokenPreAuth = 2131492895;
 			
 			// aapt resource value: 0x7f0c0002
 			public const int postCodeContainer = 2131492866;
@@ -850,26 +851,29 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0001
 			public const int postCode_Msg = 2131492865;
 			
-			// aapt resource value: 0x7f0c001f
-			public const int registerCard = 2131492895;
+			// aapt resource value: 0x7f0c0020
+			public const int registerCard = 2131492896;
 			
-			// aapt resource value: 0x7f0c0021
-			public const int sdk_version_label = 2131492897;
+			// aapt resource value: 0x7f0c0022
+			public const int sdk_version_label = 2131492898;
 			
-			// aapt resource value: 0x7f0c0014
-			public const int startDateContainer = 2131492884;
-			
-			// aapt resource value: 0x7f0c0016
-			public const int startDateEditText = 2131492886;
-			
-			// aapt resource value: 0x7f0c000a
-			public const int startDateEntryView = 2131492874;
+			// aapt resource value: 0x7f0c0008
+			public const int secureview = 2131492872;
 			
 			// aapt resource value: 0x7f0c0015
-			public const int startDateTitleText = 2131492885;
+			public const int startDateContainer = 2131492885;
 			
-			// aapt resource value: 0x7f0c0020
-			public const int switch1 = 2131492896;
+			// aapt resource value: 0x7f0c0017
+			public const int startDateEditText = 2131492887;
+			
+			// aapt resource value: 0x7f0c000b
+			public const int startDateEntryView = 2131492875;
+			
+			// aapt resource value: 0x7f0c0016
+			public const int startDateTitleText = 2131492886;
+			
+			// aapt resource value: 0x7f0c0021
+			public const int switch1 = 2131492897;
 			
 			static Id()
 			{

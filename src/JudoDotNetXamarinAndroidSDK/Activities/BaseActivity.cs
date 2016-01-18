@@ -11,6 +11,7 @@ using JudoPayDotNet.Errors;
 using JudoDotNetXamarin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Android.Webkit;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -18,9 +19,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     {
         #if DEBUG
         public const bool DEBUG = true;
-        
-
-
         #else
         public const bool DEBUG = false;
         #endif
@@ -28,6 +26,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
     public abstract class BaseActivity : Activity
     {
+        internal WebView _SecureView;
+
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
@@ -41,6 +41,11 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     Window.SetFlags (WindowManagerFlags.Secure, WindowManagerFlags.Secure);
                 }
             }
+        }
+
+        public void SecureViewCallback (PaymentReceiptModel receipt, JudoError error)
+        {
+            
         }
 
         public void SetHelpText (int titleId, int messageId)
@@ -157,54 +162,64 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             } else {
                 
                 var result = t.Result;
-                if (result != null && !result.HasError && result.Response.Result != "Declined") {
-                    var receipt = result.Response;
 
-                    if (receipt != null) {
-                        var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
-                        if (threedDSecureReceipt != null) {
-                            var message = "Account requires 3D Secure but application is not configured to accept it";
-                            SetResult (Judo.JUDO_ERROR, Judo.CreateErrorIntent (message, new Exception (message), new ModelError () {
-                                Message = message,
-                                Code = (int)JudoApiError.AuthenticationFailure
-                            }));
+                if (Judo.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
-                            Finish ();
-                        } else {
+                    var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-                            Intent intent = new Intent ();
-                            intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
-                            SetResult (Judo.JUDO_SUCCESS, intent);
-                            Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
-                            Finish ();
-                        }
+                    ShowLoadingSpinner (false);
+                    SecureManager.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
-                    } else {
-                        var message = "JudoXamarinSDK: unable to find the receipt in response.";
-                        SetResult (Judo.JUDO_ERROR,
-                            Judo.CreateErrorIntent ("message", new Exception (message), new ModelError () {
-                                Message = message,
-                                Code = (int)JudoApiError.AuthenticationFailure
-                            }));
-                        Finish ();
-                        throw new Exception (message);
-                    }
                 } else {
+                    if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                        var receipt = result.Response;
 
-                    Intent intent = new Intent ();
-                    var receipt = result.Response;
+                        if (receipt != null) {
+                            var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+                            if (threedDSecureReceipt != null) {
+                                var message = "Account requires 3D Secure but application is not configured to accept it";
+                                SetResult (Judo.JUDO_ERROR, Judo.CreateErrorIntent (message, new Exception (message), new ModelError () {
+                                    Message = message,
+                                    Code = (int)JudoApiError.AuthenticationFailure
+                                }));
 
-                    if (receipt != null) {
-                        intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
-                    } 
-                    var error = result.Error;
-                    if (error != null) {
-                        intent.PutExtra (Judo.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.Message), error)));
-                    }
+                                Finish ();
+                            } else {
+
+                                Intent intent = new Intent ();
+                                intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
+                                SetResult (Judo.JUDO_SUCCESS, intent);
+                                Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
+                                Finish ();
+                            }
+
+                        } else {
+                            var message = "JudoXamarinSDK: unable to find the receipt in response.";
+                            SetResult (Judo.JUDO_ERROR,
+                                Judo.CreateErrorIntent ("message", new Exception (message), new ModelError () {
+                                    Message = message,
+                                    Code = (int)JudoApiError.AuthenticationFailure
+                                }));
+                            Finish ();
+                            throw new Exception (message);
+                        }
+                    } else {
+
+                        Intent intent = new Intent ();
+                        var receipt = result.Response;
+
+                        if (receipt != null) {
+                            intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
+                        } 
+                        var error = result.Error;
+                        if (error != null) {
+                            intent.PutExtra (Judo.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (new JudoError (new Exception (error.Message), error)));
+                        }
             
-                    SetResult (Judo.JUDO_ERROR, intent);
-                    Finish ();
+                        SetResult (Judo.JUDO_ERROR, intent);
+                        Finish ();
 
+                    }
                 }
             }
 
