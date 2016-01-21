@@ -72,8 +72,8 @@ namespace JudoDotNetXamarinAndroidSDK.Ui
                 //validate not in the past
                 var now = DateTime.Now;
 
-                var expiryDate = new DateTime (yearNumber, monthNumber, DateTime.DaysInMonth (now.Year, 
-                                     now.Month), 23, 59, 59);
+                var daysInThisMonth = DateTime.DaysInMonth (yearNumber, monthNumber);
+                var expiryDate = new DateTime (yearNumber, monthNumber, daysInThisMonth, 23, 59, 59);
 
                 if (expiryDate < now) {
                     throw new Exception (checkExpDate);
