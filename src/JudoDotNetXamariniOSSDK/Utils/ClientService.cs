@@ -51,7 +51,7 @@ namespace JudoDotNetXamariniOSSDK
         {
             foreach (var netInterface in NetworkInterface.GetAllNetworkInterfaces()) {
                 if (netInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
-                netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet) {
+                    netInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet) {
                     var address = netInterface.GetPhysicalAddress ();
                     return BitConverter.ToString (address.GetAddressBytes ());
 
@@ -81,10 +81,16 @@ namespace JudoDotNetXamariniOSSDK
         public string GetSDKVersion ()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly ();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
-            string version = fvi.FileVersion;
 
-            return "Xamarin-iOS-" + version;
+            try {
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
+                string version = fvi.FileVersion;
+
+                return "Xamarin-iOS-" + version;
+            } catch (System.Exception e) {
+                return "Xamarin-iOS-" + "UNKNOWN-AssembleyNotFound";
+            }
+           
         }
 
 		

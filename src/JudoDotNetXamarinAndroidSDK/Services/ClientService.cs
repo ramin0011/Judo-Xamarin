@@ -57,10 +57,15 @@ namespace JudoDotNetXamarinAndroidSDK
         public string GetSDKVersion ()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly ();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
-            string version = fvi.FileVersion;
+            try {
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo (assembly.Location);
+                string version = fvi.FileVersion;
 
-            return "Xamarin-Android-" + version;
+                return "Xamarin-Android-" + version;
+            } catch (System.Exception e) {
+                return "Xamarin-Android-" + "UNKNOWN-AssembleyNotFound";
+            }
+           
         }
 			
     }
