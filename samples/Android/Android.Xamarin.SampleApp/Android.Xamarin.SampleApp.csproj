@@ -59,6 +59,7 @@
     <Reference Include="FluentValidation">
       <HintPath>..\packages\FluentValidation.6.0.2.0\lib\portable-net45+wp80+win8+wpa81\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Android.Export" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WithUIActivity.cs" />

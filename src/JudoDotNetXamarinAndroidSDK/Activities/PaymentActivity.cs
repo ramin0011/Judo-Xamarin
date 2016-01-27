@@ -62,7 +62,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             _SecureView = FindViewById<WebView> (Resource.Id.secureview);
             _SecureView.Settings.JavaScriptEnabled = true;
             _SecureView.SetWebViewClient (SecureManger);
+
             SecureManger.SetCallBack (SecureViewCallback);
+
           
         }
 

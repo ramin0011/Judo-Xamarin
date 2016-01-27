@@ -27,6 +27,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public abstract class BaseActivity : Activity
     {
         internal WebView _SecureView;
+        private SecureManager _secureManger;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -41,6 +42,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     Window.SetFlags (WindowManagerFlags.Secure, WindowManagerFlags.Secure);
                 }
             }
+            _secureManger = new SecureManager ();
         }
 
         public void SecureViewCallback (PaymentReceiptModel receipt, JudoError error)
@@ -168,7 +170,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
                     ShowLoadingSpinner (false);
-                    SecureManager.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
+
+                    _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
                 } else {
                     if (result != null && !result.HasError && result.Response.Result != "Declined") {
