@@ -29,9 +29,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
-        IPaymentService _paymentService;
-        ServiceFactory factory;
-        SecureManager SecureManger = new SecureManager ();
+       
+
+        // SecureManager SecureManger = new SecureManager ();
 
       
         Button payButton;
@@ -47,8 +47,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
             SetUpDelegates ();
 
-            factory = new ServiceFactory ();
-            _paymentService = factory.GetPaymentService (); 
+           
 
             if (bundle != null) {
                 RestoreState (bundle);
@@ -61,9 +60,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             
             _SecureView = FindViewById<WebView> (Resource.Id.secureview);
             _SecureView.Settings.JavaScriptEnabled = true;
-            _SecureView.SetWebViewClient (SecureManger);
+            _SecureView.SetWebViewClient (_secureManger);
 
-            SecureManger.SetCallBack (SecureViewCallback);
+            _secureManger.SetCallBack (SecureViewCallback);
 
           
         }

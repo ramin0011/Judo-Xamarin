@@ -13,6 +13,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Linq;
+using JudoDotNetXamarin;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -24,8 +25,15 @@ namespace JudoDotNetXamarinAndroidSDK
         string acsUrl;
         string postbackUrl;
         string javaScriptNamespace;
-        //const string RedirectUrl = "judo1234567890://threedsecurecallback/";
         const string RedirectUrl = "https://pay.judopay.com/Android/Parse3DS";
+        internal IPaymentService _paymentService;
+
+
+
+        internal SecureManager (IPaymentService paymentService)
+        {
+            _paymentService = paymentService;
+        }
 
         SecureViewCallback _secureCallback;
 
@@ -53,52 +61,25 @@ namespace JudoDotNetXamarinAndroidSDK
                 var pairComponents = keyValuePair.Split (new char[] { ':' });
                 string key = pairComponents.First ();
                 string value = pairComponents.Last ();
-                queryStringDictionary.Add (key, value);
+                queryStringDictionary.Add (key.Replace ("\"", string.Empty), value.Replace ("\"", string.Empty));
             }
+                
+            var paRes = queryStringDictionary ["PaRes"];
+            var MD = queryStringDictionary ["MD"];
+            _paymentService.CompleteDSecure (ReceiptID, paRes, MD).ContinueWith (reponse => {
+                var result = reponse.Result;
 
+                var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+                if (result.Error != null) {
+                    var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                    _secureCallback (paymentreceipt, judoError);
+                } else {
+                    _secureCallback (paymentreceipt);
+                }
 
-//            string paRes = new NSString (queryStringDictionary ["PaRes"]);
-//            var paResUnEncoded = paRes.CreateStringByRemovingPercentEncoding ().ToString ();
-//            paResUnEncoded = paResUnEncoded.Replace ("\r\n", string.Empty);
-//
-//            NSString md = new NSString (queryStringDictionary ["MD"]);
-//            var mdUnEncoded = md.CreateStringByRemovingPercentEncoding ().ToString ();
-//            mdUnEncoded = mdUnEncoded.Replace ("\r\n", string.Empty);
-//            _paymentService.CompleteDSecure (ReceiptID, paResUnEncoded, mdUnEncoded).ContinueWith (reponse => {
-//                var result = reponse.Result;
-//                if (result != null && !result.HasError && result.Response.Result != "Declined") {
-//                    var paymentreceipt = result.Response as PaymentReceiptModel;
-//
-//                    if (paymentreceipt != null) {
-//                        // call success callback
-//                        if (_successCallback != null) {
-//                            CloseView ();
-//                            _successCallback (paymentreceipt);
-//                        }   
-//                    } else {
-//                        throw new Exception ("JudoXamarinSDK: unable to find the receipt in response.");
-//                    }
-//
-//                } else {
-//                    // Failure callback
-//                    if (_failureCallback != null) {
-//                        var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-//                        var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
-//
-//                        if (paymentreceipt != null) {
-//                            // send receipt even we got card declined
-//                            CloseView ();
-//                            _failureCallback (judoError, paymentreceipt);
-//
-//                        } else {
-//                            CloseView ();
-//                            _failureCallback (judoError);
-//
-//
-//                        }
-//                    }
-//                }
-//            });
+                    
+   
+            });
         }
 
 
@@ -112,7 +93,7 @@ namespace JudoDotNetXamarinAndroidSDK
         {
             
             secureView.AddJavascriptInterface (new JsonParsingJavaScriptInterface (this), "JudoPay");
-  
+            ReceiptID = threedDSecureReceipt.ReceiptId;
             string postString = "MD=" + threedDSecureReceipt.Md + "&PaReq=" + Uri.EscapeDataString (threedDSecureReceipt.PaReq) + "&TermUrl=" + Uri.EscapeDataString (RedirectUrl) + "";
 
             var byteArray = EncodingUtils.GetBytes (postString, "utf-8");

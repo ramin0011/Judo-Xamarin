@@ -27,7 +27,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public abstract class BaseActivity : Activity
     {
         internal WebView _SecureView;
-        private SecureManager _secureManger;
+        internal SecureManager _secureManger;
+        ServiceFactory factory;
+        internal IPaymentService _paymentService;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -42,7 +44,12 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     Window.SetFlags (WindowManagerFlags.Secure, WindowManagerFlags.Secure);
                 }
             }
-            _secureManger = new SecureManager ();
+
+
+            factory = new ServiceFactory ();
+            _paymentService = factory.GetPaymentService (); 
+
+            _secureManger = new SecureManager (_paymentService);
         }
 
         public void SecureViewCallback (PaymentReceiptModel receipt, JudoError error)
@@ -155,6 +162,22 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             }
         }
 
+
+        private void SecureCallback (PaymentReceiptModel receipt, JudoError error = null)
+        {
+            Intent intent = new Intent ();
+            if (receipt != null) {
+                intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
+            } 
+
+            if (error != null) {
+                intent.PutExtra (Judo.JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (error));
+                SetResult (Judo.JUDO_ERROR, intent);
+            }
+            SetResult (Judo.JUDO_SUCCESS, intent);
+            Finish ();
+        }
+
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
             if (t.Exception != null) {      
@@ -170,7 +193,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
                     ShowLoadingSpinner (false);
-
+                    _secureManger.SetCallBack (SecureCallback);
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
                 } else {
