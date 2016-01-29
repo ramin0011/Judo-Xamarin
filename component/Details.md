@@ -15,10 +15,7 @@ Or take a look at the code yourself [Github](https://github.com/JudoPay/Judo-Xam
 
 # Release 
 
-Version 2.3.0
+Version 2.3.1
 
-- Judo API version 5.0
-- SHA 256 SSL/TLS Certificate upgrade - an industry-wide security update to protect you against man-in-the-middle attacks
-- Improved error handling
 - Bug fixes
-- Fraud prevention features
+- UX updates
