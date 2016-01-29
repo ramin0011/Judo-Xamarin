@@ -22,7 +22,7 @@ namespace Android.Xamarin.SampleApp
         private const string cardNumber = "4976000000003436";
         private const string addressPostCode = "TR14 8PA";
         private const string startDate = "";
-        private  const string expiryDate = "12/15";
+        private  const string expiryDate = "12/20";
         private const string cv2 = "452";
 
         private volatile string cardToken;

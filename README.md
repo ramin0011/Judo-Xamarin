@@ -213,6 +213,8 @@ Have your say, If you want a feature maybe we can work together on it?
 - Bug fixes
 - Fraud prevention features
 
+Due to industry-wide security updates, versions below 2.3.0 of this SDK will no longer be supported after 1st Oct 2016. For more information regarding these updates, please read our blog [here](http://hub.judopay.com/pci31-security-updates/ "Security Blog").
+
 ####V2.2.0
 - Unification of Android SDK with Core Library
 - Unified SDK Configuration and Library calls

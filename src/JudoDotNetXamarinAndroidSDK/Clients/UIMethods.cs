@@ -29,11 +29,13 @@ namespace JudoDotNetXamarinAndroidSDK
         protected override void OnCreate (Android.OS.Bundle savedInstanceState)
         {
             base.OnCreate (savedInstanceState);
-            Intent i;
-            var requestCode = Intent.GetStringExtra (Judo.REQUEST_CODE);
-            PopulateIntent (out i);
+            if (savedInstanceState == null) {
+                Intent i;
+                var requestCode = Intent.GetStringExtra (Judo.REQUEST_CODE);
+                PopulateIntent (out i);
 
-            this.StartActivityForResult (i, Int32.Parse (requestCode));
+                this.StartActivityForResult (i, Int32.Parse (requestCode));
+            }
         }
 
         public void Payment (PaymentViewModel payment, JudoSuccessCallback success, JudoFailureCallback failure, Activity context)
