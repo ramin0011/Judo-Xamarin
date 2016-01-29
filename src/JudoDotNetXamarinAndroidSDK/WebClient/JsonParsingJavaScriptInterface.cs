@@ -24,7 +24,6 @@ namespace JudoDotNetXamarinAndroidSDK
                     var startIndex = content.IndexOf ("{") + 1;
                     string json = content.Substring (startIndex, (content.LastIndexOf ("}") - startIndex));
                     _callBack.onJsonReceived (json);
-                    //jsonListener.onJsonReceived (json);
                 } catch (Exception ignore) {
                 }
             }
