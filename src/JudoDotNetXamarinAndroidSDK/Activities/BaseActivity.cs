@@ -36,7 +36,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
-            LockRotation (true);
+           
             if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.IceCreamSandwich) {
                 RequestWindowFeature (WindowFeatures.NoTitle);
             } else {
@@ -145,6 +145,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             if (cancelButton != null) {
                 cancelButton.Click += (sender, args) => {
                     SetResult (Judo.JUDO_CANCELLED);
+                    LockRotation (false);
                     Finish ();
                 };
             }
@@ -169,6 +170,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 Log.Error (Judo.DEBUG_TAG, "Exception", e);
                 SetResult (Judo.JUDO_ERROR,
                     Judo.CreateErrorIntent (e.Message, e, null));
+                LockRotation (false);
                 Finish ();
             }
         }
@@ -186,6 +188,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 SetResult (Judo.JUDO_ERROR, intent);
             }
             SetResult (Judo.JUDO_SUCCESS, intent);
+            LockRotation (false);
             Finish ();
         }
 
@@ -204,6 +207,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
+            LockRotation (true);
             if (t.Exception != null) {      
                 var judoError = t.Exception.FlattenToJudoError ();
                 SetResult (Judo.JUDO_ERROR, Judo.CreateErrorIntent (judoError.Message, judoError.Exception, judoError.ApiError));
@@ -232,7 +236,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                                     Message = message,
                                     Code = (int)JudoApiError.AuthenticationFailure
                                 }));
-
+                                LockRotation (false);
                                 Finish ();
                             } else {
 
@@ -240,6 +244,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                                 intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
                                 SetResult (Judo.JUDO_SUCCESS, intent);
                                 Log.Debug ("com.judopay.android", "SUCCESS: " + receipt.Result);
+                                LockRotation (false);
                                 Finish ();
                             }
 
@@ -250,6 +255,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                                     Message = message,
                                     Code = (int)JudoApiError.AuthenticationFailure
                                 }));
+                            LockRotation (false);
                             Finish ();
                             throw new Exception (message);
                         }
@@ -267,6 +273,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                         }
             
                         SetResult (Judo.JUDO_ERROR, intent);
+                        LockRotation (false);
                         Finish ();
 
                     }
