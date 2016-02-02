@@ -12,6 +12,8 @@ using JudoDotNetXamarin;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Android.Webkit;
+using Android.Views.InputMethods;
+using Android.Content.PM;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -34,7 +36,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected override void OnCreate (Bundle bundle)
         {
             base.OnCreate (bundle);
-
+            LockRotation (true);
             if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.IceCreamSandwich) {
                 RequestWindowFeature (WindowFeatures.NoTitle);
             } else {
@@ -148,10 +150,19 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             }
         }
 
-        protected abstract void ShowLoadingSpinner (bool show);
+        protected  void ShowLoadingSpinner (bool show)
+        {
+            RunOnUiThread (() => {
+                ((InputMethodManager)GetSystemService (Context.InputMethodService)).HideSoftInputFromWindow (
+                    FindViewById (Resource.Id.payButton).WindowToken, 0);
+                FindViewById (Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
+
+            });
+        }
 
         protected void TransactClickHandler (Action DoTransaction)
         {
+
             try {
                 DoTransaction ();
             } catch (Exception e) {
@@ -178,6 +189,19 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             Finish ();
         }
 
+        private void LockRotation (bool lockFlag)
+        {
+            if (lockFlag) {
+                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.JellyBeanMr2) {
+                    RequestedOrientation = ScreenOrientation.Locked;
+                } else {
+                    RequestedOrientation = ScreenOrientation.Nosensor;
+                }
+            } else {
+                RequestedOrientation = ScreenOrientation.Unspecified;
+            }
+        }
+
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
             if (t.Exception != null) {      
@@ -192,7 +216,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-                    ShowLoadingSpinner (false);
+                    //ShowLoadingSpinner (false);
                     _secureManger.SetCallBack (SecureCallback);
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 

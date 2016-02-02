@@ -179,7 +179,7 @@ namespace Android.Xamarin.SampleApp
         private PaymentViewModel GetCardViewModel ()
         {
             var cardPayment = new PaymentViewModel {
-                Amount = 4.5m, 
+                Amount = 1.01m, 
                 ConsumerReference = consumerRef,
                 Currency = "GBP",
                 // Non-UI API needs to pass card detail

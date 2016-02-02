@@ -169,15 +169,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         }
 
-        protected override void ShowLoadingSpinner (bool show)
-        {
-            RunOnUiThread (() => {
-                ((InputMethodManager)GetSystemService (Context.InputMethodService)).HideSoftInputFromWindow (
-                    FindViewById (Resource.Id.payButton).WindowToken, 0);
-                FindViewById (Resource.Id.loadingLayout).Visibility = show ? ViewStates.Visible : ViewStates.Gone;
-
-            });
-        }
+       
 
         protected override void OnSaveInstanceState (Bundle outState)
         {
