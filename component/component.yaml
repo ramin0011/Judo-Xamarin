@@ -37,4 +37,4 @@ packages:
     - Newtonsoft.Json, version=7.0.1
     - Serilog, version=1.5.12
 publisher-url: "https://www.judopay.com"
-version: "2.3.0"
+version: "2.3.1"
