@@ -169,8 +169,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         }
 
-       
-
         protected override void OnSaveInstanceState (Bundle outState)
         {
 

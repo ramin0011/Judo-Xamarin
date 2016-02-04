@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Android.Webkit;
 using Android.Views.InputMethods;
 using Android.Content.PM;
+using System.Runtime.ExceptionServices;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -208,10 +209,9 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
             LockRotation (true);
-            if (t.Exception != null) {      
-                var judoError = t.Exception.FlattenToJudoError ();
-                SetResult (Judo.JUDO_ERROR, Judo.CreateErrorIntent (judoError.Message, judoError.Exception, judoError.ApiError));
-                Finish ();
+            if (t.Exception != null) {  
+                HandleException (t.Exception);
+               
             } else {
                 
                 var result = t.Result;
@@ -220,7 +220,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
-                    //ShowLoadingSpinner (false);
+                    ShowLoadingSpinner (false);
                     _secureManger.SetCallBack (SecureCallback);
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
@@ -280,6 +280,32 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                 }
             }
 
+        }
+
+        void HandleException (AggregateException exception)
+        {
+           
+            JudoError judoError = new JudoError ();
+
+            foreach (var innerException in exception.InnerExceptions) {
+               
+                var field = new FieldError () {
+                    Message = innerException.Message.ToString (),
+                    Detail = "",
+                    Code = 0,
+                    FieldName = ""
+                };
+                judoError.ApiError.ModelErrors.Add (field);
+            }
+            var test = exception.InnerException.Message;
+
+            judoError.ApiError.Message = test;
+
+
+            //RunOnUiThread (() => {
+            SetResult (Judo.JUDO_ERROR, Judo.CreateJudoErrorIntent (judoError.Message, judoError));
+            Finish ();
+            //});
         }
     }
 }

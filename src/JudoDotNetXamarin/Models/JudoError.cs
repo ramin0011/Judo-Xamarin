@@ -1,5 +1,6 @@
 ﻿using System;
 using JudoPayDotNet.Errors;
+using System.Collections.Generic;
 
 namespace JudoDotNetXamarin
 {
@@ -17,6 +18,10 @@ namespace JudoDotNetXamarin
 
         public JudoError ()
         {
+            ApiError = new ModelError () {
+                ModelErrors = new List<FieldError> ()
+            };
+            Exception = new Exception ();
         }
     }
 }

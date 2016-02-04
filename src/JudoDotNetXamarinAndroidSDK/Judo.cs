@@ -238,6 +238,15 @@ namespace JudoDotNetXamarinAndroidSDK
             return intent;
         }
 
+        internal static Intent CreateJudoErrorIntent (string message, JudoError judoError)
+        {
+            Intent intent = new Intent ();
+            intent.PutExtra (JUDO_ERROR_MESSAGE, message);
+            intent.PutExtra (JUDO_ERROR_EXCEPTION, JsonConvert.SerializeObject (judoError));
+
+            return intent;
+        }
+
         void EvaluateRootCheck (JudoFailureCallback failure)
         {
             if (!AllowRooted && isRooted) {

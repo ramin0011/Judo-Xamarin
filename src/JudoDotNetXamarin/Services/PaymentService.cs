@@ -5,6 +5,8 @@ using JudoPayDotNet;
 using JudoPayDotNet.Models;
 using JudoDotNetXamarin;
 using System.Runtime.CompilerServices;
+using JudoPayDotNet.Errors;
+using System.Collections.Generic;
 
 [assembly: InternalsVisibleTo ("JudoDotNetXamariniOSSDK")]
 [assembly: InternalsVisibleTo ("JudoDotNetXamarinAndroidSDK")]
@@ -21,8 +23,10 @@ namespace JudoDotNetXamarin
 
         public async Task<IResult<ITransactionResult>> MakePayment (PaymentViewModel paymentViewModel, IClientService clientService)
         {
+            CardPaymentModel payment = new CardPaymentModel ();
             JudoConfiguration.Instance.Validate ();
-            CardPaymentModel payment = new CardPaymentModel {
+
+            payment = new CardPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (paymentViewModel.JudoID) ? JudoConfiguration.Instance.JudoId : paymentViewModel.JudoID),
                 YourConsumerReference = (String.IsNullOrWhiteSpace (paymentViewModel.ConsumerReference) ? ("Consumer:" + JudoConfiguration.Instance.JudoId) : paymentViewModel.ConsumerReference),
                 Amount = paymentViewModel.Amount,
@@ -40,17 +44,21 @@ namespace JudoDotNetXamarin
                 Currency = paymentViewModel.Currency,
                 UserAgent = clientService.GetSDKVersion ()
             };
+    
 
             Task<IResult<ITransactionResult>> task = _judoAPI.Payments.Create (payment);
 
             return await task;
-
+            
         }
 
         public async Task<IResult<ITransactionResult>> PreAuthoriseCard (PaymentViewModel authorisation, IClientService clientService)
-        {      
+        {   
             JudoConfiguration.Instance.Validate ();
-            CardPaymentModel payment = new CardPaymentModel {
+
+            CardPaymentModel payment = new CardPaymentModel ();
+
+            payment = new CardPaymentModel {
                 JudoId = (String.IsNullOrWhiteSpace (authorisation.JudoID) ? JudoConfiguration.Instance.JudoId : authorisation.JudoID),
                 YourConsumerReference = (String.IsNullOrWhiteSpace (authorisation.ConsumerReference) ? ("Consumer:" + JudoConfiguration.Instance.JudoId) : authorisation.ConsumerReference),
                 Amount = authorisation.Amount,

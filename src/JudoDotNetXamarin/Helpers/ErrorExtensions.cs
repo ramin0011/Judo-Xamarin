@@ -12,11 +12,17 @@ namespace JudoDotNetXamarin
           
             List<FieldError> models = new List<FieldError> (); 
             foreach (Exception em in errors.InnerExceptions) {
-                models.Add (new FieldError (){ Message = em.Message, });
+                models.Add (new FieldError (){ Message = em.Message, Detail = "", Code = 0, FieldName = "" });
             }
             var judoError = new JudoError () {
                 Exception = errors.InnerException,
-                ApiError = new ModelError (){ ModelErrors = models }
+                ApiError = new ModelError () {
+                    ModelErrors = models,
+                    Message = errors.InnerException.Message,
+                    Code = 0,
+                    Category = ""
+                },
+                
             };
 
             return judoError;
