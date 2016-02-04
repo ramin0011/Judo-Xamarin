@@ -301,11 +301,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
             judoError.ApiError.Message = test;
 
-
-            //RunOnUiThread (() => {
             SetResult (Judo.JUDO_ERROR, Judo.CreateJudoErrorIntent (judoError.Message, judoError));
             Finish ();
-            //});
         }
     }
 }
