@@ -239,7 +239,7 @@ Have your say, If you want a feature maybe we can work together on it?
 - Improved sample application UI
 - Improved SDK Configuration
 
-####V2.0 iOS support
+####V2.0
 -  Full suite of judo services are now available to Xamarin iOS developers
   -  Payments
   -  Pre-authorizations
