@@ -211,6 +211,11 @@ Have your say, If you want a feature maybe we can work together on it?
 
 ## Release Notes
 
+####V2.3.1
+
+- Bug fixes
+- UX updates
+
 ####V2.3.0
 
 - Judo API version 5.0
