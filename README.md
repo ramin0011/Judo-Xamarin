@@ -178,6 +178,12 @@ Apple Pay
 Judo.Instance.MakeApplePreAuth (applePayViewModel payment, SuccessCallback success, FailureCallback failure)
 ```
 
+## Media
+
+[AppCommerce with Judo and Xamarin | Webinar](https://www.youtube.com/watch?v=2Iwff6ETBMs)  We recently hosted a joint Webinar with Xamarin showing you just how easy it is to add payments to your application with Judo.
+
+[Blog](http://hub.judopay.com/what-i-learned-writing-my-first-sdk/) Our latest Xamarin blog post on what I learned writing this SDK
+
 ## Troubleshooting
 
 -  For further SDK reference please visit our SDK [docs]( https://www.judopay.com/docs/ "Docs")
