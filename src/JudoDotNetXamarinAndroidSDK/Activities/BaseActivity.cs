@@ -227,7 +227,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
                     ShowLoadingSpinner (false);
                     _secureManger.SetCallBack (SecureCallback);
-                    //_secureLayout.Visibility = ViewStates.Visible;
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
                 } else {

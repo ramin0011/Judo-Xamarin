@@ -29,11 +29,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         protected AVSEntryView avsEntryView;
         protected HelpButton cv2ExpiryHelpInfoButton;
         protected StartDateIssueNumberEntryView startDateEntryView;
-       
 
-        // SecureManager SecureManger = new SecureManager ();
-
-      
         Button payButton;
 
         protected override void OnCreate (Bundle bundle)
