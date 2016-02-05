@@ -785,17 +785,17 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0013
 			public const int addressTown = 2131492883;
 			
-			// aapt resource value: 0x7f0c000c
-			public const int avsEntryView = 2131492876;
+			// aapt resource value: 0x7f0c000b
+			public const int avsEntryView = 2131492875;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int avsMsgText = 2131492870;
 			
-			// aapt resource value: 0x7f0c000e
-			public const int cancelButton = 2131492878;
+			// aapt resource value: 0x7f0c000d
+			public const int cancelButton = 2131492877;
 			
-			// aapt resource value: 0x7f0c0009
-			public const int cardEntryView = 2131492873;
+			// aapt resource value: 0x7f0c0008
+			public const int cardEntryView = 2131492872;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int countrySpinner = 2131492864;
@@ -806,8 +806,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0007
 			public const int hintTextView = 2131492871;
 			
-			// aapt resource value: 0x7f0c000a
-			public const int infoButtonID = 2131492874;
+			// aapt resource value: 0x7f0c0009
+			public const int infoButtonID = 2131492873;
 			
 			// aapt resource value: 0x7f0c0018
 			public const int issueNumberContainer = 2131492888;
@@ -821,8 +821,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c000f
 			public const int loadingLayout = 2131492879;
 			
-			// aapt resource value: 0x7f0c000d
-			public const int payButton = 2131492877;
+			// aapt resource value: 0x7f0c000c
+			public const int payButton = 2131492876;
 			
 			// aapt resource value: 0x7f0c001c
 			public const int payCard = 2131492892;
@@ -857,8 +857,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0022
 			public const int sdk_version_label = 2131492898;
 			
-			// aapt resource value: 0x7f0c0008
-			public const int secureview = 2131492872;
+			// aapt resource value: 0x7f0c000e
+			public const int secureview = 2131492878;
 			
 			// aapt resource value: 0x7f0c0015
 			public const int startDateContainer = 2131492885;
@@ -866,8 +866,8 @@ namespace Android.Xamarin.SampleApp
 			// aapt resource value: 0x7f0c0017
 			public const int startDateEditText = 2131492887;
 			
-			// aapt resource value: 0x7f0c000b
-			public const int startDateEntryView = 2131492875;
+			// aapt resource value: 0x7f0c000a
+			public const int startDateEntryView = 2131492874;
 			
 			// aapt resource value: 0x7f0c0016
 			public const int startDateTitleText = 2131492886;

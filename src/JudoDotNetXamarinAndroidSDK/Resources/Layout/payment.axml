@@ -17,11 +17,6 @@
                 android:text="@string/enter_card_no"
                 android:textColor="@color/normal_text"
                 android:textSize="@dimen/small_text_size" />
-            <WebView
-                android:id="@+id/secureview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:visibility="gone" />
             <LinearLayout
                 style="@style/judo_payments_InputFieldContainer">
                 <LinearLayout
@@ -68,6 +63,11 @@
                 android:contentDescription="@null" />
         </LinearLayout>
     </ScrollView>
+    <WebView
+        android:id="@+id/secureview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
     <LinearLayout
         android:id="@+id/loadingLayout"
         android:layout_width="match_parent"

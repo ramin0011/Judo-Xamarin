@@ -14,6 +14,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using JudoDotNetXamarin;
+using Android.Widget;
 
 namespace JudoDotNetXamarinAndroidSDK
 {
@@ -82,14 +83,13 @@ namespace JudoDotNetXamarinAndroidSDK
 
         public void SummonThreeDSecure (PaymentRequiresThreeDSecureModel threedDSecureReceipt, WebView secureView)
         {
-            
+            secureView.Visibility = ViewStates.Visible;
             secureView.AddJavascriptInterface (new JsonParsingJavaScriptInterface (this), "JudoPay");
             ReceiptID = threedDSecureReceipt.ReceiptId;
             string postString = "MD=" + threedDSecureReceipt.Md + "&PaReq=" + Uri.EscapeDataString (threedDSecureReceipt.PaReq) + "&TermUrl=" + Uri.EscapeDataString (RedirectUrl) + "";
 
             var byteArray = EncodingUtils.GetBytes (postString, "utf-8");
             secureView.LoadUrl ("aboutblank");
-            secureView.Visibility = ViewStates.Visible;
             secureView.PostUrl (threedDSecureReceipt.AcsUrl, byteArray);
          
         }
@@ -99,6 +99,10 @@ namespace JudoDotNetXamarinAndroidSDK
            
             base.OnPageFinished (view, url);
             if (url == RedirectUrl) {
+                view.Visibility = ViewStates.Invisible;
+                FrameLayout lv = (FrameLayout)view.Parent;
+                LinearLayout loading = (LinearLayout)lv.FindViewById (Resource.Id.loadingLayout);
+                loading.Visibility = ViewStates.Visible;
                 view.LoadUrl (String.Format ("javascript:window.JudoPay.parseJsonFromHtml(document.documentElement.innerHTML);", javaScriptNamespace));
             }
         }

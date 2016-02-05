@@ -15,6 +15,7 @@ using Android.Webkit;
 using Android.Views.InputMethods;
 using Android.Content.PM;
 using System.Runtime.ExceptionServices;
+using Android.Widget;
 
 namespace JudoDotNetXamarinAndroidSDK.Activities
 {
@@ -33,6 +34,8 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         internal SecureManager _secureManger;
         ServiceFactory factory;
         internal IPaymentService _paymentService;
+
+        LinearLayout _secureLayout;
 
         protected override void OnCreate (Bundle bundle)
         {
@@ -53,6 +56,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             _paymentService = factory.GetPaymentService (); 
 
             _secureManger = new SecureManager (_paymentService);
+         
         }
 
         public void SecureViewCallback (PaymentReceiptModel receipt, JudoError error)
@@ -179,6 +183,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         private void SecureCallback (PaymentReceiptModel receipt, JudoError error = null)
         {
+           
             Intent intent = new Intent ();
             if (receipt != null) {
                 intent.PutExtra (Judo.JUDO_RECEIPT, JsonConvert.SerializeObject (receipt));
@@ -222,6 +227,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
                     ShowLoadingSpinner (false);
                     _secureManger.SetCallBack (SecureCallback);
+                    //_secureLayout.Visibility = ViewStates.Visible;
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
                 } else {

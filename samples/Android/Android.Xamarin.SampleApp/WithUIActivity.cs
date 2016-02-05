@@ -49,11 +49,11 @@ namespace Android.Xamarin.SampleApp
             Button registerCard = FindViewById<Button> (Resource.Id.registerCard);
 
             // Assigning click delegates
-            payCard.Click += new EventHandler (payPreAuth_Click);
-            payToken.Click += new EventHandler (payPreAuth_Click);
+            payCard.Click += new EventHandler (payCard_Click);
+            payToken.Click += new EventHandler (payToken_Click);
             payPreAuth.Click += new EventHandler (payPreAuth_Click);
-            payTokenPreAuth.Click += new EventHandler (payPreAuth_Click);
-            registerCard.Click += new EventHandler (payPreAuth_Click);
+            payTokenPreAuth.Click += new EventHandler (payTokenPreAuth_Click);
+            registerCard.Click += new EventHandler (registerCard_Click);
 
             FindViewById<TextView> (Resource.Id.sdk_version_label).Text = "";
 

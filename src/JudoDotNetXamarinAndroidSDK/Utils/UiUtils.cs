@@ -34,8 +34,6 @@ namespace JudoDotNetXamarinAndroidSDK.Utils
                     }
                 }
             }
-
-            //default
             return 0;
         }
 
