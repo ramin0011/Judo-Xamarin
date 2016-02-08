@@ -136,7 +136,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             };
 
             ShowLoadingSpinner (true);
-          
+            LockRotation (true);
             _paymentService.MakeTokenPayment (payment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }
 

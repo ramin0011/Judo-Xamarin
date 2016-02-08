@@ -207,7 +207,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             Finish ();
         }
 
-        private void LockRotation (bool lockFlag)
+        internal void LockRotation (bool lockFlag)
         {
             if (lockFlag) {
                 if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.JellyBeanMr2) {
@@ -222,7 +222,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
         protected void HandleServerResponse (Task<IResult<ITransactionResult>> t)
         {
-            LockRotation (true);
+           
             if (t.Exception != null) {  
                 HandleException (t.Exception);
                

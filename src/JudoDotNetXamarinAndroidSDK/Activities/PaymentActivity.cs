@@ -150,7 +150,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
 
             ShowLoadingSpinner (true);
-
+            LockRotation (true);
             _paymentService.MakePayment (cardPayment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 
         }

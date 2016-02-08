@@ -39,7 +39,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.Currency = judoCurrency;
             cardPayment.Amount = judoAmount;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-
+            LockRotation (true);
             _paymentService.PreAuthoriseCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }
     }

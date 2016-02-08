@@ -187,7 +187,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             cardPayment.JudoID = judoId;
             cardPayment.Amount = judoAmount;
             cardPayment.ConsumerReference = judoConsumer.YourConsumerReference;
-
+            LockRotation (true);
             _paymentService.RegisterCard (cardPayment, clientService).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
 
         }

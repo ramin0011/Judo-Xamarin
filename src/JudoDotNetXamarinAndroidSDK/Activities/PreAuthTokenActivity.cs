@@ -39,7 +39,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             };
 
             ShowLoadingSpinner (true);
-
+            LockRotation (true);
             _paymentService.MakeTokenPreAuthorisation (payment, new ClientService ()).ContinueWith (HandleServerResponse, TaskScheduler.FromCurrentSynchronizationContext ());
         }
     }
