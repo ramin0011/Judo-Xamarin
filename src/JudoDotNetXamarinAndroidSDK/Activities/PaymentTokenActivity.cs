@@ -18,7 +18,6 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
     public class PaymentTokenActivity : BaseActivity
     {
 
-       
         protected decimal judoAmount;
         protected string judoId;
         protected string judoCurrency;
