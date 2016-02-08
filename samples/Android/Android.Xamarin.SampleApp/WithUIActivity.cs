@@ -231,8 +231,8 @@ namespace Android.Xamarin.SampleApp
 
             configInstance.ApiToken = "F2hUI34DaSV8ywp9";
             configInstance.ApiSecret = "f06461ce36d976e473c53b78ab3cf444f13a59c27921a7339e68e6d7d8430eff";
-            configInstance.JudoId = "958389";// live route
-            //configInstance.JudoId = "100915867";
+            //configInstance.JudoId = "958389";// live route
+            configInstance.JudoId = "100915867";
 
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal

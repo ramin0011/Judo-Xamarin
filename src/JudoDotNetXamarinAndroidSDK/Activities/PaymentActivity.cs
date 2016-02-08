@@ -48,20 +48,10 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
             if (bundle != null) {
                 RestoreState (bundle);
             }
-            SetUpSecureView ();
+
         }
 
-        void SetUpSecureView ()
-        {
-            
-            _SecureView = FindViewById<WebView> (Resource.Id.secureview);
-            _SecureView.Settings.JavaScriptEnabled = true;
-            _SecureView.SetWebViewClient (_secureManger);
 
-            _secureManger.SetCallBack (SecureViewCallback);
-
-          
-        }
 
         void SetUpDelegates ()
         {

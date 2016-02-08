@@ -54,14 +54,22 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
 
             factory = new ServiceFactory ();
             _paymentService = factory.GetPaymentService (); 
-
             _secureManger = new SecureManager (_paymentService);
+
+           
          
         }
 
-        public void SecureViewCallback (PaymentReceiptModel receipt, JudoError error)
+        void SetUpSecureView ()
         {
-            
+
+            _SecureView = FindViewById<WebView> (Resource.Id.secureview);
+            _SecureView.Settings.JavaScriptEnabled = true;
+            _SecureView.SetWebViewClient (_secureManger);
+           
+            _secureManger.SetCallBack (secureViewCallback);
+
+
         }
 
         public void SetHelpText (int titleId, int messageId)
@@ -154,6 +162,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     Finish ();
                 };
             }
+            SetUpSecureView ();
         }
 
         protected  void ShowLoadingSpinner (bool show)
@@ -181,7 +190,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
         }
 
 
-        private void SecureCallback (PaymentReceiptModel receipt, JudoError error = null)
+        private void secureViewCallback (PaymentReceiptModel receipt, JudoError error = null)
         {
            
             Intent intent = new Intent ();
@@ -226,7 +235,7 @@ namespace JudoDotNetXamarinAndroidSDK.Activities
                     var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
 
                     ShowLoadingSpinner (false);
-                    _secureManger.SetCallBack (SecureCallback);
+                    _secureManger.SetCallBack (secureViewCallback);
                     _secureManger.SummonThreeDSecure (threedDSecureReceipt, _SecureView);
 
                 } else {
