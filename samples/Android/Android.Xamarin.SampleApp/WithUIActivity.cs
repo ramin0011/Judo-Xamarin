@@ -224,16 +224,6 @@ namespace Android.Xamarin.SampleApp
             Judo.RiskSignals = true;
             Judo.ThreeDSecureEnabled = true; 
 
-//            configInstance.ApiToken = "MzEtkQK1bHi8v8qy";
-//            configInstance.ApiSecret = "c158b4997dfc7595a149a20852f7af2ea2e70bd2df794b8bdbc019cc5f799aa1";
-//            configInstance.JudoId = "100915867";
-           
-
-            configInstance.ApiToken = "F2hUI34DaSV8ywp9";
-            configInstance.ApiSecret = "f06461ce36d976e473c53b78ab3cf444f13a59c27921a7339e68e6d7d8430eff";
-            //configInstance.JudoId = "958389";// live route
-            configInstance.JudoId = "100915867";
-
             /*
             configInstance.ApiToken = "[Application ApiToken]"; //retrieve from JudoPortal
             configInstance.ApiSecret = "[Application ApiSecret]"; //retrieve from JudoPortal
