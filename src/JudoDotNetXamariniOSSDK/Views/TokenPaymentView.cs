@@ -55,6 +55,7 @@ namespace JudoDotNetXamariniOSSDK.Views
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad) {
                 this.View.Superview.RepositionFormSheetForiPad ();
             }
+
         }
 
         public override void ViewDidLoad ()
@@ -66,6 +67,9 @@ namespace JudoDotNetXamariniOSSDK.Views
                 NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
                 defaultCenter.AddObserver (UIKeyboard.WillHideNotification, OnKeyboardNotification);
                 defaultCenter.AddObserver (UIKeyboard.WillShowNotification, OnKeyboardNotification);
+            } else {
+                NSNotificationCenter defaultCenter = NSNotificationCenter.DefaultCenter;
+                defaultCenter.AddObserver (UIKeyboard.WillShowNotification, RefreshKeyboard);
             }
 
             if (String.IsNullOrEmpty (tokenPayment.Token)) {
@@ -120,6 +124,13 @@ namespace JudoDotNetXamariniOSSDK.Views
         private void OnKeyboardNotification (NSNotification notification)
         {
             KeyboardVisible = notification.Name == UIKeyboard.WillShowNotification;
+
+        }
+
+        private void RefreshKeyboard (NSNotification notification)
+        {
+            tokenCell.SetNeedsDisplay ();
+            tokenCell.SetNeedsLayout ();
         }
 
         void DismissKeyboardAction ()
