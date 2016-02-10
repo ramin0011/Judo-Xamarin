@@ -1,12 +1,7 @@
-// WARNING
-//
-// This file has been generated automatically by Xamarin Studio to store outlets and
-// actions made in the UI designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
-//
 
 using Foundation;
 using UIKit;
+
 #if __UNIFIED__
 // Mappings Unified CoreGraphic classes to MonoTouch classes
 
@@ -23,44 +18,53 @@ using nint = global::System.Int32;
 using nuint = global::System.UInt32;
 #endif
 
+
 namespace JudoDotNetXamariniOSSDK.Views
 {
-	[Register ("TokenPaymentView")]
-	partial class TokenPaymentView
-	{
-		[Outlet]
-		UIView EncapsulatingView { get; set; }
+    [Register ("TokenPaymentView")]
+    partial class TokenPaymentView
+    {
+        [Outlet]
+        UIKit.UIView EncapsulatingView { get; set; }
 
-		[Outlet]
-		UIButton FormClose { get; set; }
+        [Outlet]
+        UIKit.UIButton FormClose { get; set; }
 
-		[Outlet]
-		UIButton PaymentButton { get; set; }
+        [Outlet]
+        UIKit.UIButton PaymentButton { get; set; }
 
-		[Outlet]
-		UITableView TableView { get; set; }
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (FormClose != null) {
-				FormClose.Dispose ();
-				FormClose = null;
-			}
+        [Outlet]
+        JudoDotNetXamariniOSSDK.Controllers.SecureWebView SecureWebView { get; set; }
 
-			if (EncapsulatingView != null) {
-				EncapsulatingView.Dispose ();
-				EncapsulatingView = null;
-			}
+        [Outlet]
+        UIKit.UITableView TableView { get; set; }
 
-			if (PaymentButton != null) {
-				PaymentButton.Dispose ();
-				PaymentButton = null;
-			}
+        void ReleaseDesignerOutlets ()
+        {
+            if (EncapsulatingView != null) {
+                EncapsulatingView.Dispose ();
+                EncapsulatingView = null;
+            }
 
-			if (TableView != null) {
-				TableView.Dispose ();
-				TableView = null;
-			}
-		}
-	}
+            if (FormClose != null) {
+                FormClose.Dispose ();
+                FormClose = null;
+            }
+
+            if (PaymentButton != null) {
+                PaymentButton.Dispose ();
+                PaymentButton = null;
+            }
+
+            if (SecureWebView != null) {
+                SecureWebView.Dispose ();
+                SecureWebView = null;
+            }
+
+            if (TableView != null) {
+                TableView.Dispose ();
+                TableView = null;
+            }
+        }
+    }
 }

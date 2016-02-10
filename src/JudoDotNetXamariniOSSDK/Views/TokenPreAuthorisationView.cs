@@ -115,6 +115,7 @@ namespace JudoDotNetXamariniOSSDK.Views
                     };
                 }
             }
+            SecureWebView.SetupWebView (_paymentService, successCallback, failureCallback);
         }
 
         private void OnKeyboardNotification (NSNotification notification)
@@ -191,42 +192,51 @@ namespace JudoDotNetXamariniOSSDK.Views
                         });
                     } else {
                         var result = reponse.Result;
-                        if (result != null && !result.HasError && result.Response.Result != "Declined") {
-                            PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
-                            // call success callback
-                            if (successCallback != null) {
-                                DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                                    NavigationController.CloseView ();
-                                
-                                    successCallback (paymentreceipt);
-                                });
-                            }
-                        } else {
-                            // Failure callback
-                            if (failureCallback != null) {
-                                var judoError = new JudoError { ApiError = result != null ? result.Error : null };
-                                var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+                        if (Judo.Instance.ThreeDSecureEnabled && result.Response != null && result.Response.GetType () == typeof(PaymentRequiresThreeDSecureModel)) {
 
-                                if (paymentreceipt != null) {
-                                    // send receipt even we got card declined
+                            var threedDSecureReceipt = result.Response as PaymentRequiresThreeDSecureModel;
+
+
+                            SecureManager.SummonThreeDSecure (threedDSecureReceipt, SecureWebView);
+
+                        } else {
+                            if (result != null && !result.HasError && result.Response.Result != "Declined") {
+                                PaymentReceiptModel paymentreceipt = result.Response as PaymentReceiptModel;
+                                // call success callback
+                                if (successCallback != null) {
                                     DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
                                         NavigationController.CloseView ();
-                                    
-                                        failureCallback (judoError, paymentreceipt);
-                                    });
-                                } else {
-                                    DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
-                                        NavigationController.CloseView ();
-                                    
-                                        failureCallback (judoError);
+                                
+                                        successCallback (paymentreceipt);
                                     });
                                 }
+                            } else {
+                                // Failure callback
+                                if (failureCallback != null) {
+                                    var judoError = new JudoError { ApiError = result != null ? result.Error : null };
+                                    var paymentreceipt = result != null ? result.Response as PaymentReceiptModel : null;
+
+                                    if (paymentreceipt != null) {
+                                        // send receipt even we got card declined
+                                        DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                            NavigationController.CloseView ();
+                                    
+                                            failureCallback (judoError, paymentreceipt);
+                                        });
+                                    } else {
+                                        DispatchQueue.MainQueue.DispatchAfter (DispatchTime.Now, () => {
+                                            NavigationController.CloseView ();
+                                    
+                                            failureCallback (judoError);
+                                        });
+                                    }
+                                }
+
+
                             }
-
-
                         }
+                        LoadingScreen.HideLoading ();
                     }
-                    LoadingScreen.HideLoading ();
                 });
             } catch (Exception ex) {
                 LoadingScreen.HideLoading ();
