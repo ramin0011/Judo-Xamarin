@@ -2,7 +2,7 @@
 
 namespace JudoDotNetXamarin
 {
-    public static class SupportedCurrency
+    public static class JudoSupportedCurrency
     {
         public static  string AUSTRALIAN_DOLLAR = "AUD";
         public static  string BRAZILIAN_REAL = "BRL";

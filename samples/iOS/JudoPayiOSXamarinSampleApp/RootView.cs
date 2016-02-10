@@ -203,7 +203,7 @@ namespace JudoPayiOSXamarinSampleApp
             var cardPayment = new PaymentViewModel {
                 Amount = 4.5m, 
                 ConsumerReference = consumerRef,
-                Currency = SupportedCurrency.POUNDS_STERLING,
+                Currency = JudoSupportedCurrency.POUNDS_STERLING,
                 // Non-UI API needs to pass card detail
                 Card = new CardViewModel {
                     CardNumber = cardNumber,
@@ -233,7 +233,7 @@ namespace JudoPayiOSXamarinSampleApp
 			
             var applePayment = new ApplePayViewModel {
 				
-                CurrencyCode = new NSString (SupportedCurrency.POUNDS_STERLING),
+                CurrencyCode = new NSString (JudoSupportedCurrency.POUNDS_STERLING),
                 CountryCode = new NSString (@"GB"),
                 SupportedNetworks = new NSString[3] {
                     new NSString ("Visa"),
