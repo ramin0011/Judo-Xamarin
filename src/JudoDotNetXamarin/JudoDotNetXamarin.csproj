@@ -64,6 +64,7 @@
     <Compile Include="Helpers\ErrorExtensions.cs" />
     <Compile Include="Models\judoReceipt.cs" />
     <Compile Include="IJudo.cs" />
+    <Compile Include="Models\SupportedCurrency.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />

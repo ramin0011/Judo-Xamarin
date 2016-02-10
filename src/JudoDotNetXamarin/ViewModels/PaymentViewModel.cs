@@ -9,28 +9,6 @@ namespace JudoDotNetXamarin
         /// </summary>
         public CardViewModel Card { get; set; }
 
-        /// <summary>
-        /// Amount
-        /// </summary>
-        public decimal Amount { get; set; }
-
-        /// <summary>
-        /// Currency 
-        /// </summary>
-        public string Currency { get; set; }
-
-
-        /// <summary>
-        /// your consumer reference 
-        /// </summary>
-        public string ConsumerReference { get; set; }
-
-
-
-        /// <summary>
-        /// your meta data 
-        /// </summary>
-        public IDictionary<string, string> YourPaymentMetaData { get; set; }
 
         public PaymentViewModel Clone ()
         {

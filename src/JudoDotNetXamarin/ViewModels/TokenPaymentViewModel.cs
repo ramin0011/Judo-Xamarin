@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using JudoPayDotNet.Models;
+﻿using JudoPayDotNet.Models;
 
 namespace JudoDotNetXamarin
 {
@@ -21,29 +20,11 @@ namespace JudoDotNetXamarin
         public string ConsumerToken { get; set; }
 
         /// <summary>
-        /// Amount
-        /// </summary>
-        public decimal Amount { get; set; }
-
-        /// <summary>
-        /// Currency 
-        /// </summary>
-        public string Currency { get; set; }
-
-        /// <summary>
         /// Last Four digits of card 
         /// </summary>
         public string LastFour { get; set; }
 
-        /// <summary>
-        /// your consumer reference 
-        /// </summary>
-        public string ConsumerReference { get; set; }
 
-        /// <summary>
-        /// your meta data 
-        /// </summary>
-        public IDictionary<string, string> YourPaymentMetaData { get; set; }
 
         /// <summary>
         /// must pass the card token type to dispay card image 
